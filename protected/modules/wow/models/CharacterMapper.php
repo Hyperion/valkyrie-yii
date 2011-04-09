@@ -99,7 +99,6 @@ class CharacterMapper
             characters.honor_highest_rank,
             characters.honor_rank_points,
             character_honor_static.hk,
-            character_honor_static.dk,
             character_honor_static.thisWeek_cp,
             character_honor_static.thisWeek_kills')
             ->from('characters')

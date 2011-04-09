@@ -25,8 +25,9 @@ class User extends CActiveRecord
     {
         return array(
             array('email, password, role, status, salt', 'required'),
+            array('email, username, password, role, status', 'required', 'on'=>'update'),
             array('email', 'email'),
-            array('id, username, email, password, role, status, first_name, last_name, salt, created, updated, logined, ip, hashCode', 'safe', 'on'=>'search'),
+            array('id, username, email, password, role, status, salt, created, updated, logined, ip, hashCode', 'safe', 'on'=>'search'),
         );
     }
 
@@ -83,8 +84,6 @@ class User extends CActiveRecord
         $criteria->compare('password',$this->password,true);
         $criteria->compare('role',$this->role,true);
         $criteria->compare('status',$this->status,true);
-        $criteria->compare('first_name',$this->first_name,true);
-        $criteria->compare('last_name',$this->last_name,true);
         $criteria->compare('salt',$this->salt,true);
         $criteria->compare('created',$this->created,true);
         $criteria->compare('updated',$this->updated,true);

@@ -27,6 +27,8 @@ class UserController extends AdminController
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
+            $model->salt       = User::generateSalt();
+            $model->password   = User::hashPassword($model->password, $model->salt);
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -48,9 +50,12 @@ class UserController extends AdminController
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
+        $model->setScenario('update');
+
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
+            $model->password   = User::hashPassword($model->password, $model->salt);
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

@@ -1,6 +1,6 @@
 <?php $this->beginContent('//layouts/backend'); ?>
 <div class="container">
-    <div class="span-5 last">
+    <div class="span-5 prepend-1">
         <div id="sidebar">
         <?php
             $this->beginWidget('zii.widgets.CPortlet', array(
@@ -14,7 +14,7 @@
         ?>
         </div><!-- sidebar -->
     </div>
-	<div class="span-19">
+	<div class="span-18 last">
 		<div id="content">
 			<?php echo $content; ?>
 		</div><!-- content -->

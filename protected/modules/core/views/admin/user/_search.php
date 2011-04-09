@@ -20,54 +20,26 @@
 		<?php echo $form->textField($model,'email',array('size'=>50,'maxlength'=>50)); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->label($model,'role'); ?>
-		<?php echo $form->textField($model,'role',array('size'=>9,'maxlength'=>9)); ?>
-	</div>
+    <div class="row">
+        <?php echo $form->labelEx($model,'role'); ?>
+        <?php echo $form->dropDownList($model,'role', array(
+            User::ROLE_ADMIN => User::ROLE_ADMIN,
+            User::ROLE_MODER => User::ROLE_MODER,
+            User::ROLE_USER  => User::ROLE_USER)); ?>
+    </div>
 
-	<div class="row">
-		<?php echo $form->label($model,'status'); ?>
-		<?php echo $form->textField($model,'status',array('size'=>10,'maxlength'=>10)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'first_name'); ?>
-		<?php echo $form->textArea($model,'first_name',array('rows'=>6, 'cols'=>50)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'last_name'); ?>
-		<?php echo $form->textArea($model,'last_name',array('rows'=>6, 'cols'=>50)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'salt'); ?>
-		<?php echo $form->textField($model,'salt',array('size'=>32,'maxlength'=>32)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'created'); ?>
-		<?php echo $form->textField($model,'created'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'updated'); ?>
-		<?php echo $form->textField($model,'updated'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'logined'); ?>
-		<?php echo $form->textField($model,'logined'); ?>
-	</div>
+    <div class="row">
+        <?php echo $form->labelEx($model,'status'); ?>
+        <?php echo $form->dropDownList($model,'status', array(
+            User::STATUS_REGISTER => User::STATUS_REGISTER,
+            User::STATUS_ACTIVE   => User::STATUS_ACTIVE,
+            User::STATUS_BLOCKED  => User::STATUS_BLOCKED,
+            User::STATUS_REMOVED  => User::STATUS_REMOVED)); ?>
+    </div>
 
 	<div class="row">
 		<?php echo $form->label($model,'ip'); ?>
 		<?php echo $form->textField($model,'ip'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'hashCode'); ?>
-		<?php echo $form->textField($model,'hashCode',array('size'=>32,'maxlength'=>32)); ?>
 	</div>
 
 	<div class="row buttons">

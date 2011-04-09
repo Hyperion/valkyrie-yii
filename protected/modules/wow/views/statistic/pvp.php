@@ -60,7 +60,6 @@ $this->breadcrumbs=array(
                 ),
         ),
         'hk',
-        'dk',
         'honor_standing',
         array(
             'type'=>'raw',

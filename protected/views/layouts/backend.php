@@ -43,11 +43,7 @@
 	<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 		'links'=>$this->breadcrumbs,
 	)); ?><!-- breadcrumbs -->
-    <div class="container">
-        <div id="content">
 	<?php echo $content; ?>
-        </div>
-    </div>
 	<div id="footer">
 		Copyright &copy; <?php echo date('Y'); ?> by Hyperion.<br/>
 		All Rights Reserved.<br/>
