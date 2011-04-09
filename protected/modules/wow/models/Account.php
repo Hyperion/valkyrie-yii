@@ -118,7 +118,7 @@ class Account extends CActiveRecord
             $this->addError('password','Incorrect username or password.');
             return;
         }
-        $this->id = $model->id;
+        $this->attributes = $model->attributes;
         if($sha_pass_hash != $model->sha_pass_hash)
             $this->addError('password','Incorrect username or password.');
 
