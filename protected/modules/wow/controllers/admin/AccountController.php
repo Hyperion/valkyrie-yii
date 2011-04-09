@@ -12,6 +12,8 @@ class AccountController extends AdminController
             $model->attributes=$_POST['Account'];
             if($model->validate())
             {
+                if($_POST['change_pass'] == 1)
+                    $model->password = $_POST['Account']['password'];
                 if($model->save())
                     $this->redirect(array('index'));
             }

@@ -15,6 +15,11 @@
 		<?php echo $form->error($model,'password'); ?>
 	</div>
 
+    <div class="row">
+        <label>Change Password:</label>
+        <?php echo CHtml::checkBox('change_pass'); ?>
+    </div>
+
 	<div class="row">
 		<?php echo $form->labelEx($model,'email'); ?>
 		<?php echo $form->textField($model,'email'); ?>

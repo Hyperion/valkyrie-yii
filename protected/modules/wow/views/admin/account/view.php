@@ -25,6 +25,6 @@ $this->menu=array(
 		'active_realm_id',
 		'mutetime',
 		'locale',
-		'loc_selection',
+
 	),
 )); ?>

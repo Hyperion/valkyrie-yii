@@ -100,7 +100,7 @@ class CpController extends Controller
         if(isset($_POST['Account']))
         {
             $model->attributes=$_POST['Account'];
-            if(isset($_POST['Account']['password']))
+            if($_POST['change_pass'] == 1)
                 $model->password = $_POST['Account']['password'];
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));

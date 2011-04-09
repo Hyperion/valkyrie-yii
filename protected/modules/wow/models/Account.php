@@ -28,7 +28,7 @@ class Account extends CActiveRecord
             array('username, password', 'required', 'on'=>'login'),
             array('password', 'authenticate', 'on'=>'login'),
             array('locale, email', 'required', 'on'=>'update, create, edit'),
-              array('username, password', 'required', 'on'=>'create'),
+            array('username, password', 'required', 'on'=>'create'),
             //array('username, email', 'recoveryInfo', 'on'=>'recovery'),
             array('gmlevel, mutetime, locked', 'required', 'on'=>'update'),
             array('username', 'safe', 'on'=>'search'),
@@ -119,6 +119,7 @@ class Account extends CActiveRecord
             return;
         }
         $this->attributes = $model->attributes;
+        $this->id = $model->id;
         if($sha_pass_hash != $model->sha_pass_hash)
             $this->addError('password','Incorrect username or password.');
 
