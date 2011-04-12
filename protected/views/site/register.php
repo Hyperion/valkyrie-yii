@@ -15,16 +15,6 @@
     </div>
 
     <div class="row">
-        <?php echo $activeform->labelEx($form,'first_name'); ?>
-        <?php echo $activeform->textField($form,'first_name'); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $activeform->labelEx($form,'last_name'); ?>
-        <?php echo $activeform->textField($form,'last_name'); ?>
-    </div>
-
-    <div class="row">
         <?php echo $activeform->labelEx($form,'password'); ?>
         <?php echo $activeform->passwordField($form,'password'); ?>
     </div>

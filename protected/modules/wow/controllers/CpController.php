@@ -3,7 +3,15 @@
 class CpController extends Controller
 {
 
-    public $layout='//layouts/column2';
+    public $layout='//layouts/cp';
+    public $usermenu = array();
+
+    public function init()
+    {
+        parent::init();
+        $menu = new Menu;
+        $this->usermenu = $menu->getData('usermenu');
+    }
 
     public function filters()
     {

@@ -108,15 +108,117 @@ class SiteController extends Controller
                 $model = new User();
                 $model->attributes = $form->attributes;
                 $model->role       = User::ROLE_USER;
-                $model->status     = User::STATUS_ACTIVE;
+                $model->status     = User::STATUS_REGISTER;
                 $model->hashCode   = md5($model->email . uniqid());
                 $model->salt       = User::generateSalt();
                 $model->password   = User::hashPassword($model->password, $model->salt);
                 $model->save();
-                $this->redirect(Yii::app()->user->returnUrl);
+                if($this->sendRegistrationEmail($model))
+                    $this->redirect(Yii::app()->user->returnUrl);
             }
         }
 
         $this->render('register',array('form'=>$form));
+    }
+
+    public function actionActivation($email=null, $key=null)
+    {
+        if (!Yii::app()->user->isGuest)
+          $this->redirect(Yii::app()->user->returnUrl);
+
+        if ($email != null && $key != null)
+        {
+            if (User::activate($email, $key) != false) 
+                $this->render('index');
+            else
+                $this->render('error');
+        }
+    }
+
+    public function actionRecovery()
+    {
+        $form = new RecoveryForm();
+
+        if(isset($_POST['RecoveryForm']))
+        {
+            $form->attributes=$_POST['RecoveryForm'];
+            if($form->validate())
+            {
+                $model = User::model()->find("email = '{$form->email}'");
+                $password = User::generatePassword();
+                $model->status     = User::STATUS_REGISTER;
+                $model->salt       = User::generateSalt();
+                $model->password   = User::hashPassword($password, $model->salt);
+                $model->save();
+                if($this->sendRecoveryEmail($model, $password))
+                    $this->redirect(Yii::app()->user->returnUrl);
+            }
+        }
+    }
+
+    private function sendRegistrationEmail($model)
+    {
+        if (!isset($model->email)) {
+            throw new CException('Email is not set when trying to send Registration Email');
+        }
+        $activation_url = $this->createAbsoluteUrl('/site/activation', array(
+            'key' => $model->hashCode,
+            'email' => $model->email)
+        );
+
+        $content = TextSettings::model()->find('language = :lang AND name = :name', array(
+            'lang' => Yii::app()->language,
+            'name' => 'email_registration'));
+        $sent = null;
+
+        if (is_object($content))
+        {
+            $body = strtr($content->text, array(
+                '{activation_url}' => $activation_url));
+
+            $mail = array(
+                'from' => Yii::app()->params['adminEmail'],
+                'to' => $model->email,
+                'subject' => 'You have registered for an application',
+                'body' => $body,
+                );
+            $sent = Mailer::send($mail);
+        }
+        else {
+            throw new CException('The messages for your application language are not defined.');
+        }
+
+        return $sent;
+    }
+
+    private function sendRecoveryEmail($model, $password)
+    {
+        if (!isset($model->email)) {
+            throw new CException('Email is not set when trying to send Recovery Email');
+        }
+
+        $content = TextSettings::model()->find('language = :lang AND name = :name', array(
+            'lang' => Yii::app()->language,
+            'name' => 'email_recovery'));
+        $sent = null;
+
+        if (is_object($content))
+        {
+            $body = strtr($content->text, array(
+                '{password}' => $password));
+
+            $mail = array(
+                'from' => Yii::app()->params['adminEmail'],
+                'to' => $model->email,
+                'subject' => 'You have registered for an application',
+                'body' => $body,
+                );
+            $sent = Mailer::send($mail);
+        }
+        else {
+            throw new CException('The messages for your application language are not defined.');
+        }
+
+        return $sent;
     }
 }

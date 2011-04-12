@@ -95,4 +95,41 @@ class User extends CActiveRecord
             'criteria'=>$criteria,
         ));
     }
+
+    public function activate($email=null, $key=null)
+    {
+        if ($email != null && $key != null)
+        {
+            if($user = self::model()->find("email = '{$email}'"))
+            {
+                if ($user->status != self::STATUS_REGISTER)
+                    return false;
+                if ($user->hashCode == $key)
+                {
+                    $user->status = self::STATUS_ACTIVE;
+                    if($user->save(false, array('status')))
+                    {
+                        return $user;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static function generatePassword()
+    { 
+        $consonants = array("b","c","d","f","g","h","j","k","l","m","n","p","r","s","t","v","w","x","y","z"); 
+        $vocals = array("a","e","i","o","u"); 
+   
+        $password = '';
+        srand((double) microtime() * 1000000);
+        for ($i = 1; $i <= 4; $i++)
+        {
+            $password .= $consonants[rand(0, 19)];
+            $password .= $vocals[rand(0, 4)];
+        }
+        $password .= rand(0, 9);
+        return $password;
+    }
 }

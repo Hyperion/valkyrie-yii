@@ -12,7 +12,7 @@ class Mailer
 
         if($mailer = Yii::app()->mailer)
         {
-            $mailer->From($to['from']);
+            $mailer->From = $to['from'];
             $mailer->AddAddress($to['to']);
             $mailer->Subject = $to['subject'];
             $mailer->Body = $to['body'];

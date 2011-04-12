@@ -30,6 +30,7 @@
                 'items'=>array(
                     array('label'=>'Menu Manangment', 'url'=>array('/admin/core/menu')),
                     array('label'=>'User Manangment', 'url'=>array('/admin/core/user')),
+                    array('label'=>'Text Templates Manangment', 'url'=>array('/admin/core/textSettings')),
                 )),
             array('label'=>'WoW Managment',
                 'items'=>array(
