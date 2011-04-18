@@ -29,12 +29,6 @@ class AccountBanned extends CActiveRecord
 		);
 	}
 
-	public function relations()
-	{
-		return array(
-		);
-	}
-
 	public function attributeLabels()
 	{
 		return array(

@@ -35,8 +35,8 @@ return array(
             'class'=>'IpbBridge',
             'db'=>array(
                 'connectionString' => 'mysql:host=localhost;dbname=valkyrie',
-                'username' => 'root',
-                'password' => '59tyr4pn',
+                'username' => 'valkyrie',
+                'password' => 'pdpfer56df5',
                 'charset' => 'utf8',
                 'tablePrefix'=>'wow_',
             ),
@@ -65,8 +65,8 @@ return array(
         'db'=>array(
             'connectionString' => 'mysql:host=localhost;dbname=valkyrie',
             'emulatePrepare' => true,
-            'username' => 'root',
-            'password' => '59tyr4pn',
+            'username' => 'valkyrie',
+            'password' => 'pdpfer56df5',
             'charset' => 'utf8',
             'tablePrefix'=>'',
         ),
