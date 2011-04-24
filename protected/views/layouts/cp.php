@@ -1,6 +1,6 @@
 <?php $this->beginContent('//layouts/main'); ?>
 <div id="usermenu" class="prepend-1">
-    <?php $this->widget('zii.widgets.CMenu',array('items'=>$this->usermenu)); ?>
+    <?php $this->widget('zii.widgets.CMenu',$this->usermenu); ?>
 </div>
 <div class="container">
     <div class="span-5 prepend-1">

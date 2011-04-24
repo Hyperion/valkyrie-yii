@@ -2,8 +2,8 @@
 
 class AdminController extends CController
 {
-	public $menu=array();
-
+	public $menu = array();
+	public $backendmenu;
 	public $breadcrumbs=array();
 
     public function filters()
@@ -25,8 +25,15 @@ class AdminController extends CController
         );
     }
 
-    public function init() {
+    public function init()
+	{
+		$menu = new Menu;
+        $this->backendmenu = $menu->getData('backendmenu');
+		$this->backendmenu['items'][] = array('label'=>'View Site', 'url'=>array('/site'));
         Yii::app()->layout = "backend2";
-    }
 
+		$log = new AdminAccess();
+		$log->action = Yii::app()->request->url;
+		$log->save();
+    }
 }

@@ -3,4 +3,4 @@ syntax: glob
 assets/*
 protected/runtime/*
 protected/yiic*
-protected/config/main.php
+protected/modules/doc/pages/*

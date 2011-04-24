@@ -24,22 +24,7 @@
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 	</div><!-- header -->
 
-	<?php $this->widget('application.extensions.mbmenu.MbMenu', array(
-        'items'=>array(
-            array('label'=>'Home', 'url'=>array('/admin'),
-                'items'=>array(
-                    array('label'=>'Menu Manangment', 'url'=>array('/admin/core/menu')),
-                    array('label'=>'User Manangment', 'url'=>array('/admin/core/user')),
-                    array('label'=>'Text Templates Manangment', 'url'=>array('/admin/core/textSettings')),
-                )),
-            array('label'=>'WoW Managment',
-                'items'=>array(
-                    array('label'=>'Realm Manangment', 'url'=>array('/admin/wow/realm/index')),
-                    array('label'=>'Account Manangment', 'url'=>array('/admin/wow/account/index')),
-                    array('label'=>'Characters Manangment', 'url'=>array('/admin/wow/character/index')),
-                )),
-            array('label'=>'View Site', 'url'=>array('/site')),
-          ))); ?>
+	<?php $this->widget('application.extensions.mbmenu.MbMenu', $this->backendmenu); ?>
 
 	<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 		'links'=>$this->breadcrumbs,

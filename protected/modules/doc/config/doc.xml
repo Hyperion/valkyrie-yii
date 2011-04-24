@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <name>doc</name>
+    <version>1.0.0</version>
+    <creationDate>2011-04-23</creationDate>
+    <author>Hyperion</author>
+    <authorEmail>hyperion1488@gmail.com</authorEmail>
+    <authorUrl>http://test.valkyrie-wow.com</authorUrl>
+    <copyright></copyright>
+    <license></license>
+    <description>Documentation module</description>
+</config>
