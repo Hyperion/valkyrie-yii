@@ -33,10 +33,10 @@ class IpBanned extends CActiveRecord
 	{
 		return array(
 			'ip' => 'Ip',
-			'bandate' => 'Bandate',
-			'unbandate' => 'Unbandate',
-			'bannedby' => 'Bannedby',
-			'banreason' => 'Banreason',
+			'bandate' => 'Ban Date',
+			'unbandate' => 'Unban Date',
+			'bannedby' => 'Banned by',
+			'banreason' => 'Ban Reason',
 		);
 	}
 
@@ -50,6 +50,7 @@ class IpBanned extends CActiveRecord
 		$criteria->compare('unbandate',$this->unbandate,true);
 		$criteria->compare('bannedby',$this->bannedby,true);
 		$criteria->compare('banreason',$this->banreason,true);
+		$criteria->order = 'bandate DESC';
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,

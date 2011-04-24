@@ -2,6 +2,11 @@
 
 class AccountBanned extends CActiveRecord
 {
+	public function primaryKey()
+	{
+		return 'id';
+	}
+	
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -16,7 +21,14 @@ class AccountBanned extends CActiveRecord
 	{
 		return 'account_banned';
 	}
-
+	
+	public function relations()
+	{
+		return array(
+			'account' => array(self::BELONGS_TO, 'Account', 'id', 'select' => 'username'),
+		);
+	}
+	
 	public function rules()
 	{
 		return array(
@@ -33,10 +45,10 @@ class AccountBanned extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'bandate' => 'Bandate',
-			'unbandate' => 'Unbandate',
-			'bannedby' => 'Bannedby',
-			'banreason' => 'Banreason',
+			'bandate' => 'Ban Date',
+			'unbandate' => 'Unban Date',
+			'bannedby' => 'Banned by',
+			'banreason' => 'Ban Reason',
 			'active' => 'Active',
 		);
 	}
@@ -52,6 +64,7 @@ class AccountBanned extends CActiveRecord
 		$criteria->compare('bannedby',$this->bannedby,true);
 		$criteria->compare('banreason',$this->banreason,true);
 		$criteria->compare('active',$this->active);
+		$criteria->order = 'bandate DESC';
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,

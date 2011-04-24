@@ -53,8 +53,8 @@ class User extends CActiveRecord
             $this->ip = ip2long($_SERVER['REMOTE_ADDR']);
             if($this->isNewRecord)
 			{   
-				$this->role       = (isset($this->role)) 	: $this->role 	? self::ROLE_USER;
-                $this->status     = (isset($this->status)) 	: $this->status ? self::STATUS_REGISTER;
+				$this->role       = (isset($this->role)) 	? $this->role 	: self::ROLE_USER;
+                $this->status     = (isset($this->status)) 	? $this->status : self::STATUS_REGISTER;
                 $this->hashCode   = md5($this->email . uniqid());
                 $this->salt       = self::generateSalt();
                 $this->password   = self::hashPassword($this->password, $this->salt);

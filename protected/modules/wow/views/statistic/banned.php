@@ -1,15 +1,44 @@
 <h1>Account Banned</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'characters-list',
     'dataProvider' => $accountBanned->search(),
-    'itemView'=>'_view',
+	'columns'=>array(
+		array(
+			'name'=>'Username',
+			'value'=>'$data->account->username',
+		),
+		array(
+			'name'=>'bandate',
+			'value'=>'Yii::app()->dateFormatter->formatDateTime($data->bandate, "long", "short")',
+		),
+		array(
+			'name'=>'unbandate',
+			'value'=>
+				'($data->bandate >= $data->unbandate) ? "Permanent" : Yii::app()->dateFormatter->formatDateTime($data->unbandate, "long", "short")',
+		),
+		'bannedby',
+		'banreason',
+	),
 )); ?>
 
 <h1>Ip Banned</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'characters-list',
     'dataProvider' => $ipBanned->search(),
-    'itemView'=>'_view',
+	'columns'=>array(
+		'ip',
+		array(
+			'name'=>'bandate',
+			'value'=>'Yii::app()->dateFormatter->formatDateTime($data->bandate, "long", "short")',
+		),
+		array(
+			'name'=>'unbandate',
+			'value'=>
+				'($data->bandate >= $data->unbandate) ? "Permanent" : Yii::app()->dateFormatter->formatDateTime($data->unbandate, "long", "short")',
+		),
+		'bannedby',
+		'banreason',
+	),
 )); ?>
