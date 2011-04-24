@@ -4,4 +4,4 @@ CREATE TABLE  `text_settings` (
 `name` VARCHAR( 50 ) NOT NULL ,
 `text` TEXT NOT NULL ,
 PRIMARY KEY (  `id` )
-) ENGINE = MYISAM ;
+) ENGINE = MYISAM  DEFAULT CHARSET=utf8;

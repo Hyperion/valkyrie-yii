@@ -2,7 +2,8 @@
 
 abstract class externalBridge extends CComponent
 {
-    private $_db;
+	private $_db = false;
+	private $_password = false;
     protected $_data = array();
 
     public function init()
@@ -23,6 +24,17 @@ abstract class externalBridge extends CComponent
     {
         return $this->_db;
     }
+	
+	public function getAttributes()
+	{
+		return array(
+			'email' 	=> $this->email,
+			'username' 	=> $this->username,
+			'password'	=> $this->_password,
+			'role'		=> $this->userRole,
+			'status'	=> User::STATUS_ACTIVE,
+		);
+	}
     
     abstract public function getUserData($email, $password);
 

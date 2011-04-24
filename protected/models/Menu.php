@@ -84,24 +84,30 @@ class Menu extends CActiveRecord
 
     public function refreshCache($menu = 'mainmenu')
     {
-        $fh = fopen(YiiBase::getPathOfAlias('application.cache')."/".$menu.".ser", "w");
+        $fh = fopen(YiiBase::getPathOfAlias('application.runtime.cache')."/".$menu.".ser", "w");
         fwrite($fh, serialize($this->toArray($menu)));
         fclose($fh);
     }
     
     public function getData($menu = 'mainmenu')
     {
-        $fname = YiiBase::getPathOfAlias('application.cache')."/".$menu.".ser";
-        if (!file_exists($fname)) {
-            $fh = fopen($fname, "w");
-            fwrite($fh, serialize($this->toArray($menu)));
-            fclose($fh);
+        $fname = YiiBase::getPathOfAlias('application.runtime.cache.'.$menu).'.ser';
+        if(!file_exists($fname))
+		{
+			if($menu == 'backendmenu')
+				$this->refreshXmlMenu('admin');
+			elseif($menu == 'usermenu')
+				$this->refreshXmlMenu('cp');
+			else
+			{
+				$fh = fopen($fname, "w");
+				fwrite($fh, serialize($this->toArray($menu)));
+				fclose($fh);
+			}
         }
         // Read file content and return array of menu
-        $fh = fopen($fname, "r");
-        $outputMenu = fread($fh, filesize($fname));
+        $outputMenu = file_get_contents($fname);
         $outputMenu = unserialize($outputMenu);
-        fclose($fh);
 
         return $outputMenu;
     }
@@ -140,5 +146,103 @@ class Menu extends CActiveRecord
     {
         parent::afterDelete();
         $this->refreshCache($this->menu);
+    }
+	
+	public function refreshXmlMenu($type = 'admin')
+	{
+        $totalBackendMenuArray = array();
+ 
+        $configFileList = glob(YiiBase::getPathOfAlias('application.modules').'/*/config/*.xml');
+        foreach ($configFileList as $singleConfigFile)
+		{
+            $config = new SimpleXMLElement($singleConfigFile, NULL, true);
+			switch($type)
+			{
+				case 'admin':
+					$nodes = $config->xpath('/config/adminhtml/menu/*');
+					break;
+				case 'cp':
+					$nodes = $config->xpath('/config/cphtml/menu/*');
+					break;
+				default:
+					return;
+					break;
+			}
+            
+ 
+            $menuItemsForModule = $this->parsingXmlMenu($nodes);
+            $totalBackendMenuArray = CMap::mergeArray($totalBackendMenuArray, $menuItemsForModule);
+ 
+        }
+        $this->sortingMenuItems($totalBackendMenuArray);
+        $outputMenu['items'] = $this->convertXmlMenuFormatToOutputFormat($totalBackendMenuArray);
+  
+        switch($type)
+		{
+			case 'admin':
+				$fh = fopen(YiiBase::getPathOfAlias('application.runtime.cache.backendmenu').'.ser', "w");
+				break;
+			case 'cp':
+				$fh = fopen(YiiBase::getPathOfAlias('application.runtime.cache.usermenu').'.ser', "w");
+				break;
+			default:
+				return;
+				break;
+		}
+        fwrite($fh, serialize($outputMenu));
+        fclose($fh);
+    }
+ 
+    protected function convertXmlMenuFormatToOutputFormat($xmlMenuFormat)
+	{
+        $outputMenu = array();
+        foreach($xmlMenuFormat as $single)
+		{
+            $menuItem = array();
+            $menuItem['label'] = $single['label'];
+            if(isset($single['url'])) 
+                $menuItem['url'] = array($single['url']);
+ 
+            if(isset($single['items']))
+                $menuItem['items'] = $this->convertXmlMenuFormatToOutputFormat($single['items']);
+            $outputMenu[] = $menuItem;
+        }
+        return $outputMenu;
+    }
+
+    protected function parsingXmlMenu($nodeElements)
+	{
+        $returnArray = array();
+        foreach($nodeElements as $element)
+		{
+ 
+            $nodeName = $element->getName();
+            $returnArray[$nodeName] = array();
+            if($element->label)
+                $returnArray[$nodeName]['label'] = $element->label."";
+            if($element->sort_order)
+                $returnArray[$nodeName]['sort_order'] = $element->sort_order."";
+            if($element->url)
+                $returnArray[$nodeName]['url'] = $element->url."";
+            if($element->items)
+                $returnArray[$nodeName]['items'] = $this->parsingXmlMenu($element->xpath("items/*"));
+        }
+        return $returnArray;
+    }
+ 
+    protected function sortingMenuItems(&$menuItems)
+	{
+        uasort($menuItems, "Menu::sortingByKeySortOrder");
+        foreach($menuItems as $key => $item)
+		{
+            if(isset($item['items']))
+				$this->sortingMenuItems($menuItems[$key]['items']);
+        }
+    }
+ 
+    public static function sortingByKeySortOrder($a, $b)
+	{
+        if ($a['sort_order'] == $b['sort_order']) return 0;
+        return ($a['sort_order'] > $b['sort_order']) ? 1 : -1;
     }
 }

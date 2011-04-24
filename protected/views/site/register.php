@@ -8,7 +8,12 @@
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $activeform->errorSummary($form); ?>
-
+	
+    <div class="row">
+        <?php echo $activeform->labelEx($form,'username'); ?>
+        <?php echo $activeform->textField($form,'username'); ?>
+    </div>
+	
     <div class="row">
         <?php echo $activeform->labelEx($form,'email'); ?>
         <?php echo $activeform->textField($form,'email'); ?>

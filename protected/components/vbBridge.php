@@ -4,6 +4,7 @@ class vbBridge extends externalBribge
 {
     public function getUserData($email, $password)
     {
+		$this->_password = $password;
         $password = md5($password);
 
         $c = $this->_db->createCommand('SELECT username, usergroupid, password, email, salt FROM {{user}} WHERE email = :email LIMIT 1');

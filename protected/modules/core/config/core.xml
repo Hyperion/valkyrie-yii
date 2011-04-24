@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<config>
+    <name>core</name>
+    <version>1.0.0</version>
+    <creationDate>2011-04-23</creationDate>
+    <author>Hyperion</author>
+    <authorEmail>hyperion1488@gmail.com</authorEmail>
+    <authorUrl>http://test.valkyrie-wow.com</authorUrl>
+    <copyright></copyright>
+    <license></license>
+    <description>Core(admin) module</description>
+	<adminhtml>
+        <menu>
+            <core>
+                <label>Home</label>
+                <sort_order>1</sort_order>
+				<url>/admin</url>
+                <items>
+                    <menus>
+                        <label>Menu Manangment</label>
+                        <sort_order>1</sort_order>
+                        <url>/admin/core/menu</url>
+                    </menus>
+                    <users>
+                        <label>User Manangment</label>
+                        <sort_order>2</sort_order>
+                        <url>/admin/core/user</url>
+                    </users>
+					<modules>
+                        <label>Module Manangment</label>
+                        <sort_order>3</sort_order>
+                        <url>/admin/core/module</url>
+                    </modules>
+					<texts>
+                        <label>Text Templates Manangment</label>
+                        <sort_order>4</sort_order>
+                        <url>/admin/core/textSettings</url>
+                    </texts>
+                </items>
+            </core>
+        </menu>
+    </adminhtml>
+	<cphtml>
+		<menu>
+            <general>
+                <label>General</label>
+                <sort_order>1</sort_order>
+				<url>/cp/index</url>
+            </general>
+        </menu>
+    </cphtml>
+</config>

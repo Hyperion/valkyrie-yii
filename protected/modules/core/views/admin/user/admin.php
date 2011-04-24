@@ -46,12 +46,9 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'email',
 		'role',
 		'status',
-		/*
-		'first_name',
-		'last_name',
 		'created',
 		'updated',
-		'logined',*/
+		'logined',
 		'ip',
 		array(
 			'class'=>'CButtonColumn',
