@@ -18,7 +18,7 @@ class UserIdentity extends CUserIdentity
             $data = $bridge->getUserData(strtolower($this->username), $this->password);
             if($data)
             {
-                $user = new User();
+                $user = new User('update');
                 $user->attributes = $bridge->attributes;
 				$user->save();
             }
