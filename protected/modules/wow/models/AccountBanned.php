@@ -71,4 +71,24 @@ class AccountBanned extends CActiveRecord
             'criteria'=>$criteria,
         ));
     }
+    
+    public function getCharacters()
+    {
+        $mapper = new CharacterMapper();
+        $db = new WowDatabase;
+        $realmInfo = $db->realmInfo;
+        $characters = array();
+        
+        foreach($realmInfo as $server => $data)
+		{
+            if($server != 'realmlist')
+            {
+                WowDatabase::$name = $server;
+                $mapper->setSearchParams(array('account' => $this->id));
+                $characters[$server] = $mapper->search()->getData();
+            }
+        }
+        
+        return $characters;
+    }
 }

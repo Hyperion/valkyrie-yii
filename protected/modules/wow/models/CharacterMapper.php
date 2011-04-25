@@ -53,7 +53,7 @@ class CharacterMapper
         return $char;
 
     }
-
+    
     public function setSearchParams($params)
     {
         if(is_array($params))

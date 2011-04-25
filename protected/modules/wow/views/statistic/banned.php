@@ -5,8 +5,9 @@
     'dataProvider' => $accountBanned->search(),
     'columns'=>array(
         array(
-            'name'=>'Username',
-            'value'=>'$data->account->username',
+            'class' =>'CCharsColumn',
+            'name'=>'Characters',
+            'value'=>'$data->characters',
         ),
         array(
             'name'=>'bandate',
