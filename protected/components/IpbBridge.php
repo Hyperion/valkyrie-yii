@@ -5,7 +5,7 @@ class IpbBridge extends externalBridge
     public function getUserData($email, $password)
     {
 		$this->_password = $password;
-        $password = md5($this->password);
+        $password = md5($this->_password);
 
         $c = $this->db->createCommand('SELECT name, email, members_pass_hash, members_pass_salt, member_group_id FROM {{members}} WHERE email = :email LIMIT 1');
         $c->bindParam(':email', $email);

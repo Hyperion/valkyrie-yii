@@ -3,7 +3,7 @@
 abstract class externalBridge extends CComponent
 {
 	private $_db = false;
-	private $_password = false;
+	protected $_password = false;
     protected $_data = array();
 
     public function init()
