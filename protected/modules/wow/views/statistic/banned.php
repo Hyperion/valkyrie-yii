@@ -5,6 +5,11 @@
     'dataProvider' => $accountBanned->search(),
     'columns'=>array(
         array(
+            'name'=>'Account',
+            'value'=>'$data->account->username',
+            'visible'=>Yii::app()->user->checkAccess('admin'),
+        ),
+        array(
             'class' =>'CCharsColumn',
             'name'=>'Characters',
             'value'=>'$data->characters',

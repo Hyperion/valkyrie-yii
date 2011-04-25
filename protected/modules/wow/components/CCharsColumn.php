@@ -6,6 +6,11 @@ class CCharsColumn extends CGridColumn
     public $name;
     public $value;
     
+    protected function renderHeaderCellContent()
+	{
+		echo CHtml::encode($this->name);
+	}
+    
     protected function renderDataCellContent($row,$data)
 	{
         foreach($data->characters as $server => $chars):

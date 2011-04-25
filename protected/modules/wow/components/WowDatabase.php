@@ -79,6 +79,7 @@ class WowDatabase extends CComponent
         
         $db = new CDbConnection($dsn, $username, $password);
         $db->active = true;
+        $db->charset = 'utf8';
         
         if($name == 'realmlist')
             self::$realmlist = $db;
