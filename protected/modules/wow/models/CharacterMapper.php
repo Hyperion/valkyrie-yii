@@ -16,8 +16,20 @@ class CharacterMapper
         return $this->_table;
     }
 
+    public function findByName($name)
+    {
+        return $this->findBySql('`characters`.`name`=:name', ':name', $name);
+    }
+    
     public function findById($id)
     {
+        return $this->findBySql('`characters`.`guid`=:id', ':id', $id);
+    }
+    
+    public function findBySql($sql, $name, $value)
+    {
+        $lang = Yii::app()->language;
+        
         $db = self::getDbConnection();
 
         $sql = "SELECT
@@ -42,16 +54,29 @@ class CharacterMapper
             FROM `characters` AS `characters`
             LEFT JOIN `guild_member` AS `guild_member` ON `guild_member`.`guid`=`characters`.`guid`
             LEFT JOIN `guild` AS `guild` ON `guild`.`guildid`=`guild_member`.`guildid`
-            WHERE `characters`.`guid`=:id LIMIT 1";
+            WHERE ".$sql." LIMIT 1";
         $command=$db->createCommand($sql);
-        $command->bindParam(":id", $id);
+        $command->bindParam($name, $value);
         $row = $command->queryRow();
  
         $char = new Character;
         $char->setAttributes($row);
+        
+        $column = 'name_'.$lang;
+        $sql = "SELECT
+            {{wow_classes}}.`$column` AS class,
+            {{wow_races}}.`$column` AS race
+            FROM {{wow_classes}}, {{wow_races}}
+            WHERE {{wow_classes}}.`id` =:class_id AND {{wow_races}}.`id` =:race_id LIMIT 1";
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindParam(":class_id", $char->class);
+        $command->bindParam(":race_id", $char->race);
+        $row = $command->queryRow();
+        
+        $char->classText = $row['class'];
+        $char->raceText  = $row['race'];
 
         return $char;
-
     }
     
     public function setSearchParams($params)
@@ -161,7 +186,7 @@ class CharacterMapper
     public function search($pageSize = null)
     {
         $count = $this->getSearchCommand()->select('COUNT(1)')->queryScalar();
-        $dataProvider = new CModelDataProvider($this->getSearchCommand(), 'Character', array(
+        $dataProvider = new CCharactersDataProvider($this->getSearchCommand(), 'Character', array(
             'totalItemCount'=>$count,
             'sort'=>array(
                 'attributes'=>array(

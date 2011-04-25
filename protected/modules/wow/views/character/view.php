@@ -19,7 +19,7 @@ $this->menu=array(
     <?php endif; ?>
     <span class="clear"><!-- --></span>
     <div class="under-name color-c<?php echo $model->class; ?>">
-        <a href="/wow/game/race/<?php $model->race; ?>" class="race"><?php echo $model->raceText; ?></a>-<a href="/wow/game/class/<?php echo $model->class; ?>" class="class"><?php echo $model->classText; ?></a> (<span id="profile-info-spec" class="spec tip"></span>) <span class="level"><strong><?php echo $model->level; ?></strong></span> lvl<span class="comma">,</span>
+        <a href="/wow/game/race/<?php echo $model->race; ?>" class="race"><?php echo $model->raceText; ?></a>-<a href="/wow/game/class/<?php echo $model->class; ?>" class="class"><?php echo $model->classText; ?></a> (<span id="profile-info-spec" class="spec tip"></span>) <span class="level"><strong><?php echo $model->level; ?></strong></span> lvl<span class="comma">,</span>
         <span class="realm tip" id="profile-info-realm" data-battlegroup="">Valkyrie-wow</span>
     </div>
     </div>

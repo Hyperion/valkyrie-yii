@@ -14,7 +14,6 @@ class WebUser extends CWebUser
 
     function getAccounts()
     {
-        
         if(!$this->isGuest)
         {
             $accounts = array();

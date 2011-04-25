@@ -31,6 +31,15 @@ class CharacterController extends Controller
         ));
 	}
 
+    public function actionSimple($realm, $name)
+    {
+        WowDatabase::$name = (string)$realm;
+        $model = $this->_mapper->findByName((string)$name);
+        
+        $this->render('view',array(
+			'model'=>$model,
+		));
+    }
 	public function loadModel($id)
 	{
         $model = $this->_mapper->findById((int)$id);
