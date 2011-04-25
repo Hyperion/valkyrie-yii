@@ -7,7 +7,9 @@ class CharacterController extends Controller
 
     public function init()
     {
+		
         $this->_mapper = new CharacterMapper();
+		WowDatabase::$name = 'Valkyrie 1.12 Classic';
         parent::init();
     }
 

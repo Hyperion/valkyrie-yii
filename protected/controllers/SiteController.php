@@ -138,6 +138,7 @@ class SiteController extends Controller
                 'subject' 	=> $content->title,
                 'body' 		=> $body,
                 );
+            YiiBase::import('application.extensions.Mailer');
             $sent = Mailer::send($mail);
         }
         else

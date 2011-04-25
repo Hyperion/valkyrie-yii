@@ -15,14 +15,19 @@
                 <label>WoW Managment</label>
                 <sort_order>2</sort_order>
                 <items>
+			        <realms>
+                        <label>Realms Manangment</label>
+                        <sort_order>1</sort_order>
+                        <url>/admin/wow/realm/index</url>
+                    </realms>
                     <accounts>
                         <label>Account Manangment</label>
-                        <sort_order>1</sort_order>
+                        <sort_order>2</sort_order>
                         <url>/admin/wow/account/index</url>
                     </accounts>
                     <characters>
                         <label>Characters Manangment</label>
-                        <sort_order>2</sort_order>
+                        <sort_order>3</sort_order>
                         <url>/admin/wow/character/index</url>
                     </characters>
                 </items>

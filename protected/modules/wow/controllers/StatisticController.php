@@ -2,10 +2,16 @@
 
 class StatisticController extends Controller
 {
-	public function actionIndex()
-	{
-		$this->render('index');
-	}
+	public function init()
+    {
+		WowDatabase::$name = 'Valkyrie 1.12 Classic';
+        parent::init();
+    }
+	
+    public function actionIndex()
+    {
+        $this->render('index');
+    }
 
     public function actionWarEffort()
     {
@@ -47,13 +53,13 @@ class StatisticController extends Controller
         ));
     }
 
-	public function actionBanned()
-	{
-		$ipBanned = new IpBanned('search');
-		$accountBanned = new accountBanned('search');
-		$this->render('banned', array(
-			'ipBanned' 		=> $ipBanned,
-			'accountBanned' => $accountBanned,
-		));
-	}
+    public function actionBanned()
+    {
+        $ipBanned = new IpBanned('search');
+        $accountBanned = new AccountBanned('search');
+        $this->render('banned', array(
+            'ipBanned'         => $ipBanned,
+            'accountBanned' => $accountBanned,
+        ));
+    }
 }

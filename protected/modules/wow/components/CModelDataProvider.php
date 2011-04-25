@@ -5,7 +5,7 @@ class CModelDataProvider extends CDataProvider
 
 	public $db;
 	public $command;
-        public $modelClass;
+    public $modelClass;
 	public $keyField='id';
 
 	public function __construct($command,$modelClass,$config=array())

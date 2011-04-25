@@ -31,8 +31,9 @@ class WarEffort
             ->where(array('and', 'i.entry = q.ReqItemId1', array('in', 'q.entry', $quests[$side])));
 
         $data = $command->queryAll();
-
-        $db = Yii::app()->db_chars;
+        
+        $db = new WowDatabase();
+        $db = $db->getDb();
         
         $command = $db->createCommand()
             ->select('count(*) as count, quest')

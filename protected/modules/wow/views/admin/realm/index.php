@@ -9,9 +9,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Realmlists</h1>
+<h1>Realmlist Info</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-)); ?>
+<?php echo $this->renderPartial('_realmlistForm', array('model'=>$form)); ?>

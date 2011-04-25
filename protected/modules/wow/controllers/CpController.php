@@ -8,9 +8,11 @@ class CpController extends Controller
 
     public function init()
     {
+		WowDatabase::$name = 'Valkyrie 1.12 Classic';
+		
         parent::init();
         $menu = new Menu;
-        $this->usermenu = $menu->getData('usermenu');
+		$this->usermenu = $menu->getData('usermenu');
     }
 
     public function filters()

@@ -7,7 +7,8 @@ class CharacterMapper
 
     public function getDbConnection()
     {
-        return Yii::app()->db_chars;
+        $db = new WowDatabase();
+		return $db->getDb();
     }
 
     public function getDbTable()

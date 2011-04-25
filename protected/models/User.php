@@ -11,15 +11,15 @@ class User extends CActiveRecord
     const STATUS_BLOCKED  = 'blocked';
     const STATUS_REMOVED  = 'removed';
 
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	public function tableName()
-	{
-		return '{{users}}';
-	}
+    public function tableName()
+    {
+        return '{{users}}';
+    }
 
     public function rules()
     {
@@ -52,14 +52,14 @@ class User extends CActiveRecord
         {
             $this->ip = ip2long($_SERVER['REMOTE_ADDR']);
             if($this->isNewRecord)
-			{   
-				$this->role       = (isset($this->role)) 	? $this->role 	: self::ROLE_USER;
-                $this->status     = (isset($this->status)) 	? $this->status : self::STATUS_REGISTER;
+            {   
+                $this->role       = (isset($this->role))     ? $this->role     : self::ROLE_USER;
+                $this->status     = (isset($this->status))     ? $this->status : self::STATUS_REGISTER;
                 $this->hashCode   = md5($this->email . uniqid());
                 $this->salt       = self::generateSalt();
                 $this->password   = self::hashPassword($this->password, $this->salt);
                 $this->created    = date('Y-m-d H:i:s');
-			}
+            }
             else 
                 $this->updated    = date('Y-m-d H:i:s');
             return true;
@@ -67,13 +67,13 @@ class User extends CActiveRecord
         else
             return false;
     }
-	
-	protected function afterFind()
-	{
-		parent::afterFind();
-		$this->ip = long2ip($this->ip);
-	}
-	
+    
+    protected function afterFind()
+    {
+        parent::afterFind();
+        $this->ip = long2ip($this->ip);
+    }
+    
     public function search()
     {
         $criteria=new CDbCriteria;

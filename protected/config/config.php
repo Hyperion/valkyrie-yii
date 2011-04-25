@@ -17,8 +17,8 @@ return array(
     'import'=>array(
         'application.models.*',
         'application.components.*',
-		'application.modules.core.models.*',
-		'application.modules.core.components.*',
+        'application.modules.core.models.*',
+        'application.modules.core.components.*',
     ),
 
     // application components
@@ -45,9 +45,9 @@ return array(
         'urlManager'=>array(
             'urlFormat'=>'path',
             'rules'=>array(
-				'doc'=>'/doc/default/index',
-				'doc/<section:\w+>/<language:\w+>/<page:[a-zA-Z0-9_\-\.]+>'=>'doc/default/view',
-				'doc/<section:\w+>/<page:[a-zA-Z0-9_\-\.]+>'=>'doc/default/view',
+                'doc'=>'/doc/default/index',
+                'doc/<section:\w+>/<language:\w+>/<page:[a-zA-Z0-9_\-\.]+>'=>'doc/default/view',
+                'doc/<section:\w+>/<page:[a-zA-Z0-9_\-\.]+>'=>'doc/default/view',
                 'admin/<_m:\w+>/<_c:\w+>/<_a:\w+>/*'=>'<_m>/admin/<_c>/<_a>',
                 'admin/<_m:\w+>/<_c:\w+>/*'=>'<_m>/admin/<_c>',
                 'admin/<_m:\w+>'=>'<_m>/admin/default/index',
@@ -69,25 +69,7 @@ return array(
             'class'=>'CDbConnection',
             'connectionString'=>'mysql:host=valkyrie-wow.com;dbname=1121_world',
             'username'=>'hyp_cp',
-            'password'=>'***',
-            'emulatePrepare'=> true,
-            'charset' => 'utf8',
-            'autoConnect' => false,
-        ),
-        'db_realmd'=>array(
-            'class'=>'CDbConnection',
-            'connectionString'=>'mysql:host=valkyrie-wow.com;dbname=1121_realmd',
-            'username'=>'hyp_cp',
-            'password'=>'***',
-            'emulatePrepare'=> true,
-            'charset' => 'utf8',
-            'autoConnect' => false,
-        ),
-        'db_chars'=>array(
-            'class'=>'CDbConnection',
-            'connectionString'=>'mysql:host=valkyrie-wow.com;dbname=1121_chars',
-            'username'=>'hyp_cp',
-            'password'=>'***',
+            'password'=>'gHXOkMSOD6',
             'emulatePrepare'=> true,
             'charset' => 'utf8',
             'autoConnect' => false,
@@ -123,7 +105,7 @@ return array(
                 ),
             ),
         ),
-		'cache'=>array(
+        'cache'=>array(
             'class'=>'system.caching.CFileCache',
         ),
     ),

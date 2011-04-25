@@ -1,20 +1,5 @@
 <?php
 
-/**
- * This is the model class for table "logon.realmlist".
- *
- * The followings are the available columns in table 'logon.realmlist':
- * @property string $id
- * @property string $name
- * @property string $address
- * @property integer $port
- * @property integer $icon
- * @property integer $color
- * @property integer $timezone
- * @property integer $allowedSecurityLevel
- * @property double $population
- * @property string $realmbuilds
- */
 class Realmlist extends CActiveRecord
 {
 
@@ -25,7 +10,8 @@ class Realmlist extends CActiveRecord
 
 	public function getDbConnection()
     {
-        return Yii::app()->db_realmd;
+        $db = new WowDatabase();
+        return $db->getDb('realmlist');
     }
 
 	public function tableName()
@@ -41,7 +27,19 @@ class Realmlist extends CActiveRecord
 			array('population', 'numerical'),
 			array('name, address', 'length', 'max'=>32),
 			array('realmbuilds', 'length', 'max'=>64),
+			array('name', 'safe', 'on'=>'search'),
 		);
 	}
+	
+	public function search()
+ {
+        $criteria=new CDbCriteria;
+
+        $criteria->compare('name',$this->name,true);
+
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria'=>$criteria,
+        ));
+    }
 
 }

@@ -4,26 +4,27 @@ class Account extends CActiveRecord
 {
     public $password;
     
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
 
     public function getDbConnection()
     {
-        return Yii::app()->db_realmd;
+        $db = new WowDatabase();
+        return $db->getDb('realmlist');
     }
 
-	public function tableName()
-	{
-		return 'account';
-	}
+    public function tableName()
+    {
+        return 'account';
+    }
 
-	public function rules()
-	{
-		return array(
-			array('locale, gmlevel, mutetime, locked', 'numerical', 'integerOnly'=>true),
-			array('username', 'length', 'max'=>32),
+    public function rules()
+    {
+        return array(
+            array('locale, gmlevel, mutetime, locked', 'numerical', 'integerOnly'=>true),
+            array('username', 'length', 'max'=>32),
             array('email', 'email'),
             array('username, password', 'required', 'on'=>'login'),
             array('password', 'authenticate', 'on'=>'login'),
@@ -32,31 +33,31 @@ class Account extends CActiveRecord
             //array('username, email', 'recoveryInfo', 'on'=>'recovery'),
             array('gmlevel, mutetime, locked', 'required', 'on'=>'update'),
             array('username', 'safe', 'on'=>'search'),
-		);
-	}
+        );
+    }
 
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'username' => 'Username',
-			'sha_pass_hash' => 'Password',
-			'gmlevel' => 'Gmlevel',
-			'sessionkey' => 'Sessionkey',
-			'v' => 'V',
-			's' => 'S',
-			'email' => 'Email',
-			'joindate' => 'Joindate',
-			'last_ip' => 'Last Ip',
-			'failed_logins' => 'Failed Logins',
-			'locked' => 'Locked',
-			'last_login' => 'Last Login',
-			'active_realm_id' => 'Active Realm',
-			'mutetime' => 'Mutetime',
-			'locale' => 'Locale',
-			'loc_selection' => 'Loc Selection',
-		);
-	}
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'username' => 'Username',
+            'sha_pass_hash' => 'Password',
+            'gmlevel' => 'Gmlevel',
+            'sessionkey' => 'Sessionkey',
+            'v' => 'V',
+            's' => 'S',
+            'email' => 'Email',
+            'joindate' => 'Joindate',
+            'last_ip' => 'Last Ip',
+            'failed_logins' => 'Failed Logins',
+            'locked' => 'Locked',
+            'last_login' => 'Last Login',
+            'active_realm_id' => 'Active Realm',
+            'mutetime' => 'Mutetime',
+            'locale' => 'Locale',
+            'loc_selection' => 'Loc Selection',
+        );
+    }
     
     public function search()
     {

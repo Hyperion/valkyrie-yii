@@ -1,0 +1,2 @@
+<?php
+ return 'a:2:{s:12:"Valkyrie-wow";a:4:{s:4:"host";s:16:"valkyrie-wow.com";s:8:"username";s:6:"hyp_cp";s:8:"password";s:16:")qgÈf[ÔË–X£Þ";s:8:"database";s:10:"1121_chars";}s:9:"realmlist";a:4:{s:4:"host";s:16:"valkyrie-wow.com";s:8:"username";s:6:"hyp_cp";s:8:"password";s:16:")qgÈf[ÔË–X£Þ";s:8:"database";s:11:"1121_realmd";}}';
