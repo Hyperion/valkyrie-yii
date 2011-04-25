@@ -3,18 +3,45 @@
 class CCharactersDataProvider extends CModelDataProvider
 {
 
+    public $all = false;
+    
 	protected function fetchData()
 	{
-		$data = parent::fetchData();
-        $characters = array();
-        foreach($data as $char)
+        if($this->all)
         {
-            $char->location = $this->getLocation($char->map, $char->zone);
-            $characters[] = $char;
+            $db = new WowDatabase;
+            $realmInfo = $db->realmInfo;
+            $characters = array();
+            
+            foreach($realmInfo as $server => $data)
+            {
+                if($server != 'realmlist')
+                {
+                    WowDatabase::$name = $server;
+                    $this->db = $db->getDb();
+                    $data = parent::fetchData();
+                    
+                    $characters = array();
+                    foreach($data as $char)
+                    {
+                        $char->realm = $server;
+                        $char->location = $this->getLocation($char->map, $char->zone);
+                        $characters[] = $char;
+                    }
+                }
+            }
+        } else {
+            $data = parent::fetchData();
+            $characters = array();
+            foreach($data as $char)
+            {
+                $char->location = $this->getLocation($char->map, $char->zone);
+                $characters[] = $char;
+            }
         }
-        return $characters;
+		return $characters;
 	}
-    
+ 
     private function getLocation($map, $zone)
     {
         $maps = array(

@@ -29,6 +29,6 @@ $('.search-form form').submit(function(){
 
 <?php $this->widget('zii.widgets.CListView', array(
         'id' => 'characters-list',
-	'dataProvider' => $mapper->search(),
-	'itemView'=>'_viewChars',
+        'dataProvider' => $dataProvider,
+        'itemView'=>'_viewChars',
 )); ?>

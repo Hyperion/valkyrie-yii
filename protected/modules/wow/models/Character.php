@@ -42,6 +42,7 @@ class Character extends CModel
     public $dk = false;
     public $thisWeek_cp = false;
     public $thisWeek_kills = false;
+    public $realm = false;
 
     public function attributeNames()
     {

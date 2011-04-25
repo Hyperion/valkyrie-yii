@@ -183,10 +183,11 @@ class CharacterMapper
         return $command;
     }
 
-    public function search($pageSize = null)
+    public function search($pageSize = null, $all = false)
     {
         $count = $this->getSearchCommand()->select('COUNT(1)')->queryScalar();
         $dataProvider = new CCharactersDataProvider($this->getSearchCommand(), 'Character', array(
+            'all' => $all,
             'totalItemCount'=>$count,
             'sort'=>array(
                 'attributes'=>array(

@@ -63,8 +63,7 @@ class CpController extends Controller
         $mapper = new CharacterMapper();
         $mapper->setSearchParams(array('account' => $id));
         $this->render('characters',array(
-            'mapper' => $mapper,
-            'model' => $this->loadModel($id),
+            'dataProvider' => $mapper->search(null,true),
         ));
     }
 

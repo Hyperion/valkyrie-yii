@@ -2,7 +2,6 @@
 
 class CModelDataProvider extends CDataProvider
 {
-
 	public $db;
 	public $command;
     public $modelClass;
@@ -23,7 +22,6 @@ class CModelDataProvider extends CDataProvider
 	{
 		$command=$this->command;
 		$db=$this->db===null ? Yii::app()->db : $this->db;
-		$db->active=true;
 
 		if(($sort=$this->getSort())!==false)
 		{
