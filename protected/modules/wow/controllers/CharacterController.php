@@ -13,24 +13,6 @@ class CharacterController extends Controller
         parent::init();
     }
 
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
-
-	public function actionIndex()
-	{
-        if(isset($_GET['Character']))
-            $this->_mapper->setSearchParams($_GET['Character']);
-
-        $this->render('index',array(
-            'model' => new Character(),
-            'mapper' => $this->_mapper,
-        ));
-	}
-
     public function actionSimple($realm, $name)
     {
         WowDatabase::$name = (string)$realm;

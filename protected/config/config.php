@@ -54,7 +54,7 @@ return array(
                 'admin'=>'core/admin/default/index',
                 '<_c:\w+>/<id:\d+>'=>'<_c>/view',
                 '<_m:\w+>/<_c:\w+>/<id:\d+>'=>'<_m>/<_c>/view',
-                '<_m:\w+>/<_c:\w+>/<_a:\w+>/<realm>/<name:\w+>'=>'<_m>/<_c>/<_a>',
+                'wow/<_c:character|guild>/<_a:\w+>/<realm>/<name:\w+>'=>'wow/<_c>/<_a>',
             ),
             'showScriptName' => false,
         ),
