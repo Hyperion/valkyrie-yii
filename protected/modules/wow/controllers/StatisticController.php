@@ -8,11 +8,6 @@ class StatisticController extends Controller
         parent::init();
     }
 	
-    public function actionIndex()
-    {
-        $this->render('index');
-    }
-
     public function actionWarEffort()
     {
         $model = new WarEffort();

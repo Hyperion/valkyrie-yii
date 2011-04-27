@@ -4,9 +4,12 @@ class CCharactersDataProvider extends CModelDataProvider
 {
 
     public $all = false;
+    public $lang;    
     
 	protected function fetchData()
 	{
+        $characters = array();
+        
         if($this->all)
         {
             $db = new WowDatabase;
@@ -20,28 +23,40 @@ class CCharactersDataProvider extends CModelDataProvider
                     WowDatabase::$name = $server;
                     $this->db = $db->getDb();
                     $data = parent::fetchData();
-                    
-                    $characters = array();
+                                        
                     foreach($data as $char)
-                    {
-                        $char->realm = $server;
-                        $char->location = $this->getLocation($char->map, $char->zone);
-                        $characters[] = $char;
-                    }
+                        $characters[] = $this->loadData($char);
                 }
             }
         } else {
             $data = parent::fetchData();
-            $characters = array();
             foreach($data as $char)
-            {
-                $char->location = $this->getLocation($char->map, $char->zone);
-                $characters[] = $char;
-            }
+                $characters[] = $this->loadData($char);
         }
 		return $characters;
 	}
  
+    private function loadData($char)
+    {
+        $column = 'name_'.$this->lang;
+        $sql = "SELECT
+            {{wow_classes}}.`$column` AS class,
+            {{wow_races}}.`$column` AS race
+            FROM {{wow_classes}}, {{wow_races}}
+            WHERE {{wow_classes}}.`id` =:class_id AND {{wow_races}}.`id` =:race_id LIMIT 1";
+        $command = Yii::app()->db->createCommand($sql);
+        $command->bindParam(":class_id", $char->class);
+        $command->bindParam(":race_id", $char->race);
+        $row = $command->queryRow();
+                        
+        $char->classText = $row['class'];
+        $char->raceText  = $row['race'];
+        
+        $char->realm = WowDatabase::$name;
+        $char->location = $this->getLocation($char->map, $char->zone);
+        return $char;
+    }
+    
     private function getLocation($map, $zone)
     {
         $maps = array(

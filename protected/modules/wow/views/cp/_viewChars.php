@@ -1,11 +1,11 @@
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('guid')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->guid), array('/wow/character/simple', 'realm'=>$data->realm, 'name'=>$data->name)); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
-	<?php echo CHtml::encode($data->name); ?>
+	<?php echo CHtml::link(CHtml::encode($data->name), array('/wow/character/simple', 'realm'=>$data->realm, 'name'=>$data->name)); ?>
+	<br />
+    
+    <b>Realm:</b>
+	<?php echo CHtml::encode($data->realm); ?>
 	<br />
 
     <b>Guild:</b>

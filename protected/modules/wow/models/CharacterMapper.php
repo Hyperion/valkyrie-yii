@@ -23,7 +23,7 @@ class CharacterMapper
     
     public function findById($id)
     {
-        return $this->findBySql('`characters`.`guid`=:id', ':id', $id);
+        return $this->findBySql('characters.guid=:id', ':id', $id);
     }
     
     public function findBySql($sql, $name, $value)
@@ -32,31 +32,32 @@ class CharacterMapper
         
         $db = self::getDbConnection();
 
-        $sql = "SELECT
-            `characters`.`guid`,
-            `characters`.`account`,
-            `characters`.`name`,
-            `characters`.`race`,
-            `characters`.`class`,
-            `characters`.`gender`,
-            `characters`.`level`,
-            `characters`.`money`,
-            `characters`.`playerBytes`,
-            `characters`.`playerBytes2`,
-            `characters`.`playerFlags`,
-            `characters`.`health`,
-            `characters`.`power1`,
-            `characters`.`power2`,
-            `characters`.`power3`,
-            `characters`.`equipmentCache`,
-            `guild_member`.`guildid` AS `guildId`,
-            `guild`.`name` AS `guildName`
-            FROM `characters` AS `characters`
-            LEFT JOIN `guild_member` AS `guild_member` ON `guild_member`.`guid`=`characters`.`guid`
-            LEFT JOIN `guild` AS `guild` ON `guild`.`guildid`=`guild_member`.`guildid`
-            WHERE ".$sql." LIMIT 1";
-        $command=$db->createCommand($sql);
-        $command->bindParam($name, $value);
+        $command=$db->createCommand()
+            ->select('
+            characters.guid,
+            characters.account,
+            characters.name,
+            characters.race,
+            characters.class,
+            characters.gender,
+            characters.level,
+            characters.money,
+            characters.playerBytes,
+            characters.playerBytes2,
+            characters.playerFlags,
+            characters.health,
+            characters.power1,
+            characters.power2,
+            characters.power3,
+            characters.equipmentCache,
+            guild_member.guildid AS guildId,
+            guild.name AS guildName')
+            ->from('characters')
+            ->leftJoin('guild_member', '`guild_member`.`guid` = `characters`.`guid`')
+            ->leftJoin('guild', '`guild`.`guildid` = `guild_member`.`guildid`')
+            ->where($sql, array($name => $value))
+            ->limit(1);
+        //$command->bindParam($name, $value);
         $row = $command->queryRow();
  
         $char = new Character;
@@ -187,17 +188,18 @@ class CharacterMapper
     {
         $count = $this->getSearchCommand()->select('COUNT(1)')->queryScalar();
         $dataProvider = new CCharactersDataProvider($this->getSearchCommand(), 'Character', array(
-            'all' => $all,
-            'totalItemCount'=>$count,
-            'sort'=>array(
-                'attributes'=>array(
+            'all'            => $all,
+            'lang'           => Yii::app()->language,
+            'totalItemCount' => $count,
+            'sort'           => array(
+                'attributes' => array(
                     'name', 'level', 'class', 'race', 'honor_standing', 'honor_highest_rank', 'honor_rank_points', 'hk', 'dk', 'thisWeek_kills', 'thisWeek_cp',
                 ),
             ),
-            'pagination'=>array(
+            'pagination'    => array(
                 'pageSize'=> $pageSize ? $pageSize : 10,
             ),
-            'keyField' => 'guid'
+            'keyField'      => 'guid'
         ));
         return $dataProvider;
     }
