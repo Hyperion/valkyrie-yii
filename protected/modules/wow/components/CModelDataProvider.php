@@ -44,11 +44,16 @@ class CModelDataProvider extends CDataProvider
         {
             $model = new $this->modelClass();
             $model->setAttributes($row);
-            $data[] = $model;
+            $data[] = $this->handleModel($model);
         }
         return $data;
 	}
 
+	protected function handleModel($model)
+	{
+	    return $model;
+	}
+	
 	protected function fetchKeys()
 	{
 		$keys=array();

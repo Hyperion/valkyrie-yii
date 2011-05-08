@@ -15,6 +15,7 @@ class CCharactersDataProvider extends CModelDataProvider
             $db = new WowDatabase;
             $realmInfo = $db->realmInfo;
             $characters = array();
+            $data = array();
             
             foreach($realmInfo as $server => $data)
             {
@@ -22,21 +23,15 @@ class CCharactersDataProvider extends CModelDataProvider
                 {
                     WowDatabase::$name = $server;
                     $this->db = $db->getDb();
-                    $data = parent::fetchData();
-                                        
-                    foreach($data as $char)
-                        $characters[] = $this->loadData($char);
+                    $data = array_merge($data, parent::fetchData());
                 }
             }
-        } else {
+        } else
             $data = parent::fetchData();
-            foreach($data as $char)
-                $characters[] = $this->loadData($char);
-        }
-		return $characters;
+		return $data;
 	}
  
-    private function loadData($char)
+    protected function handleModel($char)
     {
         $column = 'name_'.$this->lang;
         $sql = "SELECT

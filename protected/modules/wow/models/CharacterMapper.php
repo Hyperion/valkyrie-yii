@@ -15,49 +15,105 @@ class CharacterMapper
     {
         return $this->_table;
     }
-
-    public function findByName($name)
-    {
-        return $this->findBySql('`characters`.`name`=:name', ':name', $name);
-    }
     
-    public function findById($id)
+    private function createSqlCommand($conditions, $params, $type = 'default')
     {
-        return $this->findBySql('characters.guid=:id', ':id', $id);
-    }
-    
-    public function findBySql($sql, $name, $value)
-    {
-        $lang = Yii::app()->language;
-        
-        $db = self::getDbConnection();
-
-        $command=$db->createCommand()
-            ->select('
-            characters.guid,
+    	$sql_min =
+    		'characters.guid,
             characters.account,
             characters.name,
             characters.race,
             characters.class,
             characters.gender,
-            characters.level,
-            characters.money,
-            characters.playerBytes,
-            characters.playerBytes2,
-            characters.playerFlags,
+            characters.level';
+		
+		$sql_admin = $sql_min.',
+			characters.money,
+			characters.playerBytes,
+			characters.playerBytes2';
+		
+		$sql_statistic = $sql_min.',
+			characters.map,
+			characters.zone';
+			
+		$sql_pvp = $sql_min.',
+			characters.honor_standing,
+            characters.honor_highest_rank,
+            characters.honor_rank_points,
+            character_honor_static.hk,
+            character_honor_static.thisWeek_cp,
+            character_honor_static.thisWeek_kills';
+            
+        $sql_info = $sql_min.',
             characters.health,
             characters.power1,
             characters.power2,
             characters.power3,
             characters.equipmentCache,
             guild_member.guildid AS guildId,
-            guild.name AS guildName')
-            ->from('characters')
-            ->leftJoin('guild_member', '`guild_member`.`guid` = `characters`.`guid`')
-            ->leftJoin('guild', '`guild`.`guildid` = `guild_member`.`guildid`')
-            ->where($sql, array($name => $value))
-            ->limit(1);
-        //$command->bindParam($name, $value);
+            guild.name AS guildName';
+            		
+    	$db = self::getDbConnection();
+    	
+    	switch($type)
+    	{
+    		case 'admin':
+    			$sql = $sql_admin;
+    			break;
+    		case 'statistic':
+    			$sql = $sql_statistic;
+    			break;
+    		case 'pvp':
+    			$sql = $sql_pvp;
+    			break;
+    		case 'info':
+    			$sql = $sql_info;
+    			break;
+    		case 'default': default:
+    			$sql = $sql_min;
+    			break;
+    	}
+    	
+    	$command=$db->createCommand()
+            ->select($sql)
+            ->from('characters');
+            
+        switch($type)
+    	{
+    		case 'pvp':
+    			$command->leftjoin('character_honor_static', 'characters.guid = character_honor_static.guid');
+    			break;
+    		case 'info':
+    			$command
+    				->leftJoin('guild_member', '`guild_member`.`guid` = `characters`.`guid`')
+            		->leftJoin('guild', '`guild`.`guildid` = `guild_member`.`guildid`');
+    			break;
+    		case 'default': default:
+    			break;
+    	}   
+            
+        $command->where($conditions, $params);
+            
+		return $command;
+    }
+
+    public function findByName($name)
+    {
+        return $this->findBySql('`characters`.`name`=:name', array(':name' => $name));
+    }
+    
+    public function findById($id)
+    {
+        return $this->findBySql('characters.guid=:id', array(':id' => $id));
+    }
+    
+    public function findBySql($conditions = null, $params = null)
+    {
+        $lang = Yii::app()->language;
+        
+        $command = $this->createSqlCommand($conditions, $params, 'info');
+        $command->limit(1);
+        
         $row = $command->queryRow();
  
         $char = new Character;
@@ -68,7 +124,7 @@ class CharacterMapper
             {{wow_classes}}.`$column` AS class,
             {{wow_races}}.`$column` AS race
             FROM {{wow_classes}}, {{wow_races}}
-            WHERE {{wow_classes}}.`id` =:class_id AND {{wow_races}}.`id` =:race_id LIMIT 1";
+            WHERE {{wow_classes}}.`id` = :class_id AND {{wow_races}}.`id` = :race_id LIMIT 1";
         $command = Yii::app()->db->createCommand($sql);
         $command->bindParam(":class_id", $char->class);
         $command->bindParam(":race_id", $char->race);
@@ -89,51 +145,12 @@ class CharacterMapper
     
     private function getSearchCommand()
     {
-        $conditions = array('and');
+    	if(!isset($this->_searchParams['type']))
+    		$this->_searchParams['type'] = 'default';
+    		
+    	$conditions = array('and');
         $params = array();
-        $db = self::getDbConnection();
-        $command = $db->createCommand()
-            ->select('
-            characters.guid,
-            characters.account,
-            characters.name,
-            characters.race,
-            characters.class,
-            characters.gender,
-            characters.level,
-            characters.money,
-            characters.playerBytes,
-            characters.playerBytes2,
-            characters.map,
-            characters.zone')
-            ->from('characters');
-
-        if(isset($this->_searchParams['pvp']) and $this->_searchParams['pvp'])
-        {
-            $command = $db->createCommand()
-            ->select('
-            characters.guid,
-            characters.account,
-            characters.name,
-            characters.race,
-            characters.class,
-            characters.gender,
-            characters.level,
-            characters.money,
-            characters.map,
-            characters.zone,
-            characters.honor_standing,
-            characters.honor_highest_rank,
-            characters.honor_rank_points,
-            character_honor_static.hk,
-            character_honor_static.thisWeek_cp,
-            character_honor_static.thisWeek_kills')
-            ->from('characters')
-            ->leftjoin('character_honor_static', 'characters.guid = character_honor_static.guid')
-            ->order('characters.honor_standing');
-            $conditions[] = 'honor_standing > 0';
-        }
-
+        
         if(isset($this->_searchParams['name']) and $this->_searchParams['name'] != '')
         {
             $conditions[] = 'characters.name like :name';
@@ -169,7 +186,7 @@ class CharacterMapper
         }
         if(isset($this->_searchParams['faction']) and $this->_searchParams['faction'] != '')
         {
-            if($this->_searchParams['faction'] == 0) //alliancee
+            if($this->_searchParams['faction'] == 0) //alliance
                 $conditions[] = 'characters.race IN (1, 3, 4, 7)';
             elseif($this->_searchParams['faction'] == 1)
                 $conditions[] = 'characters.race IN (2, 5, 6, 8)';
@@ -179,8 +196,28 @@ class CharacterMapper
             $conditions[] = 'characters.honor_standing = :honor_standing';
             $params[':honor_standing'] = $this->_searchParams['honor_standing'];
         }
-        if(count($conditions) > 1)
-            $command->where($conditions, $params);
+        
+        switch($this->_searchParams['type'])
+    	{
+    		case 'admin':
+    			$command = $this->createSqlCommand($conditions, $params, 'admin');
+    			break;
+    		case 'statistic':
+    			$command = $this->createSqlCommand($conditions, $params, 'statistic');
+    			break;
+    		case 'pvp':
+    			$conditions[] = 'honor_standing > 0';
+    			$command = $this->createSqlCommand($conditions, $params, 'pvp')
+    				->order('characters.honor_standing');
+    			break;
+    		case 'info':
+    			$command = $this->createSqlCommand($conditions, $params, 'info');
+    			break;
+    		case 'default': default:
+    			$command = $this->createSqlCommand($conditions, $params);
+    			break;
+    	}
+    	
         return $command;
     }
 

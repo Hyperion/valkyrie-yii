@@ -17,7 +17,7 @@ class StatisticController extends Controller
     public function actionOnline()
     {
         $mapper = new CharacterMapper();
-        $mapper->setSearchParams(array('online' => true));
+        $mapper->setSearchParams(array('online' => true, 'type' => 'statistic'));
 
         if(isset($_GET['Character']))
         {
@@ -38,7 +38,7 @@ class StatisticController extends Controller
     public function actionPvp()
     {
         $mapper = new CharacterMapper();
-        $mapper->setSearchParams(array('pvp' => true));
+        $mapper->setSearchParams(array('type' => 'pvp'));
         if(isset($_GET['Character']))
             $mapper->setSearchParams($_GET['Character']);
 

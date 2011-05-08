@@ -20,7 +20,7 @@ class CharacterController extends AdminController
 
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+	    $model=$this->loadModel($id);
         $level = $model->level;
         $class = $model->class;
 
@@ -48,6 +48,8 @@ class CharacterController extends AdminController
 
 	public function actionIndex()
 	{
+	    $this->_mapper->setSearchParams(array('type' => 'admin'));
+	    
         if(isset($_GET['Character']))
             $this->_mapper->setSearchParams($_GET['Character']);
 
