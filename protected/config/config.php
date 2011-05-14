@@ -17,8 +17,9 @@ return array(
     'import'=>array(
         'application.models.*',
         'application.components.*',
-        'application.modules.core.models.*',
-        'application.modules.core.components.*',
+		'application.modules.user.models.*',
+		'application.modules.user.components.*',
+		'application.modules.user.*',
     ),
 
     // application components
@@ -26,21 +27,22 @@ return array(
         'ipbBridge'=>array(
             'class'=>'IpbBridge',
             'db'=>array(
-                'connectionString' => 'mysql:host=localhost;dbname=valkyrie',
-                'username' => 'valkyrie',
-                'password' => 'pdpfer56df5',
+                'connectionString' => 'mysql:host=localhost;dbname=project',
+                'username' => 'root',
+                'password' => '59tyr4pn',
                 'charset' => 'utf8',
-                'tablePrefix'=>'wow_',
+                'tablePrefix'=>'',
             ),
         ),
         'request'=>array(
-            'enableCsrfValidation'=>true,
+            //'enableCsrfValidation'=>true,
             'enableCookieValidation'=>true,
         ),
 
         'user'=>array(
-            'class' => 'WebUser',
+            'class' => 'application.modules.user.components.WebUser',
             'allowAutoLogin'=>true,
+	    'loginUrl'=>'/user/auth',
         ),
         'urlManager'=>array(
             'urlFormat'=>'path',
@@ -49,9 +51,8 @@ return array(
                 'doc/<section:\w+>/<language:\w+>/<page:[a-zA-Z0-9_\-\.]+>'=>'doc/default/view',
                 'doc/<section:\w+>/<page:[a-zA-Z0-9_\-\.]+>'=>'doc/default/view',
                 'admin/<_m:\w+>/<_c:\w+>/<_a:\w+>/*'=>'<_m>/admin/<_c>/<_a>',
-                'admin/<_m:\w+>/<_c:\w+>/*'=>'<_m>/admin/<_c>',
-                'admin/<_m:\w+>'=>'<_m>/admin/default/index',
-                'admin'=>'core/admin/default/index',
+                'admin/<_c:\w+>/<_a:\w+>'=>'admin/<_c>/<_a>',
+                'admin'=>'admin/default/index',
                 '<_c:\w+>/<id:\d+>'=>'<_c>/view',
                 '<_m:\w+>/<_c:\w+>/<id:\d+>'=>'<_m>/<_c>/view',
                 'wow/<_c:character|guild>/<_a:\w+>/<realm>/<name:\w+>'=>'wow/<_c>/<_a>',
@@ -59,10 +60,10 @@ return array(
             'showScriptName' => false,
         ),
         'db'=>array(
-            'connectionString' => 'mysql:host=localhost;dbname=valkyrie',
+            'connectionString' => 'mysql:host=localhost;dbname=cms',
             'emulatePrepare' => true,
-            'username' => 'valkyrie',
-            'password' => 'pdpfer56df5',
+            'username' => 'root',
+            'password' => '59tyr4pn',
             'charset' => 'utf8',
             'tablePrefix'=>'',
         ),
@@ -111,9 +112,5 @@ return array(
         ),
     ),
 
-    'params'=>array(
-        'adminEmail'=>'webmaster@example.com',
-        'allowExternalLogin'=>false,
-        'externalLoginMethod'=>'ipb',
-    ),
+    'params'=>require(dirname(__FILE__).'/params.php'),
 );

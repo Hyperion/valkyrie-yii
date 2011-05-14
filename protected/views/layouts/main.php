@@ -22,10 +22,18 @@
 
 	<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		<?php $this->widget('WLogin'); ?>
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array('items'=>$this->mainmenu)); ?>
+		<?php $searchForm = new SearchForm; ?>
+		<?php $form=$this->beginWidget('CActiveForm', array('action' => '/site/search')); ?>
+        	<?=$form->textField($searchForm,'query'); ?>
+			<?=CHtml::submitButton('Поиск'); ?>
+		<?php $this->endWidget(); ?>
+		<?php $this->widget('zii.widgets.CMenu',array(
+			'encodeLabel'=>false,
+			'items'=>$this->mainmenu)); ?>
 	</div><!-- mainmenu -->
 
 	<?php $this->widget('zii.widgets.CBreadcrumbs', array(

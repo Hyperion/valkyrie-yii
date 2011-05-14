@@ -51,7 +51,9 @@ class RealmController extends AdminController
             }
         }
 		
-		$this->render('update',array('form'=>$form));
+		$this->render('update',array(
+			'form'  => $form,
+			'model' => $model,));
 	}
 	
 	public function loadModel($id)

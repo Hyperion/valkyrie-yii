@@ -65,7 +65,7 @@ body
 
 #mainmenu ul li a
 {
-	color:#ffffff;
+	color:#000000;
 	background-color:transparent;
 	font-size:12px;
 	font-weight:bold;
@@ -78,39 +78,6 @@ body
 	color: #6399cd;
 	background-color:#EFF4FA;
 	text-decoration:none;
-}
-
-#usermenu
-{
-    background:white url(bg.gif) repeat-x left top;
-}
-
-#usermenu ul
-{
-    padding:6px 20px 5px 20px;
-    margin:0px;
-}
-
-#usermenu ul li
-{
-    display: inline;
-}
-
-#usermenu ul li a
-{
-    color:#ffffff;
-    background-color:transparent;
-    font-size:12px;
-    font-weight:bold;
-    text-decoration:none;
-    padding:5px 8px;
-}
-
-#usermenu ul li a:hover, #usermenu ul li.active a
-{
-    color: #6399cd;
-    background-color:#EFF4FA;
-    text-decoration:none;
 }
 
 div.flash-error, div.flash-notice, div.flash-success

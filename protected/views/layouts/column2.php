@@ -17,6 +17,7 @@
 			));
 			$this->endWidget();
 		?>
+		<?php $this->widget('WRecentPosts'); ?>
 		</div><!-- sidebar -->
 	</div>
 </div>

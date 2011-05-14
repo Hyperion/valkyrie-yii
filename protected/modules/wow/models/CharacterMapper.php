@@ -196,6 +196,9 @@ class CharacterMapper
             $conditions[] = 'characters.honor_standing = :honor_standing';
             $params[':honor_standing'] = $this->_searchParams['honor_standing'];
         }
+
+		if(count($conditions) == 1)
+			$conditions = null;
         
         switch($this->_searchParams['type'])
     	{

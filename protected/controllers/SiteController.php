@@ -2,6 +2,7 @@
 
 class SiteController extends Controller
 {
+	public $layout='column1';
 
 	public function actions()
 	{
@@ -16,11 +17,30 @@ class SiteController extends Controller
 		);
 	}
 
-	public function actionIndex()
+ 	public function actionIndex()
 	{
-		$this->render('index');
-	}
+		$this->layout='column2';
+	    
+		$criteria=new CDbCriteria(array(
+			'condition'=>'status="'.Material::STATUS_PUBLISHED.'" AND type="'.Material::TYPE_NEWS.'"',
+			'order'=>'update_time DESC',
+			'with'=>'commentCount',
+		));
+		if(isset($_GET['tag']))
+			$criteria->addSearchCondition('tags',$_GET['tag']);
 
+		$dataProvider=new CActiveDataProvider('Material', array(
+			'pagination'=>array(
+				'pageSize'=>Yii::app()->params['postsPerPage'],
+			),
+			'criteria'=>$criteria,
+		));
+
+		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
+	
 	public function actionError()
 	{
 	    if($error=Yii::app()->errorHandler->error)
@@ -32,118 +52,31 @@ class SiteController extends Controller
 	    }
 	}
 
-    public function actionLogin()
-    {
-        $model=new LoginForm;
-
-        if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-
-        if(isset($_POST['LoginForm']))
-        {
-            $model->attributes=$_POST['LoginForm'];
-            if($model->validate() && $model->login())
-                $this->redirect(Yii::app()->user->returnUrl);
-        }
-        $this->render('login',array('model'=>$model));
-    }
-
-    public function actionLogout()
-    {
-        Yii::app()->user->logout();
-        $this->redirect(Yii::app()->homeUrl);
-    }
-
-    public function actionRegister()
-    {
-        $form = new RegisterForm();
-
-        if(isset($_POST['RegisterForm']))
-        {
-            $form->attributes=$_POST['RegisterForm'];
-            if($form->validate())
-            {
-                $model = new User();
-                $model->attributes = $form->attributes;
-                $model->save();
-				$params = array(
-					'{activation_url}' => $this->createAbsoluteUrl('/site/activation',
-						array(
-							'key'   => $model->hashCode,
-							'email' => $model->email,
-						)
-					),
-				);
-                if($this->sendEmail('email_registration', $model->email, $params))
-                    $this->redirect(Yii::app()->user->returnUrl);
-            }
-        }
-
-        $this->render('register',array('form'=>$form));
-    }
-
-    public function actionActivation($email = null, $key = null)
-    {
-        if(!Yii::app()->user->isGuest)
-			$this->redirect(Yii::app()->user->returnUrl);
-
-        if(($email != null) and ($key != null) and (User::activate($email, $key) == true))
-            $this->render('index');
-        else
-            $this->render('error');
-    }
-
-    public function actionRecovery()
-    {
-        $form = new RecoveryForm();
-
-        if(isset($_POST['RecoveryForm']))
-        {
-            $form->attributes=$_POST['RecoveryForm'];
-            if($form->validate())
-            {
-                $model = User::model()->find("email = '{$form->email}'");
-                $model->password   = User::generatePassword();
-                $model->status     = User::STATUS_REGISTER;
-                $model->salt       = User::generateSalt();
-                $model->password   = User::hashPassword($password, $model->salt);
-                $model->save();
-                if($this->sendEmail('email_recovery', $model->email, array('{password}' => $password)))
-                    $this->redirect(Yii::app()->user->returnUrl);
-            }
-        }
-    }
-
-    private function sendEmail($template, $email, $params = array())
-    {
-        $content = TextSettings::model()->find('language = :lang AND name = :name',
-			array(
-				':lang' => Yii::app()->language,
-				':name' => $template,
-			)
-		);
-		
-        $sent = null;
-
-        if(is_object($content))
-        {
-            $body = strtr($content->text, $params);
-
-            $mail = array(
-                'from' 		=> Yii::app()->params['adminEmail'],
-                'to' 		=> $email,
-                'subject' 	=> $content->title,
-                'body' 		=> $body,
-                );
-            YiiBase::import('application.extensions.Mailer');
-            $sent = Mailer::send($mail);
-        }
-        else
-            throw new CException('The messages for your application language are not defined.');
-
-        return $sent;
-    }
+	public function actionSearch()
+	{
+		$model = new SearchForm;
+		if(isset($_POST['SearchForm']))
+		{
+			$model['attributes'] = $_POST['SearchForm'];
+			if($model->validate())
+			{
+				$criteria = new CDbCriteria(array(
+           			'condition' => 'status="'.Material::STATUS_PUBLISHED.'" AND type="'.Material::TYPE_POST.'"',
+               		'order'     => 'update_time DESC',
+               		'with'      => 'commentCount',
+				));
+	           	$criteria->compare('title',$model['query'],true);
+               	$dataProvider = new CActiveDataProvider('Material', array(
+               		'pagination' => array(
+               			'pageSize' => Yii::app()->params['postsPerPage'],
+               		),
+               		'criteria'   => $criteria,
+               	));
+			}
+		}
+		$this->render('search',array(
+			'model'		   => $model,
+			'dataProvider' => (isset($dataProvider)) ? $dataProvider : false,
+		));
+	}
 }

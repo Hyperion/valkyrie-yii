@@ -48,7 +48,7 @@ class CCharactersDataProvider extends CModelDataProvider
         $char->raceText  = $row['race'];
         
         $char->realm = WowDatabase::$name;
-        $char->location = $this->getLocation($char->map, $char->zone);
+        if(isset($char['map'])) $char->location = $this->getLocation($char->map, $char->zone);
         return $char;
     }
     
@@ -149,7 +149,7 @@ class CCharactersDataProvider extends CModelDataProvider
             '406' => "Stonetalon Mountains",
             '17' => "The Barrens",
             '25' => "WTF?");
-        $location = ($map == 0 or $map == 1) ? $zones[$zone] : $maps[$map];
+        @$location = ($map == 0 or $map == 1) ? $zones[$zone] : $maps[$map];
         return $location;
     }
 }
