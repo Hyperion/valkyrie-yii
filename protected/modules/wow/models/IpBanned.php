@@ -9,8 +9,7 @@ class IpBanned extends CActiveRecord
 
     public function getDbConnection()
     {
-        $db = new WowDatabase();
-        return $db->getDb('realmlist');
+        return Database::getConnection('realmlist');
     }
 
     public function tableName()

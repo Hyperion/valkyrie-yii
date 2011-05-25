@@ -1,10 +1,5 @@
 <?php
 
-// uncomment the following to define a path alias
-// Yii::setPathOfAlias('local','path/to/local-folder');
-
-// This is the main Web application configuration. Any writable
-// CWebApplication properties can be configured here.
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'Hyperion\'s Sandbox',
@@ -42,20 +37,15 @@ return array(
         'user'=>array(
             'class' => 'application.modules.user.components.WebUser',
             'allowAutoLogin'=>true,
-	    'loginUrl'=>'/user/auth',
+			'loginUrl'=>'/user/auth',
         ),
         'urlManager'=>array(
             'urlFormat'=>'path',
             'rules'=>array(
-                'doc'=>'/doc/default/index',
-                'doc/<section:\w+>/<language:\w+>/<page:[a-zA-Z0-9_\-\.]+>'=>'doc/default/view',
-                'doc/<section:\w+>/<page:[a-zA-Z0-9_\-\.]+>'=>'doc/default/view',
-                'admin/<_m:\w+>/<_c:\w+>/<_a:\w+>/*'=>'<_m>/admin/<_c>/<_a>',
-                'admin/<_c:\w+>/<_a:\w+>'=>'admin/<_c>/<_a>',
-                'admin'=>'admin/default/index',
                 '<_c:\w+>/<id:\d+>'=>'<_c>/view',
                 '<_m:\w+>/<_c:\w+>/<id:\d+>'=>'<_m>/<_c>/view',
                 'wow/<_c:character|guild>/<_a:\w+>/<realm>/<name:\w+>'=>'wow/<_c>/<_a>',
+                'wow/<_c:statistic>/<_a:\w+>/<realm>'=>'wow/<_c>/<_a>',
             ),
             'showScriptName' => false,
         ),
@@ -76,14 +66,6 @@ return array(
             'charset' => 'utf8',
             'autoConnect' => false,
         ),
-        'authManager' => array(
-            'class' => 'PhpAuthManager',
-            'defaultRoles' => array('guest'),
-        ),
-        'errorHandler'=>array(
-            // use 'site/error' action to display errors
-            'errorAction'=>'site/error',
-        ),
         'mailer' => array(
             'class' => 'application.extensions.mailer.EMailer',
             'pathViews' => 'application.views.email',
@@ -99,16 +81,14 @@ return array(
             'From' => 'valkyrie.wow@gmail.com',
             'FromName' => 'Administration of Valkyrie-wow',
         ),
-        'log'=>array(
-            'class'=>'CLogRouter',
-            'routes'=>array(
-                array(
-                    'class'=>'CWebLogRoute',
-                ),
-            ),
-        ),
         'cache'=>array(
             'class'=>'system.caching.CFileCache',
+        ),
+    ),
+    
+    'behaviors'=>array(
+        'runEnd'=>array(
+            'class'=>'application.components.WebApplicationEndBehavior',
         ),
     ),
 

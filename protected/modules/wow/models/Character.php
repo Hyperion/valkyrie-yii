@@ -1,96 +1,75 @@
 <?php
 
-class Character extends CModel
+class Character extends CActiveRecord
 {
-    public $guid = false;
-    public $account = false;
-    public $name = false;
-    public $class = false;
-    public $classText = false;
-    public $race = false;
-    public $raceText = false;
-    public $gender = false;
-    public $level = false;
-    public $money = false;
-    public $playerBytes = false;
-    public $playerBytes2 = false;
-    public $playerFlags = false;
-    public $zone = false;
-    public $map = false;
-    public $location = false;
-    
-    //private $_chosenTitle = false;
-    
-    private $_health = false;
-    
-    private $_power1 = false;
-    private $_power2 = false;
-    private $_power3 = false;
- 
-    public $guildId = false;
-    public $guildName = false;
-    
-    private $_equipmentCache = false;
-    
-    private $_realmName = false;
-    private $_realmID = false;
+	public $location = 'В разработке';
 
-    public $honor_standing = false;
-    public $honor_rank_points = false;
-    public $honor_highest_rank = false;
-    public $hk = false;
-    public $dk = false;
-    public $thisWeek_cp = false;
-    public $thisWeek_kills = false;
-    public $realm = false;
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
 
-    public function attributeNames()
+    public function getDbConnection()
+    {
+        return Database::getConnection(Database::$realm);
+    }
+
+    public function tableName()
+    {
+        return 'characters';
+    }
+
+	public function rules()
     {
         return array(
-            'guid',
-            'account',
-            'name',
-            'level',
-            'class',
-            'race',
-            'gender',
-            'money',
-            'faction',
-            'playerBytes',
-            'playerBytes2',
-            'zone',
-            'map',
-            'honor_standing',
-            'honor_highest_rank',
-            'honor_rank_points',
-            'honorRank',
-            'hk',
-            'dk',
-            'thisWeek_cp',
-            'thisWeek_kills',
-            'guildId',
-            'guildName',
+			array('name, level, class, race', 'safe', 'on'=>'search'),
+			array('name, level, class, race, honor_standing', 'safe', 'on'=>'pvp'),
         );
     }
+	
+	public function relations()
+	{
+		return array(
+			'honor' => array(self::HAS_ONE, 'CharacterHonorStatic','guid'),
+		);
+	}
 
-    public function rules()
+	public function search()
     {
-        return array(
-            array('guid, account, level, class, race, gender, money, faction, playerBytes, playerBytes2, zone, map, hk, dk, honorRank, honor_standing, honor_highest_rank, honor_rank_points,thisWeek_cp, thisWeek_kills, guildId', 'numerical', 'integerOnly'=>true),
-            array('name, guildName', 'length', 'max'=>12),
-            array('name', 'UniqueNameValidator', 'on'=>'update'),
-            array('name', 'safe', 'on'=>'search'),
-            array('name, level, class, race, zone, map', 'safe', 'on'=>'online'),
-            array('name, level, class, race, faction, honor_standing, honor_highest_rank, honor_rank_points', 'safe', 'on'=>'pvp'),
-        );
+        $criteria=new CDbCriteria;
+
+        $criteria->compare('name',$this->name,true);
+        $criteria->compare('race',$this->race);
+        $criteria->compare('class',$this->class);
+        $criteria->compare('level',$this->level);
+        $criteria->compare('online',$this->online);
+		$criteria->compare('honor_standing',$this->honor_standing);
+
+		if($this->scenario == 'pvp')
+		{
+			$criteria->compare('honor_standing','>0');
+			$criteria->order = 'honor_standing';
+			$criteria->with = 'honor';
+		}
+
+		if(isset($_GET['Character']['faction']))
+		{
+			switch($_GET['Character']['faction'])
+			{
+				case 0: $criteria->compare('race', array(1, 3 ,4, 7)); break;
+				case 1: $criteria->compare('race', array(2, 5 ,6, 8)); break;
+			}
+		}
+        
+		return new CActiveDataProvider(get_class($this), array(
+            'criteria'=>$criteria,
+			'pagination'    => array(
+                'pageSize'=> 40,
+            ),
+        ));
     }
 
-    public function getPrimaryKey()
-    {
-      return $this->guid;
-    }
-
-    public function getFaction()
+	public function getFaction()
     {
         switch($this->race)
         {
@@ -99,16 +78,6 @@ class Character extends CModel
         }
     }
 
-    public function setFaction()
-    {
-        return $this;
-    }
-
-    public function setHonorRank()
-    {
-        return $this;
-    }
-    
     public function getHonorRank()
     {
         $rank = 0;

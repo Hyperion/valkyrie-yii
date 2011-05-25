@@ -14,8 +14,7 @@ class AccountBanned extends CActiveRecord
 
     public function getDbConnection()
     {
-        $db = new WowDatabase();
-        return $db->getDb('realmlist');
+        return Database::getConnection('realmlist');
     }
 
     public function tableName()
@@ -74,19 +73,13 @@ class AccountBanned extends CActiveRecord
     
     public function getCharacters()
     {
-        $mapper = new CharacterMapper();
-        $db = new WowDatabase;
-        $realmInfo = $db->realmInfo;
+        $realmInfo = Database::model()->findAll('type = "characters"');
         $characters = array();
         
-        foreach($realmInfo as $server => $data)
-		{
-            if($server != 'realmlist')
-            {
-                WowDatabase::$name = $server;
-                $mapper->setSearchParams(array('account' => $this->id));
-                $characters[$server] = $mapper->search()->getData();
-            }
+        foreach($realmInfo as $server)
+        {
+             Database::$realm = $server->title;
+             $characters[$server->title] = Character::model()->findAll('account = ?', array($this->id));
         }
         
         return $characters;

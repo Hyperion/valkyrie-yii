@@ -1,6 +1,6 @@
 <?php
  return array(
- 'modules' => array('core','doc','wow','user','group',
+ 'modules' => array('doc','wow','user','group',
  'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'123',
