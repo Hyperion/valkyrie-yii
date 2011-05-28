@@ -91,6 +91,9 @@ return array(
                 array(
                     'class'=>'CFileLogRoute',
                 ),
+                array(
+                    'class'=>'CWebLogRoute',
+                ),
             ),
         ),
     ),

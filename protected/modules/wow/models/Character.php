@@ -35,6 +35,23 @@ class Character extends CActiveRecord
 		);
 	}
 
+	public function itemAlias($type, $code = NULL)
+	{
+		$_items = array(
+			'classes' => array(
+				
+			),
+			'races' => array(
+				
+			),
+		);
+						
+		if (isset($code))
+			return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+		else
+			return isset($_items[$type]) ? $_items[$type] : false;
+	}
+
 	public function search()
     {
         $criteria=new CDbCriteria;

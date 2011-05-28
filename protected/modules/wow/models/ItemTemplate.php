@@ -61,6 +61,16 @@ class ItemTemplate extends CActiveRecord
 
 	public $ItemStat = array();
 	public $Spells = array();
+	public $item_set = array();
+
+	public $races = false;
+	public $classes = false;
+	
+	public $skill;
+	public $faction;
+	public $spell;
+
+	public $sell_price;
 
 	public static function model($className=__CLASS__)
 	{
@@ -77,7 +87,8 @@ class ItemTemplate extends CActiveRecord
     	return Yii::app()->db_world;
     }
 
-   	public static function itemAlias($type, $code=NULL) {
+   	public static function itemAlias($type, $code=NULL)
+	{
 		$_items = array(
 			'bonding' => array(
 				'1' => 'Binds when picked up',
@@ -91,7 +102,6 @@ class ItemTemplate extends CActiveRecord
     			'5' => 'Intellect',
     			'6' => 'Spirit',
     			'7' => 'Stamina',
-    			'8' => 'Agility', // Not used?	
 			),
 			'invtype' => array(
     			'1' => 'Head',
@@ -132,25 +142,27 @@ class ItemTemplate extends CActiveRecord
 		else
 			return isset($_items[$type]) ? $_items[$type] : false;
 	}
- 
+	
     protected function afterFind()
     {
      	parent::afterFind();
 		$column = 'name_'.Yii::app()->language;
 		$connection = Yii::app()->db;
-		$command = $connection->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$this->displayid} LIMIT 1");
-		$this->icon = $command->queryScalar();
-
-		$command = $connection->createCommand("SELECT `subclass_$column` AS `subclass`, `class_$column` AS `class` FROM `wow_item_subclasses` WHERE `subclass` = {$this->subclass} AND `class` = {$this->class} LIMIT 1");
-		$itemsubclass = $command->queryRow();
-        $this->subclass_text = $itemsubclass['subclass'];
+		$this->icon = $connection
+			->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$this->displayid} LIMIT 1")
+			->queryScalar();
+		
+		$itemsubclass = $connection
+			->createCommand("SELECT `subclass_$column` AS `subclass`, `class_$column` AS `class` FROM `wow_item_subclasses` WHERE `subclass` = {$this->subclass} AND `class` = {$this->class} LIMIT 1")
+			->queryRow();
+		$this->subclass_text = $itemsubclass['subclass'];
         $this->class_text = $itemsubclass['class'];
 		
 		if($this->Map > 0)
-		{
-			$command = $connection->createCommand("SELECT $column FROM wow_maps WHERE id = {$this->Map} LIMIT 1");
-			$this->map_text = $command->queryScalar();
-		}
+			$this->map_text = $connection
+				->createCommand("SELECT $column FROM wow_maps WHERE id = {$this->Map} LIMIT 1")
+				->queryScalar();
+		
 		//Item stats
 		for($i = 0; $i < self::MAX_ITEM_PROTO_STATS; $i++)
 		{
@@ -164,11 +176,14 @@ class ItemTemplate extends CActiveRecord
         }
 
         // Item damages
-		$this->dps = 0;
-        for($i = 1; $i <= self::MAX_ITEM_PROTO_DAMAGES; $i++)
-			if(isset($this->{'dmg_type' . $i}))
-				$this->dps += round(($this->{'dmg_min'. $i} + $this->{'dmg_max'. $i}) * 500 / $this->delay, 1);
-		
+		if($this->class == self::ITEM_CLASS_WEAPON)
+		{
+			$this->dps = 0;
+        	for($i = 1; $i <= self::MAX_ITEM_PROTO_DAMAGES; $i++)
+				if(isset($this->{'dmg_type' . $i}))
+					$this->dps += round(($this->{'dmg_min'. $i} + $this->{'dmg_max'. $i}) * 500 / $this->delay, 1);
+		}
+
 		// Item spells
         for($i = 0; $i < self::MAX_ITEM_PROTO_SPELLS; $i++)
 		{
@@ -186,5 +201,103 @@ class ItemTemplate extends CActiveRecord
                 );
             }
         }
+
+		if($this->AllowableClass > 0)
+		{
+			$mask = $this->AllowableClass;
+        	$mask &= 0x5DF;
+        	if($mask == 0x5DF || $mask == 0)
+            	$this->classes = true;
+			
+			if(!$this->classes)
+			{
+				$command = $connection->createCommand("SELECT $column FROM wow_classes WHERE id = :id");  
+	        	$this->classes = array();
+    	    	$i = 1;
+        		while($mask)
+				{
+            		if($mask & 1)
+					{
+						$command->bindParam(':id', $i);
+	                	$this->classes[$i] = $command->queryScalar();
+					}
+        	    	$mask >>= 1;
+            		$i++;
+				}
+			}
+		}
+
+		if($this->AllowableRace > 0)
+		{
+			$mask = $this->AllowableRace;
+        	$mask &= 0xFF;
+        	if($mask == 0xFF || $mask == 0)
+            	$this->races = true;
+
+			if(!$this->races)
+			{
+				$command = $connection->createCommand("SELECT $column FROM wow_races WHERE id = :id");  
+        		$this->races = array();
+        		$i = 1;
+        		while($mask)
+				{
+            		if($mask & 1)
+					{
+						$command->bindParam(':id', $i);
+     		           	$this->races[$i] = $command->queryScalar();
+					}
+            		$mask >>= 1;
+            		$i++;
+				}
+			}
+		}
+		
+		if($this->RequiredSkill > 0)
+			$this->skill = $connection
+				->createCommand("SELECT $column FROM wow_skills WHERE id = {$this->RequiredSkill} LIMIT 1")
+				->queryScalar();
+		if($this->requiredspell > 0)
+			$this->spell = $connection
+				->createCommand("SELECT spellname_loc0 FROM wow_spells WHERE spellID = {$this->requiredspell} LIMIT 1")
+				->queryScalar();
+		if($this->RequiredReputationFaction > 0)
+			$this->faction = $connection
+				->createCommand("SELECT $column FROM wow_factions WHERE id = {$this->RequiredReputationFaction} LIMIT 1")
+				->queryScalar();
+
+		if($this->itemset > 0)
+		{
+			$item_set = $connection
+				->createCommand("SELECT * FROM wow_itemset WHERE id = {$this->itemset} LIMIT 1")
+				->queryRow();
+			$this->item_set['name'] = $item_set['name_loc0'];
+
+			$this->item_set['items'] = $this->dbConnection
+				->createCommand("SELECT entry, name FROM item_template WHERE itemset = {$this->itemset}")
+				->queryAll();
+
+			$this->item_set['count'] = count($this->item_set['items']);
+
+			for($i = 1; $i < 8; $i++)
+				if($item_set['spell' . $i] > 0)
+				{
+					$spell = Spell::model()->findByPk($item_set['spell' . $i]);
+					
+					$spell->formatInfo();
+					$this->item_set['bonuses'][$item_set['bonus'.$i]] = $spell;
+					unset($spell);
+				}
+			ksort($this->item_set['bonuses']);			
+		}
+
+		if($this->SellPrice > 0)
+		{
+			$amount = $this->SellPrice;
+			$this->sell_price['gold'] = floor($amount/(100*100));
+        	$amount = $amount-$this->sell_price['gold']*100*100;
+        	$this->sell_price['silver'] = floor($amount/100);
+        	$amount = $amount-$this->sell_price['silver']*100;
+        	$this->sell_price['copper'] = floor($amount);
+		}
     }
 }
