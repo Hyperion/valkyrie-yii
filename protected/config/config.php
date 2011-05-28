@@ -44,6 +44,7 @@ return array(
             'rules'=>array(
                 '<_c:\w+>/<id:\d+>'=>'<_c>/view',
                 '<_m:\w+>/<_c:\w+>/<id:\d+>'=>'<_m>/<_c>/view',
+                'doc/<section>/<page>'=>'doc/default/view',
                 'wow/<_c:character|guild>/<_a:\w+>/<realm>/<name:\w+>'=>'wow/<_c>/<_a>',
                 'wow/<_c:statistic>/<_a:\w+>/<realm>'=>'wow/<_c>/<_a>',
             ),
@@ -59,9 +60,9 @@ return array(
         ),
         'db_world'=>array(
             'class'=>'CDbConnection',
-            'connectionString'=>'mysql:host=valkyrie-wow.com;dbname=1121_world',
-            'username'=>'hyp_cp',
-            'password'=>'gHXOkMSOD6',
+            'connectionString'=>'mysql:host=localhost;dbname=world',
+            'username'=>'root',
+            'password'=>'59tyr4pn',
             'emulatePrepare'=> true,
             'charset' => 'utf8',
             'autoConnect' => false,
@@ -83,6 +84,14 @@ return array(
         ),
         'cache'=>array(
             'class'=>'system.caching.CFileCache',
+        ),
+         'log'=>array(
+            'class'=>'CLogRouter',
+            'routes'=>array(
+                array(
+                    'class'=>'CFileLogRoute',
+                ),
+            ),
         ),
     ),
     

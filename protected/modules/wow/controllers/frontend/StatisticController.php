@@ -12,9 +12,9 @@ class StatisticController extends Controller
     {
 		Database::$realm = (string) $realm;
 
-		$model = new Character('search');
+		$model = new Character('online');
 		$model->unsetAttributes();
-		$model->online = 1;
+		//$model->online = 1;
 
         if(isset($_GET['Character']))
 			$model->attributes = $_GET['Character'];

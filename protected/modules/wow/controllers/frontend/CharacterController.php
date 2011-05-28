@@ -8,6 +8,7 @@ class CharacterController extends Controller
     {
         Database::$realm = (string)$realm;
         $model = $this->loadModel((string)$name);
+		$model->loadAdditionalData();
         
         $this->render('simple',array(
             'model'=>$model,

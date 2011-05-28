@@ -11,13 +11,16 @@ $this->breadcrumbs=array(
     'dataProvider'=>$model->search(40),
     'enableSorting'=>true,
     'columns'=>array(
-        'name',
+        array(
+            'type'=>'raw',
+            'value'=>'CHtml::link($data->name,array("/wow/character/simple/", "realm" => Database::$realm, "name" => $data->name))',
+            'name'=>'name',
+        ),
         'level',
         array(
             'type'=>'raw',
             'value'=>'CHtml::image("/images/wow/class/$data->class.gif","Test")',
             'name'=>'class',
-            'sortable'=>true,
             'filter' => array(
                 1 => 'Warrior',
                 2 => 'Paladin', 
@@ -34,7 +37,6 @@ $this->breadcrumbs=array(
             'type'=>'raw',
             'value'=>'CHtml::image("/images/wow/race/$data->race-$data->gender.gif","Test")',
             'name'=>'race',
-            'sortable'=>true,
             'filter' => array(
                 1 => 'Human',
                 2 => 'Orc', 

@@ -2,7 +2,8 @@
 
 class Character extends CActiveRecord
 {
-	public $location = 'В разработке';
+	public $class_text = false;
+	public $race_text = false;
 
     public static function model($className=__CLASS__)
     {
@@ -22,7 +23,7 @@ class Character extends CActiveRecord
 	public function rules()
     {
         return array(
-			array('name, level, class, race', 'safe', 'on'=>'search'),
+			array('name, level, class, race', 'safe', 'on'=>'online'),
 			array('name, level, class, race, honor_standing', 'safe', 'on'=>'pvp'),
         );
     }
@@ -48,7 +49,6 @@ class Character extends CActiveRecord
 		if($this->scenario == 'pvp')
 		{
 			$criteria->compare('honor_standing','>0');
-			$criteria->order = 'honor_standing';
 			$criteria->with = 'honor';
 		}
 
@@ -92,4 +92,24 @@ class Character extends CActiveRecord
 
         return $rank;
     }
+
+	public function loadAdditionalData()
+	{
+		$column = 'name_'.Yii::app()->language;
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand()
+            ->select("r.$column AS race, c.$column AS class")
+            ->from('wow_races r, wow_classes c')
+			->where('r.id = ? AND c.id = ?', array($this->race, $this->class))
+			->limit(1);
+		$row = $command->queryRow();
+		$this->race_text = $row['race'];
+		$this->class_text = $row['class'];
+	}
+
+	protected function afterFind()
+	{
+		parent::afterFind();
+		$this->equipmentCache = explode(' ', $this->equipmentCache);
+	}
 }

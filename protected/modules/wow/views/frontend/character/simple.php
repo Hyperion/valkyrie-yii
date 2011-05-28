@@ -11,11 +11,8 @@ $this->menu=array(
 );
 ?>
 
-<div class="profile-info-anchor">
-    <div class="profile-info">
-    <div class="name">
-    	<?=CHtml::link($model['name'], array('/wow/character/simple', 'realm' => Database::$realm, 'name' => $model['name']))?></div>
-        <span class="realm tip" id="profile-info-realm" data-battlegroup=""><?=CHtml::encode(Database::$realm)?></span>
-    </div>
-    </div>
+<div>
+	<?=CHtml::link($model['name'], array('/wow/character/simple', 'realm' => Database::$realm, 'name' => $model['name']))?>
 </div>
+<div><?=CHtml::encode(Database::$realm)?></div>
+<div>Level <?=$model['level']?> <?=$model['race_text']?> <?=$model['class_text']?></div>

@@ -11,8 +11,12 @@ $this->breadcrumbs=array(
     'dataProvider'=>$model->search(),
     'enableSorting'=>true,
     'columns'=>array(
-        'name',
-        'level',
+	    array(
+            'type'=>'raw',
+            'value'=>'CHtml::link($data->name,array("/wow/character/simple/", "realm" => Database::$realm, "name" => $data->name))',
+            'name'=>'name',
+        ),
+		'level',
         array(
             'type'=>'raw',
             'value'=>'CHtml::image("/images/wow/class/$data->class.gif","Test")',
@@ -47,9 +51,7 @@ $this->breadcrumbs=array(
                 ),
         ),
         array(
-            'type'=>'raw',
-            'name'=>'location',
-            'filter'=>false,
+            'class'=>'CLocationColumn',
         ),
     ),
 )); ?>
