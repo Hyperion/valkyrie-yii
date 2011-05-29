@@ -4,6 +4,7 @@ return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'Hyperion\'s Sandbox',
     'language' => 'ru',
+    'theme' => 'wow',
 
     // preloading 'log' component
     'preload'=>array('log'),
@@ -57,6 +58,7 @@ return array(
             'password' => '59tyr4pn',
             'charset' => 'utf8',
             'tablePrefix'=>'',
+            'schemaCachingDuration'=>3600,
         ),
         'db_world'=>array(
             'class'=>'CDbConnection',
@@ -66,6 +68,7 @@ return array(
             'emulatePrepare'=> true,
             'charset' => 'utf8',
             'autoConnect' => false,
+            'schemaCachingDuration'=>3600,
         ),
         'mailer' => array(
             'class' => 'application.extensions.mailer.EMailer',
@@ -85,7 +88,7 @@ return array(
         'cache'=>array(
             'class'=>'system.caching.CFileCache',
         ),
-         'log'=>array(
+        'log'=>array(
             'class'=>'CLogRouter',
             'routes'=>array(
                 array(

@@ -197,26 +197,26 @@ class Spell extends CActiveRecord
             {
                 if ($match[3])
                 {
-                    $effectBasePoints = $this->dbConnection->createCommand("SELECT effect{$match[5]}BasePoints FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar();
+                    $value = $this->dbConnection->createCommand("SELECT effect{$match[5]}BasePoints FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar();
                     if ($match[1] == "/")
-                        $effectBasePoints = abs(($effectBasePoints + 1) / $match[2]);
+                        $value = abs(($value + 1) / $match[2]);
                     else if ($match[1] == "*")
-                        $effectBasePoints = abs(($effectBasePoints + 1) * $match[2]);
+                        $value = abs(($value + 1) * $match[2]);
                 }
                 else
                 {
                     if ($match[1] == "/")
-                        $effectBasePoints = abs(($this->{'effect'.$match[5].'BasePoints'} + 1) / $match[2]);
+                        $value = abs(($this->{'effect'.$match[5].'BasePoints'} + 1) / $match[2]);
                     else if ($match[1] == "*")
-                        $effectBasePoints = abs(($this->{'effect'.$match[5].'BasePoints'} + 1) * $match[2]);
+                        $value = abs(($this->{'effect'.$match[5].'BasePoints'} + 1) * $match[2]);
                 }
             }
             else if ($match[3])
-                $effectBasePoints = abs(1 + $this->dbConnection->createCommand("SELECT effect{$match[5]}BasePoints FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar());
+                $value = abs(1 + $this->dbConnection->createCommand("SELECT effect{$match[5]}BasePoints FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar());
             else
-                $effectBasePoints = abs($this->{'effect'.$match[5].'BasePoints'} + 1);
-
-            $this->info = str_replace($match[0], $effectBasePoints, $this->info);
+                $value = abs($this->{'effect'.$match[5].'BasePoints'} + 1);
+            
+            @$this->info = str_replace($match[0], $value, $this->info);
         }
         
         private function RegExpO($match)

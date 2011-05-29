@@ -1,0 +1,9 @@
+/* Filters area */
+.roster-filters .selection { float: left; margin-right: 10px; }
+#professions-filters, #roster-filters {float: left }
+.roster-filters #activate-reset { margin-right: 15px;}
+
+/* Tables (Professions)*/
+.table-bar .icon-frame {left: -26px; top: -2px;}
+
+

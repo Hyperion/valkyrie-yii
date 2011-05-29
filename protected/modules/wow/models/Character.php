@@ -2,8 +2,33 @@
 
 class Character extends CActiveRecord
 {
+    /* Equipment Slots */
+    const EQUIPMENT_SLOT_START = 0;
+    const EQUIPMENT_SLOT_HEAD = 0;
+    const EQUIPMENT_SLOT_NECK = 1;
+    const EQUIPMENT_SLOT_SHOULDERS = 2;
+    const EQUIPMENT_SLOT_BODY = 3;
+    const EQUIPMENT_SLOT_CHEST = 4;
+    const EQUIPMENT_SLOT_WAIST = 5;
+    const EQUIPMENT_SLOT_LEGS = 6;
+    const EQUIPMENT_SLOT_FEET = 7;
+    const EQUIPMENT_SLOT_WRISTS = 8;
+    const EQUIPMENT_SLOT_HANDS = 9;
+    const EQUIPMENT_SLOT_FINGER1 = 10;
+    const EQUIPMENT_SLOT_FINGER2 = 11;
+    const EQUIPMENT_SLOT_TRINKET1 = 12;
+    const EQUIPMENT_SLOT_TRINKET2 = 13;
+    const EQUIPMENT_SLOT_BACK = 14;
+    const EQUIPMENT_SLOT_MAINHAND = 15;
+    const EQUIPMENT_SLOT_OFFHAND = 16;
+    const EQUIPMENT_SLOT_RANGED = 17;
+    const EQUIPMENT_SLOT_TABARD = 18;
+    const EQUIPMENT_SLOT_END = 19;
+
 	public $class_text = false;
 	public $race_text = false;
+
+	private $_items = array();
 
     public static function model($className=__CLASS__)
     {
@@ -128,5 +153,38 @@ class Character extends CActiveRecord
 	{
 		parent::afterFind();
 		$this->equipmentCache = explode(' ', $this->equipmentCache);
+	}
+	
+	public function getItems()
+	{
+		if(!$this->_items)
+			for($i = 0; $i < count($this->equipmentCache); $i += 2)
+				$this->_items[] = ItemTemplate::model()->findByPk($this->equipmentCache[$i]);
+		
+		return $this->_items;
+	}
+	
+	public function getEquippedItemInfo($slot)
+	{
+		if(!$this->items[$slot])
+			return false;
+
+		$item_data = array(
+			'item_id'    => $this->items[$slot]->entry,
+		        'name'       => $this->items[$slot]->name,
+		        'guid'       => 0,
+		        'quality'    => $this->items[$slot]->Quality,
+		        'item_level' => $this->items[$slot]->ItemLevel,
+		        'icon'       => $this->items[$slot]->icon,
+		        'slot_id'    => $slot,
+		        'data-item'  => '',
+		        /*'enchid'     => $item->GetEnchantmentId(),
+		        'g0'         => $item->GetSocketInfo(1),
+		        'g1'         => $item->GetSocketInfo(2),
+		        'g2'         => $item->GetSocketInfo(3),
+		        'can_ench'   => !in_array($item->GetSlot(), array(INV_SHIRT, INV_RANGED_RELIC, INV_TABARD, INV_TRINKET_1, INV_TRINKET_2, INV_TYPE_NECK, INV_OFF_HAND, INV_RING_1, INV_RING_2, INV_NECK, INV_BELT))*/
+        	);
+        	
+		return $item_data;
 	}
 }

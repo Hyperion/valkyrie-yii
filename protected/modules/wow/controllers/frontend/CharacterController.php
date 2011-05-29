@@ -2,10 +2,12 @@
 
 class CharacterController extends Controller
 {
-    public $layout='//layouts/column2';
+    public $layout='//layouts/profile_wrapper';
+    private $_model;
 
     public function actionSimple($realm, $name)
     {
+    	
         Database::$realm = (string)$realm;
         $model = $this->loadModel((string)$name);
 		$model->loadAdditionalData();
@@ -17,10 +19,9 @@ class CharacterController extends Controller
     
     public function loadModel($name)
     {
-        $model = Character::model()->find('name = ?', array($name));
-        if($model===null)
+        $this->_model = Character::model()->find('name = ?', array($name));
+        if($this->_model===null)
             throw new CHttpException(404,'The requested page does not exist.');
-        return $model;
+        return $this->_model;
     }
-
 }

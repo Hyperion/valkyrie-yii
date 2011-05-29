@@ -53,24 +53,22 @@ class ItemTemplate extends CActiveRecord
     const ITEM_FLAGS_MILLABLE = 0x20000000;
     const ITEM_FLAGS_BOP_TRADEABLE = 0x80000000;
 
-	public $icon;
-	public $class_text;
-	public $subclass_text;
-	public $dps;
-	public $map_text;
+	private $_icon;
+	private $_subclass_text;
+	private $_dps;
+	private $_map_text;
 
-	public $ItemStat = array();
-	public $Spells = array();
-	public $item_set = array();
+	private $_stats = array();
+	private $_spells = array();
+	private $_set = array();
 
-	public $races = false;
-	public $classes = false;
-	
-	public $skill;
-	public $faction;
-	public $spell;
+	private $_required_races = false;
+	private $_required_classes = false;
+	private $_required_skill;
+	private $_required_faction;
+	private $_required_spell;
 
-	public $sell_price;
+	private $_sell_price;
 
 	public static function model($className=__CLASS__)
 	{
@@ -143,83 +141,124 @@ class ItemTemplate extends CActiveRecord
 			return isset($_items[$type]) ? $_items[$type] : false;
 	}
 	
+	public function getIcon()
+	{
+		return $this->_icon;
+	}
     protected function afterFind()
     {
      	parent::afterFind();
 		$column = 'name_'.Yii::app()->language;
 		$connection = Yii::app()->db;
-		$this->icon = $connection
+		$this->_icon = $connection
 			->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$this->displayid} LIMIT 1")
 			->queryScalar();
-		
-		$itemsubclass = $connection
-			->createCommand("SELECT `subclass_$column` AS `subclass`, `class_$column` AS `class` FROM `wow_item_subclasses` WHERE `subclass` = {$this->subclass} AND `class` = {$this->class} LIMIT 1")
-			->queryRow();
-		$this->subclass_text = $itemsubclass['subclass'];
-        $this->class_text = $itemsubclass['class'];
-		
-		if($this->Map > 0)
-			$this->map_text = $connection
-				->createCommand("SELECT $column FROM wow_maps WHERE id = {$this->Map} LIMIT 1")
-				->queryScalar();
-		
-		//Item stats
-		for($i = 0; $i < self::MAX_ITEM_PROTO_STATS; $i++)
-		{
-            $key = $i+1;
-            if(isset($this->{'stat_type' . $key}))
-			{
-                $this->ItemStat[$i] = array(
-                    'type'  => $this->{'stat_type'  . $key},
-                    'value' => $this->{'stat_value' . $key});
-            }
-        }
+	}
 
-        // Item damages
-		if($this->class == self::ITEM_CLASS_WEAPON)
+	public function getSubclass_text()
+	{
+		if(!$this->_subclass_text)
 		{
-			$this->dps = 0;
-        	for($i = 1; $i <= self::MAX_ITEM_PROTO_DAMAGES; $i++)
-				if(isset($this->{'dmg_type' . $i}))
-					$this->dps += round(($this->{'dmg_min'. $i} + $this->{'dmg_max'. $i}) * 500 / $this->delay, 1);
+			$column = 'name_'.Yii::app()->language;
+			$this->_subclass_text = Yii::app()->db 
+				->createCommand("SELECT `subclass_$column` AS `subclass`, `class_$column` AS `class` FROM `wow_item_subclasses` WHERE `subclass` = {$this->subclass} AND `class` = {$this->class} LIMIT 1")
+				->queryRow();
 		}
 
-		// Item spells
-        for($i = 0; $i < self::MAX_ITEM_PROTO_SPELLS; $i++)
-		{
-            $key = $i+1;
-            if(isset($this->{'spellid_' . $key}))
-			{
-                $this->Spells[$i] = array(
-                    'spellid'          => $this->{'spellid_'               . $key}, 
-                    'trigger'          => $this->{'spelltrigger_'          . $key}, 
-                    'charges'          => $this->{'spellcharges_'          . $key}, 
-                    'ppmRate'          => $this->{'spellppmRate_'          . $key},
-                    'cooldown'         => $this->{'spellcooldown_'         . $key},
-                    'category'         => $this->{'spellcategory_'         . $key},
-                    'categorycooldown' => $this->{'spellcategorycooldown_' . $key}
-                );
-            }
-        }
+		return $this->_subclass_text;
+	}
 
-		if($this->AllowableClass > 0)
+	public function getMap_text()
+	{
+		if(!$this->_map_text)
+		{
+			$column = 'name_'.Yii::app()->language;
+			$this->_map_text = Yii::app()->db
+				->createCommand("SELECT $column FROM wow_maps WHERE id = {$this->Map} LIMIT 1")
+				->queryScalar();
+		}
+
+		return $this->_map_text;
+	}	
+
+	public function getStats()
+	{
+		if(!$this->_stats)
+			for($i = 0; $i < self::MAX_ITEM_PROTO_STATS; $i++)
+			{
+        	    $key = $i+1;
+            	if(isset($this->{'stat_type' . $key}))
+				{
+                	$this->_stats[$i] = array(
+                    	'type'  => $this->{'stat_type'  . $key},
+                    	'value' => $this->{'stat_value' . $key});
+            	}
+        	}
+
+		return $this->_stats;
+	}
+
+	public function getDps()
+	{
+		if(!$this->_dps AND $this->class == self::ITEM_CLASS_WEAPON)
+		{
+			$this->_dps = 0;
+        	for($i = 1; $i <= self::MAX_ITEM_PROTO_DAMAGES; $i++)
+				if(isset($this->{'dmg_type' . $i}))
+					$this->_dps += round(($this->{'dmg_min'. $i} + $this->{'dmg_max'. $i}) * 500 / $this->delay, 1);
+		}
+
+		return $this->_dps;
+	}
+
+	public function getSpells()
+	{
+		if(!$this->_spells)
+        	for($i = 0; $i < self::MAX_ITEM_PROTO_SPELLS; $i++)
+			{
+            	$key = $i+1;
+            	if($this->{'spellid_' . $key} > 0)
+				{
+					$spell = Spell::model()->findByPk($this->{'spellid_'.$key});
+					$spell->formatInfo();
+                	$this->_spells[$i] = array(
+                    	'spellid'          => $this->{'spellid_'               . $key}, 
+                    	'trigger'          => $this->{'spelltrigger_'          . $key}, 
+                    	'charges'          => $this->{'spellcharges_'          . $key}, 
+                    	'ppmRate'          => $this->{'spellppmRate_'          . $key},
+                    	'cooldown'         => $this->{'spellcooldown_'         . $key},
+                    	'category'         => $this->{'spellcategory_'         . $key},
+                    	'categorycooldown' => $this->{'spellcategorycooldown_' . $key},
+						'description'	   => $spell->info,
+                	);
+					unset($spell);
+            	}
+        	}
+
+		return $this->_spells;
+	}
+
+	public function getRequired_classes()
+	{
+		if(!$this->_required_classes)
 		{
 			$mask = $this->AllowableClass;
         	$mask &= 0x5DF;
         	if($mask == 0x5DF || $mask == 0)
-            	$this->classes = true;
+            	$this->_required_classes = true;
 			
-			if(!$this->classes)
+			if(!$this->_required_classes)
 			{
-				$command = $connection->createCommand("SELECT $column FROM wow_classes WHERE id = :id");  
-	        	$this->classes = array();
+				$column = 'name_'.Yii::app()->language;
+				$command = Yii::app()->db->createCommand("SELECT $column FROM wow_classes WHERE id = :id");  
+	        	$this->_required_classes = array();
     	    	$i = 1;
         		while($mask)
 				{
             		if($mask & 1)
 					{
 						$command->bindParam(':id', $i);
-	                	$this->classes[$i] = $command->queryScalar();
+	                	$this->_required_classes[$i] = $command->queryScalar();
 					}
         	    	$mask >>= 1;
             		$i++;
@@ -227,17 +266,23 @@ class ItemTemplate extends CActiveRecord
 			}
 		}
 
-		if($this->AllowableRace > 0)
+		return $this->_required_classes;
+	}
+
+	public function getRequired_races()
+	{
+		if(!$this->_required_races)
 		{
 			$mask = $this->AllowableRace;
         	$mask &= 0xFF;
         	if($mask == 0xFF || $mask == 0)
-            	$this->races = true;
+            	$this->_required_races = true;
 
-			if(!$this->races)
+			if(!$this->_required_races)
 			{
-				$command = $connection->createCommand("SELECT $column FROM wow_races WHERE id = :id");  
-        		$this->races = array();
+				$column = 'name_'.Yii::app()->language;
+				$command = Yii::app()->db->createCommand("SELECT $column FROM wow_races WHERE id = :id");  
+        		$this->_required_races = array();
         		$i = 1;
         		while($mask)
 				{
@@ -251,32 +296,62 @@ class ItemTemplate extends CActiveRecord
 				}
 			}
 		}
-		
-		if($this->RequiredSkill > 0)
-			$this->skill = $connection
+
+		return $this->_required_races;
+	}
+	
+	public function getRequired_skill()
+	{	
+		if(!$this->_required_skill)
+		{
+			$column = 'name_'.Yii::app()->language;
+			$this->_required_skill = Yii::app()->db
 				->createCommand("SELECT $column FROM wow_skills WHERE id = {$this->RequiredSkill} LIMIT 1")
 				->queryScalar();
-		if($this->requiredspell > 0)
-			$this->spell = $connection
+		}
+
+		return $this->_required_skill;
+	}
+
+	public function getRequired_spell()
+	{	
+		if(!$this->_required_spell)
+		{
+			$this->_required_spell = Yii::app()->db
 				->createCommand("SELECT spellname_loc0 FROM wow_spells WHERE spellID = {$this->requiredspell} LIMIT 1")
 				->queryScalar();
-		if($this->RequiredReputationFaction > 0)
-			$this->faction = $connection
+		}
+
+		return $this->_required_spell;
+	}
+
+	public function getRequired_faction()
+	{	
+		if(!$this->_required_faction)
+		{
+			$column = 'name_'.Yii::app()->language;
+			$this->_required_faction = Yii::app()->db
 				->createCommand("SELECT $column FROM wow_factions WHERE id = {$this->RequiredReputationFaction} LIMIT 1")
 				->queryScalar();
+		}
 
-		if($this->itemset > 0)
+		return $this->_required_faction;
+	}
+
+	public function getSet()
+	{
+		if(!$this->_set)
 		{
-			$item_set = $connection
+			$item_set = Yii::app()->db
 				->createCommand("SELECT * FROM wow_itemset WHERE id = {$this->itemset} LIMIT 1")
 				->queryRow();
-			$this->item_set['name'] = $item_set['name_loc0'];
+			$this->_set['name'] = $item_set['name_loc0'];
 
-			$this->item_set['items'] = $this->dbConnection
+			$this->_set['items'] = $this->dbConnection
 				->createCommand("SELECT entry, name FROM item_template WHERE itemset = {$this->itemset}")
 				->queryAll();
 
-			$this->item_set['count'] = count($this->item_set['items']);
+			$this->_set['count'] = count($this->_set['items']);
 
 			for($i = 1; $i < 8; $i++)
 				if($item_set['spell' . $i] > 0)
@@ -284,20 +359,27 @@ class ItemTemplate extends CActiveRecord
 					$spell = Spell::model()->findByPk($item_set['spell' . $i]);
 					
 					$spell->formatInfo();
-					$this->item_set['bonuses'][$item_set['bonus'.$i]] = $spell;
+					$this->_set['bonuses'][$item_set['bonus'.$i]] = $spell;
 					unset($spell);
 				}
-			ksort($this->item_set['bonuses']);			
+			ksort($this->_set['bonuses']);			
 		}
+		
+		return $this->_set;
+	}
 
-		if($this->SellPrice > 0)
+	public function getSell_price()
+	{
+		if(!$this->_sell_price)
 		{
 			$amount = $this->SellPrice;
-			$this->sell_price['gold'] = floor($amount/(100*100));
-        	$amount = $amount-$this->sell_price['gold']*100*100;
-        	$this->sell_price['silver'] = floor($amount/100);
-        	$amount = $amount-$this->sell_price['silver']*100;
-        	$this->sell_price['copper'] = floor($amount);
+			$this->_sell_price['gold'] = floor($amount/(100*100));
+        	$amount = $amount-$this->_sell_price['gold']*100*100;
+        	$this->_sell_price['silver'] = floor($amount/100);
+        	$amount = $amount-$this->_sell_price['silver']*100;
+        	$this->_sell_price['copper'] = floor($amount);
 		}
+		
+		return $this->_sell_price;
     }
 }

@@ -1,0 +1,18 @@
+/* overrides */
+.profile-section { padding: 0; }
+.table dl { border-left: 1px solid #2a150d; }
+
+/* search box */
+#search-error { text-align: center; width: 500px; margin: 0 auto; position: relative; top: 140px; border: 1px solid red; display: none; }
+
+dd strong { color: #FEF092; font-weight: normal; }
+dd .empty { color: #9d9d9d; }
+
+.search-container { display:none; margin-top:-37px; position:absolute; right: 21px; }
+.search-container .input { color: #a7a7a7; width: 180px; padding-right: 40px}
+.search-container .active { color: #000;}
+#search-container.searching #symbol-cross { display: block;}
+#search-container.searching #symbol-mag { display: none;}
+.search-container #symbol-mag { background:url("../../images/icons/mag-glass-input.png") no-repeat scroll center center transparent; border:medium none; height:33px; outline:medium none; position:absolute; right:-5px; top:-3px; width:33px; z-index:7;}
+.search-container #symbol-cross { background:url("../../images/icons/cross.png") no-repeat scroll center center transparent; border:medium none; height:33px; outline:medium none; position:absolute; right:-6px; top:-4px; width:33px; z-index:7; display: none; cursor: pointer}
+
