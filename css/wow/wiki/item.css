@@ -1,5 +1,5 @@
-body.item-index #content .content-top { background: url("../../images/wiki/profession/index-bg.jpg") 0 0 no-repeat; }
-#content .content-top { background: url("../../images/wiki/item/page-bg.jpg") 0 0 no-repeat; }
+body.item-index #content .content-top { background: url("/images/wow/wiki/profession/index-bg.jpg") 0 0 no-repeat; }
+#content .content-top { background: url("/images/wow/wiki/item/page-bg.jpg") 0 0 no-repeat; }
 #wiki.wiki-item { padding-bottom: 0; }
 
 .wiki .info .title { margin-bottom: 15px; }

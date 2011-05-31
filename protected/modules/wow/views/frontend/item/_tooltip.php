@@ -25,6 +25,8 @@
         <li>+<?=($model->dmg_min1 + $model->dmg_max1) / 2?> damage per second</li>
 		<?php endif; if($model->block): ?>
 		<li><?=$model->block?> Block</li>
+        <?php endif; if($model->armor): ?>
+		<li><?=$model->armor?> Armor</li>
 		<?php endif; if($model->fire_res): ?>
 		<li>+<?=$model->fire_res?> Fire Resistance</li>
         <?php endif; if($model->nature_res): ?>
@@ -35,8 +37,6 @@
 		<li>+<?=$model->shadow_res?> Shadow Resistance</li>
         <?php endif; if($model->arcane_res): ?>
 		<li>+<?=$model->arcane_res?> Arcane Resistance</li>
-        <?php endif; if($model->armor): ?>
-		<li><?=$model->armor?> Armor</li>
 		<?php endif; foreach($model->stats as $stat):
             if($stat['type'] >= 3 && $stat['type'] <= 8): ?>
 		<li id="stat-<?=$stat['type']?>">+<span><?=$stat['value']?></span> <?=$model::itemAlias('stat', $stat['type'])?></li>

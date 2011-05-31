@@ -289,7 +289,7 @@ class ItemTemplate extends CActiveRecord
             		if($mask & 1)
 					{
 						$command->bindParam(':id', $i);
-     		           	$this->races[$i] = $command->queryScalar();
+     		           	$this->_required_races[$i] = $command->queryScalar();
 					}
             		$mask >>= 1;
             		$i++;

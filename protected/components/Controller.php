@@ -1,21 +1,20 @@
 <?php
-/**
- * Controller is the customized base controller class.
- * All controller classes for this application should extend from this base class.
- */
+
 class Controller extends CController
 {
-	public $layout='//layouts/column1';
-	public $menu=array();
-	public $breadcrumbs=array();
-    public $mainmenu=array();
-
-	private $_model;
+    protected $_model;
+    protected $_cs;
+    protected $body_class;
+    
+    public $breadcrumbs;
 
     public function init()
     {
-        $menu = new Menu;
-        $this->mainmenu = $menu->getData('mainmenu');
+    	$this->_cs = Yii::app()->clientScript;
+    	$this->_cs->registerPackage('jquery');
+    	$this->_cs->registerScriptFile('/js/local-common/core.js');
+    	$this->_cs->registerScriptFile('/js/local-common/tooltip.js');
+    	$this->_cs->registerScriptFile('/js/wow/wow.js', CClientScript::POS_END);
     }
 
     protected function performAjaxValidation($model, $form) {
@@ -25,8 +24,8 @@ class Controller extends CController
         }
     }
 
-	public function loadModel($model = false)
-	{
+    public function loadModel($model = false)
+    {
         if(!$model)
             $model = str_replace('Controller', '', get_class($this));
 

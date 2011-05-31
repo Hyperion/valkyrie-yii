@@ -16,7 +16,7 @@ class Spell extends CActiveRecord
 
 	public function formatInfo()
 	{
-            $regExp = "/\\$+([\/,*])?([0-9]*);?([d+\;(\d*)?([1-9]*)([A-z])([1-3]*)(([A-z, ]*)\:([A-z, ]*)\;)?/";
+            $regExp = "/\\$+(?:([\/,*])?([0-9]*);)?([d+\;(\d*)?([1-9]*)([A-z])([1-3]*)(([A-z, ]*)\:([A-z, ]*)\;)?/";
             
             $this->info = $this->tooltip_loc0;
             
@@ -216,7 +216,7 @@ class Spell extends CActiveRecord
             else
                 $value = abs($this->{'effect'.$match[5].'BasePoints'} + 1);
             
-            @$this->info = str_replace($match[0], $value, $this->info);
+            $this->info = str_replace($match[0], $value, $this->info);
         }
         
         private function RegExpO($match)
@@ -256,7 +256,7 @@ class Spell extends CActiveRecord
             {
                 if ($match[3])
                 {
-                    $duration = $this->dbConnection->createCommand("SELECT durationID FROM wow_spells WHERE spellID = {$match[3]}")->query();
+                    $duration = $this->dbConnection->createCommand("SELECT durationID FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar();
                     if ($match[1] == "/")
                         $duration = $this->GetDuration($duration) / $match[2];
                     else if ($match[1] == "*")
@@ -272,8 +272,8 @@ class Spell extends CActiveRecord
             }
             else if ($match[3])
             {
-                $duration = $this->dbConnection->createCommand("SELECT durationID FROM wow_spells WHERE spellID = {$match[3]}")->query();
-                $duration = $this->GetDuration($duration);
+                $durationId = $this->dbConnection->createCommand("SELECT durationID FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar();
+                $duration = $this->GetDuration($durationId);
             }
             else
                 $duration = $this->GetDuration($this->durationID);
@@ -303,7 +303,7 @@ class Spell extends CActiveRecord
             }
             else if ($match[3])
             {
-                $radius = $this->dbConnection->createCommand("SELECT effect{$match[5]}radius FROM wow_spells WHERE spellID = {$match[3]}")->queryRow();
+                $radius = $this->dbConnection->createCommand("SELECT effect{$match[5]}radius FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar();
                 $radius = $this->GetRadius($radius, $match[5]);
             }
             else
