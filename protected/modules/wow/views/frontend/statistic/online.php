@@ -11,12 +11,12 @@ $this->breadcrumbs=array(
     'dataProvider'=>$model->search(),
     'enableSorting'=>true,
     'columns'=>array(
-	    array(
+        array(
             'type'=>'raw',
             'value'=>'CHtml::link($data->name,array("/wow/character/simple/", "realm" => Database::$realm, "name" => $data->name))',
             'name'=>'name',
         ),
-		'level',
+        'level',
         array(
             'type'=>'raw',
             'value'=>'CHtml::image("/images/wow/icons/class/$data->class.gif","Test")',

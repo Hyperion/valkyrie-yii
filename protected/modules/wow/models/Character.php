@@ -378,17 +378,27 @@ class Character extends CActiveRecord
                 ->createCommand("SELECT spell FROM character_spell WHERE guid = {$this->guid} AND disabled = 0")
                 ->queryColumn();
             $spells = implode(', ',$spells);
-            $tTalents = Yii::app()->db
-                ->createCommand("SELECT count(*) * 5 as c, tab FROM `wow_talent` WHERE rank5 IN ($spells) GROUP BY tab
-                    UNION
-                    SELECT count(*) * 4, tab FROM `wow_talent` WHERE rank4 IN ($spells) GROUP BY tab
-                    UNION
-                    SELECT count(*) * 3, tab FROM `wow_talent` WHERE rank3 IN ($spells) GROUP BY tab
-                    UNION
-                    SELECT count(*) * 2, tab FROM `wow_talent` WHERE rank2 IN ($spells) GROUP BY tab
-                    UNION
-                    SELECT count(*), tab  FROM `wow_talent` WHERE rank1 IN ($spells) GROUP BY tab")
-                ->queryAll();
+            if($spells)
+                $tTalents = Yii::app()->db
+                    ->createCommand("SELECT count(*) * 5 as c, tab FROM wow_talent WHERE rank5 IN ($spells) GROUP BY tab
+                        UNION
+                        SELECT count(*) * 4, tab FROM `wow_talent` WHERE rank4 IN ($spells) GROUP BY tab
+                        UNION
+                        SELECT count(*) * 3, tab FROM `wow_talent` WHERE rank3 IN ($spells) GROUP BY tab
+                        UNION
+                        SELECT count(*) * 2, tab FROM `wow_talent` WHERE rank2 IN ($spells) GROUP BY tab
+                        UNION
+                        SELECT count(*), tab  FROM `wow_talent` WHERE rank1 IN ($spells) GROUP BY tab")
+                    ->queryAll();
+            else
+            {
+                $this->_talents_data['treeOne'] = 0;
+                $this->_talents_data['treeTwo'] = 0;
+                $this->_talents_data['treeThree'] = 0;
+                $this->_talents_data['name'] = 'No Talents';
+                $this->_talents_data['icon'] = 'inv_misc_questionmark';
+                return $this->_talents_data;
+            }
             $talentTab = $this->getTalentTabForClass();
             $talents = array();
             foreach($talentTab as $tab)
@@ -414,7 +424,7 @@ class Character extends CActiveRecord
             }
         }
 
-        return $this->_talents_data;    
+        return $this->_talents_data;
     }
     
     private function getTalentTabForClass()

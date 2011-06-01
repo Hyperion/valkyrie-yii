@@ -8,12 +8,14 @@
         <?=$model->race_text?>-<?=$model->class_text?> (<?=$model->talentData['name']?>) <?=$model->level?> ур.
     </div> 
     <div class="color-tooltip-<?=Character::itemAlias('factions', $this->_model->faction)?>"><?=Database::$realm?></div> 
-    <span class="clear"><!-- --></span> 
-    <span class="character-talents"> 
+    <span class="clear"><!-- --></span>
+    <?php if($model->talentData['name'] != 'No Talents'): ?>
+    <span class="character-talents">
         <span class="icon"><span class="icon-frame frame-12 "> 
             <img src="http://eu.media.blizzard.com/wow/icons/18/<?=$model->talentData['icon']?>.jpg" alt="" width="12" height="12" /> 
         </span></span> 
         <span class="points"><?=$model->talentData['treeOne']?><ins>/</ins><?=$model->talentData['treeTwo']?><ins>/</ins><?=$model->talentData['treeThree']?></span> 
     <span class="clear"><!-- --></span> 
     </span> 
+    <?php endif; ?>
 </div>
