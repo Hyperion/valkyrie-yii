@@ -3,10 +3,12 @@ Yii::import('zii.widgets.grid.CGridColumn');
 
 class CLocationColumn extends CGridColumn
 {
-   
+    public $sortable = false;
+    public $name = 'zone';
+       
     public function init()
     {
-    	Yii::log('Init', 'info', 'grid');
+    	parent::init();
     }
     
     protected function renderHeaderCellContent()

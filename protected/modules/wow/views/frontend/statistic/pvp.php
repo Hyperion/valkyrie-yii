@@ -5,21 +5,20 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-    'id'=>'characters-grid',
+<?php $this->widget('WGridWow', array(
     'filter' => $model,
     'dataProvider'=>$model->search(40),
     'enableSorting'=>true,
     'columns'=>array(
         array(
             'type'=>'raw',
-            'value'=>'CHtml::link($data->name,array("/wow/character/simple/", "realm" => Database::$realm, "name" => $data->name))',
+            'value'=>'CHtml::link("<strong>{$data->name}</strong>",array("/wow/character/simple/", "realm" => Database::$realm, "name" => $data->name))',
             'name'=>'name',
         ),
         'level',
         array(
             'type'=>'raw',
-            'value'=>'CHtml::image("/images/wow/class/$data->class.gif","Test")',
+            'value'=>'CHtml::image("/images/wow/icons/class/$data->class.gif")',
             'name'=>'class',
             'filter' => array(
                 1 => 'Warrior',
@@ -35,7 +34,7 @@ $this->breadcrumbs=array(
         ),
         array(
             'type'=>'raw',
-            'value'=>'CHtml::image("/images/wow/race/$data->race-$data->gender.gif","Test")',
+            'value'=>'CHtml::image("/images/wow/icons/race/$data->race-$data->gender.gif")',
             'name'=>'race',
             'filter' => array(
                 1 => 'Human',
@@ -50,7 +49,7 @@ $this->breadcrumbs=array(
         ),
         array(
             'type'=>'raw',
-            'value'=>'CHtml::image("/images/wow/faction/$data->faction.png","Test")',
+            'value'=>'CHtml::image("/images/wow/icons/faction/$data->faction.gif")',
             'name'=>'faction',
             'sortable'=>false,
             'filter' => array(
@@ -58,23 +57,32 @@ $this->breadcrumbs=array(
                 1 => 'Horde',
                 ),
         ),
-        'honor.hk',
+        array(
+            'name'=>'honor.hk',
+            'sortable'=>false,
+        ),
         'honor_standing',
         array(
             'type'=>'raw',
-            'value'=>'CHtml::image("/images/wow/rank/PvPRank0$data->honor_highest_rank.png")',
+            'value'=>'CHtml::image("/images/wow/icons/rank/PvPRank0$data->honor_highest_rank.png", "", array("height" => 18, "width" => 18))',
             'name'=>'honor_highest_rank',
             'sortable'=>true,
             'filter'=>false,
         ),
         array(
             'type'=>'raw',
-            'value'=>'CHtml::image("/images/wow/rank/PvPRank0$data->honorRank.png")',
+            'value'=>'CHtml::image("/images/wow/icons/rank/PvPRank0$data->honorRank.png", "", array("height" => 18, "width" => 18))',
             'name'=>'honor_rank_points',
             'sortable'=>true,
             'filter'=>false,
         ),
-        'honor.thisWeek_cp',
-        'honor.thisWeek_kills',
+        array(
+            'name' => 'honor.thisWeek_cp',
+            'sortable' => false,
+        ),
+        array(
+            'name' => 'honor.thisWeek_kills',
+            'sortable' => false,
+        ),
     ),
 )); ?>

@@ -60,7 +60,7 @@ class CharacterController extends Controller
     {
         $this->_model = Character::model()->find('name = ?', array($name));
         if($this->_model===null)
-            throw new CHttpException(404,'The requested page does not exist.');
+            throw new CHttpException(404, 'The requested page does not exist.');
         return $this->_model;
     }
 

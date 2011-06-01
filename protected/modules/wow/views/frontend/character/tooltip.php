@@ -1,6 +1,6 @@
 <div class="character-tooltip"> 
     <span class="icon-frame frame-56"> 
-        <img src="/wow/static/images/2d/avatar/<?=$model->race?>-<?=$model->gender?>.jpg" alt="" width="56" height="56" /> 
+        <img src="/images/wow/2d/avatar/<?=$model->race?>-<?=$model->gender?>.jpg" alt="" width="56" height="56" /> 
         <span class="frame"></span> 
     </span> 
     <h3><?=$model->name?></h3> 

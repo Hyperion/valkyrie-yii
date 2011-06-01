@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php $this->widget('WGridWow', array(
     'id'=>'characters-grid',
     'filter' => $model,
     'dataProvider'=>$model->search(),
@@ -19,7 +19,7 @@ $this->breadcrumbs=array(
 		'level',
         array(
             'type'=>'raw',
-            'value'=>'CHtml::image("/images/wow/class/$data->class.gif","Test")',
+            'value'=>'CHtml::image("/images/wow/icons/class/$data->class.gif","Test")',
             'name'=>'class',
             'sortable'=>true,
             'filter' => array(
@@ -36,7 +36,7 @@ $this->breadcrumbs=array(
         ),
         array(
             'type'=>'raw',
-            'value'=>'CHtml::image("/images/wow/race/$data->race-$data->gender.gif","Test")',
+            'value'=>'CHtml::image("/images/wow/icons/race/$data->race-$data->gender.gif","Test")',
             'name'=>'race',
             'sortable'=>true,
             'filter' => array(
@@ -52,6 +52,8 @@ $this->breadcrumbs=array(
         ),
         array(
             'class'=>'CLocationColumn',
+            'name'=>'zone',
+            'sortable'=>true,
         ),
     ),
 )); ?>

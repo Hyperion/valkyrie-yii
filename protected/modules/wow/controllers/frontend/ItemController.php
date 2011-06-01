@@ -23,8 +23,12 @@ class ItemController extends Controller
     public function actionTooltip($id)
     {
         $model = $this->loadModel($id);
+		$data = array();
 
-        $this->renderPartial('tooltip', array('model' => $model));
+		if(isset($_REQUEST['data']))
+			$data = $_REQUEST['data'];
+
+        $this->renderPartial('tooltip', array('model' => $model, 'data' => $data));
     }
 
     public function loadModel($id)

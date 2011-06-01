@@ -382,4 +382,12 @@ class ItemTemplate extends CActiveRecord
 		
 		return $this->_sell_price;
     }
+
+	public function getEnchantText($id)
+	{
+		$column = 'text_'.Yii::app()->language;
+        return Yii::app()->db
+        	->createCommand("SELECT $column FROM wow_enchantment WHERE id = {$id} LIMIT 1")
+            ->queryScalar();
+	}
 }

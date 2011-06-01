@@ -85,7 +85,7 @@ $this->widget('WSummaryStatsColumn', array(
 		),
 		array(
 			'label' => 'Crit',
-			'value' => $model->stats->critPct.'%',
+			'value' => round($model->stats->critPct,2).'%',
 			'itemOptions' => array('data-id' => 'meleecrit'),
 		),
 	),
@@ -117,7 +117,7 @@ $this->widget('WSummaryStatsColumn', array(
 		),
 		array(
 			'label' => 'Crit',
-			'value' => $model->stats->rangedCritPct.'%',
+			'value' => round($model->stats->rangedCritPct,2).'%',
 			'itemOptions' => array('data-id' => 'rangedcrit'),
 		),
 	),

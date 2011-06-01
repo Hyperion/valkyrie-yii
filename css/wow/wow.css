@@ -109,7 +109,7 @@ tr:hover .fansite-link,
 .ui-pagination { background: url("/images/wow/icons/pagination.gif") 0 50% no-repeat; padding-left: 25px }
 .ui-pagination li a { background: #2b1507; color: #d3ac6b; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px }
 .ui-pagination li a:hover { background-color: #4e2f1b }
-.ui-pagination li.current a { background-color: #ffae00; color: #000; font-weight: bold }
+.ui-pagination li.selected a { background-color: #ffae00; color: #000; font-weight: bold }
 
 /* toasts */
 .ui-toast .toast-top { background: url("/images/wow/layout/toast.png") no-repeat }
@@ -412,31 +412,38 @@ tr:hover .fansite-link,
 /* tables */
 .table { padding-bottom: 2px; background: url("/images/wow/content/table-bg.gif") 50% 100% no-repeat }
 
-	/* real table */
-	.table table { width: 100%; table-layout: auto; }
-	.table thead th { padding: 0; background: #4d1a08 url("/images/wow/content/table-header.gif") 0 100% repeat-x; border-bottom: 1px solid #1a0f08 }
-	.table thead th, .table thead th a { color: #F5EBD1; font-weight: bold;}
-	.table thead th.align-center .sort-tab, .table thead th.align-center .sort-link { text-align: center; }
-	.table thead th.align-right .sort-tab, .table thead th.align-right .sort-link { text-align: right; }
-	.table tfoot th { padding: 10px }
-	.table tbody td { padding: 10px; color: #f5ebd1; }
-	.table tbody .row1 td { background: #2b1507; border-top: 1px solid #31190a }
-	.table tbody .row2 td { background: #231207; border-top: 1px solid #30190b }
-	.table tbody tr:hover td,
-	.table tbody tr.row-active td { background: #180c04; color: #fff }
-	.table tbody tr.no-results td { padding: 25px 50px; text-align: center; background: #231207; color: #C09A67 }
-	.table tbody tr.disabled { opacity: 0.33333; }
-	.table.full-width td:first-child { padding-left: 20px; }
-	.table.full-width td:last-child { padding-right: 20px; }
+/* real table */
+.table table { width: 100%; table-layout: auto; }
+.table thead th { padding: 0; background: #4d1a08 url("/images/wow/content/table-header.gif") 0 100% repeat-x; border-bottom: 1px solid #1a0f08 }
+.table thead tr.filters td { padding: 2px 5px;}
+.table thead tr.filters input { width: 90px; margin: 0px; border: 0px;}
+.table thead th, .table thead th a { color: #F5EBD1; font-weight: bold;}
+.table thead th.align-center .sort-tab, .table thead th.align-center .sort-link { text-align: center; }
+.table thead th.align-right .sort-tab, .table thead th.align-right .sort-link { text-align: right; }
+.table tfoot th { padding: 10px }
+.table tbody td { padding: 10px; color: #f5ebd1; }
+.table tbody .row1 td { background: #2b1507; border-top: 1px solid #31190a }
+.table tbody .row2 td { background: #231207; border-top: 1px solid #30190b }
+.table tbody td li { height: 20px; line-height: 20px; clear: both; padding: 7px; }
+.table tbody tr:hover td li,
+.table tbody tr.selected td li { border: 1px solid #180c04; }
+.table tbody .row1 td li { background: #231207; border: 1px solid #2b1507; }
+.table tbody .row2 td li { background: #2b1507; border: 1px solid #231207; }
+.table tbody tr:hover td,
+.table tbody tr.selected td { background: #180c04; color: #fff }
+.table tbody tr.no-results td { padding: 25px 50px; text-align: center; background: #231207; color: #C09A67 }
+.table tbody tr.disabled { opacity: 0.33333; }
+.table.full-width td:first-child { padding-left: 20px; }
+.table.full-width td:last-child { padding-right: 20px; }
 
-	/* list version */
-	.table dl { padding: 0 10px; clear: both; height: 38px; line-height: 38px; background-color: #231207}
-	.table dt { float: left; display: inline-block; }
-	.table dd { float: right; display: inline-block; color: #fefffe;}
-	.table h4 {	color: #fff; background: #4D1A08 url("/images/wow/content/table-header.gif") repeat-x 0 100%; padding: 6px 8px; border-top: 1px solid #7C2804; border-left: 1px solid #7C2804; }
-	.table li { background: #231207; border-top: 1px solid #30190B; height: 27px; line-height: 27px; clear: both; padding: 4px 0; }
-	.table dl.odd { background: #2B1507; border-top: 1px solid #31190A; }
-	.table dl:hover { background: #180c04; border-top-color: #0f0702; }
+/* list version */
+.table dl { padding: 0 10px; clear: both; height: 38px; line-height: 38px; background-color: #231207}
+.table dt { float: left; display: inline-block; }
+.table dd { float: right; display: inline-block; color: #fefffe;}
+.table h4 { color: #fff; background: #4D1A08 url("/images/wow/content/table-header.gif") repeat-x 0 100%; padding: 6px 8px; border-top: 1px solid #7C2804; border-left: 1px solid #7C2804; }
+.table li { background: #231207; border-top: 1px solid #30190B; height: 27px; line-height: 27px; clear: both; padding: 4px 0; }
+.table dl.odd { background: #2B1507; border-top: 1px solid #31190A; }
+.table dl:hover { background: #180c04; border-top-color: #0f0702; }
 
 .table-options { color: #855b47; padding: 0 10px; height: 40px; line-height: 40px; background: url("/images/wow/content/table-options-bg.jpg") 50% 0 no-repeat }
 .table-options strong { color: #FEF092 }
@@ -459,10 +466,10 @@ tr:hover .fansite-link,
 .table .sort-link:hover { color: #fff; background: #6a240b url("/images/wow/content/table-header-hover.gif") 0 100% repeat-x; border-top-color: #af3900; border-left-color: #af3900 }
 .table .sort-link .arrow { padding-left: 10px; background: url("/images/wow/content/table-sort-arrows.gif") 0 -10px no-repeat }
 .table .sort-link:hover .arrow { background-position: 0 -115px }
-.table .sort-link .arrow.up,
-.table .sort-link:hover .arrow.up { background-position: 0 -80px }
-.table .sort-link .arrow.down,
-.table .sort-link:hover .arrow.down { background-position: 0 -45px }
+.table .sort-link.desc .arrow,
+.table .sort-link.desc:hover .arrow { background-position: 0 -80px }
+.table .sort-link.asc .arrow,
+.table .sort-link.asc:hover .arrow { background-position: 0 -45px }
 .table .sort-data.hidden { display: none; } /* table specificity for ie6 */
 
 /* content boxes */

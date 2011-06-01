@@ -18,6 +18,6 @@
 <h2 class="color-q<?=$model->Quality?>"><?=$model->name?></h2> 
 </div>
 <div class="item-detail">
-<?php $this->renderPartial('_tooltip', array('model' => $model, 'full' => false)); ?>
+<?php $this->renderPartial('_tooltip', array('model' => $model, 'data' => false)); ?>
 </div>
 </div>

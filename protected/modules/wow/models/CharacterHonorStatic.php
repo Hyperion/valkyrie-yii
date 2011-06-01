@@ -33,6 +33,13 @@ class CharacterHonorStatic extends CActiveRecord
         return 'character_honor_static';
     }
 
+    public function attributeLabels()
+    {
+        return array(
+            'thisWeek_cp' => 'Week CP',
+            'thisWeek_kills' => 'Week HK',
+        );
+    }
     public function relations()
     {
         return array(

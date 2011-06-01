@@ -73,6 +73,7 @@ class Character extends CActiveRecord
 	private $_professions = false;
     private $_power_type;
 	private $_role;
+	private $_item_level;
 
     public static function model($className=__CLASS__)
     {
@@ -104,6 +105,15 @@ class Character extends CActiveRecord
             'stats' => array(self::HAS_ONE, 'CharacterStats', 'guid'),
         );
     }
+
+	public function attributeLabels()
+	{
+		return array(
+			'honor_highest_rank' => 'Highest Rank',
+			'honor_standing' => 'Standing',
+			'honor_rank_points' => 'Rank Points',
+		);
+	}
 
     public function itemAlias($type, $code = NULL)
     {
@@ -239,7 +249,7 @@ class Character extends CActiveRecord
             self::EQUIPMENT_SLOT_FINGER2   => 11,
             self::EQUIPMENT_SLOT_TRINKET1  => 12,
             self::EQUIPMENT_SLOT_TRINKET2  => 12,
-            self::EQUIPMENT_SLOT_MAINHAND  => 15,
+            self::EQUIPMENT_SLOT_MAINHAND  => 21,
             self::EQUIPMENT_SLOT_OFFHAND   => 22,
             self::EQUIPMENT_SLOT_RANGED    => 28,
 		);
@@ -260,8 +270,8 @@ class Character extends CActiveRecord
 						'enchant_id' 	  => $this->equipmentCache[$i+1],
 						'enchant_item'    => 0,
 						'enchant_text'    => '',
-						'slot'			  => $item_slots[$j],
-						'can_displayed'	  => !in_array($item_slots[$j] , array(2, 11, 12)),
+						'slot'			  => $proto->InventoryType,
+						'can_displayed'	  => !in_array($proto->InventoryType, array(2, 11, 12)),
 						'can_enchanted'	  => !in_array($j, array(3, 17, 1, 5, 10, 11, 12, 13, 16, 18)),
 					);
 					if($item_data['enchant_id'])
@@ -271,7 +281,7 @@ class Character extends CActiveRecord
 							->createCommand("
             					SELECT wow_enchantment.$column AS text, wow_spellenchantment.id AS spellId
             					FROM wow_enchantment
-            					JOIN wow_spellenchantment ON wow_spellenchantment.Value = wow_enchantment.id
+            					LEFT JOIN wow_spellenchantment ON wow_spellenchantment.Value = wow_enchantment.id
             					WHERE wow_enchantment.id = {$item_data['enchant_id']} LIMIT 1")
 							->queryRow();
             			if(is_array($info))
@@ -286,7 +296,9 @@ class Character extends CActiveRecord
 										WHERE 
 										spellid_1 = {$info['spellId']} OR
 										spellid_2 = {$info['spellId']} OR 
-										spellid_3 = {$info['spellId']} LIMIT 1")
+										spellid_3 = {$info['spellId']} OR
+										spellid_4 = {$info['spellId']} OR 
+										spellid_5 = {$info['spellId']} LIMIT 1")
 									->queryRow();
                     			if($item)
 								{
@@ -296,6 +308,22 @@ class Character extends CActiveRecord
                 			}
             			}
 					}
+					$data=array();
+					if($item_data['enchant_id'])
+						$data[] = "data[enchant_id]={$item_data['enchant_id']}";
+					
+					if($proto->itemset)
+					{
+						$set = Yii::app()->db_world
+                			->createCommand("SELECT entry FROM item_template WHERE itemset = {$proto->itemset}")
+                			->queryColumn();
+						$set_pieces = array();
+						for($k = 0; $k < 37; $k += 2)
+							if(in_array($this->equipmentCache[$k], $set))
+								$set_pieces[] = $this->equipmentCache[$k];
+						$data[] = 'data[set]='.implode(',', $set_pieces);
+					}
+					$item_data['data'] = implode('&', $data);
 					$this->_items[$j] = $item_data;
 				}
 				else
@@ -533,5 +561,39 @@ class Character extends CActiveRecord
     {
         foreach ($arr as $key => $val)
             if ($val == max($arr)) return $key;
+    }
+	
+	public function getItemLevel()
+	{
+		if($this->_item_level)
+			return $this->_item_level;
+
+        $total_iLvl = 0;
+        $maxLvl = 0;
+        $minLvl = 500;
+        $i = 0;
+        $this->_item_level = array('avgEquipped' => 0, 'avg' => 0);
+        foreach($this->items as $slot => $item)
+		{
+            if(!in_array($slot, array(self::EQUIPMENT_SLOT_BODY, self::EQUIPMENT_SLOT_TABARD)))
+			{
+				if(isset($item['item_level']))
+				{
+                    $total_iLvl += $item['item_level'];
+                    if($item['item_level'] < $minLvl)
+                        $minLvl = $item['item_level'];
+                    if($item['item_level'] > $maxLvl)
+                        $maxLvl = $item['item_level'];
+                }
+				$i++;
+			}
+        }
+        if($i == 0) {
+            // Prevent divison by zero.
+            return $this->_item_level;
+        }
+        $this->_item_level['avgEquipped'] = round(($maxLvl + $minLvl) / 2);
+        $this->_item_level['avg'] = round($total_iLvl / $i);
+        return $this->_item_level;
     }
 }
