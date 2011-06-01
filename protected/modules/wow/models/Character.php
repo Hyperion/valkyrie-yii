@@ -53,7 +53,7 @@ class Character extends CActiveRecord
     const ROLE_HEALER = 4;
     const ROLE_TANK   = 5;
 
-	const SKILL_BLACKSMITHING = 164;
+    const SKILL_BLACKSMITHING = 164;
     const SKILL_LEATHERWORKING = 165;
     const SKILL_ALCHEMY = 171;
     const SKILL_HERBALISM = 182;
@@ -65,15 +65,16 @@ class Character extends CActiveRecord
     const SKILL_JEWELCRAFTING = 755;
     const SKILL_INSCRIPTION = 773;
 
-	public $class_text = false;
+    public $class_text = false;
     public $race_text = false;
+	public $realm = false;
 
     private $_items = array();
     private $_talents_data = array();
-	private $_professions = false;
+    private $_professions = false;
     private $_power_type;
-	private $_role;
-	private $_item_level;
+    private $_role;
+    private $_item_level;
 
     public static function model($className=__CLASS__)
     {
@@ -106,14 +107,14 @@ class Character extends CActiveRecord
         );
     }
 
-	public function attributeLabels()
-	{
-		return array(
-			'honor_highest_rank' => 'Highest Rank',
-			'honor_standing' => 'Standing',
-			'honor_rank_points' => 'Rank Points',
-		);
-	}
+    public function attributeLabels()
+    {
+        return array(
+            'honor_highest_rank' => 'Highest Rank',
+            'honor_standing' => 'Standing',
+            'honor_rank_points' => 'Rank Points',
+        );
+    }
 
     public function itemAlias($type, $code = NULL)
     {
@@ -152,7 +153,7 @@ class Character extends CActiveRecord
             return isset($_items[$type]) ? $_items[$type] : false;
     }
 
-    public function search()
+    public function search($all_realms = false)
     {
         $criteria=new CDbCriteria;
 
@@ -178,9 +179,10 @@ class Character extends CActiveRecord
             }
         }
         
-        return new CActiveDataProvider(get_class($this), array(
+        return new CMultirealmDataProvider(get_class($this), array(
+			'all_realms'=>$all_realms,
             'criteria'=>$criteria,
-            'pagination'    => array(
+            'pagination'=> array(
                 'pageSize'=> 40,
             ),
         ));
@@ -227,17 +229,18 @@ class Character extends CActiveRecord
     protected function afterFind()
     {
         parent::afterFind();
+		$this->realm = Database::$realm;
         $this->equipmentCache = explode(' ', $this->equipmentCache);
     }
     
     public function getItems()
-	{
-    	$item_slots = array(
-	    	self::EQUIPMENT_SLOT_HEAD      => 1,
-    		self::EQUIPMENT_SLOT_NECK      => 2,
-    		self::EQUIPMENT_SLOT_SHOULDERS => 3,
-    		self::EQUIPMENT_SLOT_BACK      => 16,
-    		self::EQUIPMENT_SLOT_CHEST     => 5,
+    {
+        $item_slots = array(
+            self::EQUIPMENT_SLOT_HEAD      => 1,
+            self::EQUIPMENT_SLOT_NECK      => 2,
+            self::EQUIPMENT_SLOT_SHOULDERS => 3,
+            self::EQUIPMENT_SLOT_BACK      => 16,
+            self::EQUIPMENT_SLOT_CHEST     => 5,
             self::EQUIPMENT_SLOT_BODY      => 4,
             self::EQUIPMENT_SLOT_TABARD    => 19,
             self::EQUIPMENT_SLOT_WRISTS    => 9,
@@ -252,83 +255,83 @@ class Character extends CActiveRecord
             self::EQUIPMENT_SLOT_MAINHAND  => 21,
             self::EQUIPMENT_SLOT_OFFHAND   => 22,
             self::EQUIPMENT_SLOT_RANGED    => 28,
-		);
-		
+        );
+        
         if(!$this->_items)
-        	for($i = 0, $j = 0; $i < 37; $i += 2, $j++)
-			{
-				$proto = ItemTemplate::model()->findByPk($this->equipmentCache[$i]);
-				if($proto)
-				{
-					$item_data = array(
-						'entry' 	 	  => $proto->entry,
-						'icon'		 	  => $proto->icon,
-						'name'		 	  => $proto->name,
-						'display_id' 	  => $proto->displayid,
-						'quality'	 	  => $proto->Quality,
-						'item_level' 	  => $proto->ItemLevel,
-						'enchant_id' 	  => $this->equipmentCache[$i+1],
-						'enchant_item'    => 0,
-						'enchant_text'    => '',
-						'slot'			  => $proto->InventoryType,
-						'can_displayed'	  => !in_array($proto->InventoryType, array(2, 11, 12)),
-						'can_enchanted'	  => !in_array($j, array(3, 17, 1, 5, 10, 11, 12, 13, 16, 18)),
-					);
-					if($item_data['enchant_id'])
-					{
-						$column = 'text_'.Yii::app()->language;
-						$info = Yii::app()->db
-							->createCommand("
-            					SELECT wow_enchantment.$column AS text, wow_spellenchantment.id AS spellId
-            					FROM wow_enchantment
-            					LEFT JOIN wow_spellenchantment ON wow_spellenchantment.Value = wow_enchantment.id
-            					WHERE wow_enchantment.id = {$item_data['enchant_id']} LIMIT 1")
-							->queryRow();
-            			if(is_array($info))
-						{
-                			$item_data['enchant_text'] = $info['text'];
-                			if($info['spellId'])
-							{
-                    			$item = Yii::app()->db_world
-									->createCommand("
-										SELECT entry, name
-										FROM item_template
-										WHERE 
-										spellid_1 = {$info['spellId']} OR
-										spellid_2 = {$info['spellId']} OR 
-										spellid_3 = {$info['spellId']} OR
-										spellid_4 = {$info['spellId']} OR 
-										spellid_5 = {$info['spellId']} LIMIT 1")
-									->queryRow();
-                    			if($item)
-								{
-                        			$item_data['enchant_text'] = $item['name'];
-									$item_data['enchant_item'] = $item['entry'];
-                    			}
-                			}
-            			}
-					}
-					$data=array();
-					if($item_data['enchant_id'])
-						$data[] = "data[enchant_id]={$item_data['enchant_id']}";
-					
-					if($proto->itemset)
-					{
-						$set = Yii::app()->db_world
-                			->createCommand("SELECT entry FROM item_template WHERE itemset = {$proto->itemset}")
-                			->queryColumn();
-						$set_pieces = array();
-						for($k = 0; $k < 37; $k += 2)
-							if(in_array($this->equipmentCache[$k], $set))
-								$set_pieces[] = $this->equipmentCache[$k];
-						$data[] = 'data[set]='.implode(',', $set_pieces);
-					}
-					$item_data['data'] = implode('&', $data);
-					$this->_items[$j] = $item_data;
-				}
-				else
-					$this->_items[$j] = array('slot' => $item_slots[$j]);
-			}
+            for($i = 0, $j = 0; $i < 37; $i += 2, $j++)
+            {
+                $proto = ItemTemplate::model()->findByPk($this->equipmentCache[$i]);
+                if($proto)
+                {
+                    $item_data = array(
+                        'entry'            => $proto->entry,
+                        'icon'               => $proto->icon,
+                        'name'               => $proto->name,
+                        'display_id'       => $proto->displayid,
+                        'quality'           => $proto->Quality,
+                        'item_level'       => $proto->ItemLevel,
+                        'enchant_id'       => $this->equipmentCache[$i+1],
+                        'enchant_item'    => 0,
+                        'enchant_text'    => '',
+                        'slot'              => $proto->InventoryType,
+                        'can_displayed'      => !in_array($proto->InventoryType, array(2, 11, 12)),
+                        'can_enchanted'      => !in_array($j, array(3, 17, 1, 5, 10, 11, 12, 13, 16, 18)),
+                    );
+                    if($item_data['enchant_id'])
+                    {
+                        $column = 'text_'.Yii::app()->language;
+                        $info = Yii::app()->db
+                            ->createCommand("
+                                SELECT wow_enchantment.$column AS text, wow_spellenchantment.id AS spellId
+                                FROM wow_enchantment
+                                LEFT JOIN wow_spellenchantment ON wow_spellenchantment.Value = wow_enchantment.id
+                                WHERE wow_enchantment.id = {$item_data['enchant_id']} LIMIT 1")
+                            ->queryRow();
+                        if(is_array($info))
+                        {
+                            $item_data['enchant_text'] = $info['text'];
+                            if($info['spellId'])
+                            {
+                                $item = Yii::app()->db_world
+                                    ->createCommand("
+                                        SELECT entry, name
+                                        FROM item_template
+                                        WHERE 
+                                        spellid_1 = {$info['spellId']} OR
+                                        spellid_2 = {$info['spellId']} OR 
+                                        spellid_3 = {$info['spellId']} OR
+                                        spellid_4 = {$info['spellId']} OR 
+                                        spellid_5 = {$info['spellId']} LIMIT 1")
+                                    ->queryRow();
+                                if($item)
+                                {
+                                    $item_data['enchant_text'] = $item['name'];
+                                    $item_data['enchant_item'] = $item['entry'];
+                                }
+                            }
+                        }
+                    }
+                    $data=array();
+                    if($item_data['enchant_id'])
+                        $data[] = "data[enchant_id]={$item_data['enchant_id']}";
+                    
+                    if($proto->itemset)
+                    {
+                        $set = Yii::app()->db_world
+                            ->createCommand("SELECT entry FROM item_template WHERE itemset = {$proto->itemset}")
+                            ->queryColumn();
+                        $set_pieces = array();
+                        for($k = 0; $k < 37; $k += 2)
+                            if(in_array($this->equipmentCache[$k], $set))
+                                $set_pieces[] = $this->equipmentCache[$k];
+                        $data[] = 'data[set]='.implode(',', $set_pieces);
+                    }
+                    $item_data['data'] = implode('&', $data);
+                    $this->_items[$j] = $item_data;
+                }
+                else
+                    $this->_items[$j] = array('slot' => $item_slots[$j]);
+            }
         
         return $this->_items;
     }
@@ -468,19 +471,19 @@ class Character extends CActiveRecord
             ->queryRow();
     }
 
-	public function GetRole()
-	{
+    public function GetRole()
+    {
         if($this->_role > 0)
             return $this->_role;
         
         switch($this->class)
-		{
+        {
             case self::CLASS_WARRIOR:
-				if($this->talentData['treeThree'] > $this->talentData['treeTwo'] && $this->talentData['treeThree'] > $this->talentData['treeOne'])
-					$this->_role = self::ROLE_TANK;
-				else
-					$this->_role = self::ROLE_MELEE;
-				break;
+                if($this->talentData['treeThree'] > $this->talentData['treeTwo'] && $this->talentData['treeThree'] > $this->talentData['treeOne'])
+                    $this->_role = self::ROLE_TANK;
+                else
+                    $this->_role = self::ROLE_MELEE;
+                break;
             case self::CLASS_ROGUE:
             case self::CLASS_DK:
                 $this->_role = self::ROLE_MELEE;
@@ -490,8 +493,8 @@ class Character extends CActiveRecord
             case self::CLASS_SHAMAN:
                 // Hybrid classes. Need to check active talent tree.
                 if($this->talentData['treeOne'] > $this->talentData['treeTwo'] && $this->talentData['treeOne'] > $this->talentData['treeThree'])
-                	if($this->class == self::CLASS_PALADIN)
-					   	$this->_role = self::ROLE_HEALER;
+                    if($this->class == self::CLASS_PALADIN)
+                           $this->_role = self::ROLE_HEALER;
                     else
                         $this->_role = self::ROLE_CASTER;
                 elseif($this->talentData['treeTwo'] > $this->talentData['treeOne'] && $this->talentData['treeTwo'] > $this->talentData['treeThree'])
@@ -507,7 +510,7 @@ class Character extends CActiveRecord
                 break;
             case self::CLASS_PRIEST:
                 if($this->talentData['treeThree'] > $this->talentData['treeOne'] && $this->talentData['treeThree'] > $this->talentData['treeTwo'])
-                	$this->_role = self::ROLE_CASTER;
+                    $this->_role = self::ROLE_CASTER;
                 else
                     $this->_role = self::ROLE_HEALER;
                 break;
@@ -520,15 +523,15 @@ class Character extends CActiveRecord
                 break;
         }
 
-		return $this->_role;
+        return $this->_role;
     }
 
-	public function getProfessions()
-	{
-		if($this->_professions !== false)
-			return $this->_professions;
+    public function getProfessions()
+    {
+        if($this->_professions !== false)
+            return $this->_professions;
 
-		$skill_professions = array(
+        $skill_professions = array(
             self::SKILL_BLACKSMITHING,
             self::SKILL_LEATHERWORKING,
             self::SKILL_ALCHEMY,
@@ -541,42 +544,42 @@ class Character extends CActiveRecord
             self::SKILL_JEWELCRAFTING,
             self::SKILL_INSCRIPTION
         );
-		$skill_professions = implode(', ', $skill_professions);
+        $skill_professions = implode(', ', $skill_professions);
 
         $professions = $this->dbConnection
-			->createCommand("SELECT * FROM character_skills WHERE guid = {$this->guid} AND skill IN ({$skill_professions}) LIMIT 2")
-			->queryAll();
+            ->createCommand("SELECT * FROM character_skills WHERE guid = {$this->guid} AND skill IN ({$skill_professions}) LIMIT 2")
+            ->queryAll();
         if(!is_array($professions))
-			return false;
+            return false;
 
-		$this->_professions = array();
+        $this->_professions = array();
         $i = 0;
-		$column = 'name_'.Yii::app()->language;
+        $column = 'name_'.Yii::app()->language;
         foreach($professions as $prof)
-		{
+        {
             $this->_professions[$i] = Yii::app()->db
-				->createCommand("SELECT id, $column AS name, icon FROM wow_professions WHERE id = {$prof['skill']} LIMIT 1")
-				->queryRow();
+                ->createCommand("SELECT id, $column AS name, icon FROM wow_professions WHERE id = {$prof['skill']} LIMIT 1")
+                ->queryRow();
             if(!$this->_professions[$i])
-			    continue;
+                continue;
             $this->_professions[$i]['value'] = $prof['value'];
             $this->_professions[$i]['max'] = 300;
             $i++;
         }
 
-		return $this->_professions;
-	}
+        return $this->_professions;
+    }
 
     public function getMaxArray($arr)
     {
         foreach ($arr as $key => $val)
             if ($val == max($arr)) return $key;
     }
-	
-	public function getItemLevel()
-	{
-		if($this->_item_level)
-			return $this->_item_level;
+    
+    public function getItemLevel()
+    {
+        if($this->_item_level)
+            return $this->_item_level;
 
         $total_iLvl = 0;
         $maxLvl = 0;
@@ -584,19 +587,19 @@ class Character extends CActiveRecord
         $i = 0;
         $this->_item_level = array('avgEquipped' => 0, 'avg' => 0);
         foreach($this->items as $slot => $item)
-		{
+        {
             if(!in_array($slot, array(self::EQUIPMENT_SLOT_BODY, self::EQUIPMENT_SLOT_TABARD)))
-			{
-				if(isset($item['item_level']))
-				{
+            {
+                if(isset($item['item_level']))
+                {
                     $total_iLvl += $item['item_level'];
                     if($item['item_level'] < $minLvl)
                         $minLvl = $item['item_level'];
                     if($item['item_level'] > $maxLvl)
                         $maxLvl = $item['item_level'];
                 }
-				$i++;
-			}
+                $i++;
+            }
         }
         if($i == 0) {
             // Prevent divison by zero.

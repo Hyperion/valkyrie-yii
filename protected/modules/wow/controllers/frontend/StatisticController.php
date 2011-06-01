@@ -10,8 +10,7 @@ class StatisticController extends Controller
 
     public function actionOnline($realm)
     {
-        Database::$realm = (string) $realm;
-
+		Database::$realm = (string) $realm;
         $model = new Character('online');
         $model->unsetAttributes();
         $model->online = 1;
@@ -26,8 +25,7 @@ class StatisticController extends Controller
 
     public function actionPvp($realm)
     {
-        Database::$realm = (string) $realm;
-
+		Database::$realm = (string) $realm;
         $model = new Character('pvp');
         $model->unsetAttributes();
 

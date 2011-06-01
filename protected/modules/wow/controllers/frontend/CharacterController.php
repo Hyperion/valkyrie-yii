@@ -17,6 +17,22 @@ class CharacterController extends Controller
             'model'=>$model,
         ));
     }
+
+    public function actionIndex()
+    {
+		$this->layout = '//layouts/main';
+
+		Database::$realm = Database::model()->find('type = "characters"')->title;
+        $model = new Character('search');
+        $model->unsetAttributes();
+
+        if(isset($_GET['Character']))
+			$model->attributes = $_GET['Character'];
+
+        $this->render('index',array(
+            'model' => $model,
+        ));
+    }
     
 	public function actionAdvanced($realm, $name)
     {
