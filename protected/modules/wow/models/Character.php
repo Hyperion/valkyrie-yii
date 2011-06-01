@@ -67,7 +67,7 @@ class Character extends CActiveRecord
 
     public $class_text = false;
     public $race_text = false;
-	public $realm = false;
+    public $realm = false;
 
     private $_items = array();
     private $_talents_data = array();
@@ -163,6 +163,7 @@ class Character extends CActiveRecord
         $criteria->compare('level',$this->level);
         $criteria->compare('online',$this->online);
         $criteria->compare('honor_standing',$this->honor_standing);
+        $criteria->compare('account','>0');
 
         if($this->scenario == 'pvp')
         {
@@ -180,7 +181,7 @@ class Character extends CActiveRecord
         }
         
         return new CMultirealmDataProvider(get_class($this), array(
-			'all_realms'=>$all_realms,
+            'all_realms'=>$all_realms,
             'criteria'=>$criteria,
             'pagination'=> array(
                 'pageSize'=> 40,
@@ -229,7 +230,7 @@ class Character extends CActiveRecord
     protected function afterFind()
     {
         parent::afterFind();
-		$this->realm = Database::$realm;
+        $this->realm = Database::$realm;
         $this->equipmentCache = explode(' ', $this->equipmentCache);
     }
     
