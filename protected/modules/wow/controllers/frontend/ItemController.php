@@ -24,6 +24,15 @@ class ItemController extends Controller
     {
         $model = new ItemTemplate('search');
         
+        $model->unsetAttributes();
+        
+        if(isset($_GET['classId']))
+            $model->class = (int) $_GET['classId'];
+        if(isset($_GET['subClassId']))
+            $model->subclass = (int) $_GET['subClassId'];
+        if(isset($_GET['invType']))
+            $model->InventoryType = (int) $_GET['invType'];
+        
         $this->render('index', array('model' => $model));
     }
     

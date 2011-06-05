@@ -54,7 +54,7 @@ class ItemTemplate extends CActiveRecord
     const ITEM_FLAGS_BOP_TRADEABLE = 0x80000000;
 
     private $_icon;
-	private $_class_text;
+    private $_class_text;
     private $_subclass_text;
     private $_dps;
     private $_map_text;
@@ -85,7 +85,14 @@ class ItemTemplate extends CActiveRecord
     {
         return Yii::app()->db_world;
     }
-
+    
+    public function rules()
+    {
+        return array(
+            array('class, subclass, InventoryType', 'safe', 'on'=>'search'),
+        );
+    }
+    
     public static function itemAlias($type, $code=NULL)
     {
         $_items = array(
@@ -132,7 +139,7 @@ class ItemTemplate extends CActiveRecord
                 '1' => 'On Equip',
                 '2' => 'Chance on Hit',
                 '4' => 'Soulstone',
-                '5'    => 'Use with no delay',
+                '5' => 'Use with no delay',
                 '6' => 'Use',
             ),
         );
@@ -147,6 +154,10 @@ class ItemTemplate extends CActiveRecord
         $criteria=new CDbCriteria;
 
         $criteria->compare('name',$this->name,true);
+        $criteria->compare('class',$this->class);
+        $criteria->compare('subclass',$this->subclass);
+        $criteria->compare('InventoryType',$this->InventoryType);
+        $criteria->order = 'Quality DESC, ItemLevel DESC';
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,
@@ -169,25 +180,31 @@ class ItemTemplate extends CActiveRecord
             ->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$this->displayid} LIMIT 1")
             ->queryScalar();
 
-        $row = Yii::app()->db 
-                ->createCommand("SELECT `subclass_$column` AS `subclass`, `class_$column` AS `class` FROM `wow_item_subclasses` WHERE `subclass` = {$this->subclass} AND `class` = {$this->class} LIMIT 1")
-                ->queryRow();
-		if($row)
-		{
-			$this->_subclass_text = $row['subclass'];
-			$this->_class_text = $row['class'];
-		}
-	}
+    }
+    
+    public function getSubclass_text()
+    {
+        if(!isset($this->_subclass_text))
+        {
+            $column = 'name_'.Yii::app()->language;
+            $this->_subclass_text = Yii::app()->db 
+                ->createCommand("SELECT subclass_$column FROM wow_item_subclasses WHERE subclass = {$this->subclass}  AND class = {$this->class} LIMIT 1")
+                ->queryScalar();
+        }
+        return $this->_subclass_text;
+    }
 
-	public function getSubclass_text()
-	{
-		return $this->_subclass_text;
-	}
-
-	public function getClass_text()
-	{
-		return $this->_class_text;
-	}
+    public function getClass_text()
+    {
+        if(!isset($this->_class_text))
+        {
+            $column = 'name_'.Yii::app()->language;
+            $this->_class_text = Yii::app()->db 
+                ->createCommand("SELECT class_$column FROM wow_item_subclasses WHERE class = {$this->class} LIMIT 1")
+                ->queryScalar();
+        }
+        return $this->_class_text;
+    }
 
     public function getMap_text()
     {

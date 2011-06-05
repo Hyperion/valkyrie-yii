@@ -95,7 +95,7 @@ var Menu = {
 		// Bind the handlers
 		$('.ui-breadcrumb li a').each(function(key, crumb) {
 			var anchor = $(crumb),
-				url = anchor.attr('href').replace(Core.baseUrl, '');
+				url = anchor.attr('href');
 
 			anchor.mouseover(function() {
 				Menu.show(this, url);
@@ -129,7 +129,7 @@ var Menu = {
 			return;
 
 		$.ajax({
-			url: Core.baseUrl + url,
+			url: url,
 			dataType: 'json',
 			success: function(data) {
 				Menu.data[set] = data;
@@ -139,7 +139,7 @@ var Menu = {
 				// Add dotted underline to last breadcrumb node if it has children
 				var lastNode = $('.ui-breadcrumb li:last-child a');
 				if(lastNode.length) {
-					var url = lastNode.attr('href').replace(Core.baseUrl, '');
+					var url = lastNode.attr('href');
 					var idx = Menu.dataIndex[set][url];
 					if(idx && idx.children) {
 						lastNode.parent().addClass('children');
@@ -377,7 +377,7 @@ var Menu = {
 			params = {};
 
 		if (obj.url != null)
-			mapping.href = Core.baseUrl + obj.url;
+			mapping.href = obj.url;
 
 		$.each(mapping, function(key, value) {
 			if (value)

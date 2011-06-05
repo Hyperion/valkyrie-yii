@@ -1,8 +1,14 @@
 <?php
 $this->breadcrumbs=array(
     'Game'=>array('/wow'),
-    'Items',
+    'Items'=>array('/wow/item'),
 );
+if(isset($model->class))
+    $this->breadcrumbs[$model->class_text] = array("/wow/item?classId={$model->class}");
+if(isset($model->subclass))
+    $this->breadcrumbs[$model->subclass_text] = array("/wow/item?classId={$model->class}&subClassId={$model->subclass}");
+if(isset($model->InventoryType))
+    $this->breadcrumbs[$model::itemAlias('invtype', $model->InventoryType)] = array("/wow/item?classId={$model->class}&subClassId={$model->subclass}&invType={$model->InventoryType}");
 ?>
 
 <?php $this->widget('WGridWow', array(
