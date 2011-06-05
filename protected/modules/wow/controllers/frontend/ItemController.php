@@ -19,14 +19,21 @@ class ItemController extends Controller
         
         $this->render('view', array('model' => $model));
     }
-	
+
+    public function actionIndex()
+    {
+        $model = new ItemTemplate('search');
+        
+        $this->render('index', array('model' => $model));
+    }
+    
     public function actionTooltip($id)
     {
         $model = $this->loadModel($id);
-		$data = array();
+        $data = array();
 
-		if(isset($_REQUEST['data']))
-			$data = $_REQUEST['data'];
+        if(isset($_REQUEST['data']))
+            $data = $_REQUEST['data'];
 
         $this->renderPartial('tooltip', array('model' => $model, 'data' => $data));
     }

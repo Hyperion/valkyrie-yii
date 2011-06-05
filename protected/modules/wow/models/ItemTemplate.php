@@ -54,6 +54,7 @@ class ItemTemplate extends CActiveRecord
     const ITEM_FLAGS_BOP_TRADEABLE = 0x80000000;
 
     private $_icon;
+	private $_class_text;
     private $_subclass_text;
     private $_dps;
     private $_map_text;
@@ -141,6 +142,20 @@ class ItemTemplate extends CActiveRecord
             return isset($_items[$type]) ? $_items[$type] : false;
     }
     
+    public function search()
+    {
+        $criteria=new CDbCriteria;
+
+        $criteria->compare('name',$this->name,true);
+
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria'=>$criteria,
+            'pagination'=> array(
+                'pageSize'=> 40,
+            ),
+        ));
+    }
+    
     public function getIcon()
     {
         return $this->_icon;
@@ -153,20 +168,26 @@ class ItemTemplate extends CActiveRecord
         $this->_icon = $connection
             ->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$this->displayid} LIMIT 1")
             ->queryScalar();
-    }
 
-    public function getSubclass_text()
-    {
-        if(!$this->_subclass_text)
-        {
-            $column = 'name_'.Yii::app()->language;
-            $this->_subclass_text = Yii::app()->db 
+        $row = Yii::app()->db 
                 ->createCommand("SELECT `subclass_$column` AS `subclass`, `class_$column` AS `class` FROM `wow_item_subclasses` WHERE `subclass` = {$this->subclass} AND `class` = {$this->class} LIMIT 1")
                 ->queryRow();
-        }
+		if($row)
+		{
+			$this->_subclass_text = $row['subclass'];
+			$this->_class_text = $row['class'];
+		}
+	}
 
-        return $this->_subclass_text;
-    }
+	public function getSubclass_text()
+	{
+		return $this->_subclass_text;
+	}
+
+	public function getClass_text()
+	{
+		return $this->_class_text;
+	}
 
     public function getMap_text()
     {

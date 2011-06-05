@@ -102,8 +102,8 @@ class Character extends CActiveRecord
     public function relations()
     {
         return array(
-            'honor' => array(self::HAS_ONE, 'CharacterHonorStatic','guid'),
-            'stats' => array(self::HAS_ONE, 'CharacterStats', 'guid'),
+            'honor' => array(self::HAS_ONE,  'CharacterHonorStatic','guid'),
+            'stats' => array(self::HAS_ONE,  'CharacterStats', 'guid'),
         );
     }
 
@@ -265,18 +265,18 @@ class Character extends CActiveRecord
                 if($proto)
                 {
                     $item_data = array(
-                        'entry'            => $proto->entry,
-                        'icon'               => $proto->icon,
-                        'name'               => $proto->name,
-                        'display_id'       => $proto->displayid,
-                        'quality'           => $proto->Quality,
-                        'item_level'       => $proto->ItemLevel,
-                        'enchant_id'       => $this->equipmentCache[$i+1],
-                        'enchant_item'    => 0,
-                        'enchant_text'    => '',
-                        'slot'              => $proto->InventoryType,
-                        'can_displayed'      => !in_array($proto->InventoryType, array(2, 11, 12)),
-                        'can_enchanted'      => !in_array($j, array(3, 17, 1, 5, 10, 11, 12, 13, 16, 18)),
+                        'entry'         => $proto->entry,
+                        'icon'          => $proto->icon,
+                        'name'          => $proto->name,
+                        'display_id'    => $proto->displayid,
+                        'quality'       => $proto->Quality,
+                        'item_level'    => $proto->ItemLevel,
+                        'enchant_id'    => $this->equipmentCache[$i+1],
+                        'enchant_item'  => 0,
+                        'enchant_text'  => '',
+                        'slot'          => $proto->InventoryType,
+                        'can_displayed' => !in_array($proto->InventoryType, array(2, 11, 12)),
+                        'can_enchanted' => !in_array($j, array(3, 17, 1, 5, 10, 11, 12, 13, 16, 18)),
                     );
                     if($item_data['enchant_id'])
                     {
@@ -336,6 +336,14 @@ class Character extends CActiveRecord
         
         return $this->_items;
     }
+
+	public function isEquipped($entry)
+	{
+		for($i = 0; $i < 37; $i += 2)
+			if($entry == $this->equipmentCache[$i])
+				return true;
+		return false;
+	}
 
     public function getPowerType()
     {
@@ -610,4 +618,24 @@ class Character extends CActiveRecord
         $this->_item_level['avg'] = round($total_iLvl / $i);
         return $this->_item_level;
     }
+
+	public function getFeed()
+	{
+		$feed = array();
+
+		$feed = $this->dbConnection
+			->createCommand("SELECT * FROM character_feed_log WHERE guid = {$this->guid} ORDER BY date ASC LIMIT 5")
+			->queryAll();
+
+		for($i = 0; $i < count($feed); $i++)
+			switch($feed[$i]['type'])
+			{
+				case 2:
+					$feed[$i]['item'] = ItemTemplate::model()->findByPk($feed[$i]['data']);
+					$feed[$i]['equipped'] = $this->isEquipped($feed[$i]['data']);
+	                break;
+ 			}
+
+		return $feed;
+	}
 }

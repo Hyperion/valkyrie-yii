@@ -12,7 +12,7 @@
     <?php endif; if($model->maxcount == 1): ?>
     <li>Unique</li>
     <?php endif; if(in_array($model->class, array($model::ITEM_CLASS_ARMOR, $model::ITEM_CLASS_WEAPON))): ?>
-    <li><span class="float-right"><?=$model->subclass_text['subclass']?></span><?=$model::itemAlias('invtype', $model->InventoryType)?></li>
+    <li><span class="float-right"><?=$model->subclass_text?></span><?=$model::itemAlias('invtype', $model->InventoryType)?></li>
     <?php endif; if($model->class == $model::ITEM_CLASS_CONTAINER): ?>
     <li><?=$model->ContainerSlots?> Slot Bag</li>
     <?php endif; if($model->class == $model::ITEM_CLASS_WEAPON): ?>

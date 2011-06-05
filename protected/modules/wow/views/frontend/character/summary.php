@@ -98,6 +98,7 @@ switch($this->action->id)
 		</div>
     </div>
     <div class="summary-bottom">
+<?php $this->renderPartial('_recent_activity', array('model' => $model)); ?>
         <div class="summary-bottom-left">
             <div class="summary-talents" id="summary-talents">
                 <ul>
