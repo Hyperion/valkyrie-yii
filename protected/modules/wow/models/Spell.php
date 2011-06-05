@@ -395,4 +395,9 @@ class Spell extends CActiveRecord
 
             $this->info = str_replace($match[0], $effectMiscValue, $this->info);
         }
+        
+        public function getIconName()
+        {
+            return trim($this->dbConnection->createCommand("SELECT iconname FROM wow_spellicons WHERE id = {$this->spellID}")->queryScalar());
+        }
 }
