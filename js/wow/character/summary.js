@@ -525,22 +525,10 @@ Summary.Stats = function(data) {
 				MsgSummary.stats.rage.description
 			];
 		},
-		'power-2': function() { // Focus
-			return [
-				'<h3>' + Core.msg(MsgSummary.stats.focus.title, data.power) + '</h3>',
-				MsgSummary.stats.focus.description
-			];
-		},
 		'power-3': function() { // Energy
 			return [
 				'<h3>' + Core.msg(MsgSummary.stats.energy.title, data.power) + '</h3>',
 				MsgSummary.stats.energy.description
-			];
-		},
-		'power-6': function() { // Runic
-			return [
-				'<h3>' + Core.msg(MsgSummary.stats.runic.title, data.power) + '</h3>',
-				MsgSummary.stats.runic.description
 			];
 		},
 
@@ -587,27 +575,6 @@ Summary.Stats = function(data) {
 			}
 			return res;
 		},
-		mastery: function() {
-			var res = [
-				'<h3>' + Core.msg(MsgSummary.stats.mastery.title, data.mastery.toFixed(2)) + '</h3>',
-				Core.msg(MsgSummary.stats.mastery.description, data.masteryRating, data.masteryRatingBonus.toFixed(2))
-			];
-
-			var masteryKnown = !!(data.masteryName && data.masteryDescription);
-			var specced = $('#profile-info-spec').length > 0;
-
-			if(masteryKnown && specced) {
-				res.push('<br /><h3 class="color-q1">' + data.masteryName + '</h3>');
-				res.push(data.masteryDescription);
-			} else {
-				if(specced) {
-					res.push('<br /><span class="color-q0">' + MsgSummary.stats.mastery.unknown + '</span>');
-				} else {
-					res.push('<br /><span class="color-q0">' + MsgSummary.stats.mastery.unspecced + '</span>');
-				}
-			}
-			return res;
-		},
 
 		// Melee
 		meleedamage: function() {
@@ -640,24 +607,10 @@ Summary.Stats = function(data) {
 				)) + '</h3>'
 			];
 		},
-		meleehaste: function() {
-			return [
-				'<h3>' + Core.msg(MsgSummary.stats.meleeHaste.title, data.hasteRatingPercent.toFixed(PERCENT_DECIMALS)) + '</h3>',
-				MsgSummary.stats.meleeHaste.description2,
-				Core.msg(MsgSummary.stats.meleeHaste.description, data.hasteRating, data.hasteRatingPercent.toFixed(PERCENT_DECIMALS))
-			];
-		},
-		meleehit: function() {
-			return [
-				'<h3>' + Core.msg(MsgSummary.stats.meleeHit.title, data.hitRatingPercent.toFixed(PERCENT_DECIMALS)) + '</h3>',
-				Core.msg(MsgSummary.stats.meleeHit.description, data.hitRating, data.hitRatingPercent.toFixed(PERCENT_DECIMALS))
-			];
-		},
 		meleecrit: function() {
 			return [
 				'<h3>' + Core.msg(MsgSummary.stats.meleeCrit.title, data.critPercent.toFixed(PERCENT_DECIMALS)) + '</h3>',
-				MsgSummary.stats.meleeCrit.description2,
-				Core.msg(MsgSummary.stats.meleeCrit.description, data.critRating, data.critRatingPercent.toFixed(PERCENT_DECIMALS))
+				MsgSummary.stats.meleeCrit.description
 			];
 		},
 		expertise: function() {
@@ -722,8 +675,7 @@ Summary.Stats = function(data) {
 		rangedcrit: function() {
 			return [
 				'<h3>' + Core.msg(MsgSummary.stats.rangedCrit.title, data.rangeCritPercent.toFixed(PERCENT_DECIMALS)) + '</h3>',
-				MsgSummary.stats.rangedCrit.description2,
-				Core.msg(MsgSummary.stats.rangedCrit.description, data.rangeCritRating, data.rangeCritRatingPercent.toFixed(PERCENT_DECIMALS))
+				MsgSummary.stats.rangedCrit.description
 			];
 		},
 
@@ -737,31 +689,10 @@ Summary.Stats = function(data) {
 				res.push(Core.msg(MsgSummary.stats.increases.petAttackPowerSpellDamage, data.spellDmg_petAp, data.spellDmg_petSpellDmg));
 			return res;
 		},
-
-		spellhaste: function() {
-			return [
-				'<h3>' + Core.msg(MsgSummary.stats.spellHaste.title, data.hasteRatingPercent.toFixed(PERCENT_DECIMALS)) + '</h3>',
-				MsgSummary.stats.spellHaste.description2,
-				Core.msg(MsgSummary.stats.spellHaste.description, data.hasteRating, data.hasteRatingPercent.toFixed(PERCENT_DECIMALS))
-			];
-		},
-		spellhit: function() {
-			return [
-				'<h3>' + Core.msg(MsgSummary.stats.spellHit.title, data.spellHitRatingPercent.toFixed(PERCENT_DECIMALS)) + '</h3>',
-				Core.msg(MsgSummary.stats.spellHit.description, data.spellHitRating, data.spellHitRatingPercent.toFixed(PERCENT_DECIMALS))
-			];
-		},
 		spellcrit: function() {
 			return [
 				'<h3>' + Core.msg(MsgSummary.stats.spellCrit.title, data.spellCritPercent.toFixed(PERCENT_DECIMALS)) + '</h3>',
-				MsgSummary.stats.spellCrit.description2,
-				Core.msg(MsgSummary.stats.spellCrit.description, data.spellCritRating, data.spellCritRatingPercent.toFixed(PERCENT_DECIMALS))
-			];
-		},
-		spellpenetration: function() {
-			return [
-				'<h3>' + Core.msg(MsgSummary.stats.spellPenetration.title, data.spellPenetration) + '</h3>',
-				Core.msg(MsgSummary.stats.decreases.enemyRes, 0)
+				MsgSummary.stats.spellCrit.description
 			];
 		},
 		manaregen: function() {
@@ -791,28 +722,19 @@ Summary.Stats = function(data) {
 		dodge: function() {
 			return [
 				'<h3>' + Core.msg(MsgSummary.stats.dodge.title, data.dodge.toFixed(PERCENT_DECIMALS)) + '</h3>',
-				Core.msg(MsgSummary.stats.dodge.description, data.dodgeRating, data.dodgeRatingPercent.toFixed(PERCENT_DECIMALS)),
 				'<span class="color-q0">' + MsgSummary.stats.beforeReturns + '</span>'
 			];
 		},
 		parry: function() {
 			return [
 				'<h3>' + Core.msg(MsgSummary.stats.parry.title, data.parry.toFixed(PERCENT_DECIMALS)) + '</h3>',
-				Core.msg(MsgSummary.stats.parry.description, data.parryRating, data.parryRatingPercent.toFixed(PERCENT_DECIMALS)),
 				'<span class="color-q0">' + MsgSummary.stats.beforeReturns + '</span>'
 			];
 		},
 		block: function() {
 			return [
 				'<h3>' + Core.msg(MsgSummary.stats.block.title, data.block.toFixed(PERCENT_DECIMALS)) + '</h3>',
-				Core.msg(MsgSummary.stats.block.description2, data.block_damage.toFixed(PERCENT_DECIMALS)),
-				Core.msg(MsgSummary.stats.block.description, data.blockRating, data.blockRatingPercent.toFixed(PERCENT_DECIMALS))
-			];
-		},
-		resilience: function() {
-			return [
-				'<h3>' + Core.msg(MsgSummary.stats.resilience.title, data.resilience) + '</h3>',
-				Core.msg(MsgSummary.stats.resilience.description, (data.resilience_damage).toFixed(PERCENT_DECIMALS))
+				Core.msg(MsgSummary.stats.block.description, data.block_damage.toFixed(PERCENT_DECIMALS))
 			];
 		},
 

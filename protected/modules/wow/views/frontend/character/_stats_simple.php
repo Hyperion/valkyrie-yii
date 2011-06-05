@@ -70,7 +70,7 @@ $this->widget('WSummaryStatsColumn', array(
 		),
 		array(
 			'label' => 'DPS',
-			'value' => 0,
+			'value' => ($model->isOffhandWeapon()) ? $model->stats->mainDps.'/'.$model->stats->offDps : $model->stats->mainDps,
 			'itemOptions' => array('data-id' => 'meleedps'),
 		),
 		array(
@@ -79,8 +79,8 @@ $this->widget('WSummaryStatsColumn', array(
 			'itemOptions' => array('data-id' => 'meleeattackpower'),
 		),
 		array(
-			'label' => 'Speed',
-			'value' => $model->stats->mainAttSpeed,
+			'label' => 'Attack Speed',
+			'value' => ($model->isOffhandWeapon()) ? round($model->stats->mainAttSpeed, 2).'/'.round($model->stats->offAttSpeed, 2) : round($model->stats->mainAttSpeed, 2),
 			'itemOptions' => array('data-id' => 'meleespeed'),
 		),
 		array(
@@ -97,12 +97,12 @@ $this->widget('WSummaryStatsColumn', array(
 	'items' => array(
 		array(
 			'label' => 'Damage',
-			'value' => $model->stats->rangeMinDmg.' - '.$model->stats->rangeMaxDmg,
+			'value' => ($model->isRangedWeapon()) ? $model->stats->rangeMinDmg.' - '.$model->stats->rangeMaxDmg : '--',
 			'itemOptions' => array('data-id' => 'rangeddamage'),
 		),
 		array(
 			'label' => 'DPS',
-			'value' => 0,
+			'value' => ($model->isRangedWeapon()) ? $model->stats->rangedDps : '--',
 			'itemOptions' => array('data-id' => 'rangeddps'),
 		),
 		array(
@@ -111,8 +111,8 @@ $this->widget('WSummaryStatsColumn', array(
 			'itemOptions' => array('data-id' => 'rangedattackpower'),
 		),
 		array(
-			'label' => 'Speed',
-			'value' => $model->stats->rangeAttSpeed,
+			'label' => 'Attack Speed',
+			'value' => ($model->isRangedWeapon()) ? $model->stats->rangeAttSpeed : '--',
 			'itemOptions' => array('data-id' => 'rangedspeed'),
 		),
 		array(
@@ -125,7 +125,14 @@ $this->widget('WSummaryStatsColumn', array(
 
 $this->widget('WSummaryStatsColumn', array(
 	'title' => 'Spell',
-	'visible' => ($model->role == $model::ROLE_CASTER OR $model->role == $model::ROLE_HEALER), 
+	'visible' => ($model->role == $model::ROLE_CASTER OR $model->role == $model::ROLE_HEALER),
+	'items' => array(
+		array(
+			'label' => 'Crit',
+			'value' => ($model->powerType == $model::POWER_MANA) ? round(max($model->stats->spellCritPctHoly, $model->stats->spellCritPctFire, $model->stats->spellCritPctNature, $model->stats->spellCritPctFrost, $model->stats->spellCritPctShadow, $model->stats->spellCritPctArcane), 2).'%' : '--',
+			'itemOptions' => array('data-id' => 'spellcrit'),
+		),
+	), 
 ));
 
 $this->widget('WSummaryStatsColumn', array(

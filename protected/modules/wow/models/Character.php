@@ -271,6 +271,7 @@ class Character extends CActiveRecord
                         'display_id'    => $proto->displayid,
                         'quality'       => $proto->Quality,
                         'item_level'    => $proto->ItemLevel,
+						'class'         => $proto->class,
                         'enchant_id'    => $this->equipmentCache[$i+1],
                         'enchant_item'  => 0,
                         'enchant_text'  => '',
@@ -343,6 +344,16 @@ class Character extends CActiveRecord
 			if($entry == $this->equipmentCache[$i])
 				return true;
 		return false;
+	}
+
+	public function isOffhandWeapon()
+	{
+		return(isset($this->items[self::EQUIPMENT_SLOT_OFFHAND]['class']) && $this->items[self::EQUIPMENT_SLOT_OFFHAND]['class'] == ItemTemplate::ITEM_CLASS_WEAPON);
+	}
+
+	public function isRangedWeapon()
+	{
+		return(isset($this->items[self::EQUIPMENT_SLOT_RANGED]['class']) && $this->items[self::EQUIPMENT_SLOT_RANGED]['class'] == ItemTemplate::ITEM_CLASS_WEAPON);
 	}
 
     public function getPowerType()

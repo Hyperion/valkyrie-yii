@@ -38,4 +38,19 @@ class CharacterStats extends CActiveRecord
 				LIMIT 1")->queryRow();
 		return $this->_levelStats;
 	}
+	
+	public function getMainDps()
+	{
+		return round(($this->mainMinDmg + $this->mainMaxDmg) / 2 / $this->mainAttSpeed, 1);
+	}
+	
+	public function getOffDps()
+	{
+		return round(($this->offMinDmg + $this->offMaxDmg) / 2 / $this->offAttSpeed, 1);
+	}
+
+	public function getRangedDps()
+	{
+		return round(($this->rangeMinDmg + $this->rangeMaxDmg) / 2 / $this->rangeAttSpeed, 1);
+	}
 }

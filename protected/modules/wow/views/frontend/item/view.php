@@ -7,7 +7,7 @@ if(isset($model->class))
     $this->breadcrumbs[$model->class_text] = array("/wow/item?classId={$model->class}");
 if(isset($model->subclass))
     $this->breadcrumbs[$model->subclass_text] = array("/wow/item?classId={$model->class}&subClassId={$model->subclass}");
-if(isset($model->InventoryType))
+if(isset($model->InventoryType) and $model->class == $model::ITEM_CLASS_ARMOR)
     $this->breadcrumbs[$model::itemAlias('invtype', $model->InventoryType)] = array("/wow/item?classId={$model->class}&subClassId={$model->subclass}&invType={$model->InventoryType}");
 $this->breadcrumbs[$model->name] = array("/wow/item/{$model->entry}");
 ?>

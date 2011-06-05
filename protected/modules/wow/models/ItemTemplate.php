@@ -171,6 +171,7 @@ class ItemTemplate extends CActiveRecord
     {
         return $this->_icon;
     }
+
     protected function afterFind()
     {
         parent::afterFind();
