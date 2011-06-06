@@ -35,8 +35,11 @@ $this->breadcrumbs=array(
             'type'=>'raw',
             'value'=>'CHtml::image("/images/wow/icons/faction/$data->faction.gif")',
             'name'=>'faction',
-            'sortable'=>true,
+            'sortable'=>false,
         ),
-	'realm',
+		array(
+			'name' => 'realm',
+			'sortable' => false,
+		),
     ),
 )); ?>
