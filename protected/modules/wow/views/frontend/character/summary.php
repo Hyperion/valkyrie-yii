@@ -143,11 +143,11 @@ switch($this->action->id)
 switch($this->action->id)
 {
     case 'simple': default:
-        $this->renderPartial('_stats_simple', array('model' => $model));
+        $this->renderPartial('_stats_simple', array('model' => $model->stats));
         break;
 }
 
-$this->renderPartial('_stats_js', array('model' => $model));
+$this->renderPartial('_stats_js', array('model' => $model->stats));
 ?>
                 </div>
 <?php $this->renderPartial('_bg_professions', array('model' => $model)); ?>
