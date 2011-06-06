@@ -25,7 +25,7 @@
 			"dmgRangeDps": <?=$model->stats->rangedDps?>,
 			"frostCrit": <?=$model->stats->spellCritPctFrost?>,
 			"resistShadow_pet": -1,
-			"natureResist": <?=$model->stats->resNature?>0,
+			"natureResist": <?=$model->stats->resNature?>,
 			"intTotal": <?=$model->stats->intellect?>,
 			"frostResist": <?=$model->stats->resFrost?>,
 			"int_mp": 33920,

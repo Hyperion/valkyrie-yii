@@ -110,9 +110,9 @@ class Character extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'honor_highest_rank' => 'Highest Rank',
+            'honor_highest_rank' => 'Max Rank',
             'honor_standing' => 'Standing',
-            'honor_rank_points' => 'Rank Points',
+            'honor_rank_points' => 'RP',
         );
     }
 
@@ -155,7 +155,8 @@ class Character extends CActiveRecord
 
     public function search($all_realms = false)
     {
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
+		$sort = new CSort;
 
         $criteria->compare('name',$this->name,true);
         $criteria->compare('race',$this->race);
@@ -169,6 +170,19 @@ class Character extends CActiveRecord
         {
             $criteria->compare('honor_standing','>0');
             $criteria->with = 'honor';
+			$sort->attributes = array(
+				'name'                 => 'name',
+            	'honor.hk'             => 'honor.hk',
+				'level'                => 'level',
+				'race'                 => 'race',
+				'class'                => 'class',
+				'honor_standing'       => 'honor_standing',
+				'honor_highest_rank'   => 'honor_highest_rank',
+				'honor_rank_points'    => 'honor_rank_points',
+				'honor.thisWeek_cp'    => 'honor.thisWeek_cp',
+				'honor.thisWeek_kills' => 'honor.thisWeek_kills',		
+            );
+			$sort->defaultOrder = 'honor_standing ASC';
         }
 
         if(isset($_GET['Character']['faction']))
@@ -181,11 +195,12 @@ class Character extends CActiveRecord
         }
         
         return new CMultirealmDataProvider(get_class($this), array(
-            'all_realms'=>$all_realms,
-            'criteria'=>$criteria,
-            'pagination'=> array(
-                'pageSize'=> 40,
+            'all_realms' => $all_realms,
+            'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => 40,
             ),
+			'sort' => $sort,
         ));
     }
 

@@ -1,7 +1,8 @@
 <?php
 $this->breadcrumbs=array(
-    'Statistic'=>array('index'),
-    'PvP',
+	'Game'                    => array('/wow'),
+    'Statistic'				  => array('/wow/statistic'),
+	Database::$realm.' @ PvP' => array('/wow/statistic/pvp', 'realm' => Database::$realm),
 );
 ?>
 
@@ -62,7 +63,6 @@ $this->breadcrumbs=array(
         ),
         array(
             'name'=>'honor.hk',
-            'sortable'=>false,
         ),
         'honor_standing',
         array(
@@ -81,11 +81,9 @@ $this->breadcrumbs=array(
         ),
         array(
             'name' => 'honor.thisWeek_cp',
-            'sortable' => false,
         ),
         array(
             'name' => 'honor.thisWeek_kills',
-            'sortable' => false,
         ),
     ),
 )); ?>
