@@ -3,7 +3,12 @@
 	<ul>
 		<li class="rating">
 			<span class="name">PvP Rank</span>
-			<span class="value"><?=$model->honorRank?></span>
+			<span class="value">
+				<?php if ($model->honorRank > 4) {?>
+					<img src="/images/wow/icons/rank/PvPRank0<?=$model->honorRank?>.png">
+				<?php } else?>
+				None
+			</span>
 			<span class="clear"><!-- --></span>
 		</li>
 		<li class="kills">
