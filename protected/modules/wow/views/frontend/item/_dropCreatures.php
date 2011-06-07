@@ -12,20 +12,23 @@
     'columns'=>array(
 		array(
 			'type' => 'raw',
-			'name' => 'name',
+			'name' => 'Name',
 			'value' => 'CHtml::link(
 				"<strong>{$data[\'name\']}</strong>",
 				array("/wow/creature/view", "id" => $data[\'entry\']))',
 		),
 		array(
-			'name' => 'type',
+			'name' => 'Type',
 			'value' => 'CreatureTemplate::itemAlias("type",$data["type"])',
 		),
 		array(
-			'name' => 'level',
+			'name' => 'Level',
 			'value' => '($data["minlevel"] == $data["maxlevel"]) ? $data["maxlevel"] : $data["minlevel"]." - ".$data["maxlevel"]',
 		),
-		'percent',
+		array(
+			'name' => 'Drop Chance',
+			'value' => 'round($data["percent"], 2)." %"'
+		),
     ),
 )); ?>
 	<script type="text/javascript"> 

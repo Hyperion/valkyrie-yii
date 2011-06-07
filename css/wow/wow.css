@@ -466,8 +466,12 @@ tr:hover .fansite-link,
 .table .sort-link:hover { color: #fff; background: #6a240b url("/images/wow/content/table-header-hover.gif") 0 100% repeat-x; border-top-color: #af3900; border-left-color: #af3900 }
 .table .sort-link .arrow { padding-left: 10px; background: url("/images/wow/content/table-sort-arrows.gif") 0 -10px no-repeat }
 .table .sort-link:hover .arrow { background-position: 0 -115px }
+.table .sort-link .arrow.up,
+.table .sort-link:hover .arrow.up,
 .table .sort-link.desc .arrow,
 .table .sort-link.desc:hover .arrow { background-position: 0 -80px }
+.table .sort-link .arrow.down,
+.table .sort-link:hover .arrow.down,
 .table .sort-link.asc .arrow,
 .table .sort-link.asc:hover .arrow { background-position: 0 -45px }
 .table .sort-data.hidden { display: none; } /* table specificity for ie6 */

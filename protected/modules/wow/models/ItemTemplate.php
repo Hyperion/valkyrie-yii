@@ -444,11 +444,6 @@ class ItemTemplate extends CActiveRecord
 					$droppedby[] = array_merge($row->attributes, $drop);
 			}
 		}
-
-		$sort = new CSort;
-		$sort->attributes = array(
-			'name' => 'name',
-		);
 		$dataProvider = new CArrayDataProvider($droppedby, array(
 			'keyField' => 'entry',
 			'pagination' => false,

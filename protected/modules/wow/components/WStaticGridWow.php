@@ -157,10 +157,7 @@ class WStaticGridWow extends CWidget
             echo CHtml::openTag('th',$column->headerHtmlOptions);
             
             $label = CHtml::encode($column->name);
-            echo CHtml::link("<span class = \"arrow\">{$label}</span>",
-                   array('javascript:;'),
-                array('class' => 'sort-link',)
-            );
+            echo '<a href="javascript:;" class="sort-link"><span class = "arrow">'.$label.'</span></a>';
             echo '</th>';
         }
         echo "</tr>\n";
