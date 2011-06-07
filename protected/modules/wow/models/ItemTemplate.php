@@ -432,9 +432,9 @@ class ItemTemplate extends CActiveRecord
 
 	public function getDropCreatures()
 	{
-		//$dropCreatures = Yii::app()->cache->get('item_'.$this->entry.'_dropCreatures');
-		//if($dropCreatures === false)
-		//{
+		$dropCreatures = Yii::app()->cache->get('item_'.$this->entry.'_dropCreatures');
+		if($dropCreatures === false)
+		{
 			$drops_cr = WowDropLoot::drop('creature_loot_template',$this->entry);
 			$dropCreatures = array();		
 
@@ -451,8 +451,8 @@ class ItemTemplate extends CActiveRecord
 						$dropCreatures[] = array_merge($row, $drop);
 				}
 			}
-		//	Yii::app()->cache->set('item_'.$this->entry.'_dropCreatures', $dropCreatures);
-		//}
+			Yii::app()->cache->set('item_'.$this->entry.'_dropCreatures', $dropCreatures);
+		}
 
 		$dataProvider = new CArrayDataProvider($dropCreatures, array(
 			'keyField' => 'entry',
@@ -463,9 +463,9 @@ class ItemTemplate extends CActiveRecord
 
 	public function getDropCreaturesCount()
 	{
-		//$count = Yii::app()->cache->get('item_'.$this->entry.'_dropCreaturesCount');
-		//if($count === false)
-		//{
+		$count = Yii::app()->cache->get('item_'.$this->entry.'_dropCreaturesCount');
+		if($count === false)
+		{
 			$drops_cr = WowDropLoot::drop('creature_loot_template',$this->entry);
         	$count = 0;
 
@@ -478,8 +478,8 @@ class ItemTemplate extends CActiveRecord
                         	WHERE lootid = {$lootid}")
 	                    ->queryScalar();
     	    }
-		//	Yii::app()->cache->set('item_'.$this->entry.'_dropCreaturesCount', $count);
-		//}
+			Yii::app()->cache->set('item_'.$this->entry.'_dropCreaturesCount', $count);
+		}
 
         return $count;
 	}
