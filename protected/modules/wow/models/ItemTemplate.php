@@ -430,24 +430,57 @@ class ItemTemplate extends CActiveRecord
             ->queryScalar();
     }
 
-	public function getDroppedBy()
+	public function getDropCreatures()
 	{
-		$drops_cr = WowDropLoot::drop('creature_loot_template',$this->entry);
-		$droppedby = array();		
+		//$dropCreatures = Yii::app()->cache->get('item_'.$this->entry.'_dropCreatures');
+		//if($dropCreatures === false)
+		//{
+			$drops_cr = WowDropLoot::drop('creature_loot_template',$this->entry);
+			$dropCreatures = array();		
 
-		if ($drops_cr)
-		{
-			foreach($drops_cr as $lootid => $drop)
+			if ($drops_cr)
 			{
-				$rows = CreatureTemplate::model()->findAll('lootid = ?', array($lootid));
-				foreach ($rows as $numRow => $row)
-					$droppedby[] = array_merge($row->attributes, $drop);
-			}
-		}
-		$dataProvider = new CArrayDataProvider($droppedby, array(
+				foreach($drops_cr as $lootid => $drop)
+				{
+					$rows = $this->dbConnection->createCommand("
+							SELECT entry, name, type, minlevel, maxlevel
+							FROM creature_template
+							WHERE lootid = {$lootid}")
+						->queryAll();
+					foreach ($rows as $numRow => $row)
+						$dropCreatures[] = array_merge($row, $drop);
+				}
+		//	}
+		//	Yii::app()->cache->set('item_'.$this->entry.'_dropCreatures', $dropCreatures);
+		//}
+
+		$dataProvider = new CArrayDataProvider($dropCreatures, array(
 			'keyField' => 'entry',
 			'pagination' => false,
 		));
 		return $dataProvider;
+	}
+
+	public function getDropCreaturesCount()
+	{
+		//$count = Yii::app()->cache->get('item_'.$this->entry.'_dropCreaturesCount');
+		//if($count === false)
+		//{
+			$drops_cr = WowDropLoot::drop('creature_loot_template',$this->entry);
+        	$count = 0;
+
+	        if ($drops_cr)
+    	    {
+        	    foreach($drops_cr as $lootid => $drop)
+            	    $count += $this->dbConnection->createCommand("
+                	        SELECT count(1)
+                    	    FROM creature_template
+                        	WHERE lootid = {$lootid}")
+	                    ->queryScalar();
+    	    }
+		//	Yii::app()->cache->set('item_'.$this->entry.'_dropCreaturesCount', $count);
+		//}
+
+        return $count;
 	}
 }

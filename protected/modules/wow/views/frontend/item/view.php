@@ -40,8 +40,8 @@ $this->breadcrumbs[$model->name] = array("/wow/item/{$model->entry}");
 <?php
 
 $tabs = array();
-if($model->droppedBy->totalItemCount)
-	$tabs["Добыча с: (".$model->droppedBy->totalItemCount.")"] = array('ajax'=>'/wow/item/dropCreatures/id/'.$model->entry);
+if($model->dropCreaturesCount)
+	$tabs["Добыча с: (".$model->dropCreaturesCount.")"] = array('ajax'=>'/wow/item/dropCreatures/id/'.$model->entry);
 $this->widget('zii.widgets.jui.CJuiTabs', array(
     'tabs'=> $tabs,
 	'cssFile' => false,

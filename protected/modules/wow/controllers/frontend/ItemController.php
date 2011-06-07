@@ -50,7 +50,7 @@ class ItemController extends Controller
 	public function actionDropCreatures($id)
 	{
 		$model = $this->loadModel($id);
-		$dataProvider = $model->droppedBy;
+		$dataProvider = $model->dropCreatures;
 
 		$this->renderPartial('_dropCreatures', array('dataProvider' => $dataProvider));
 	}
