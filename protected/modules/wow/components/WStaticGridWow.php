@@ -14,6 +14,8 @@ class WStaticGridWow extends CWidget
     public $template;
     public $htmlOptions = array();
     public $summaryText;
+    public $showTableOnEmpty = true;
+    public $emptyText = 'Нет данных для отображения';
     
     public function init()
     {

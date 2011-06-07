@@ -55,6 +55,14 @@ class ItemController extends Controller
 		$this->renderPartial('_dropCreatures', array('dataProvider' => $dataProvider));
 	}
 
+    public function actionDisenchantItems($id)
+    {
+        $model = $this->loadModel($id);
+        $dataProvider = $model->disenchantItems;
+
+        $this->renderPartial('_items', array('dataProvider' => $dataProvider));
+    }
+
     public function loadModel($id)
     {
         $model = ItemTemplate::model()->findByPk($id);

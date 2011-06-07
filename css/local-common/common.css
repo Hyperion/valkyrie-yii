@@ -132,7 +132,7 @@ a.ui-button.imgbutton span span span { padding: 0 5px; }
 
 /* pagination */
 .ui-pagination { height: 22px; overflow: hidden }
-.ui-pagination li { display: inline-block; }
+.ui-pagination li { display: inline-block; margin: 0px 1px;}
 .ui-pagination li a,
 .ui-pagination li.expander { padding: 0 10px; height: 22px; display: block; text-align: center; line-height: 22px }
 .ui-pagination li.expander { display: inline-block; font-weight: bold; }

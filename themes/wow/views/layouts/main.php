@@ -70,5 +70,89 @@ $(function(){
 //
 Menu.initialize('/data/menu.json');
 });
+</script>
+<script type="text/javascript"> 
+//<![CDATA[
+var xsToken = '';
+var Msg = {
+support: {
+ticketNew: 'Открыт запрос № {0}.',
+ticketStatus: 'Запросу № {0} присвоен статус «{1}».',
+ticketOpen: 'Открыт',
+ticketAnswered: 'Дан ответ',
+ticketResolved: 'Разрешен',
+ticketCanceled: 'Отменен',
+ticketArchived: 'Перемещен в архив',
+ticketInfo: 'Уточнить',
+ticketAll: 'Все запросы'
+},
+cms: {
+requestError: 'Ваш запрос не может быть завершен.',
+ignoreNot: 'Этот пользователь не в черном списке.',
+ignoreAlready: 'Этот пользователь уже в черном списке.',
+stickyRequested: 'Отправлена просьба прикрепить тему.',
+postAdded: 'Сообщение отслеживается',
+postRemoved: 'Сообщение больше не отслеживается',
+userAdded: 'Сообщения пользователя отслеживаются',
+userRemoved: 'Сообщения пользователя больше не отслеживается',
+validationError: 'Обязательное поле не заполнено',
+characterExceed: 'В сообщении превышено допустимое число символов.',
+searchFor: "Поиск по",
+searchTags: "Помеченные статьи:",
+characterAjaxError: "Возможно, вы вышли из системы. Обновите страницу и повторите попытку.",
+ilvl: "Уровень предмета",
+shortQuery: "Запрос для поиска должен состоять не менее чем из двух букв."
+},
+bml: {
+bold: 'Полужирный',
+italics: 'Курсив',
+underline: 'Подчеркивание',
+list: 'Несортированный список',
+listItem: 'Список',
+quote: 'Цитирование',
+quoteBy: 'Размещено {0}',
+unformat: 'Отменить форматирование',
+cleanup: 'Исправить переносы строки',
+code: 'Код',
+item: 'Предмет WoW',
+itemPrompt: 'Идентификатор предмета:',
+url: 'Адрес',
+urlPrompt: 'Адрес страницы:'
+},
+ui: {
+viewInGallery: 'Галерея',
+loading: 'Подождите, пожалуйста.',
+unexpectedError: 'Произошла ошибка.',
+fansiteFind: 'Найти на…',
+fansiteFindType: '{0}: поиск на…',
+fansiteNone: 'Нет доступных сайтов.'
+},
+grammar: {
+colon: '{0}:',
+first: 'Первая стр.',
+last: 'Последняя стр.'
+},
+fansite: {
+achievement: 'Достжение',
+character: 'Персонаж',
+faction: 'Фракция',
+'class': 'Класс',
+object: 'Объект',
+talentcalc: 'Таланты',
+skill: 'Профессия',
+quest: 'Задание',
+spell: 'Заклинания',
+event: 'Событие',
+title: 'Звание',
+arena: 'Команда Арены',
+guild: 'Гильдия',
+zone: 'Территория',
+item: 'Предмет',
+race: 'Раса',
+npc: 'НПС',
+pet: 'Питомец'
+}
+};
+//]]>
 </script> 
 </body></html>

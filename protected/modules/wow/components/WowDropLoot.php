@@ -2,7 +2,148 @@
 
 class WowDropLoot
 {
-    static $loot_groups;
+	private static function add_loot(&$loot, $newloot)
+	{
+		// Записываем все существующие в луте итемы в массив
+		$e = array();
+		foreach($loot as $offset => $item)
+			$e[$item['entry']] = $offset;
+
+		foreach($newloot as $newitem)
+		{
+			// MUST NOT HAPPEN
+			if(!is_array($newitem))
+				return;
+			// Если в луте есть такая вещь
+			if(isset($e[$newitem['entry']]))
+			{
+				$loot[$e[$item['entry']]]['mincount'] = min($loot[$e[$item['entry']]]['mincount'], $newitem['mincount']);
+				$loot[$e[$item['entry']]]['maxcount'] = max($loot[$e[$item['entry']]]['maxcount'], $newitem['maxcount']);
+				$loot[$e[$item['entry']]]['percent'] += $newitem['percent'];
+				$loot[$e[$item['entry']]]['group'] = 0;
+			}
+			else
+				$loot[] = $newitem;
+		}
+	}
+
+	public static function loot($table, $lootid, $mod = 1)
+	{
+		// Все элементы
+		$loot = array();
+		$groups = array();
+		// Мего запрос :)
+		$rows = Yii::app()->db_world->createCommand("
+			SELECT 
+				l.ChanceOrQuestChance, 
+				l.mincountOrRef, 
+				l.maxcount,
+				l.groupid,
+				i.displayid,
+				i.entry,
+				i.name,
+				i.itemLevel,
+				i.Quality
+			FROM  {$table} l
+			LEFT JOIN item_template i ON l.item=i.entry
+			WHERE
+				l.entry= {$lootid}
+			ORDER BY groupid ASC, ChanceOrQuestChance DESC")->queryAll();
+	
+
+		$last_group = 0;
+		$last_group_equal_chance = 100;
+		// Перебираем
+		foreach($rows as $row)
+		{
+			// Не группа
+			if($row['groupid'] == 0)
+			{
+				// Ссылка
+				if($row['mincountOrRef'] < 0)
+					self::add_loot($loot, self::loot('reference_loot_template', -$row['mincountOrRef'], abs($row['ChanceOrQuestChance']) / 100 * $row['maxcount'] * $mod));
+				else
+					// Обыкновенный дроп
+					self::add_loot($loot, array(array(
+						'percent'   => max(abs($row['ChanceOrQuestChance']) * $mod, 0),
+						'mincount'  => $row['mincountOrRef'],
+						'maxcount'  => $row['maxcount'],
+						'entry'		=> $row['entry'],
+						'name'		=> $row['name'],
+						'itemLevel' => $row['itemLevel'],
+						'quality'	=> $row['Quality'],
+						'icon'		=> Yii::app()->db
+            				->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$row['displayid']} LIMIT 1")
+            				->queryScalar(),
+					)));
+			}
+			// Группа
+			else
+			{
+				$chance = abs($row['ChanceOrQuestChance']);
+				// Новая группа?
+				if($row['groupid'] <> $last_group)
+				{
+					$last_group = $row['groupid'];
+					$last_group_equal_chance = 100;
+				}
+
+				// Шанс лута задан
+				if($chance > 0)
+				{
+					$last_group_equal_chance -= $chance;
+					$last_group_equal_chance = max($last_group_equal_chance, 0);
+
+					// Ссылка
+					if($row['mincountOrRef'] < 0)
+					{
+						self::add_loot($loot, self::loot('reference_loot_template', -$row['mincountOrRef'], $chance / 100 * $row['maxcount'] * $mod));
+					}
+					else
+						self::add_loot($loot, array(array(
+							'percent'  => $chance * $mod,
+							'mincount' => $row['mincountOrRef'],
+							'maxcount' => $row['maxcount'],
+							'entry'		=> $row['entry'],
+							'name'		=> $row['name'],
+							'itemLevel' => $row['itemLevel'],
+							'quality'   => $row['Quality'],
+							'icon'		=> Yii::app()->db
+            					->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$row['displayid']} LIMIT 1")
+            					->queryScalar(),
+						)));
+				}
+				// Шанс не задан, добавляем эту группу в группы
+				else
+				{
+					$groups[$last_group][] = array(
+						'mincount' => $row['mincountOrRef'],
+						'maxcount' => $row['maxcount'],
+						'groupchance'=>$last_group_equal_chance * $mod,
+						'entry'		=> $row['entry'],
+						'name'		=> $row['name'],
+						'itemLevel' => $row['itemLevel'],
+						'quality'	=> $row['Quality'],
+						'icon'		=> Yii::app()->db
+            				->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$row['displayid']} LIMIT 1")
+            				->queryScalar(),
+					);
+				}
+			}
+		}
+
+		// Перебираем и добавляем группы
+		foreach($groups as $group)
+		{
+			$num = count($group);
+			foreach($group as $item)
+			{
+				$item['percent'] = $item['groupchance'] / $num;
+				self::add_loot($loot, array($item));
+			}
+		}
+		return $loot;
+	}
 
     public static function drop($table, $item)
     {

@@ -483,4 +483,21 @@ class ItemTemplate extends CActiveRecord
 
         return $count;
 	}
+
+	public function getDisenchantItems()
+	{
+		//$disenchantItems = Yii::app()->cache->get('item_'.$this->DisenchantID.'_disenchantItems');
+        //if($disenchantItems === false)
+        //{
+            $disenchantItems = WowDropLoot::loot('disenchant_loot_template', $this->DisenchantID);
+        //    Yii::app()->cache->set('item_'.$this->DisenchantID.'_disenchantItems', $disenchantItems);
+        //}
+
+        $dataProvider = new CArrayDataProvider($disenchantItems, array(
+            'keyField' => 'entry',
+            'pagination' => false,
+        ));
+        return $dataProvider;
+
+	}
 }

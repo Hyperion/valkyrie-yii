@@ -53,5 +53,22 @@ class CreatureTemplate extends CActiveRecord
                 'pageSize'=> 40,
             ),
         ));
-    }    
+    }
+
+	public function getLoot()
+	{
+		$loot = Yii::app()->cache->get('creature_'.$this->lootid.'_loot');
+        if($loot === false)
+        {
+            $loot = WowDropLoot::loot('creature_loot_template', $this->lootid);
+            Yii::app()->cache->set('creature_'.$this->lootid.'_loot', $loot);
+        }
+
+        $dataProvider = new CArrayDataProvider($loot, array(
+            'keyField' => 'entry',
+            'pagination' => false,
+        ));
+        return $dataProvider;
+	
+	}   
 }

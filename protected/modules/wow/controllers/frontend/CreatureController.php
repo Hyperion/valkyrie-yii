@@ -30,13 +30,16 @@ class CreatureController extends Controller
     public function actionTooltip($id)
     {
         $model = $this->loadModel($id);
-        $data = array();
-
-        if(isset($_REQUEST['data']))
-            $data = $_REQUEST['data'];
-
         $this->renderPartial('tooltip', array('model' => $model));
     }
+
+	public function actionLoot($id)
+	{
+		$model = $this->loadModel($id);
+		$dataProvider = $model->loot;
+
+		$this->renderPartial('/item/_items', array('dataProvider' => $dataProvider));
+	}
 
     public function loadModel($id)
     {

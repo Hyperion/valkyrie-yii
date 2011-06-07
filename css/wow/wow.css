@@ -448,7 +448,7 @@ tr:hover .fansite-link,
 .table-options { color: #855b47; padding: 0 10px; height: 40px; line-height: 40px; background: url("/images/wow/content/table-options-bg.jpg") 50% 0 no-repeat }
 .table-options strong { color: #FEF092 }
 .table-options .input { padding: 1px }
-.table-options .option { float: right; padding-left: 15px }
+.table-options .option { float: right; padding: 15px 10px}
 .table-options .option .input { padding-right: 2px }
 .table-options .ui-pagination { padding: 0; background: none; height: 20px; display: inline }
 .table-options .ui-pagination a { height: 20px; line-height: 20px; color: #ffae00 }
