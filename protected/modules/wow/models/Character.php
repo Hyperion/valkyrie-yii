@@ -156,7 +156,7 @@ class Character extends CActiveRecord
     public function search($all_realms = false)
     {
         $criteria = new CDbCriteria;
-		$sort = new CSort;
+        $sort = new CSort;
 
         $criteria->compare('name',$this->name,true);
         $criteria->compare('race',$this->race);
@@ -170,19 +170,19 @@ class Character extends CActiveRecord
         {
             $criteria->compare('honor_standing','>0');
             $criteria->with = 'honor';
-			$sort->attributes = array(
-				'name'                 => 'name',
-            	'honor.hk'             => 'honor.hk',
-				'level'                => 'level',
-				'race'                 => 'race',
-				'class'                => 'class',
-				'honor_standing'       => 'honor_standing',
-				'honor_highest_rank'   => 'honor_highest_rank',
-				'honor_rank_points'    => 'honor_rank_points',
-				'honor.thisWeek_cp'    => 'honor.thisWeek_cp',
-				'honor.thisWeek_kills' => 'honor.thisWeek_kills',		
+            $sort->attributes = array(
+                'name'                 => 'name',
+                'honor.hk'             => 'honor.hk',
+                'level'                => 'level',
+                'race'                 => 'race',
+                'class'                => 'class',
+                'honor_standing'       => 'honor_standing',
+                'honor_highest_rank'   => 'honor_highest_rank',
+                'honor_rank_points'    => 'honor_rank_points',
+                'honor.thisWeek_cp'    => 'honor.thisWeek_cp',
+                'honor.thisWeek_kills' => 'honor.thisWeek_kills',
             );
-			$sort->defaultOrder = 'honor_standing ASC';
+            $sort->defaultOrder = 'honor_standing ASC';
         }
 
         if(isset($_GET['Character']['faction']))
@@ -200,7 +200,7 @@ class Character extends CActiveRecord
             'pagination' => array(
                 'pageSize' => 40,
             ),
-			'sort' => $sort,
+            'sort' => $sort,
         ));
     }
 
@@ -286,7 +286,7 @@ class Character extends CActiveRecord
                         'display_id'    => $proto->displayid,
                         'quality'       => $proto->Quality,
                         'item_level'    => $proto->ItemLevel,
-						'class'         => $proto->class,
+                        'class'         => $proto->class,
                         'enchant_id'    => $this->equipmentCache[$i+1],
                         'enchant_item'  => 0,
                         'enchant_text'  => '',
@@ -353,23 +353,23 @@ class Character extends CActiveRecord
         return $this->_items;
     }
 
-	public function isEquipped($entry)
-	{
-		for($i = 0; $i < 37; $i += 2)
-			if($entry == $this->equipmentCache[$i])
-				return true;
-		return false;
-	}
+    public function isEquipped($entry)
+    {
+        for($i = 0; $i < 37; $i += 2)
+            if($entry == $this->equipmentCache[$i])
+                return true;
+        return false;
+    }
 
-	public function isOffhandWeapon()
-	{
-		return(isset($this->items[self::EQUIPMENT_SLOT_OFFHAND]['class']) && $this->items[self::EQUIPMENT_SLOT_OFFHAND]['class'] == ItemTemplate::ITEM_CLASS_WEAPON);
-	}
+    public function isOffhandWeapon()
+    {
+        return(isset($this->items[self::EQUIPMENT_SLOT_OFFHAND]['class']) && $this->items[self::EQUIPMENT_SLOT_OFFHAND]['class'] == ItemTemplate::ITEM_CLASS_WEAPON);
+    }
 
-	public function isRangedWeapon()
-	{
-		return(isset($this->items[self::EQUIPMENT_SLOT_RANGED]['class']) && $this->items[self::EQUIPMENT_SLOT_RANGED]['class'] == ItemTemplate::ITEM_CLASS_WEAPON);
-	}
+    public function isRangedWeapon()
+    {
+        return(isset($this->items[self::EQUIPMENT_SLOT_RANGED]['class']) && $this->items[self::EQUIPMENT_SLOT_RANGED]['class'] == ItemTemplate::ITEM_CLASS_WEAPON);
+    }
 
     public function getPowerType()
     {
@@ -645,23 +645,23 @@ class Character extends CActiveRecord
         return $this->_item_level;
     }
 
-	public function getFeed()
-	{
-		$feed = array();
+    public function getFeed()
+    {
+        $feed = array();
 
-		$feed = $this->dbConnection
-			->createCommand("SELECT * FROM character_feed_log WHERE guid = {$this->guid} ORDER BY date ASC LIMIT 5")
-			->queryAll();
+        $feed = $this->dbConnection
+            ->createCommand("SELECT * FROM character_feed_log WHERE guid = {$this->guid} ORDER BY date ASC LIMIT 5")
+            ->queryAll();
 
-		for($i = 0; $i < count($feed); $i++)
-			switch($feed[$i]['type'])
-			{
-				case 2:
-					$feed[$i]['item'] = ItemTemplate::model()->findByPk($feed[$i]['data']);
-					$feed[$i]['equipped'] = $this->isEquipped($feed[$i]['data']);
-	                break;
- 			}
+        for($i = 0; $i < count($feed); $i++)
+            switch($feed[$i]['type'])
+            {
+                case 2:
+                    $feed[$i]['item'] = ItemTemplate::model()->findByPk($feed[$i]['data']);
+                    $feed[$i]['equipped'] = $this->isEquipped($feed[$i]['data']);
+                    break;
+             }
 
-		return $feed;
-	}
+        return $feed;
+    }
 }

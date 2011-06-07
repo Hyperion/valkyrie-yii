@@ -20,6 +20,20 @@ class CreatureTemplate extends CActiveRecord
     public static function itemAlias($type, $code=NULL)
     {
         $_items = array(
+			'type' => array(
+				0 => 'None',
+				1 => 'Beast',
+				2 => 'Dragonkin',
+				3 => 'Demon',
+				4 => 'Elemental',
+				5 => 'Giant',
+				6 => 'Undead',
+				7 => 'Humanoid',
+				8 => 'Critter',
+				9 => 'Mechanical',
+				10 => 'Not Specified',
+				11 => 'Totem',	
+			),
         );
         if (isset($code))
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;

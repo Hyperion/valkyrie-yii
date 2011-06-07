@@ -429,4 +429,30 @@ class ItemTemplate extends CActiveRecord
             ->createCommand("SELECT $column FROM wow_enchantment WHERE id = {$id} LIMIT 1")
             ->queryScalar();
     }
+
+	public function getDroppedBy()
+	{
+		$drops_cr = WowDropLoot::drop('creature_loot_template',$this->entry);
+		$droppedby = array();		
+
+		if ($drops_cr)
+		{
+			foreach($drops_cr as $lootid => $drop)
+			{
+				$rows = CreatureTemplate::model()->findAll('lootid = ?', array($lootid));
+				foreach ($rows as $numRow => $row)
+					$droppedby[] = array_merge($row->attributes, $drop);
+			}
+		}
+
+		$sort = new CSort;
+		$sort->attributes = array(
+			'name' => 'name',
+		);
+		$dataProvider = new CArrayDataProvider($droppedby, array(
+			'keyField' => 'entry',
+			'pagination' => false,
+		));
+		return $dataProvider;
+	}
 }

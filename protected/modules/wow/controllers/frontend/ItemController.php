@@ -47,6 +47,14 @@ class ItemController extends Controller
         $this->renderPartial('tooltip', array('model' => $model, 'data' => $data));
     }
 
+	public function actionDropCreatures($id)
+	{
+		$model = $this->loadModel($id);
+		$dataProvider = $model->droppedBy;
+
+		$this->renderPartial('_dropCreatures', array('dataProvider' => $dataProvider));
+	}
+
     public function loadModel($id)
     {
         $model = ItemTemplate::model()->findByPk($id);
