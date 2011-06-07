@@ -60,7 +60,9 @@
     <li>Item Level <?=$model->ItemLevel?></li>
     <?php endif; foreach($model->spells as $spell): ?>
     <li class="color-q2">
-        <?=$model::itemAlias('spell_trigger', $spell['trigger'])?>: <?=$spell['description']?>
+        <a class = "has-tip" href="/wow/spell/<?=$spell['spellid']?>">
+			<?=$model::itemAlias('spell_trigger', $spell['trigger'])?>: <?=$spell['description']?>
+		</a>
     </li>
        <?php endforeach; if($model->description): ?>
     <li class="color-tooltip-yellow">"<?=$model->description?>"</li>
@@ -90,7 +92,7 @@
     <?php endforeach; ?>
                <li class="indent-top"></li>
     <?php foreach($model->set['bonuses'] as $piece => $spell): ?>
-            <li class="color-<?=(($piece <= $count)?'tooltip-green':'d4')?>">(<?=$piece?>) Set: <?=$spell->info?></li>
+            <li class="color-<?=(($piece <= $count)?'tooltip-green':'d4')?>">(<?=$piece?>) Set: <a class = "has-tip" href="/wow/spell/<?=$spell->spellID?>"><?=$spell->info?></a></li>
     <?php endforeach; ?>
            </ul>
     </li>

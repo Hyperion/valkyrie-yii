@@ -1,2 +1,3 @@
-<div class="wiki-tooltip"><?php $this->renderPartial('_tooltip', array('model' => $model, 'data' => $data)); ?>
+<div class="wiki-tooltip">
+<h3><?=$model->name?></h3>
 </div>

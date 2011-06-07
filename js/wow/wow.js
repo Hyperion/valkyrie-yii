@@ -1,6 +1,8 @@
 
 $(function() {
 	Wow.bindItemTooltips();
+	Wow.bindSpellTooltips();
+	Wow.bindCreatureTooltips();
 	Wow.bindCharacterTooltips();
 	Fansite.initialize();
 });
@@ -37,6 +39,46 @@ var Wow = {
 
 		doc.undelegate('a[href*="/item/"]', 'mouseover.tooltip', callback);
 		doc.delegate('a[href*="/item/"]', 'mouseover.tooltip', callback);
+	},
+	
+	bindSpellTooltips: function() {
+		var doc = $(document);
+		var callback = function() {
+			if (this.href == 'javascript:;' || this.href.indexOf('#') == 0 || this.rel == 'np')
+				return;
+
+			var self = $(this),
+				data = self.data('spell'),
+				href = self.attr('href').replace(Core.baseUrl +'/spell/', ""),
+				id = parseInt(href),
+				query = (data) ? '?'+ data : "";
+
+			if (id && id > 0)
+				Tooltip.show(this, '/spell/tooltip/id/'+ id + query, true);
+		};
+
+		doc.undelegate('a[href*="/spell/"]', 'mouseover.tooltip', callback);
+		doc.delegate('a[href*="/spell/"]', 'mouseover.tooltip', callback);
+	},
+	
+	bindCreatureTooltips: function() {
+		var doc = $(document);
+		var callback = function() {
+			if (this.href == 'javascript:;' || this.href.indexOf('#') == 0 || this.rel == 'np')
+				return;
+
+			var self = $(this),
+				data = self.data('creature'),
+				href = self.attr('href').replace(Core.baseUrl +'/creature/', ""),
+				id = parseInt(href),
+				query = (data) ? '?'+ data : "";
+
+			if (id && id > 0)
+				Tooltip.show(this, '/creature/tooltip/id/'+ id + query, true);
+		};
+
+		doc.undelegate('a[href*="/creature/"]', 'mouseover.tooltip', callback);
+		doc.delegate('a[href*="/creature/"]', 'mouseover.tooltip', callback);
 	},
 
 	/**

@@ -6,6 +6,7 @@ class SpellController extends Controller
 	{
         $this->layout = '//layouts/wiki';
         $model = $this->loadModel($id);
+		$model->formatInfo();
 
         $this->_cs->registerCssFile('/css/wow/wiki/wiki.css');
         $this->_cs->registerCssFile('/css/wow/wiki/item.css');
@@ -30,12 +31,8 @@ class SpellController extends Controller
     public function actionTooltip($id)
     {
         $model = $this->loadModel($id);
-        $data = array();
-
-        if(isset($_REQUEST['data']))
-            $data = $_REQUEST['data'];
-
-        $this->renderPartial('tooltip', array('model' => $model, 'data' => $data));
+		$model->formatInfo();
+        $this->renderPartial('tooltip', array('model' => $model));
     }
 
     public function loadModel($id)

@@ -398,6 +398,15 @@ class Spell extends CActiveRecord
         
         public function getIconName()
         {
-            return trim($this->dbConnection->createCommand("SELECT iconname FROM wow_spellicons WHERE id = {$this->spellicon}")->queryScalar());
+            return trim($this->dbConnection
+				->createCommand("SELECT iconname FROM wow_spellicons WHERE id = {$this->spellicon} LIMIT 1")
+				->queryScalar());
         }
+
+		public function getCastTime()
+		{
+            return $this->dbConnection
+				->createCommand("SELECT base FROM wow_spellcasttimes WHERE id = {$this->spellcasttimesID} LIMIT 1")
+				->queryScalar()/1000;
+		}
 }
