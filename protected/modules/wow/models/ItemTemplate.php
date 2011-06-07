@@ -450,7 +450,7 @@ class ItemTemplate extends CActiveRecord
 					foreach ($rows as $numRow => $row)
 						$dropCreatures[] = array_merge($row, $drop);
 				}
-		//	}
+			}
 		//	Yii::app()->cache->set('item_'.$this->entry.'_dropCreatures', $dropCreatures);
 		//}
 
