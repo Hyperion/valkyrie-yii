@@ -10,12 +10,17 @@
 <?php
 $tabs = array();
 if($model->loot->totalItemCount)
-    $tabs["Добыча (".$model->loot->totalItemCount.")"] = array('ajax'=>'/wow/creature/loot/id/'.$model->entry);
-$this->widget('zii.widgets.jui.CJuiTabs', array(
-    'tabs'=> $tabs,
-    'cssFile' => false,
-    'headerTemplate' => '<li><a href="{url}" data-key="{id}" id="tab-{id}"><span><span>{title}</span></span></a></li>',
-));
-?>
+    $tabs["Добыча (".$model->loot->totalItemCount.")"] = 'loot';
+if(count($tabs)): ?>
+<div class="tabs">
+	<ul id="related-tabs"> 
+<?php foreach($tabs as $tab => $key): ?>
+	<li><a href="#<?=$key?>" data-key="<?=$key?>" data-id="<?=$model->entry?>" id="tab-<?=$key?>"><span><span><?=$tab?></span></span></a></li>
+<?php endforeach; ?> 
+	</ul> 
+	<span class="clear"><!-- --></span> 
+</div> 
+<div id="related-content" class="loading"> 
+<?php endif; ?>
 </div>
 

@@ -78,8 +78,8 @@ var Wiki = {
 		node = $(node);
 
 		// Generate url key
-		var key = node.data('key'),
-			wrapper = $('#related-content');
+		var key = node.data('key'), id = node.data('id'), wrapper = $('#related-content');
+			
 
 		$('#related-tabs a').removeClass('tab-active');
 		
@@ -106,7 +106,7 @@ var Wiki = {
 
 		$.ajax({
 			type: 'GET',
-			url: Wiki.pageUrl + key,
+			url: Wiki.pageUrl + key + '/id/' + id,
 			dataType: 'html',
 			global: false,
 			cache: (key != 'comments'),

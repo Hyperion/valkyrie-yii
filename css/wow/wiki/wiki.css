@@ -82,24 +82,18 @@
 .wiki .related { margin-top: 30px; background: url("/images/wow/wiki/tab-bg.jpg") 0 44px repeat-x; }
 .wiki .related .table-options-top .table-options { background: none; margin: 5px 0; }
 .wiki .related .table-options { padding: 0 15px; }
-
-.ui-tabs { position: relative; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
-.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 0px; background: none; }
-.ui-tabs .ui-tabs-hide { display: none !important; }
-
-.ui-tabs .ui-tabs-nav { display: block; margin-bottom: -1px; padding: 0 15px; }
-.ui-tabs .ui-tabs-nav li { height: 45px; display: inline-block; margin-right: 5px; }
-.ui-tabs .ui-tabs-nav li a { display: inline-block; height: 45px; line-height: 45px; color: #c09a67; background: #35190f url("/images/wow/wiki/tab.jpg") 0 -90px repeat-x; }
-.ui-tabs .ui-tabs-nav li a em { font-style: normal; }
-.ui-tabs .ui-tabs-nav li a span { display: block; background: url("/images/wow/wiki/tab.jpg") 0 0 no-repeat; }
-.ui-tabs .ui-tabs-nav li a span span { height: 45px; padding: 0 20px; background-position: 100% -45px; }
-.ui-tabs .ui-tabs-nav li a:hover { color: #fff; background-color: #48281b; background-position: 0 -225px; }
-.ui-tabs .ui-tabs-nav li a:hover span { background-position: 0 -135px; }
-.ui-tabs .ui-tabs-nav li a:hover span span { background-position: 100% -180px; }
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected a { color: #fff; font-weight: bold; background-color: #611f04; background-position: 0 -360px; }
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected a span { background-position: 0 -270px; }
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected a span span { background-position: 100% -315px; }
-
+.wiki .related .tabs { display: block; margin-bottom: -1px; padding: 0 15px; }
+.wiki .related .tabs li { height: 45px; display: inline-block; margin-right: 5px; }
+.wiki .related .tabs li a { display: inline-block; height: 45px; line-height: 45px; color: #c09a67; background: #35190f url("/images/wow/wiki/tab.jpg") 0 -90px repeat-x; }
+.wiki .related .tabs li a em { font-style: normal; }
+.wiki .related .tabs li a span { display: block; background: url("/images/wow/wiki/tab.jpg") 0 0 no-repeat; }
+.wiki .related .tabs li a span span { height: 45px; padding: 0 20px; background-position: 100% -45px; }
+.wiki .related .tabs li a:hover { color: #fff; background-color: #48281b; background-position: 0 -225px; }
+.wiki .related .tabs li a:hover span { background-position: 0 -135px; }
+.wiki .related .tabs li a:hover span span { background-position: 100% -180px; }
+.wiki .related .tabs li a.tab-active { color: #fff; font-weight: bold; background-color: #611f04; background-position: 0 -360px; }
+.wiki .related .tabs li a.tab-active span { background-position: 0 -270px; }
+.wiki .related .tabs li a.tab-active span span { background-position: 100% -315px; }
 .wiki .related .tabs.tabs-small li a span span { padding: 0 10px; }
 .wiki .related-content em { color: #EFC9A0; font-style: normal; }
 

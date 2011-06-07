@@ -41,13 +41,18 @@ $this->breadcrumbs[$model->name] = array("/wow/item/{$model->entry}");
 
 $tabs = array();
 if($model->dropCreaturesCount)
-	$tabs["Добыча с: (".$model->dropCreaturesCount.")"] = array('ajax'=>'/wow/item/dropCreatures/id/'.$model->entry);
+	$tabs["Добыча с: (".$model->dropCreaturesCount.")"] = 'dropCreatures';
 if($model->disenchantItems->totalItemCount)
-	$tabs["Можно распылить на: (".$model->disenchantItems->totalItemCount.")"] = array('ajax'=>'/wow/item/disenchantItems/id/'.$model->entry);
-$this->widget('zii.widgets.jui.CJuiTabs', array(
-    'tabs'=> $tabs,
-	'cssFile' => false,
-	'headerTemplate' => '<li><a href="{url}" data-key="{id}" id="tab-{id}"><span><span>{title}</span></span></a></li>',
-));
-?>
+	$tabs["Можно распылить на: (".$model->disenchantItems->totalItemCount.")"] = 'disenchantItems';
+if(count($tabs)): ?>
+<div class="tabs">
+	<ul id="related-tabs"> 
+<?php foreach($tabs as $tab => $key): ?>
+	<li><a href="#<?=$key?>" data-key="<?=$key?>" data-id="<?=$model->entry?>" id="tab-<?=$key?>"><span><span><?=$tab?></span></span></a></li>
+<?php endforeach; ?> 
+	</ul> 
+	<span class="clear"><!-- --></span> 
+</div> 
+<div id="related-content" class="loading"> 
+<?php endif; ?>
 </div>
