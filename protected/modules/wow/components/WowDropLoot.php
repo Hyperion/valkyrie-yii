@@ -71,7 +71,7 @@ class WowDropLoot
 						'entry'		=> $row['entry'],
 						'name'		=> $row['name'],
 						'itemLevel' => $row['itemLevel'],
-						'quality'	=> $row['Quality'],
+						'Quality'	=> $row['Quality'],
 						'icon'		=> Yii::app()->db
             				->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$row['displayid']} LIMIT 1")
             				->queryScalar(),
@@ -107,7 +107,7 @@ class WowDropLoot
 							'entry'		=> $row['entry'],
 							'name'		=> $row['name'],
 							'itemLevel' => $row['itemLevel'],
-							'quality'   => $row['Quality'],
+							'Quality'   => $row['Quality'],
 							'icon'		=> Yii::app()->db
             					->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$row['displayid']} LIMIT 1")
             					->queryScalar(),
@@ -123,7 +123,7 @@ class WowDropLoot
 						'entry'		=> $row['entry'],
 						'name'		=> $row['name'],
 						'itemLevel' => $row['itemLevel'],
-						'quality'	=> $row['Quality'],
+						'Quality'	=> $row['Quality'],
 						'icon'		=> Yii::app()->db
             				->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$row['displayid']} LIMIT 1")
             				->queryScalar(),

@@ -69,6 +69,5 @@ class CreatureTemplate extends CActiveRecord
             'pagination' => false,
         ));
         return $dataProvider;
-	
 	}   
 }

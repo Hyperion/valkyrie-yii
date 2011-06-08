@@ -484,20 +484,78 @@ class ItemTemplate extends CActiveRecord
         return $count;
 	}
 
+	public function getVendors()
+	{
+		
+		$vendors = Yii::app()->cache->get('item_'.$this->entry.'_vendors');
+		if($vendors === false)
+		{
+			$vendors = $this->dbConnection->createCommand("
+					SELECT
+						c.entry, c.name, c.subname, c.minlevel, c.maxlevel, c.type, c.rank, c.faction_A, c.faction_H,
+						v.maxcount AS stock
+					FROM npc_vendor v, creature_template c
+					WHERE v.item = {$this->entry} AND c.entry = v.entry")
+				->queryAll();
+			Yii::app()->cache->set('item_'.$this->entry.'_vendors', $vendors);
+		}
+
+		$dataProvider = new CArrayDataProvider($vendors, array(
+			'keyField' => 'entry',
+			'pagination' => false,
+		));
+		return $dataProvider;
+	}
+
 	public function getDisenchantItems()
 	{
-		//$disenchantItems = Yii::app()->cache->get('item_'.$this->DisenchantID.'_disenchantItems');
-        //if($disenchantItems === false)
-        //{
-            $disenchantItems = WowDropLoot::loot('disenchant_loot_template', $this->DisenchantID);
-        //    Yii::app()->cache->set('item_'.$this->DisenchantID.'_disenchantItems', $disenchantItems);
-        //}
+		$loot = Yii::app()->cache->get('item_'.$this->DisenchantID.'_disenchantItems');
+        if($loot === false)
+        {
+            $loot = WowDropLoot::loot('disenchant_loot_template', $this->DisenchantID);
+            Yii::app()->cache->set('item_'.$this->DisenchantID.'_disenchantItems', $loot);
+        }
 
-        $dataProvider = new CArrayDataProvider($disenchantItems, array(
+        $dataProvider = new CArrayDataProvider($loot, array(
             'keyField' => 'entry',
             'pagination' => false,
         ));
         return $dataProvider;
+	}
 
+	public function getDisenchantFrom()
+	{
+        $drop = Yii::app()->cache->get('item_'.$this->entry.'_disenchantFrom');
+        if($drop === false)
+        {
+            $drop_de = WowDropLoot::drop('disenchant_loot_template', $this->entry);
+			$drop = array();
+
+            if($drop_de)
+            {
+                foreach($drop_de as $lootid => $drop_info)
+                {
+                    $rows = $this->dbConnection->createCommand("
+                            SELECT displayid, entry, name, itemLevel, Quality
+                            FROM item_template
+                            WHERE DisenchantID = {$lootid}")
+                        ->queryAll();
+                    foreach ($rows as $row)
+					{
+						$row['icon'] = Yii::app()->db
+                            ->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$row['displayid']} LIMIT 1")
+                            ->queryScalar();
+                        $drop[] = array_merge($row, $drop_info);
+					}
+                }
+            }
+            Yii::app()->cache->set('item_'.$this->entry.'_disenchantFrom', $drop);
+        }
+
+        $dataProvider = new CArrayDataProvider($drop, array(
+            'keyField' => 'entry',
+            'pagination' => false,
+        ));
+        return $dataProvider;
 	}
 }

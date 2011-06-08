@@ -55,6 +55,22 @@ class ItemController extends Controller
 		$this->renderPartial('_dropCreatures', array('dataProvider' => $dataProvider));
 	}
 
+	public function actionVendors($id)
+	{
+		$model = $this->loadModel($id);
+        $dataProvider = $model->vendors;
+
+        $this->renderPartial('_vendors', array('dataProvider' => $dataProvider));
+	}
+
+	public function actionDisenchantFrom($id)
+	{
+		$model = $this->loadModel($id);
+        $dataProvider = $model->disenchantFrom;
+
+        $this->renderPartial('_items', array('dataProvider' => $dataProvider));
+	}
+
     public function actionDisenchantItems($id)
     {
         $model = $this->loadModel($id);

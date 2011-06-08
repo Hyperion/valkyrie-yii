@@ -41,9 +41,13 @@ $this->breadcrumbs[$model->name] = array("/wow/item/{$model->entry}");
 
 $tabs = array();
 if($model->dropCreaturesCount)
-	$tabs["Добыча с: (".$model->dropCreaturesCount.")"] = 'dropCreatures';
+	$tabs["Добыча с: ({$model->dropCreaturesCount})"] = 'dropCreatures';
+if($model->vendors->totalItemCount)
+	$tabs["Продаеться: ({$model->vendors->totalItemCount})"] = 'vendors';
 if($model->disenchantItems->totalItemCount)
-	$tabs["Можно распылить на: (".$model->disenchantItems->totalItemCount.")"] = 'disenchantItems';
+	$tabs["Можно распылить на: ({$model->disenchantItems->totalItemCount})"] = 'disenchantItems';
+if($model->disenchantFrom->totalItemCount)
+    $tabs["Можно получить распылением с: ({$model->disenchantFrom->totalItemCount})"] = 'disenchantFrom';
 if(count($tabs)): ?>
 <div class="tabs">
 	<ul id="related-tabs"> 
