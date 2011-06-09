@@ -17,7 +17,6 @@ $this->breadcrumbs[$model->name] = array("/wow/item/{$model->entry}");
 	<div class="snippet"> 
  		<div class="model" id="model-<?=$model->entry?>"> 
 			<div class="viewer" style="background-image: url(http://eu.media.blizzard.com/wow/renders/items/item<?=$model->entry?>.jpg);"></div> 
-			<a href="javascript:;" onclick="this.blur(); ModelViewer.show({ type: 3, typeId: <?=$model->entry?>, displayId: <?=$model->displayid?>, slot: <?=$model->InventoryType?>})"><span>Посмотреть в 3d</span></a>
 		</div> 
  
 	<script type="text/javascript"> 
@@ -32,7 +31,11 @@ $this->breadcrumbs[$model->name] = array("/wow/item/{$model->entry}");
 	<div class="snippet"> 
 		<h3>Это интересно!</h3> 
  		<ul class="fact-list">
-<?php if($model->DisenchantID): ?> 
+<?php if($model->class == $model::ITEM_CLASS_WEAPON || ($model->class == $model::ITEM_CLASS_ARMOR && !in_array($model->InventoryType, array(2, 11, 12, 28)))): ?>
+			<li>
+				<a href="javascript:;" onclick="ModelViewer.show({ type: 3, typeId: <?=$model->entry?>, displayId: <?=$model->displayid?>, slot: <?=$model->InventoryType?>})">Посмотреть в 3d</a>
+			</li>
+<?php endif; if($model->DisenchantID): ?> 
 			<li> 
 				<span class="term">Можно распылить</span> 
 			</li> 
