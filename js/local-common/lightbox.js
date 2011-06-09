@@ -166,6 +166,25 @@ var Lightbox = {
         Lightbox.setFrameDimensions(video.width, video.height);
         Lightbox.show();
     },
+    
+    loadModel: function(model) {
+         if (!Lightbox.initialized)
+             Lightbox.init();
+            
+         Lightbox.setModel(model);
+         
+         Lightbox.controls.toggleClass("no-paging");
+         Lightbox.controls.toggleClass("no-gallery");
+          
+    },
+    
+    setModel: function(model) {
+      	Lightbox.setFrameDimensions(749, 560);
+      	Lightbox.emptyContent();
+    	ModelViewer.render(Lightbox.content, model);
+    	Lightbox.show(); 
+    	
+    },
     /**
      * View image in the media gallery
      */

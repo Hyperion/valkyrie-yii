@@ -239,7 +239,7 @@ class ItemTemplate extends CActiveRecord
 
     public function getDps()
     {
-        if(!$this->_dps AND $this->class == self::ITEM_CLASS_WEAPON)
+        if(!$this->_dps && $this->class == self::ITEM_CLASS_WEAPON && $this->delay)
         {
             $this->_dps = 0;
             for($i = 1; $i <= self::MAX_ITEM_PROTO_DAMAGES; $i++)
@@ -407,19 +407,15 @@ class ItemTemplate extends CActiveRecord
         return $this->_set;
     }
 
-    public function getSell_price()
+    public function getPrice($amount)
     {
-        if(!$this->_sell_price)
-        {
-            $amount = $this->SellPrice;
-            $this->_sell_price['gold'] = floor($amount/(100*100));
-            $amount = $amount-$this->_sell_price['gold']*100*100;
-            $this->_sell_price['silver'] = floor($amount/100);
-            $amount = $amount-$this->_sell_price['silver']*100;
-            $this->_sell_price['copper'] = floor($amount);
-        }
-        
-        return $this->_sell_price;
+        $price['gold'] = floor($amount/(100*100));
+        $amount = $amount-$price['gold']*100*100;
+        $price['silver'] = floor($amount/100);
+        $amount = $amount-$price['silver']*100;
+        $price['copper'] = floor($amount);
+                
+        return $price;
     }
 
     public function getEnchantText($id)

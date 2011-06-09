@@ -1,4 +1,8 @@
-<span  class="icon-frame frame-56" style='background-image: url("http://eu.battle.net/wow-assets/static/images/icons/56/<?=$model->icon?>.jpg");'></span>
+<span  class="icon-frame frame-56" style='background-image: url("http://eu.battle.net/wow-assets/static/images/icons/56/<?=$model->icon?>.jpg");'>
+<?php if($model->stackable > 1 && !is_array($data)): ?>
+<span class="stack"><?=$model->stackable?></span>
+<?php endif; ?>
+</span>
 <?php if(is_array($data)): ?>
 <h3 class="subheader color-q<?=$model->Quality?>"><?=$model->name?></h3>
 <?php endif; ?>
@@ -15,7 +19,7 @@
     <li><span class="float-right"><?=$model->subclass_text?></span><?=$model::itemAlias('invtype', $model->InventoryType)?></li>
     <?php endif; if($model->class == $model::ITEM_CLASS_CONTAINER): ?>
     <li><?=$model->ContainerSlots?> Slot Bag</li>
-    <?php endif; if($model->class == $model::ITEM_CLASS_WEAPON): ?>
+    <?php endif; if($model->class == $model::ITEM_CLASS_WEAPON && $model->delay): ?>
     <li>
         <span class="float-right">Speed <?=$model->delay/1000?></span>
         <?=$model->dmg_min1?> - <?=$model->dmg_max1?> Damage
@@ -66,10 +70,12 @@
     </li>
        <?php endforeach; if($model->description): ?>
     <li class="color-tooltip-yellow">"<?=$model->description?>"</li>
-    <?php endif; if($model->SellPrice > 0): $sMoney = array('gold', 'silver', 'copper'); ?>
+    <?php endif; if($model->SellPrice > 0): 
+		$sMoney = array('gold', 'silver', 'copper');
+		$price = $model->getPrice($model->SellPrice); ?>
     <li>Sell Price:
-    <?php foreach($sMoney as $money): if($model->sell_price[$money] > 0): ?>
-           <span class="icon-<?=$money?>"><?=$model->sell_price[$money]?></span>
+    <?php foreach($sMoney as $money): if($price[$money] > 0): ?>
+           <span class="icon-<?=$money?>"><?=$price[$money]?></span>
     <?php endif; endforeach; ?>
     </li>
     <?php endif; if($model->itemset):

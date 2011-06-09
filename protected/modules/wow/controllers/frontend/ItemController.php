@@ -9,13 +9,17 @@ class ItemController extends Controller
 
         $this->_cs->registerCssFile('/css/wow/wiki/wiki.css');
         $this->_cs->registerCssFile('/css/wow/wiki/item.css');
+        $this->_cs->registerCssFile('/css/wow/lightbox.css');
         
         $this->_cs->registerScriptFile('/js/wow/wiki/wiki.js', CClientScript::POS_END);
         $this->_cs->registerScriptFile('/js/wow/wiki/item.js', CClientScript::POS_END);
+		$this->_cs->registerScriptFile('/js/local-common/third-party/swfobject.js', CClientScript::POS_END);
         $this->_cs->registerScriptFile('/js/local-common/table.js', CClientScript::POS_END);
         $this->_cs->registerScriptFile('/js/local-common/cms.js', CClientScript::POS_END);
         $this->_cs->registerScriptFile('/js/local-common/filter.js', CClientScript::POS_END);
+		$this->_cs->registerScriptFile('/js/local-common/lightbox.js', CClientScript::POS_END);
         $this->_cs->registerScriptFile('/js/local-common/utility/model-rotator.js', CClientScript::POS_END);
+        $this->_cs->registerScriptFile('/js/local-common/utility/model-viewer.js', CClientScript::POS_END);
         
         $this->render('view', array('model' => $model));
     }

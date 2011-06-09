@@ -13,9 +13,11 @@ $this->breadcrumbs[$model->name] = array("/wow/item/{$model->entry}");
 ?>
 
 <div class="sidebar">
+<?php if($model->class == $model::ITEM_CLASS_WEAPON || ($model->class == $model::ITEM_CLASS_ARMOR && !in_array($model->InventoryType, array(2, 11, 12, 28)))): ?>
 	<div class="snippet"> 
  		<div class="model" id="model-<?=$model->entry?>"> 
 			<div class="viewer" style="background-image: url(http://eu.media.blizzard.com/wow/renders/items/item<?=$model->entry?>.jpg);"></div> 
+			<a href="javascript:;" onclick="this.blur(); ModelViewer.show({ type: 3, typeId: <?=$model->entry?>, displayId: <?=$model->displayid?>, slot: <?=$model->InventoryType?>})"><span>Посмотреть в 3d</span></a>
 		</div> 
  
 	<script type="text/javascript"> 
@@ -25,6 +27,39 @@ $this->breadcrumbs[$model->name] = array("/wow/item/{$model->entry}");
 			});
 	//]]>
 	</script> 
+	</div> 
+<?php endif; ?>
+	<div class="snippet"> 
+		<h3>Это интересно!</h3> 
+ 		<ul class="fact-list">
+<?php if($model->DisenchantID): ?> 
+			<li> 
+				<span class="term">Можно распылить</span> 
+			</li> 
+<?php endif; if($model->stackable > 1): ?>
+            <li>
+                <span class="term">Можно положить в связку</span>
+            </li>
+<?php endif; if($model->BuyPrice): 
+	$sMoney = array('gold', 'silver', 'copper');
+    $price = $model->getPrice($model->BuyPrice); ?>
+            <li>
+                <span class="term">Цена покупки: </span>
+<?php foreach($sMoney as $money): if($price[$money] > 0): ?>
+	           <span class="icon-<?=$money?>"><?=$price[$money]?></span>
+<?php endif; endforeach; ?>
+            </li>
+<?php endif; if($model->SellPrice):
+    $sMoney = array('gold', 'silver', 'copper');
+    $price = $model->getPrice($model->SellPrice); ?>
+            <li>
+                <span class="term">Цена продажи: </span>
+<?php foreach($sMoney as $money): if($price[$money] > 0): ?>
+               <span class="icon-<?=$money?>"><?=$price[$money]?></span>
+<?php endif; endforeach; ?>
+            </li>
+<?php endif; ?>
+ 		</ul> 
 	</div> 
 </div> 
 <div class="info">
