@@ -80,19 +80,19 @@ class ItemTemplate extends CActiveRecord
     {
         return 'item_template';
     }
-    
+
     public function getDbConnection()
     {
         return Yii::app()->db_world;
     }
-    
+
     public function rules()
     {
         return array(
             array('class, subclass, InventoryType', 'safe', 'on'=>'search'),
         );
     }
-    
+
     public static function itemAlias($type, $code=NULL)
     {
         $_items = array(
@@ -148,7 +148,7 @@ class ItemTemplate extends CActiveRecord
         else
             return isset($_items[$type]) ? $_items[$type] : false;
     }
-    
+
     public function search()
     {
         $criteria=new CDbCriteria;
@@ -166,7 +166,7 @@ class ItemTemplate extends CActiveRecord
             ),
         ));
     }
-    
+
     public function getIcon()
     {
         return $this->_icon;
@@ -182,13 +182,13 @@ class ItemTemplate extends CActiveRecord
             ->queryScalar();
 
     }
-    
+
     public function getSubclass_text()
     {
         if(!isset($this->_subclass_text))
         {
             $column = 'name_'.Yii::app()->language;
-            $this->_subclass_text = Yii::app()->db 
+            $this->_subclass_text = Yii::app()->db
                 ->createCommand("SELECT subclass_$column FROM wow_item_subclasses WHERE subclass = {$this->subclass}  AND class = {$this->class} LIMIT 1")
                 ->queryScalar();
         }
@@ -200,7 +200,7 @@ class ItemTemplate extends CActiveRecord
         if(!isset($this->_class_text))
         {
             $column = 'name_'.Yii::app()->language;
-            $this->_class_text = Yii::app()->db 
+            $this->_class_text = Yii::app()->db
                 ->createCommand("SELECT class_$column FROM wow_item_subclasses WHERE class = {$this->class} LIMIT 1")
                 ->queryScalar();
         }
@@ -218,7 +218,7 @@ class ItemTemplate extends CActiveRecord
         }
 
         return $this->_map_text;
-    }    
+    }
 
     public function getStats()
     {
@@ -261,9 +261,9 @@ class ItemTemplate extends CActiveRecord
                     $spell = Spell::model()->findByPk($this->{'spellid_'.$key});
                     $spell->formatInfo();
                     $this->_spells[$i] = array(
-                        'spellid'          => $this->{'spellid_'               . $key}, 
-                        'trigger'          => $this->{'spelltrigger_'          . $key}, 
-                        'charges'          => $this->{'spellcharges_'          . $key}, 
+                        'spellid'          => $this->{'spellid_'               . $key},
+                        'trigger'          => $this->{'spelltrigger_'          . $key},
+                        'charges'          => $this->{'spellcharges_'          . $key},
                         'ppmRate'          => $this->{'spellppmRate_'          . $key},
                         'cooldown'         => $this->{'spellcooldown_'         . $key},
                         'category'         => $this->{'spellcategory_'         . $key},
@@ -285,11 +285,11 @@ class ItemTemplate extends CActiveRecord
             $mask &= 0x5DF;
             if($mask == 0x5DF || $mask == 0)
                 $this->_required_classes = true;
-            
+
             if(!$this->_required_classes)
             {
                 $column = 'name_'.Yii::app()->language;
-                $command = Yii::app()->db->createCommand("SELECT $column FROM wow_classes WHERE id = :id");  
+                $command = Yii::app()->db->createCommand("SELECT $column FROM wow_classes WHERE id = :id");
                 $this->_required_classes = array();
                 $i = 1;
                 while($mask)
@@ -320,7 +320,7 @@ class ItemTemplate extends CActiveRecord
             if(!$this->_required_races)
             {
                 $column = 'name_'.Yii::app()->language;
-                $command = Yii::app()->db->createCommand("SELECT $column FROM wow_races WHERE id = :id");  
+                $command = Yii::app()->db->createCommand("SELECT $column FROM wow_races WHERE id = :id");
                 $this->_required_races = array();
                 $i = 1;
                 while($mask)
@@ -338,9 +338,9 @@ class ItemTemplate extends CActiveRecord
 
         return $this->_required_races;
     }
-    
+
     public function getRequired_skill()
-    {    
+    {
         if(!$this->_required_skill)
         {
             $column = 'name_'.Yii::app()->language;
@@ -353,7 +353,7 @@ class ItemTemplate extends CActiveRecord
     }
 
     public function getRequired_spell()
-    {    
+    {
         if(!$this->_required_spell)
         {
             $this->_required_spell = Yii::app()->db
@@ -365,7 +365,7 @@ class ItemTemplate extends CActiveRecord
     }
 
     public function getRequired_faction()
-    {    
+    {
         if(!$this->_required_faction)
         {
             $column = 'name_'.Yii::app()->language;
@@ -396,14 +396,14 @@ class ItemTemplate extends CActiveRecord
                 if($item_set['spell' . $i] > 0)
                 {
                     $spell = Spell::model()->findByPk($item_set['spell' . $i]);
-                    
+
                     $spell->formatInfo();
                     $this->_set['bonuses'][$item_set['bonus'.$i]] = $spell;
                     unset($spell);
                 }
-            ksort($this->_set['bonuses']);            
+            ksort($this->_set['bonuses']);
         }
-        
+
         return $this->_set;
     }
 
@@ -414,7 +414,7 @@ class ItemTemplate extends CActiveRecord
         $price['silver'] = floor($amount/100);
         $amount = $amount-$price['silver']*100;
         $price['copper'] = floor($amount);
-                
+
         return $price;
     }
 
@@ -426,86 +426,86 @@ class ItemTemplate extends CActiveRecord
             ->queryScalar();
     }
 
-	public function getDropCreatures()
-	{
-		$dropCreatures = Yii::app()->cache->get('item_'.$this->entry.'_dropCreatures');
-		if($dropCreatures === false)
-		{
-			$drops_cr = WowDropLoot::drop('creature_loot_template',$this->entry);
-			$dropCreatures = array();		
+    public function getDropCreatures()
+    {
+        $dropCreatures = Yii::app()->cache->get('item_'.$this->entry.'_dropCreatures');
+        if($dropCreatures === false)
+        {
+            $drops_cr = WowDropLoot::drop('creature_loot_template',$this->entry);
+            $dropCreatures = array();
 
-			if ($drops_cr)
-			{
-				foreach($drops_cr as $lootid => $drop)
-				{
-					$rows = $this->dbConnection->createCommand("
-							SELECT entry, name, type, minlevel, maxlevel
-							FROM creature_template
-							WHERE lootid = {$lootid}")
-						->queryAll();
-					foreach ($rows as $numRow => $row)
-						$dropCreatures[] = array_merge($row, $drop);
-				}
-			}
-			Yii::app()->cache->set('item_'.$this->entry.'_dropCreatures', $dropCreatures);
-		}
+            if ($drops_cr)
+            {
+                foreach($drops_cr as $lootid => $drop)
+                {
+                    $rows = $this->dbConnection->createCommand("
+                            SELECT entry, name, type, minlevel, maxlevel
+                            FROM creature_template
+                            WHERE lootid = {$lootid}")
+                        ->queryAll();
+                    foreach ($rows as $numRow => $row)
+                        $dropCreatures[] = array_merge($row, $drop);
+                }
+            }
+            Yii::app()->cache->set('item_'.$this->entry.'_dropCreatures', $dropCreatures);
+        }
 
-		$dataProvider = new CArrayDataProvider($dropCreatures, array(
-			'keyField' => 'entry',
-			'pagination' => false,
-		));
-		return $dataProvider;
-	}
+        $dataProvider = new CArrayDataProvider($dropCreatures, array(
+            'keyField' => 'entry',
+            'pagination' => false,
+        ));
+        return $dataProvider;
+    }
 
-	public function getDropCreaturesCount()
-	{
-		$count = Yii::app()->cache->get('item_'.$this->entry.'_dropCreaturesCount');
-		if($count === false)
-		{
-			$drops_cr = WowDropLoot::drop('creature_loot_template',$this->entry);
-        	$count = 0;
+    public function getDropCreaturesCount()
+    {
+        $count = Yii::app()->cache->get('item_'.$this->entry.'_dropCreaturesCount');
+        if($count === false)
+        {
+            $drops_cr = WowDropLoot::drop('creature_loot_template',$this->entry);
+            $count = 0;
 
-	        if ($drops_cr)
-    	    {
-        	    foreach($drops_cr as $lootid => $drop)
-            	    $count += $this->dbConnection->createCommand("
-                	        SELECT count(1)
-                    	    FROM creature_template
-                        	WHERE lootid = {$lootid}")
-	                    ->queryScalar();
-    	    }
-			Yii::app()->cache->set('item_'.$this->entry.'_dropCreaturesCount', $count);
-		}
+            if ($drops_cr)
+            {
+                foreach($drops_cr as $lootid => $drop)
+                    $count += $this->dbConnection->createCommand("
+                            SELECT count(1)
+                            FROM creature_template
+                            WHERE lootid = {$lootid}")
+                        ->queryScalar();
+            }
+            Yii::app()->cache->set('item_'.$this->entry.'_dropCreaturesCount', $count);
+        }
 
         return $count;
-	}
+    }
 
-	public function getVendors()
-	{
-		
-		$vendors = Yii::app()->cache->get('item_'.$this->entry.'_vendors');
-		if($vendors === false)
-		{
-			$vendors = $this->dbConnection->createCommand("
-					SELECT
-						c.entry, c.name, c.subname, c.minlevel, c.maxlevel, c.type, c.rank, c.faction_A, c.faction_H,
-						v.maxcount AS stock
-					FROM npc_vendor v, creature_template c
-					WHERE v.item = {$this->entry} AND c.entry = v.entry")
-				->queryAll();
-			Yii::app()->cache->set('item_'.$this->entry.'_vendors', $vendors);
-		}
+    public function getVendors()
+    {
 
-		$dataProvider = new CArrayDataProvider($vendors, array(
-			'keyField' => 'entry',
-			'pagination' => false,
-		));
-		return $dataProvider;
-	}
+        $vendors = Yii::app()->cache->get('item_'.$this->entry.'_vendors');
+        if($vendors === false)
+        {
+            $vendors = $this->dbConnection->createCommand("
+                    SELECT
+                        c.entry, c.name, c.subname, c.minlevel, c.maxlevel, c.type, c.rank, c.faction_A, c.faction_H,
+                        v.maxcount AS stock
+                    FROM npc_vendor v, creature_template c
+                    WHERE v.item = {$this->entry} AND c.entry = v.entry")
+                ->queryAll();
+            Yii::app()->cache->set('item_'.$this->entry.'_vendors', $vendors);
+        }
 
-	public function getDisenchantItems()
-	{
-		$loot = Yii::app()->cache->get('item_'.$this->DisenchantID.'_disenchantItems');
+        $dataProvider = new CArrayDataProvider($vendors, array(
+            'keyField' => 'entry',
+            'pagination' => false,
+        ));
+        return $dataProvider;
+    }
+
+    public function getDisenchantItems()
+    {
+        $loot = Yii::app()->cache->get('item_'.$this->DisenchantID.'_disenchantItems');
         if($loot === false)
         {
             $loot = WowDropLoot::loot('disenchant_loot_template', $this->DisenchantID);
@@ -517,15 +517,15 @@ class ItemTemplate extends CActiveRecord
             'pagination' => false,
         ));
         return $dataProvider;
-	}
+    }
 
-	public function getDisenchantFrom()
-	{
+    public function getDisenchantFrom()
+    {
         $drop = Yii::app()->cache->get('item_'.$this->entry.'_disenchantFrom');
         if($drop === false)
         {
             $drop_de = WowDropLoot::drop('disenchant_loot_template', $this->entry);
-			$drop = array();
+            $drop = array();
 
             if($drop_de)
             {
@@ -537,12 +537,12 @@ class ItemTemplate extends CActiveRecord
                             WHERE DisenchantID = {$lootid}")
                         ->queryAll();
                     foreach ($rows as $row)
-					{
-						$row['icon'] = Yii::app()->db
+                    {
+                        $row['icon'] = Yii::app()->db
                             ->createCommand("SELECT icon FROM wow_icons WHERE displayid = {$row['displayid']} LIMIT 1")
                             ->queryScalar();
                         $drop[] = array_merge($row, $drop_info);
-					}
+                    }
                 }
             }
             Yii::app()->cache->set('item_'.$this->entry.'_disenchantFrom', $drop);
@@ -553,5 +553,5 @@ class ItemTemplate extends CActiveRecord
             'pagination' => false,
         ));
         return $dataProvider;
-	}
+    }
 }

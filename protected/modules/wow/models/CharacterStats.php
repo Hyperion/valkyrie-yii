@@ -2,7 +2,7 @@
 
 class CharacterStats extends CActiveRecord
 {
-	private $_levelStats = array();
+    private $_levelStats = array();
 
     public static function model($className=__CLASS__)
     {
@@ -26,34 +26,43 @@ class CharacterStats extends CActiveRecord
         );
     }
 
-	public function getLevelStats()
-	{
-		if(!$this->_levelStats)
-			$this->_levelStats = Yii::app()->db_world->createCommand("
-				SELECT str AS strength, agi AS agility, sta AS stamina, inte AS intellect, spi AS spirit 
-				FROM player_levelstats 
-                WHERE race = {$this->character->race} 
-                    AND class = {$this->character->class} 
+    public function getLevelStats()
+    {
+        if(!$this->_levelStats)
+            $this->_levelStats = Yii::app()->db_world->createCommand("
+                SELECT str AS strength, agi AS agility, sta AS stamina, inte AS intellect, spi AS spirit
+                FROM player_levelstats
+                WHERE race = {$this->character->race}
+                    AND class = {$this->character->class}
                     AND level = {$this->character->level}
                 LIMIT 1")->queryRow();
         return $this->_levelStats;
     }
-    
+
     public function getMainDps()
     {
-        return round(($this->mainMinDmg + $this->mainMaxDmg) / 2 / $this->mainAttSpeed, 1);
+        if($this->mainAttSpeed)
+            return round(($this->mainMinDmg + $this->mainMaxDmg) / 2 / $this->mainAttSpeed, 1);
+        else
+            return 0;
     }
-    
+
     public function getOffDps()
     {
-        return round(($this->offMinDmg + $this->offMaxDmg) / 2 / $this->offAttSpeed, 1);
+        if($this->offAttSpeed)
+            return round(($this->offMinDmg + $this->offMaxDmg) / 2 / $this->offAttSpeed, 1);
+        else
+            return 0;
     }
 
     public function getRangedDps()
     {
-        return round(($this->rangeMinDmg + $this->rangeMaxDmg) / 2 / $this->rangeAttSpeed, 1);
+        if($this->rangeAttSpeed)
+            return round(($this->rangeMinDmg + $this->rangeMaxDmg) / 2 / $this->rangeAttSpeed, 1);
+        else
+            return 0;
     }
-    
+
     public function getHealthBonusFromStamina()
     {
         $baseStam = ($this->stamina < 20) ? $this->stamina : 20;
@@ -65,25 +74,26 @@ class CharacterStats extends CActiveRecord
         $baseInt = ($this->intellect < 20) ? $this->intellect : 20;
         return $this->intellect * 15 - $baseInt * 14;
     }
-    
+
     public function getManaPerFiveSeconds()
     {
-        $Spirit = $this->spirit;
-
         switch ($this->character->class)
         {
-            case Character::CLASS_DRUID:   $value = ($Spirit / 5 + 15);   break;
-            case Character::CLASS_HUNTER:  $value = ($Spirit / 5 + 15);   break;
-            case Character::CLASS_MAGE:    $value = ($Spirit / 4 + 12.5); break;
-            case Character::CLASS_PALADIN: $value = ($Spirit / 5 + 15);   break;
-            case Character::CLASS_PRIEST:  $value = ($Spirit / 4 + 12.5); break;
-            case Character::CLASS_SHAMAN:  $value = ($Spirit / 5 + 17);   break;
-            case Character::CLASS_WARLOCK: $value = ($Spirit / 5 + 15);   break;
+            case Character::CLASS_DRUID:
+            case Character::CLASS_HUNTER:
+            case Character::CLASS_PALADIN:
+            case Character::CLASS_WARLOCK:
+                $value = ($this->spirit / 5 + 15);   break;
+            case Character::CLASS_MAGE:
+            case Character::CLASS_PRIEST:
+                $value = ($this->spirit / 4 + 12.5); break;
+            case Character::CLASS_SHAMAN:  $value = ($this->spirit / 5 + 17);   break;
+            default: $value = 0; break;
         }
 
         return $value / 2 * 5;
     }
-    
+
     public function getSpellCritFromIntellect()
     {
         $crit_data = array(array( 0.0,   0.0,  10.0 ),      //  0: unused
@@ -122,7 +132,7 @@ class CharacterStats extends CActiveRecord
 
         return $this->agility / $classrate;
     }
-    
+
     public function getMeleeAPFromStrength()
     {
         $level = $this->character->level;

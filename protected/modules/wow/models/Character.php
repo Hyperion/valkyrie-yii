@@ -70,7 +70,10 @@ class Character extends CActiveRecord
     public $realm = false;
 
     private $_items = array();
+    private $_spells = array();
     private $_talents_data = array();
+    private $_talents_build = array(null, null, null);
+    private $_talents_points = array(0, 0, 0);
     private $_professions = false;
     private $_power_type;
     private $_role;
@@ -98,7 +101,7 @@ class Character extends CActiveRecord
             array('name, level, class, race, honor_standing', 'safe', 'on'=>'pvp'),
         );
     }
-    
+
     public function relations()
     {
         return array(
@@ -120,7 +123,7 @@ class Character extends CActiveRecord
     {
         $_items = array(
             'classes' => array(
-                
+
             ),
             'races' => array(
                 '1' => 'human',
@@ -146,7 +149,7 @@ class Character extends CActiveRecord
                 1 => 'horde',
             ),
         );
-                        
+
         if (isset($code))
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
         else
@@ -193,7 +196,7 @@ class Character extends CActiveRecord
                 case 1: $criteria->compare('race', array(2, 5 ,6, 8)); break;
             }
         }
-        
+
         return new CMultirealmDataProvider(get_class($this), array(
             'all_realms' => $all_realms,
             'criteria' => $criteria,
@@ -240,6 +243,10 @@ class Character extends CActiveRecord
         $row = $command->queryRow();
         $this->race_text = $row['race'];
         $this->class_text = $row['class'];
+
+        $this->_spells = $this->dbConnection
+                ->createCommand("SELECT spell FROM character_spell WHERE guid = {$this->guid} AND disabled = 0")
+                ->queryColumn();
     }
 
     protected function afterFind()
@@ -248,7 +255,7 @@ class Character extends CActiveRecord
         $this->realm = Database::$realm;
         $this->equipmentCache = explode(' ', $this->equipmentCache);
     }
-    
+
     public function getItems()
     {
         $item_slots = array(
@@ -272,7 +279,7 @@ class Character extends CActiveRecord
             self::EQUIPMENT_SLOT_OFFHAND   => 22,
             self::EQUIPMENT_SLOT_RANGED    => 28,
         );
-        
+
         if(!$this->_items)
             for($i = 0, $j = 0; $i < 37; $i += 2, $j++)
             {
@@ -313,11 +320,11 @@ class Character extends CActiveRecord
                                     ->createCommand("
                                         SELECT entry, name
                                         FROM item_template
-                                        WHERE 
+                                        WHERE
                                         spellid_1 = {$info['spellId']} OR
-                                        spellid_2 = {$info['spellId']} OR 
+                                        spellid_2 = {$info['spellId']} OR
                                         spellid_3 = {$info['spellId']} OR
-                                        spellid_4 = {$info['spellId']} OR 
+                                        spellid_4 = {$info['spellId']} OR
                                         spellid_5 = {$info['spellId']} LIMIT 1")
                                     ->queryRow();
                                 if($item)
@@ -331,7 +338,7 @@ class Character extends CActiveRecord
                     $data=array();
                     if($item_data['enchant_id'])
                         $data[] = "data[enchant_id]={$item_data['enchant_id']}";
-                    
+
                     if($proto->itemset)
                     {
                         $set = Yii::app()->db_world
@@ -349,7 +356,7 @@ class Character extends CActiveRecord
                 else
                     $this->_items[$j] = array('slot' => $item_slots[$j]);
             }
-        
+
         return $this->_items;
     }
 
@@ -408,53 +415,156 @@ class Character extends CActiveRecord
         return $power;
     }
 
+    public function getTalentTabForClass($tab_count = -1)
+    {
+
+        $talentTabId = array(
+            self::CLASS_WARRIOR => array(161, 164, 163),
+            self::CLASS_PALADIN => array(382, 383, 381),
+            self::CLASS_HUNTER  => array(361, 363, 362),
+            self::CLASS_ROGUE   => array(182, 181, 183),
+            self::CLASS_PRIEST  => array(201, 202, 203),
+            //self::CLASS_DK      => array(398, 399, 400),
+            self::CLASS_SHAMAN  => array(261, 263, 262),
+            self::CLASS_MAGE    => array( 81,  41,  61),
+            self::CLASS_WARLOCK => array(302, 303, 301),
+            self::CLASS_DRUID   => array(283, 281, 282)
+        );
+        if(!isset($talentTabId[$this->class]))
+        {
+            return false;
+        }
+        $tab_class = $talentTabId[$this->class];
+        if($tab_count >= 0)
+        {
+            $values = array_values($tab_class);
+            return $values[$tab_count];
+        }
+        return $tab_class;
+    }
+
+    private function calculateTalents()
+    {
+        $tab_class = $this->getTalentTabForClass();
+        if(!$tab_class) {
+            return false;
+        }
+
+        for($i = 0; $i < 3; $i++)
+        {
+            $current_tab = Yii::app()->db
+                    ->createCommand("SELECT * FROM `wow_talent` WHERE `tab` = {$tab_class[$i]} ORDER BY `tab`, `row`, `col`")
+                    ->queryAll();
+            if(!$current_tab)
+            {
+                continue;
+            }
+
+            foreach($current_tab as $talent)
+            {
+                if(in_array($talent['rank5'], $this->_spells))
+                    $this->_talents_points[$i] += 5;
+                elseif(in_array($talent['rank4'], $this->_spells))
+                    $this->_talents_points[$i] += 4;
+                elseif(in_array($talent['rank3'], $this->_spells))
+                    $this->_talents_points[$i] += 3;
+                elseif(in_array($talent['rank2'], $this->_spells))
+                    $this->_talents_points[$i] += 2;
+                elseif(in_array($talent['rank1'], $this->_spells))
+                    $this->_talents_points[$i] += 1;
+            }
+        }
+    }
+
+    private function calculateTalentsBuild()
+    {
+        $tab_class = $this->getTalentTabForClass();
+        if(!$tab_class) {
+            return false;
+        }
+
+        for($i = 0; $i < 3; $i++)
+        {
+            $current_tab = Yii::app()->db
+                    ->createCommand("SELECT * FROM `wow_talent` WHERE `tab` = {$tab_class[$i]} ORDER BY `tab`, `row`, `col`")
+                    ->queryAll();
+            if(!$current_tab)
+            {
+                continue;
+            }
+
+            foreach($current_tab as $tal)
+            {
+                $talent = array();
+
+                $talent['id'] = $tal['id'];
+                $talent['y'] = $tal['row'];
+                $talent['x'] = $tal['col'];
+                $talent['req'] = $tal['required'];
+
+                if($tal['rank5'])
+                    $talent['maxpoints'] = 5;
+                elseif($tal['rank4'])
+                    $talent['maxpoints'] = 4;
+                elseif($tal['rank3'])
+                    $talent['maxpoints'] = 3;
+                elseif($tal['rank2'])
+                    $talent['maxpoints'] = 2;
+                else
+                    $talent['maxpoints'] = 1;
+
+                if(in_array($tal['rank5'], $this->_spells))
+                    $talent['points'] = 5;
+                elseif(in_array($tal['rank4'], $this->_spells))
+                    $talent['points'] = 4;
+                elseif(in_array($tal['rank3'], $this->_spells))
+                    $talent['points'] = 3;
+                elseif(in_array($tal['rank2'], $this->_spells))
+                    $talent['points'] = 2;
+                elseif(in_array($tal['rank1'], $this->_spells))
+                    $talent['points'] = 1;
+                else
+                    $talent['points'] = 0;
+
+                $this->_talents_build[$i][$tal['id']] = $talent;
+            }
+        }
+    }
+
+    public function getTalentBuild()
+    {
+        $this->calculateTalentsBuild();
+        return $this->_talents_build;
+    }
+
     public function getTalentData()
     {
         if(empty($this->_talents_data))
         {
-            $spells = $this->dbConnection
-                ->createCommand("SELECT spell FROM character_spell WHERE guid = {$this->guid} AND disabled = 0")
-                ->queryColumn();
-            $spells = implode(', ',$spells);
-            if($spells)
-                $tTalents = Yii::app()->db
-                    ->createCommand("SELECT count(*) * 5 as c, tab FROM wow_talent WHERE rank5 IN ($spells) GROUP BY tab
-                        UNION
-                        SELECT count(*) * 4, tab FROM `wow_talent` WHERE rank4 IN ($spells) GROUP BY tab
-                        UNION
-                        SELECT count(*) * 3, tab FROM `wow_talent` WHERE rank3 IN ($spells) GROUP BY tab
-                        UNION
-                        SELECT count(*) * 2, tab FROM `wow_talent` WHERE rank2 IN ($spells) GROUP BY tab
-                        UNION
-                        SELECT count(*), tab  FROM `wow_talent` WHERE rank1 IN ($spells) GROUP BY tab")
-                    ->queryAll();
-            else
+            $this->calculateTalents();
+
+            for ($i = 0; $i < 3; $i++)
             {
-                $this->_talents_data['treeOne'] = 0;
-                $this->_talents_data['treeTwo'] = 0;
-                $this->_talents_data['treeThree'] = 0;
-                $this->_talents_data['name'] = 'No Talents';
-                $this->_talents_data['icon'] = 'inv_misc_questionmark';
-                return $this->_talents_data;
+                if($i == $this->getMaxArray($this->_talents_points))
+                    $spec = $i;
             }
-            $talentTab = $this->getTalentTabForClass();
-            $talents = array();
-            foreach($talentTab as $tab)
-                $talents[$tab] = 0;
-            foreach($tTalents as $v)
-                $talents[$v['tab']] += $v['c'];
 
-            foreach($talentTab as $k => $v)
-                if($v == $this->getMaxArray($talents))
-                    $spec = $k;
+            $this->_talents_data[0]['count'] = $this->_talents_points[0];
+            $this->_talents_data[1]['count'] = $this->_talents_points[1];
+            $this->_talents_data[2]['count'] = $this->_talents_points[2];
 
-            $this->_talents_data['treeOne'] = $talents[$talentTab[0]];
-            $this->_talents_data['treeTwo'] = $talents[$talentTab[1]];
-            $this->_talents_data['treeThree'] = $talents[$talentTab[2]];
-            $this->_talents_data['name'] = $this->getTalentSpecNameFromDB($spec);
-            $this->_talents_data['icon'] = $this->getTalentSpecIconFromDB($spec);
+            $this->_talents_data[0]['name'] = $this->getTalentSpecNameFromDB(0);
+            $this->_talents_data[1]['name'] = $this->getTalentSpecNameFromDB(1);
+            $this->_talents_data[2]['name'] = $this->getTalentSpecNameFromDB(2);
 
-            if($this->_talents_data['treeOne'] == 0 && $this->_talents_data['treeTwo'] == 0 && $this->_talents_data['treeThree'] == 0)
+            $this->_talents_data[0]['icon'] = $this->getTalentSpecIconFromDB(0);
+            $this->_talents_data[1]['icon'] = $this->getTalentSpecIconFromDB(1);
+            $this->_talents_data[2]['icon'] = $this->getTalentSpecIconFromDB(2);
+
+            $this->_talents_data['name'] = $this->_talents_data[$spec]['name'];
+            $this->_talents_data['icon'] = $this->_talents_data[$spec]['icon'];
+
+            if($this->_talents_data[0]['count'] == 0 && $this->_talents_data[1]['count'] == 0 && $this->_talents_data[2]['count'] == 0)
             {
                 // have no talents
                 $this->_talents_data['icon'] = 'inv_misc_questionmark';
@@ -464,26 +574,7 @@ class Character extends CActiveRecord
 
         return $this->_talents_data;
     }
-    
-    private function getTalentTabForClass()
-    {
-        $talentTabId = array(
-            self::CLASS_WARRIOR => array(161, 164, 163),
-            self::CLASS_PALADIN => array(382, 383, 381),
-            self::CLASS_HUNTER  => array(361, 363, 362),
-            self::CLASS_ROGUE   => array(182, 181, 183),
-            self::CLASS_PRIEST  => array(201, 202, 203),
-            self::CLASS_DK      => array(398, 399, 400),
-            self::CLASS_SHAMAN  => array(261, 263, 262),
-            self::CLASS_MAGE    => array( 81,  41,  61),
-            self::CLASS_WARLOCK => array(302, 303, 301),
-            self::CLASS_DRUID   => array(283, 281, 282)
-        );
-        
-        $tab_class = $talentTabId[$this->class];
-        return $tab_class;
-    }
-    
+
     public function getTalentSpecNameFromDB($spec)
     {
         $column = 'name_'.Yii::app()->language;
@@ -491,14 +582,14 @@ class Character extends CActiveRecord
             ->createCommand("SELECT $column FROM wow_talent_icons WHERE class = {$this->class} AND spec = $spec LIMIT 1")
             ->queryScalar();
     }
-    
+
     public function getTalentSpecIconFromDB($spec)
     {
         return Yii::app()->db
             ->createCommand("SELECT icon FROM wow_talent_icons WHERE class = {$this->class} AND spec = $spec LIMIT 1")
             ->queryScalar();
     }
-    
+
     public static function getTalentSpecRolesFromDB($spec)
     {
         return Yii::app()->db
@@ -506,15 +597,15 @@ class Character extends CActiveRecord
             ->queryRow();
     }
 
-    public function GetRole()
+    public function getRole()
     {
         if($this->_role > 0)
             return $this->_role;
-        
+
         switch($this->class)
         {
             case self::CLASS_WARRIOR:
-                if($this->talentData['treeThree'] > $this->talentData['treeTwo'] && $this->talentData['treeThree'] > $this->talentData['treeOne'])
+                if($this->talentData[2]['count'] > $this->talentData[1]['count'] && $this->talentData[2]['count'] > $this->talentData[0]['count'])
                     $this->_role = self::ROLE_TANK;
                 else
                     $this->_role = self::ROLE_MELEE;
@@ -527,15 +618,15 @@ class Character extends CActiveRecord
             case self::CLASS_DRUID:
             case self::CLASS_SHAMAN:
                 // Hybrid classes. Need to check active talent tree.
-                if($this->talentData['treeOne'] > $this->talentData['treeTwo'] && $this->talentData['treeOne'] > $this->talentData['treeThree'])
+                if($this->talentData[0]['count'] > $this->talentData[1]['count'] && $this->talentData[0]['count'] > $this->talentData[2]['count'])
                     if($this->class == self::CLASS_PALADIN)
                            $this->_role = self::ROLE_HEALER;
                     else
                         $this->_role = self::ROLE_CASTER;
-                elseif($this->talentData['treeTwo'] > $this->talentData['treeOne'] && $this->talentData['treeTwo'] > $this->talentData['treeThree'])
+                elseif($this->talentData[1]['count'] > $this->talentData[0]['count'] && $this->talentData[1]['count'] > $this->talentData[2]['count'])
                     if($this->class == self::CLASS_PALADIN)
                         $this->_role = self::ROLE_TANK;// Paladin: Protection
-                    else 
+                    else
                         $this->_role = self::ROLE_MELEE; //Druid: Feral, Shaman: Enhancemenet
                 else
                     if($this->class == self::CLASS_PALADIN)
@@ -544,7 +635,7 @@ class Character extends CActiveRecord
                         $this->_role = self::ROLE_HEALER;
                 break;
             case self::CLASS_PRIEST:
-                if($this->talentData['treeThree'] > $this->talentData['treeOne'] && $this->talentData['treeThree'] > $this->talentData['treeTwo'])
+                if($this->talentData[2]['count'] > $this->talentData[0]['count'] && $this->talentData[2]['count'] > $this->talentData[1]['count'])
                     $this->_role = self::ROLE_CASTER;
                 else
                     $this->_role = self::ROLE_HEALER;
@@ -610,7 +701,7 @@ class Character extends CActiveRecord
         foreach ($arr as $key => $val)
             if ($val == max($arr)) return $key;
     }
-    
+
     public function getItemLevel()
     {
         if($this->_item_level)
