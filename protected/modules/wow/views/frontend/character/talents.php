@@ -30,12 +30,13 @@
 $j = 0;
 foreach($build as $tal):
     if($tal['points'] == $tal['maxpoints'])
-        $class = "talent-full";
+        $class = 'talent-full';
     elseif($tal['points'] < $tal['maxpoints'] && $tal['points'] != 0)
-        $class = "talent-partial";
+        $class = 'talent-partial';
     else
-        $class = "";
-    /* <span class="arrow arrow-down" style="width: 40px; height: 14px; left: 7px; top: -6px;"></span> */
+        $class = '';
+    if($tal['req'] && $tal['points'] != 0)
+        $class .= ' talent-arrow';
 ?>
     <div class="talentcalc-cell <?=$class?>" style="left: <?=($tal['x'] * 53)?>px; top: <?=($tal['y'] * 53)?>px;" data-id="<?=$tal['id']?>">
         <span class="icon">
@@ -45,6 +46,42 @@ foreach($build as $tal):
         </span>
         <a href="javascript:;" class="interact"><span class="hover"></span></a>
         <span class="points"><span class="frame"></span><span class="value"><?=$tal['points']?></span></span>
+<?php if($tal['req']):
+    $prev = $build[$tal['req']];
+
+    if($tal['x'] == $prev['x'])
+    {
+        $type = 'down';
+        $w = 40;
+        $l = 7;
+        $h = 14 + ($tal['y'] - $build[$tal['req']]['y'] - 1) * 53;
+        $t = -6 - ($tal['y'] - $build[$tal['req']]['y'] - 1) * 53;
+    }
+    elseif($tal['x'] > $prev['x'] && $tal['y'] == $prev['y'])
+    {
+        $type = 'right';
+        $h = 40;
+        $t = 7;
+        $l = -6;
+        $w = 13;
+    }
+    else
+    {
+        $type = 'right-down';
+        $w = 53;
+        $l = -6;
+        $t = -24;
+        $h = 31;
+    }
+
+
+?>
+        <span class="arrow arrow-<?=$type?>" style="width: <?=$w?>px; height: <?=$h?>px; left: <?=$l?>px; top: <?=$t?>px;">
+        <?php if($type == 'right-down'): ?>
+            <ins></ins><em></em>
+        <?php endif; ?>
+        </span>
+<?php endif; ?>
     </div>
 <?php endforeach; ?>
 
