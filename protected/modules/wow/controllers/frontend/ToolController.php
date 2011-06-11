@@ -76,9 +76,10 @@ class ToolController extends Controller
                     $talent['ranks'][] = array('description' => $tSpell->info);
                 }
 
-                $talent['keyAbility'] = false;
-                $talent['categoryMask0'] = 0;
-                $talent['categoryMask1'] = 0;
+                if($tal['singlePoint'])
+                    $talent['keyAbility'] = true;
+                else
+                    $talent['keyAbility'] = false;
 
                 $talentTrees[$i]['talents'][] = $talent;
             }

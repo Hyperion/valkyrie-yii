@@ -461,29 +461,49 @@ class Character extends CActiveRecord
                 continue;
             }
 
-            foreach($current_tab as $talent)
+            foreach($current_tab as $tal)
             {
-                if(in_array($talent['rank5'], $this->_spells))
+                $hasRank = false;
+                if($tal['singlePoint'])
+                {
+                    $tSpell = Spell::model()->findByPk($tal['rank1']);
+                    $name = $tSpell->spellname_loc0;
+                    $spellRanks = Yii::app()->db->createCommand(
+                            "SELECT spellID
+                            FROM wow_spells
+                            WHERE spellicon = {$tSpell->spellicon} AND
+                                spellname_loc0 = :name")
+                        ->bindParam(':name', $name)
+                        ->queryColumn();
+                    foreach($spellRanks as $spell)
+                        if(in_array($spell, $this->_spells))
+                        {
+                            $hasRank = true;
+                            break;
+                        }
+
+                }
+                if(in_array($tal['rank5'], $this->_spells))
                 {
                     $this->_talents_points[$i] += 5;
                     $this->_talents_data['build'] .= 5;
                 }
-                elseif(in_array($talent['rank4'], $this->_spells))
+                elseif(in_array($tal['rank4'], $this->_spells))
                 {
                     $this->_talents_points[$i] += 4;
                     $this->_talents_data['build'] .= 4;
                 }
-                elseif(in_array($talent['rank3'], $this->_spells))
+                elseif(in_array($tal['rank3'], $this->_spells))
                 {
                     $this->_talents_points[$i] += 3;
                     $this->_talents_data['build'] .= 3;
                 }
-                elseif(in_array($talent['rank2'], $this->_spells))
+                elseif(in_array($tal['rank2'], $this->_spells))
                 {
                     $this->_talents_points[$i] += 2;
                     $this->_talents_data['build'] .= 2;
                 }
-                elseif(in_array($talent['rank1'], $this->_spells))
+                elseif(in_array($tal['rank1'], $this->_spells) || $hasRank)
                 {
                     $this->_talents_points[$i] += 1;
                     $this->_talents_data['build'] .= 1;
@@ -513,6 +533,28 @@ class Character extends CActiveRecord
 
             foreach($current_tab as $tal)
             {
+
+                $hasRank = false;
+                if($tal['singlePoint'])
+                {
+                    $tSpell = Spell::model()->findByPk($tal['rank1']);
+                    $name = $tSpell->spellname_loc0;
+                    $spellRanks = Yii::app()->db->createCommand(
+                            "SELECT spellID
+                            FROM wow_spells
+                            WHERE spellicon = {$tSpell->spellicon} AND
+                                spellname_loc0 = :name")
+                        ->bindParam(':name', $name)
+                        ->queryColumn();
+                    foreach($spellRanks as $spell)
+                        if(in_array($spell, $this->_spells))
+                        {
+                            $hasRank = true;
+                            break;
+                        }
+
+                }
+
                 $talent = array();
 
                 $talent['id'] = $tal['id'];
@@ -539,7 +581,7 @@ class Character extends CActiveRecord
                     $talent['points'] = 3;
                 elseif(in_array($tal['rank2'], $this->_spells))
                     $talent['points'] = 2;
-                elseif(in_array($tal['rank1'], $this->_spells))
+                elseif(in_array($tal['rank1'], $this->_spells) || $hasRank)
                     $talent['points'] = 1;
                 else
                     $talent['points'] = 0;

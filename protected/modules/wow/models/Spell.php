@@ -242,7 +242,7 @@ class Spell extends CActiveRecord
             else if ($match[3])
             {
                 $tSpell = $this->dbConnection->createCommand("SELECT * FROM wow_spells WHERE spellID = {$match[3]}")->queryRow();
-                $value = $this->GetRealDuration($tSpell["durationID"], $tSpell["effect{$match[5]}Amplitude"], $match[5]) * ($tSpell->{'effect'.$match[5].'BasePoints'} + 1);
+                $value = $this->GetRealDuration($tSpell["durationID"], $tSpell["effect{$match[5]}Amplitude"], $match[5]) * ($tSpell["effect{$match[5]}BasePoints"] + 1);
             }
             else
                 $value = $this->GetRealDuration($this->durationID, $this->{'effect'.$match[5].'Amplitude'}, $match[5]) * ($this->{'effect'.$match[5].'BasePoints'} + 1);
