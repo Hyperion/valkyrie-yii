@@ -71,9 +71,7 @@ class Character extends CActiveRecord
 
     private $_items = array();
     private $_spells = array();
-    private $_talents_data = array();
-    private $_talents_build = array(null, null, null);
-    private $_talents_points = array(0, 0, 0);
+    private $_talents = array();
     private $_professions = false;
     private $_power_type;
     private $_role;
@@ -415,246 +413,83 @@ class Character extends CActiveRecord
         return $power;
     }
 
-    public function getTalentTabForClass($tab_count = -1)
+    public function getTalents()
     {
-
-        $talentTabId = array(
-            self::CLASS_WARRIOR => array(161, 164, 163),
-            self::CLASS_PALADIN => array(382, 383, 381),
-            self::CLASS_HUNTER  => array(361, 363, 362),
-            self::CLASS_ROGUE   => array(182, 181, 183),
-            self::CLASS_PRIEST  => array(201, 202, 203),
-            //self::CLASS_DK      => array(398, 399, 400),
-            self::CLASS_SHAMAN  => array(261, 263, 262),
-            self::CLASS_MAGE    => array( 81,  41,  61),
-            self::CLASS_WARLOCK => array(302, 303, 301),
-            self::CLASS_DRUID   => array(283, 281, 282)
-        );
-        if(!isset($talentTabId[$this->class]))
+        if(empty($this->_talents))
         {
-            return false;
-        }
-        $tab_class = $talentTabId[$this->class];
-        if($tab_count >= 0)
-        {
-            $values = array_values($tab_class);
-            return $values[$tab_count];
-        }
-        return $tab_class;
-    }
+            $talentHandler = new WowTalents($this->class);
 
-    private function calculateTalents()
-    {
-        $tab_class = $this->getTalentTabForClass();
-        if(!$tab_class) {
-            return false;
-        }
 
-        $this->_talents_data['build'] = null;
-        for($i = 0; $i < 3; $i++)
-        {
-            $current_tab = Yii::app()->db
-                    ->createCommand("SELECT * FROM `wow_talent` WHERE `tab` = {$tab_class[$i]} ORDER BY `tab`, `row`, `col`")
-                    ->queryAll();
-            if(!$current_tab)
+            $this->_talents = $talentHandler->talentTrees;
+
+            $build = null;
+
+            foreach($this->_talents as $i => $tree)
             {
-                continue;
+                $this->_talents[$i]['count'] = 0;
+                foreach($tree['talents'] as $k => $tal)
+                {
+                    $checked = false;
+                    $points = 0;
+                    if($tal['keyAbility'])
+                    {
+                        $tSpell = Spell::model()->findByPk($tal['ranks'][0]['id']);
+                        $name = $tSpell->spellname_loc0;
+                        $spellRanks = Yii::app()->db->createCommand(
+                                "SELECT spellID
+                                FROM wow_spells
+                                WHERE spellicon = {$tSpell->spellicon} AND
+                                    spellname_loc0 = :name")
+                            ->bindParam(':name', $name)
+                            ->queryColumn();
+
+                        foreach($spellRanks as $spell)
+                            if(in_array($spell, $this->_spells))
+                            {
+                                $checked = true;
+                                $build .= 1;
+                                $points = 1;
+                                $this->_talents[$i]['count']++;
+                                break;
+                            }
+                    }
+                    else
+                    {
+                        foreach($tal['ranks'] as $j => $spell)
+                            if(in_array($spell['id'], $this->_spells))
+                            {
+                                $checked = true;
+                                $build .= $j + 1;
+                                $points = $j + 1;
+                                $this->_talents[$i]['count'] += $j + 1;
+                                break;
+                            }
+                    }
+
+                    if(!$checked)
+                        $build .= 0;
+
+                    $this->_talents[$i]['talents'][$k]['points'] = $points;
+                }
             }
 
-            foreach($current_tab as $tal)
-            {
-                $hasRank = false;
-                if($tal['singlePoint'])
-                {
-                    $tSpell = Spell::model()->findByPk($tal['rank1']);
-                    $name = $tSpell->spellname_loc0;
-                    $spellRanks = Yii::app()->db->createCommand(
-                            "SELECT spellID
-                            FROM wow_spells
-                            WHERE spellicon = {$tSpell->spellicon} AND
-                                spellname_loc0 = :name")
-                        ->bindParam(':name', $name)
-                        ->queryColumn();
-                    foreach($spellRanks as $spell)
-                        if(in_array($spell, $this->_spells))
-                        {
-                            $hasRank = true;
-                            break;
-                        }
+            $this->_talents['build'] = $build;
 
-                }
-                if(in_array($tal['rank5'], $this->_spells))
-                {
-                    $this->_talents_points[$i] += 5;
-                    $this->_talents_data['build'] .= 5;
-                }
-                elseif(in_array($tal['rank4'], $this->_spells))
-                {
-                    $this->_talents_points[$i] += 4;
-                    $this->_talents_data['build'] .= 4;
-                }
-                elseif(in_array($tal['rank3'], $this->_spells))
-                {
-                    $this->_talents_points[$i] += 3;
-                    $this->_talents_data['build'] .= 3;
-                }
-                elseif(in_array($tal['rank2'], $this->_spells))
-                {
-                    $this->_talents_points[$i] += 2;
-                    $this->_talents_data['build'] .= 2;
-                }
-                elseif(in_array($tal['rank1'], $this->_spells) || $hasRank)
-                {
-                    $this->_talents_points[$i] += 1;
-                    $this->_talents_data['build'] .= 1;
-                }
-                else
-                    $this->_talents_data['build'] .= 0;
-            }
-        }
-    }
+            $this->_talents['maxTreeNo'] = 0;
+            for($i = 0; $i < 3; $i++)
+                if($this->_talents[$i]['count'] > $this->_talents[$this->_talents['maxTreeNo']]['count'])
+                    $this->_talents['maxTreeNo'] = $i;
 
-    private function calculateTalentsBuild()
-    {
-        $tab_class = $this->getTalentTabForClass();
-        if(!$tab_class) {
-            return false;
-        }
-
-        for($i = 0; $i < 3; $i++)
-        {
-            $current_tab = Yii::app()->db
-                    ->createCommand("SELECT * FROM `wow_talent` WHERE `tab` = {$tab_class[$i]} ORDER BY `tab`, `row`, `col`")
-                    ->queryAll();
-            if(!$current_tab)
-            {
-                continue;
-            }
-
-            foreach($current_tab as $tal)
-            {
-
-                $hasRank = false;
-                if($tal['singlePoint'])
-                {
-                    $tSpell = Spell::model()->findByPk($tal['rank1']);
-                    $name = $tSpell->spellname_loc0;
-                    $spellRanks = Yii::app()->db->createCommand(
-                            "SELECT spellID
-                            FROM wow_spells
-                            WHERE spellicon = {$tSpell->spellicon} AND
-                                spellname_loc0 = :name")
-                        ->bindParam(':name', $name)
-                        ->queryColumn();
-                    foreach($spellRanks as $spell)
-                        if(in_array($spell, $this->_spells))
-                        {
-                            $hasRank = true;
-                            break;
-                        }
-
-                }
-
-                $talent = array();
-
-                $talent['id'] = $tal['id'];
-                $talent['y'] = $tal['row'];
-                $talent['x'] = $tal['col'];
-                $talent['req'] = $tal['required'];
-
-                if($tal['rank5'])
-                    $talent['maxpoints'] = 5;
-                elseif($tal['rank4'])
-                    $talent['maxpoints'] = 4;
-                elseif($tal['rank3'])
-                    $talent['maxpoints'] = 3;
-                elseif($tal['rank2'])
-                    $talent['maxpoints'] = 2;
-                else
-                    $talent['maxpoints'] = 1;
-
-                if(in_array($tal['rank5'], $this->_spells))
-                    $talent['points'] = 5;
-                elseif(in_array($tal['rank4'], $this->_spells))
-                    $talent['points'] = 4;
-                elseif(in_array($tal['rank3'], $this->_spells))
-                    $talent['points'] = 3;
-                elseif(in_array($tal['rank2'], $this->_spells))
-                    $talent['points'] = 2;
-                elseif(in_array($tal['rank1'], $this->_spells) || $hasRank)
-                    $talent['points'] = 1;
-                else
-                    $talent['points'] = 0;
-
-                $this->_talents_build[$i][$tal['id']] = $talent;
-            }
-        }
-    }
-
-    public function getTalentBuild()
-    {
-        $this->calculateTalentsBuild();
-        return $this->_talents_build;
-    }
-
-    public function getTalentData()
-    {
-        if(empty($this->_talents_data))
-        {
-            $this->calculateTalents();
-
-            for ($i = 0; $i < 3; $i++)
-            {
-                if($i == $this->getMaxArray($this->_talents_points))
-                    $spec = $i;
-            }
-
-            $this->_talents_data[0]['count'] = $this->_talents_points[0];
-            $this->_talents_data[1]['count'] = $this->_talents_points[1];
-            $this->_talents_data[2]['count'] = $this->_talents_points[2];
-
-            $this->_talents_data[0]['name'] = $this->getTalentSpecNameFromDB(0);
-            $this->_talents_data[1]['name'] = $this->getTalentSpecNameFromDB(1);
-            $this->_talents_data[2]['name'] = $this->getTalentSpecNameFromDB(2);
-
-            $this->_talents_data[0]['icon'] = $this->getTalentSpecIconFromDB(0);
-            $this->_talents_data[1]['icon'] = $this->getTalentSpecIconFromDB(1);
-            $this->_talents_data[2]['icon'] = $this->getTalentSpecIconFromDB(2);
-
-            $this->_talents_data['name'] = $this->_talents_data[$spec]['name'];
-            $this->_talents_data['icon'] = $this->_talents_data[$spec]['icon'];
-
-            if($this->_talents_data[0]['count'] == 0 && $this->_talents_data[1]['count'] == 0 && $this->_talents_data[2]['count'] == 0)
+            if($this->_talents[0]['count'] == 0 && $this->_talents[1]['count'] == 0 && $this->_talents[2]['count'] == 0)
             {
                 // have no talents
-                $this->_talents_data['icon'] = 'inv_misc_questionmark';
-                $this->_talents_data['name'] = 'No Talents';
+                $this->_talents['maxTreeNo'] = -1;
+                $this->_talents['icon'] = 'inv_misc_questionmark';
+                $this->_talents['name'] = 'No Talents';
             }
         }
 
-        return $this->_talents_data;
-    }
-
-    public function getTalentSpecNameFromDB($spec)
-    {
-        $column = 'name_'.Yii::app()->language;
-        return Yii::app()->db
-            ->createCommand("SELECT $column FROM wow_talent_icons WHERE class = {$this->class} AND spec = $spec LIMIT 1")
-            ->queryScalar();
-    }
-
-    public function getTalentSpecIconFromDB($spec)
-    {
-        return Yii::app()->db
-            ->createCommand("SELECT icon FROM wow_talent_icons WHERE class = {$this->class} AND spec = $spec LIMIT 1")
-            ->queryScalar();
-    }
-
-    public static function getTalentSpecRolesFromDB($spec)
-    {
-        return Yii::app()->db
-            ->createCommand("SELECT tank, healer, dps FROM wow_talent_icons WHERE class = {$this->class} AND spec = $spec LIMIT 1")
-            ->queryRow();
+        return $this->_talents;
     }
 
     public function getRole()
@@ -754,12 +589,6 @@ class Character extends CActiveRecord
         }
 
         return $this->_professions;
-    }
-
-    public function getMaxArray($arr)
-    {
-        foreach ($arr as $key => $val)
-            if ($val == max($arr)) return $key;
     }
 
     public function getItemLevel()

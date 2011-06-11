@@ -8,20 +8,20 @@
             <div class="character-talents-wrapper">
 
     <div id="talentcalc-character" class="talentcalc talentcalc-locked">
-<?php foreach($model->talentBuild as $i => $build): ?>
-            <div class="talentcalc-tree-wrapper tree-<?=($model->talentData[$i]['name'] != $model->talentData['name']) ? 'non' : ''?>specialization">
+<?php for($i = 0; $i < 3; $i++) { ?>
+            <div class="talentcalc-tree-wrapper tree-<?=($model->talents['maxTreeNo'] != $i) ? 'non' : ''?>specialization">
 
     <div class="talentcalc-tree-header" style="visibility: visible; ">
         <span class="icon">
         <span class="icon-frame-treeheader ">
-            <img src="http://eu.media.blizzard.com/wow/icons/36/<?=$model->talentData[$i]['icon']?>.jpg" alt="" width="36" height="36" />
+            <img src="http://eu.media.blizzard.com/wow/icons/36/<?=$model->talents[$i]['icon']?>.jpg" alt="" width="36" height="36" />
             <span class="frame"></span>
         </span>
         </span>
         <span class="points">
-            <span class="value"><?=$model->talentData[$i]['count']?></span>
+            <span class="value"><?=$model->talents[$i]['count']?></span>
         </span>
-        <span class="name"><?=$model->talentData[$i]['name']?></span>
+        <span class="name"><?=$model->talents[$i]['name']?></span>
         <span class="clear"><!-- --></span>
     </div>
 
@@ -30,34 +30,38 @@
 
 <?php
 $j = 0;
-foreach($build as $tal):
+foreach($model->talents[$i]['talents'] as $tal):
     if($tal['points'] == $tal['maxpoints'])
         $class = 'talent-full';
     elseif($tal['points'] < $tal['maxpoints'] && $tal['points'] != 0)
         $class = 'talent-partial';
     else
         $class = '';
-    if($tal['req'] && $tal['points'] != 0)
+    if(isset($tal['req']) && $tal['points'] != 0)
         $class .= ' talent-arrow';
 ?>
     <div class="talentcalc-cell <?=$class?>" style="left: <?=($tal['x'] * 53)?>px; top: <?=($tal['y'] * 53)?>px;" data-id="<?=$tal['id']?>">
         <span class="icon">
-            <span class="texture" style="background-position: -<?=($j++ * 36)?>px -<?=($i * 36)?>px;"></span>
+            <span class="texture"></span>
 
             <span class="frame"></span>
         </span>
         <a href="javascript:;" class="interact"><span class="hover"></span></a>
         <span class="points"><span class="frame"></span><span class="value"><?=$tal['points']?></span></span>
-<?php if($tal['req']):
-    $prev = $build[$tal['req']];
+<?php if(isset($tal['req'])):
+
+    foreach($model->talents[$i]['talents'] as $prev):
+        if($prev['id'] == $tal['req'])
+            break;
+    endforeach;
 
     if($tal['x'] == $prev['x'])
     {
         $type = 'down';
         $w = 40;
         $l = 7;
-        $h = 14 + ($tal['y'] - $build[$tal['req']]['y'] - 1) * 53;
-        $t = -6 - ($tal['y'] - $build[$tal['req']]['y'] - 1) * 53;
+        $h = 14 + ($tal['y'] - $prev['y'] - 1) * 53;
+        $t = -6 - ($tal['y'] - $prev['y'] - 1) * 53;
     }
     elseif($tal['x'] > $prev['x'] && $tal['y'] == $prev['y'])
     {
@@ -92,12 +96,12 @@ foreach($build as $tal):
     </div>
 
              </div>
-<?php endforeach; ?>
+<?php } ?>
 
     <script type="text/javascript">
     //<![CDATA[
         $(document).ready(function() {
-            new TalentCalculator({ id: "character", classId: <?=$model->class?>, calculatorMode: false, build: "<?=$model->talentData['build']?>", callback: "", nTrees: 3 });
+            new TalentCalculator({ id: "character", classId: <?=$model->class?>, calculatorMode: false, build: "<?=$model->talents['build']?>", callback: "", nTrees: 3 });
         });
         var MsgTalentCalculator = {
             talents: {
