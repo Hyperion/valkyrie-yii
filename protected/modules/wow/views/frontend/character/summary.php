@@ -18,7 +18,7 @@ $this->breadcrumbs = array(
                         <div class="under-name color-c<?=$model['class']?>">
                             <a href="/wow/game/race/<?=$model['race']?>" class="race"><?=$model['race_text']?></a> -
                             <a href="/wow/game/class/<?=$model['class']?>" class="class"><?=$model['class_text']?></a>
-                            (<span id="profile-info-spec" class="spec tip"><?=$model->talentData['name']?></span>)
+                            (<span id="profile-info-spec" class="spec tip"><?=$model->talents['name']?></span>)
                             <span class="level"><strong><?=$model['level']?></strong></span> lvl<span class="comma">,</span>
                             <span class="realm tip" id="profile-info-realm" data-battlegroup="<?=CHtml::encode(Database::$realm)?>"><?=CHtml::encode(Database::$realm)?></span>
                         </div>
@@ -106,18 +106,18 @@ switch($this->action->id)
                         <a href="<?=$this->createUrl('/wow/character/talents', array('name' => $model->name, 'realm' => Database::$realm))?>" rel="np" class="active">
                         <span class="inner">
                             <span class="icon">
-                                <img src="http://eu.battle.net/wow-assets/static/images/icons/36/<?=$model->talentData['icon']?>.jpg" alt="" />
+                                <img src="http://eu.battle.net/wow-assets/static/images/icons/36/<?=$model->talents['icon']?>.jpg" alt="" />
                                 <span class="frame"></span>
                             </span>
                             <span class="roles"></span>
                             <span class="name-build">
-                                <span class="name"><?=$model->talentData['name']?></span>
+                                <span class="name"><?=$model->talents['name']?></span>
                                 <span class="build">
-                                    <?=$model->talentData[0]['count']?>
+                                    <?=$model->talents[0]['count']?>
                                     <ins>/</ins>
-                                    <?=$model->talentData[1]['count']?>
+                                    <?=$model->talents[1]['count']?>
                                     <ins>/</ins>
-                                    <?=$model->talentData[2]['count']?>
+                                    <?=$model->talents[2]['count']?>
                                 </span>
                             </span>
                         </span>

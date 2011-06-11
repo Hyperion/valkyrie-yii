@@ -480,6 +480,9 @@ class Character extends CActiveRecord
                 if($this->_talents[$i]['count'] > $this->_talents[$this->_talents['maxTreeNo']]['count'])
                     $this->_talents['maxTreeNo'] = $i;
 
+            $this->_talents['name'] = $this->_talents[$this->_talents['maxTreeNo']]['name'];
+            $this->_talents['icon'] = $this->_talents[$this->_talents['maxTreeNo']]['icon'];
+
             if($this->_talents[0]['count'] == 0 && $this->_talents[1]['count'] == 0 && $this->_talents[2]['count'] == 0)
             {
                 // have no talents
@@ -500,7 +503,7 @@ class Character extends CActiveRecord
         switch($this->class)
         {
             case self::CLASS_WARRIOR:
-                if($this->talentData[2]['count'] > $this->talentData[1]['count'] && $this->talentData[2]['count'] > $this->talentData[0]['count'])
+                if($this->talents[2]['count'] > $this->talents[1]['count'] && $this->talents[2]['count'] > $this->talents[0]['count'])
                     $this->_role = self::ROLE_TANK;
                 else
                     $this->_role = self::ROLE_MELEE;
@@ -513,12 +516,12 @@ class Character extends CActiveRecord
             case self::CLASS_DRUID:
             case self::CLASS_SHAMAN:
                 // Hybrid classes. Need to check active talent tree.
-                if($this->talentData[0]['count'] > $this->talentData[1]['count'] && $this->talentData[0]['count'] > $this->talentData[2]['count'])
+                if($this->talents[0]['count'] > $this->talents[1]['count'] && $this->talents[0]['count'] > $this->talents[2]['count'])
                     if($this->class == self::CLASS_PALADIN)
                            $this->_role = self::ROLE_HEALER;
                     else
                         $this->_role = self::ROLE_CASTER;
-                elseif($this->talentData[1]['count'] > $this->talentData[0]['count'] && $this->talentData[1]['count'] > $this->talentData[2]['count'])
+                elseif($this->talents[1]['count'] > $this->talents[0]['count'] && $this->talents[1]['count'] > $this->talents[2]['count'])
                     if($this->class == self::CLASS_PALADIN)
                         $this->_role = self::ROLE_TANK;// Paladin: Protection
                     else
@@ -530,7 +533,7 @@ class Character extends CActiveRecord
                         $this->_role = self::ROLE_HEALER;
                 break;
             case self::CLASS_PRIEST:
-                if($this->talentData[2]['count'] > $this->talentData[0]['count'] && $this->talentData[2]['count'] > $this->talentData[1]['count'])
+                if($this->talents[2]['count'] > $this->talents[0]['count'] && $this->talents[2]['count'] > $this->talents[1]['count'])
                     $this->_role = self::ROLE_CASTER;
                 else
                     $this->_role = self::ROLE_HEALER;
