@@ -1,62 +1,27 @@
 <?php
 $this->breadcrumbs = array(
     'Game' => array('/wow/'),
-    'Characters' => array('/wow/character/'),
-    Database::$realm.' @ '.$model->name => array('/wow/character/simple', 'realm' => Database::$realm, 'name' => $model['name']),
-    'Talents' => array('/wow/character/talent', 'realm' => Database::$realm, 'name' => $model['name']),
+    'Tools' => array('/wow/tool/'),
+    'Talent Calculator' => array('/wow/tool/talentCalculator'),
 ); ?>
 <div class="profile-sidebar-anchor">
     <div class="profile-sidebar-outer">
         <div class="profile-sidebar-inner">
             <div class="profile-sidebar-contents">
+<?php
+$classes = Yii::app()->db->createCommand("
+        SELECT id, name_ru AS name FROM wow_classes WHERE id <> 6")
+    ->queryAll();
+$links = array();
+foreach($classes as $class)
+{
+    $links[] = array(
+        'label'=> $class['name'],
+        'url' => array('/wow/tool/talentCalculator', 'class'=>$class['id'])
+    );
+}
 
-        <div class="profile-sidebar-crest">
-            <?=CHtml::link('<span class="hover"></span><span class="fade"></span>',
-                array('/wow/character/simple', 'realm' => Database::$realm, 'name' => $model['name']),
-                array(
-                    'rel' => 'np',
-                    'class' => 'profile-sidebar-character-model',
-                    'style' => "background-image: url(/images/wow/2d/inset/{$model['race']}-{$model['gender']}.jpg);",
-            ))?>
-            <div class="profile-sidebar-info">
-                <div class="name">
-                    <?=CHtml::link($model['name'], array('/wow/character/simple', 'realm' => Database::$realm, 'name' => $model['name']))?>
-                </div>
-
-                <div class="under-name color-c<?=$model['class']?>">
-                    <a href="/wow/game/race/<?=$model['race']?>" class="race"><?=$model['race_text']?></a> -
-                    <a href="/wow/game/class/<?=$model['class']?>" class="class"><?=$model['class_text']?></a>
-                    <span class="level"><strong><?=$model['level']?></strong></span> lvl<span class="comma">,</span>
-                </div>
-
-                <div class="realm">
-                    <span id="profile-info-realm" class="tip" data-battlegroup="<?=CHtml::encode(Database::$realm)?>"><?=CHtml::encode(Database::$realm)?></span>
-                </div>
-
-
-            </div>
-        </div>
-
-<?php $this->widget('WProfileSidebarMenu', array(
-    'items' => array(
-        array(
-            'label'=>'Сводка',
-            'url'=>array('/wow/character/simple', 'realm'=>Database::$realm, 'name'=>$model->name)
-        ),
-        array(
-            'label'=>'Таланты',
-            'url'=>array('/wow/character/talents', 'realm'=>Database::$realm, 'name'=>$model->name)
-        ),
-        array(
-            'label'=>'Репутация',
-            'url'=>array('/wow/character/reputation', 'realm'=>Database::$realm, 'name'=>$model->name)
-        ),
-        array(
-            'label'=>'PvP',
-            'url'=>array('/wow/character/pvp', 'realm'=>Database::$realm, 'name'=>$model->name)
-        ),
-    ),
-)); ?>
+$this->widget('WProfileSidebarMenu', array('items' => $links));?>
             </div>
         </div>
     </div>
@@ -77,14 +42,14 @@ $this->breadcrumbs = array(
     <div class="talentcalc-tree-header" style="visibility: visible; ">
         <span class="icon">
         <span class="icon-frame-treeheader ">
-            <img src="http://eu.media.blizzard.com/wow/icons/36/<?=$model->talents[$i]['icon']?>.jpg" alt="" width="36" height="36" />
+            <img src="http://eu.media.blizzard.com/wow/icons/36/<?=$data[$i]['icon']?>.jpg" alt="" width="36" height="36" />
             <span class="frame"></span>
         </span>
         </span>
         <span class="points">
-            <span class="value"><?=$model->talents[$i]['count']?></span>
+            <span class="value">0</span>
         </span>
-        <span class="name"><?=$model->talents[$i]['name']?></span>
+        <span class="name"><?=$data[$i]['name']?></span>
         <span class="clear"><!-- --></span>
     </div>
 
@@ -93,14 +58,9 @@ $this->breadcrumbs = array(
 
 <?php
 $j = 0;
-foreach($model->talents[$i]['talents'] as $tal):
-    if($tal['points'] == $tal['maxpoints'])
-        $class = 'talent-full';
-    elseif($tal['points'] < $tal['maxpoints'] && $tal['points'] != 0)
-        $class = 'talent-partial';
-    else
-        $class = '';
-    if(isset($tal['req']) && $tal['points'] != 0)
+foreach($data[$i]['talents'] as $tal):
+    $class = '';
+    if(isset($tal['req']))
         $class .= ' talent-arrow';
 ?>
     <div class="talentcalc-cell <?=$class?>" style="left: <?=($tal['x'] * 53)?>px; top: <?=($tal['y'] * 53)?>px;" data-id="<?=$tal['id']?>">
@@ -112,10 +72,10 @@ foreach($model->talents[$i]['talents'] as $tal):
             <span class="frame"></span>
         </span>
         <a href="javascript:;" class="interact"><span class="hover"></span></a>
-        <span class="points"><span class="frame"></span><span class="value"><?=$tal['points']?></span></span>
+        <span class="points"><span class="frame"></span><span class="value">0</span></span>
 <?php if(isset($tal['req'])):
 
-    foreach($model->talents[$i]['talents'] as $prev):
+    foreach($data[$i]['talents'] as $prev):
         if($prev['id'] == $tal['req'])
             break;
     endforeach;
@@ -162,16 +122,14 @@ foreach($model->talents[$i]['talents'] as $tal):
 
              </div>
 <?php } ?>
-<span class="clear"><!-- --></span>
 <div class="talentcalc-bottom">
     <div class="talentcalc-info">
-        <div class="export" style="display: none"><a href="#">Экспортировать</a></div>
-        <div class="calcmode"><a href="javascript:;">Режим «Калькулятор»</a></div>
-        <div class="restore" style="display: none"><a href="javascript:;">Восстановить</a></div>
-        <div class="reset" style="display: none"><a href="javascript:;">Сбросить</a></div>
-        <div class="pointsspent" style="display: none"><span class="name">Очков потрачено:</span><span class="value"><span>9</span><ins>/</ins><span>0</span><ins>/</ins><span>32</span></span></div>
-        <div class="pointsleft" style="display: none"><span class="name">Очков осталось:</span><span class="value">0</span></div>
-        <div class="requiredlevel" style="display: none"><span class="name">Требуемый уровень:</span><span class="value">-</span></div>
+        <div class="export"><a href="#">Экспортировать</a></div>
+        <div class="reset"><a href="javascript:;">Сбросить</a></div>
+        <div class="pointsspent"><span class="name">Очков потрачено:</span><span class="value"><span>0</span><ins>/</ins><span>0</span><ins>/</ins><span>0</span></span></div>
+        <div class="pointsleft"><span class="name">Очков осталось:</span><span class="value">51</span></div>
+        <div class="requiredlevel"><span class="name">Требуемый уровень:</span><span class="value">-</span></div>
+
     </div>
 
     <span class="clear"><!-- --></span>
@@ -180,7 +138,7 @@ foreach($model->talents[$i]['talents'] as $tal):
     <script type="text/javascript">
     //<![CDATA[
         $(document).ready(function() {
-            new TalentCalculator({ id: "character", classId: <?=$model->class?>, calculatorMode: false, build: "<?=$model->talents['build']?>", callback: "", nTrees: 3 });
+            new TalentCalculator({ id: "character", classId: <?=$classId?>, calculatorMode: true, build: "<?=$build?>", callback: "", nTrees: 3 });
         });
         var MsgTalentCalculator = {
             talents: {

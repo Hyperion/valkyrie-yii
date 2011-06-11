@@ -3,6 +3,7 @@ function TalentCalculator(options) {
 
     // Variables
     var self = this;
+    var currBuild = '';
     TalentCalculator.instances[options.id] = self;
 
     // Options
@@ -19,7 +20,6 @@ function TalentCalculator(options) {
     var pointsSpent = 0;
     var processingBuild = false;
     var locked;
-    var overviewPaneVisible = true;
     var dataLoaded = false;
 
     // Helper
@@ -57,9 +57,11 @@ function TalentCalculator(options) {
 
         initData();
         initHtml();
-        lock();
-
-        overviewPaneVisible = (options.calculatorMode && !options.build); // Initial state
+        if(options.calculatorMode) {
+            unlock();
+        } else {
+            lock();
+        }
 
         if(options.build) {
             processBuild(options.build);
@@ -201,17 +203,11 @@ function TalentCalculator(options) {
         $exportLink         = $export.children('a');
         $calcMode           = $info.children('div.calcmode');
         $restore            = $info.children('div.restore');
-        $fansiteLink        = $info.children('div.third-party');
 
         $reset.children('a').click(reset);
         $calcMode.children('a').click(enterCalculatorMode).mouseover(calcModeMouseOver);
         $restore.children('a').click(exitCalculatorMode);
 
-        // Buttons
-        var $buttons = $bottom.children('div.talentcalc-buttons');
-        $toggleOverviewPane = $buttons.find('button');
-
-        $toggleOverviewPane.click(toggleOverviewPane);
     }
 
     function processBuild(build) {
@@ -270,6 +266,23 @@ function TalentCalculator(options) {
         }
     }
 
+    function geterateBuild() {
+
+        currBuild = '';
+
+        for(var treeNo = 0; treeNo < NUM_TREES; ++treeNo) {
+
+            var talents = data[treeNo].talents;
+
+            $.each(talents, function() {
+
+                var talent = this;
+
+                currBuild = currBuild + talent.points;
+            });
+        }
+    }
+
     function lock() {
         locked = true;
         $talentCalc.addClass('talentcalc-locked');
@@ -304,11 +317,6 @@ function TalentCalculator(options) {
 
             for(var treeNo = 0; treeNo < NUM_TREES; ++treeNo) {
                 var tree = data[treeNo];
-
-                if(calculatorMode) {
-                    tree.$treeHeader.css('visibility', 'hidden');
-                    //tree.$button.show();
-                }
             }
         }
     }
@@ -340,8 +348,8 @@ function TalentCalculator(options) {
         $requiredLevelValue.text(getRequiredLevel());
         $pointsLeftValue.text(totalPoints - pointsSpent);
 
-        // TODO: Export build to talent calculator
-        //$exportLink.attr('href', ...);
+        geterateBuild();
+        $exportLink.attr('href', Core.baseUrl + '/tool/talentCalculator?class=' + options.classId + '&build=' + currBuild);
     }
 
     function resetAllTrees() {
@@ -364,30 +372,6 @@ function TalentCalculator(options) {
     function reset() {
         resetAllTrees();
         updateAllTrees();
-    }
-
-    function setOverviewPane(visibility) {
-        overviewPaneVisible = visibility;
-        updateOverviewPane();
-    }
-
-    function toggleOverviewPane() {
-        overviewPaneVisible = !overviewPaneVisible;
-        updateOverviewPane();
-    }
-
-    function updateOverviewPane() {
-        for(var treeNo = 0; treeNo < NUM_TREES; ++treeNo) {
-            var tree = data[treeNo];
-
-            if(overviewPaneVisible) {
-                tree.$treeOverview.show();
-            } else {
-                tree.$treeOverview.hide();
-            }
-        }
-
-        $toggleOverviewPane.find('span span').text(overviewPaneVisible ? MsgTalentCalculator.buttons.overviewPane.hide : MsgTalentCalculator.buttons.overviewPane.show);
     }
 
     function doesTalentValidate(talent)
@@ -420,13 +404,12 @@ function TalentCalculator(options) {
         talent.$cell.removeClass('talent-partial talent-full talent-arrow');
 
         talent.$icon.css('background-image', active ? 'url(' + Wow.Icon.getUrl(talent.icon, 36) + ')' : 'url(http://static.mmo-champion.com/db/img/icons/greyscale/' + talent.icon + '.png)');
-        if(!active)
-        {
-            talent.$icon.css('background-size', '40px 40px');
+        if(!active) {
+            talent.$icon.css('background-size', '42px 42px');
             talent.$icon.css('background-position', 'center');
         }
         if(active) {
-
+            talent.$icon.css('background-size', '100%');
             if(talent.points < talent.max) {
                 talent.$cell.addClass('talent-partial');
             } else {
@@ -484,14 +467,6 @@ function TalentCalculator(options) {
 
         if(talent.points <= 0) // Already empty
             return false;
-
-        if(specializationPoints && specialization != null && specialization == talent.tree.treeNo) {
-            // Don't allow unspecializing if there are still points in the other trees
-            var pointsSpentInMainTree = data[specialization].points;
-            if(pointsSpentInMainTree == specializationPoints && pointsSpent > pointsSpentInMainTree) {
-                return false;
-            }
-        }
 
         // Check talents on deeper tiers to see if removing a point would break them
         var brokenTalent = false;
@@ -641,22 +616,7 @@ function TalentCalculator(options) {
         var reqLevel = 9;
         var points = pointsSpent;
 
-        // First 2 points = every 1 level
-        var part = Math.min(2, points);
-        if(part > 0) {
-            reqLevel += part;
-            points -= part;
-        }
-
-        // Next 35 points = every 2 levels
-        part = Math.min(35, points);
-        if(part > 0) {
-            reqLevel += part * 2;
-            points -= part;
-        }
-
-        // Last 4 points = every 1 level
-        part = Math.min(5, points);
+        var part = Math.min(51, points);
         if(part > 0) {
             reqLevel += part;
             points -= part;
@@ -686,6 +646,7 @@ function TalentCalculator(options) {
         unlock();
         updateAllTrees();
 
+        $export.show();
         $pointsSpent.show();
         $requiredLevel.show();
         $pointsLeft.show();
@@ -693,11 +654,6 @@ function TalentCalculator(options) {
         $reset.show();
         $calcMode.hide();
         $restore.show();
-        $fansiteLink.hide();
-
-        if(specializationPoints && pointsSpent == 0) {
-            setSpecialization(-1);
-        }
     }
 
     function exitCalculatorMode() {
@@ -709,13 +665,13 @@ function TalentCalculator(options) {
         lock();
         updateAllTrees();
 
+        $export.hide();
         $pointsSpent.hide();
         $requiredLevel.hide();
         $pointsLeft.hide();
         $reset.hide();
         $calcMode.show();
         $restore.hide();
-        $fansiteLink.show();
     }
 
     function iconMouseOver() {
@@ -748,23 +704,6 @@ function TalentCalculator(options) {
         }
 
         var updateAll = false;
-
-        if(specializationPoints && specialization != null) {
-
-            var pointsSpentInMainTree = data[specialization].points;
-
-            if(added) {
-                if(pointsSpentInMainTree == specializationPoints) { // Fully specialized
-                    updateAll = true;
-                }
-            }
-
-            if(removed) {
-                if(pointsSpentInMainTree == (specializationPoints - 1)) { // No longer fully specialized
-                    updateAll = true;
-                }
-            }
-        }
 
         if(added && pointsSpent == totalPoints) // All points have been spent
             updateAll = true;

@@ -11,6 +11,7 @@ class CharacterController extends Controller
         $model->loadAdditionalData();
 
         $this->registerFiles();
+        $this->_cs->registerCssFile('/css/wow/character/summary.css');
         $this->_cs->registerCss(1, '#content .content-top { background: url("/images/wow/character/summary/backgrounds/race/'.$model->race.'.jpg") left top no-repeat; } .profile-wrapper { background-image: url("/images/wow/2d/profilemain/race/'.$model->race.'-'.$model->gender.'.jpg"); }');
 
         $this->render('summary',array(
@@ -41,6 +42,7 @@ class CharacterController extends Controller
         $model->loadAdditionalData();
 
         $this->registerFiles();
+        $this->_cs->registerCssFile('/css/wow/character/summary.css');
         $this->_cs->registerCss(1, '#content .content-top { background: url("/images/wow/character/summary/backgrounds/race/'.$model->race.'.jpg") left top no-repeat; } .profile-wrapper { background-image: url("/images/wow/2d/profilemain/race/'.$model->race.'-'.$model->gender.'.jpg"); }');
 
         $this->render('summary',array(
@@ -54,6 +56,7 @@ class CharacterController extends Controller
         $model = $this->loadModel((string)$name);
         $model->loadAdditionalData();
         $this->registerFiles();
+        $this->_cs->registerCssFile('/css/wow/character/summary.css');
 
         $this->render('summary',array(
             'model'=>$model,
@@ -99,7 +102,6 @@ class CharacterController extends Controller
     private function registerFiles()
     {
         $this->_cs->registerCssFile('/css/wow/profile.css');
-        $this->_cs->registerCssFile('/css/wow/character/summary.css');
         $this->_cs->registerScriptFile('/js/wow/profile.js', CClientScript::POS_END);
         $this->_cs->registerScriptFile('/js/wow/character/summary.js', CClientScript::POS_END);
     }
