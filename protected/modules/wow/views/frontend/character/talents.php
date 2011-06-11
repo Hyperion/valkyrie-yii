@@ -18,7 +18,9 @@
             <span class="frame"></span>
         </span>
         </span>
-        <span class="points"><?=$model->talentData[$i]['count']?></span>
+        <span class="points">
+            <span class="value"><?=$model->talentData[$i]['count']?></span>
+        </span>
         <span class="name"><?=$model->talentData[$i]['name']?></span>
         <span class="clear"><!-- --></span>
     </div>
@@ -95,7 +97,7 @@ foreach($build as $tal):
     <script type="text/javascript">
     //<![CDATA[
         $(document).ready(function() {
-            new TalentCalculator({ id: "character", classId: <?=$model->class?>, calculatorMode: false, petMode: false, build: "", callback: "", nTrees: 3 });
+            new TalentCalculator({ id: "character", classId: <?=$model->class?>, calculatorMode: false, build: "<?=$model->talentData['build']?>", callback: "", nTrees: 3 });
         });
         var MsgTalentCalculator = {
             talents: {

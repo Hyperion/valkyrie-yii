@@ -2,26 +2,26 @@
 
 class Spell extends CActiveRecord
 {
-	public $info = false;
+    public $info = false;
 
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	public function tableName()
-	{
-		return 'wow_spells';
-	}
+    public function tableName()
+    {
+        return 'wow_spells';
+    }
 
-	public function formatInfo()
-	{
+    public function formatInfo()
+    {
             $regExp = "/\\$+(?:([\/,*])?([0-9]*);)?([d+\;(\d*)?([1-9]*)([A-z])([1-3]*)(([A-z, ]*)\:([A-z, ]*)\;)?/";
-            
+
             $this->info = $this->tooltip_loc0;
-            
+
             $matches = array();
-            
+
             preg_match_all($regExp, $this->info , $matches, PREG_SET_ORDER);
 
             foreach($matches as $match)
@@ -29,7 +29,7 @@ class Spell extends CActiveRecord
                 switch (strtolower($match[4]))
                 {
                     case 'u':
-                        $this->RegExpU($match);
+                        //$this->RegExpU($match);
                     break;
                     case 'h':
                         $this->RegExpH($match);
@@ -83,8 +83,8 @@ class Spell extends CActiveRecord
                     break;
                 }
             }
-	}
-        
+    }
+
         private function GetDuration($durationId)
         {
             return $this->dbConnection->createCommand("SELECT durationBase FROM wow_spellduration WHERE durationID = $durationId")->queryScalar() / 1000;
@@ -94,36 +94,36 @@ class Spell extends CActiveRecord
         {
             return $this->GetDuration($durationId) / ($amplitude ? ($amplitude / 1000) : 5);
         }
-        
+
         private function GetRadius($radiusId, $effIdx)
         {
             return $this->dbConnection->createCommand("SELECT radiusBase FROM wow_spellradius WHERE radiusID = $radiusId")->queryScalar();
         }
-        
+
         private function RegExpU($match)
         {
             if ($match[3])
-                $stackAmount = $this->dbConnection->createCommand("SELECT stackAmount FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar(); 
+                $stackAmount = $this->dbConnection->createCommand("SELECT stackAmount FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar();
             else
                 $stackAmount = $this->stackAmount;
 
             $this->info = str_replace($match[0], $stackAmount, $this->info);
         }
-        
+
         private function RegExpH($match)
         {
             if ($match[3])
-                $procChance = $this->dbConnection->createCommand("SELECT procChance FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar(); 
+                $procChance = $this->dbConnection->createCommand("SELECT procChance FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar();
             else
                 $procChance = $this->procChance;
 
             $this->info = str_replace($match[0], $procChance, $this->info);
         }
-        
+
         private function RegExpV($match)
         {
             if ($match[3])
-                $targetLevel = $this->dbConnection->createCommand("SELECT affected_target_level FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar(); 
+                $targetLevel = $this->dbConnection->createCommand("SELECT affected_target_level FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar();
             else
                 $targetLevel = $this->affected_target_level;
 
@@ -133,33 +133,33 @@ class Spell extends CActiveRecord
         private function RegExpX($match)
         {
             if ($match[3])
-                $chainTarget = $this->dbConnection->createCommand("SELECT effect{$match[5]}ChainTarget FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar(); 
+                $chainTarget = $this->dbConnection->createCommand("SELECT effect{$match[5]}ChainTarget FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar();
             else
                 $chainTarget = $this->{'effect'.$match[5].'ChainTarget'};
 
             $this->info = str_replace($match[0], $chainTarget, $this->info);
         }
-        
+
         private function RegExpN($match)
         {
             if ($match[3])
-                $procCharges = $this->dbConnection->createCommand("SELECT procCharges FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar(); 
+                $procCharges = $this->dbConnection->createCommand("SELECT procCharges FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar();
             else
                 $procCharges = $this->procCharges;
 
             $this->info = str_replace($match[0], $procCharges, $this->info);
         }
-        
+
         private function RegExpI($match)
         {
             if ($match[3])
-                $spellTargets = $this->dbConnection->createCommand("SELECT spellTargets FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar(); 
+                $spellTargets = $this->dbConnection->createCommand("SELECT spellTargets FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar();
             else
                 $spellTargets = $this->spellTargets;
 
             $this->info = str_replace($match[0], $spellTargets ? $spellTargets : "nearby", $this->info);
         }
-        
+
         private function RegExpT($match)
         {
             if ($match[2])
@@ -190,7 +190,7 @@ class Spell extends CActiveRecord
 
             $this->info = str_replace($match[0], $effectAmplitude, $this->info);
         }
-        
+
         private function RegExpS($match)
         {
             if ($match[2])
@@ -215,10 +215,10 @@ class Spell extends CActiveRecord
                 $value = abs(1 + $this->dbConnection->createCommand("SELECT effect{$match[5]}BasePoints FROM wow_spells WHERE spellID = {$match[3]}")->queryScalar());
             else
                 $value = abs($this->{'effect'.$match[5].'BasePoints'} + 1);
-            
+
             $this->info = str_replace($match[0], $value, $this->info);
         }
-        
+
         private function RegExpO($match)
         {
             if ($match[2])
@@ -249,7 +249,7 @@ class Spell extends CActiveRecord
 
             $this->info = str_replace($match[0], $value, $this->info);
         }
-        
+
         private function RegExpD($match)
         {
             if ($match[2])
@@ -280,7 +280,7 @@ class Spell extends CActiveRecord
 
             $this->info = str_replace($match[0], $duration, $this->info);
         }
-        
+
         private function RegExpA($match)
         {
             if ($match[2])
@@ -311,7 +311,7 @@ class Spell extends CActiveRecord
 
             $this->info = str_replace($match[0], $radius, $this->info);
         }
-        
+
         private function RegExpM($match)
         {
             if ($match[2])
@@ -339,7 +339,7 @@ class Spell extends CActiveRecord
 
             $this->info = str_replace($match[0], $effectBasePoints, $this->info);
         }
-        
+
         private function RegExpB($match)
         {
             if ($match[2])
@@ -367,7 +367,7 @@ class Spell extends CActiveRecord
 
             $this->info = str_replace($match[0], $effectPointsPerComboPoint, $this->info);
         }
-        
+
         private function RegExpQ($match)
         {
             if ($match[2])
@@ -395,18 +395,18 @@ class Spell extends CActiveRecord
 
             $this->info = str_replace($match[0], $effectMiscValue, $this->info);
         }
-        
+
         public function getIconName()
         {
-            return trim($this->dbConnection
-				->createCommand("SELECT iconname FROM wow_spellicons WHERE id = {$this->spellicon} LIMIT 1")
-				->queryScalar());
+            return strtolower(trim($this->dbConnection
+                ->createCommand("SELECT iconname FROM wow_spellicons WHERE id = {$this->spellicon} LIMIT 1")
+                ->queryScalar()));
         }
 
-		public function getCastTime()
-		{
+        public function getCastTime()
+        {
             return $this->dbConnection
-				->createCommand("SELECT base FROM wow_spellcasttimes WHERE id = {$this->spellcasttimesID} LIMIT 1")
-				->queryScalar()/1000;
-		}
+                ->createCommand("SELECT base FROM wow_spellcasttimes WHERE id = {$this->spellcasttimesID} LIMIT 1")
+                ->queryScalar()/1000;
+        }
 }

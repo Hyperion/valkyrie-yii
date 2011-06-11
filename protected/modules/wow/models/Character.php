@@ -450,6 +450,7 @@ class Character extends CActiveRecord
             return false;
         }
 
+        $this->_talents_data['build'] = null;
         for($i = 0; $i < 3; $i++)
         {
             $current_tab = Yii::app()->db
@@ -463,15 +464,32 @@ class Character extends CActiveRecord
             foreach($current_tab as $talent)
             {
                 if(in_array($talent['rank5'], $this->_spells))
+                {
                     $this->_talents_points[$i] += 5;
+                    $this->_talents_data['build'] .= 5;
+                }
                 elseif(in_array($talent['rank4'], $this->_spells))
+                {
                     $this->_talents_points[$i] += 4;
+                    $this->_talents_data['build'] .= 4;
+                }
                 elseif(in_array($talent['rank3'], $this->_spells))
+                {
                     $this->_talents_points[$i] += 3;
+                    $this->_talents_data['build'] .= 3;
+                }
                 elseif(in_array($talent['rank2'], $this->_spells))
+                {
                     $this->_talents_points[$i] += 2;
+                    $this->_talents_data['build'] .= 2;
+                }
                 elseif(in_array($talent['rank1'], $this->_spells))
+                {
                     $this->_talents_points[$i] += 1;
+                    $this->_talents_data['build'] .= 1;
+                }
+                else
+                    $this->_talents_data['build'] .= 0;
             }
         }
     }

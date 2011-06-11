@@ -69,6 +69,7 @@ class CharacterController extends Controller
         $this->registerFiles();
         $this->_cs->registerCssFile('/css/wow/character/talent.css');
         $this->_cs->registerCssFile('/css/wow/tool/talent-calculator.css');
+        $this->_cs->registerScriptFile('/js/wow/tool/talent-calculator.js', CClientScript::POS_END);
 
         $this->render('talents',array(
             'model'=>$model,
