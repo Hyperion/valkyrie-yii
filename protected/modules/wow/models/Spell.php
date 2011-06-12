@@ -409,4 +409,9 @@ class Spell extends CActiveRecord
                 ->createCommand("SELECT base FROM wow_spellcasttimes WHERE id = {$this->spellcasttimesID} LIMIT 1")
                 ->queryScalar()/1000;
         }
+        
+        public function getRange()
+        {
+            return $this->dbConnection->createCommand("SELECT rangeMax FROM wow_spellrange WHERE rangeID = {$this->rangeID} LIMIT 1")->queryScalar();
+        }
 }
