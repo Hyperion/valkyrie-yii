@@ -1,4 +1,4 @@
-<script type="text/javascript"> 
+<script type="text/javascript">
 /*<![CDATA[*/
 updateForm = function(id){
         var settings = $.fn.yiiGridView.settings[id];
@@ -12,7 +12,7 @@ updateForm = function(id){
         $('#Character_playerBytes2').val(values[4]);
     };
 /*]]>*/
-</script> 
+</script>
 <?php
 $this->breadcrumbs=array(
     'Characters'=>array('index'),
@@ -20,11 +20,6 @@ $this->breadcrumbs=array(
     'Update',
 );
 
-$this->menu=array(
-    array('label'=>'List Characters', 'url'=>array('index')),
-    array('label'=>'View Characters', 'url'=>array('view', 'id'=>$model->guid)),
-    array('label'=>'Manage Characters', 'url'=>array('admin')),
-);
 ?>
 
 <h1>Update Characters <?php echo $model->guid; ?></h1>
@@ -35,7 +30,7 @@ $this->menu=array(
     $model->unsetAttributes();
     $this->widget('zii.widgets.grid.CGridView', array(
         'id'=>'characters-grid',
-        'dataProvider'=>$mapper->search(),
+        'dataProvider'=>$model->search(true),
         'filter'=>$model,
         'columns'=>array(
             'name',
@@ -44,5 +39,5 @@ $this->menu=array(
             array('name' => 'playerBytes', 'value' => '$data->playerBytes', 'filter' => false),
             array('name' => 'playerBytes2', 'value' => '$data->playerBytes2', 'filter' => false),
         ),
-        'selectionChanged' => 'updateForm', 
+        'selectionChanged' => 'updateForm',
 )); ?>

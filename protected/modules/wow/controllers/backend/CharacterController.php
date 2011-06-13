@@ -1,70 +1,64 @@
 <?php
 
-class CharacterController extends AdminController
+class CharacterController extends Controller
 {
-    private $_mapper;
 
-    public function init()
+    public function actionView($realm, $id)
     {
-		WowDatabase::$name = 'Valkyrie 1.12 Classic';
-        $this->_mapper = new CharacterMapper();
-        parent::init();
+        Database::$realm = $realm;
+        $this->render('view',array(
+            'model'=>$this->loadModel($id),
+        ));
     }
 
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
-
-	public function actionUpdate($id)
-	{
-	    $model=$this->loadModel($id);
+    public function actionUpdate($realm, $id)
+    {
+        Database::$realm = $realm;
+        $model=$this->loadModel($id);
         $level = $model->level;
         $class = $model->class;
 
-		if(isset($_POST['Character']))
-		{
-			$model->attributes=$_POST['Character'];
-			if($this->_mapper->save($model))
+        if(isset($_POST['Character']))
+        {
+            $model->attributes=$_POST['Character'];
+            if($model->save())
             {
-                if($level !== $model->level)
+                /*if($level !== $model->level)
                     $this->_mapper->updateWeaponSkills($model);
                 if($class !== $model->class)
-                    $this->_mapper->deleteSpells($model);
-				$this->redirect(array('view','id'=>$model->guid));
+                    $this->_mapper->deleteSpells($model);*/
+                $this->redirect(array('view','id'=>$model->guid, 'realm'=>Database::$realm));
             }
-		}
+        }
 
         if(isset($_GET['Character']))
-            $this->_mapper->setSearchParams($_GET['Character']);
+            $model->attributes=$_GET['Character'];
 
-		$this->render('update',array(
-			'model'=>$model,
-            'mapper'=>$this->_mapper,
-		));
-	}
-
-	public function actionIndex()
-	{
-	    $this->_mapper->setSearchParams(array('type' => 'admin'));
-	    
-        if(isset($_GET['Character']))
-            $this->_mapper->setSearchParams($_GET['Character']);
-
-        $this->render('admin',array(
-            'model' => new Character(),
-            'mapper' => $this->_mapper,
+        $this->render('update',array(
+            'model'=>$model,
         ));
-	}
+    }
 
-	public function loadModel($id)
-	{
-        $model = $this->_mapper->findById((int)$id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
-	}
+    public function actionIndex()
+    {
+        Database::$realm = Database::model()->find('type = "characters"')->title;
+        $model = new Character('admin');
+        $model->unsetAttributes();
+
+        if(isset($_GET['Character']))
+            $model->attributes = $_GET['Character'];
+
+        $this->render('index',array(
+            'model' => $model,
+        ));
+    }
+
+    public function loadModel($id)
+    {
+        $model = Character::model()->findByPk((int)$id);
+        if($model===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        return $model;
+    }
 
 }

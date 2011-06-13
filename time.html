@@ -1,0 +1,47 @@
+<html>
+<head>
+<script type="text/javascript" src ="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript">
+$.getTime = function(zone, success) {
+    var url = 'http://json-time.appspot.com/time.json?tz='
+            + zone + '&callback=?';
+    $.getJSON(url, function(o){
+        success && success(o.datetime, o);
+    });
+};
+</script>
+</head>
+<body>
+<script type="text/javascript">
+function insertTime(datetime, city){
+    alert(datetime);
+    time = new Date(datetime);
+    d=time.getDate();
+    M=time.getMonth();
+    y=time.getYear()+1900;
+    h=time.getHours();
+    m=time.getMinutes();
+    s=time.getSeconds();
+    $('#'+city).html(d+'/'+M+'/'+y+' '+(h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s);
+}
+
+function updateTime() {
+    $.getTime('America/New_York', function(datetime){
+        insertTime(datetime, 'NY');
+    });
+    $.getTime('GMT', function(datetime){
+        insertTime(datetime, 'London');
+    });
+    $.getTime('Europe/Moscow', function(datetime){
+        insertTime(datetime, 'Moscow');
+    });
+}
+
+setInterval( "updateTime()", 1000 );
+
+</script>
+NY:<div id="NY"></div>
+London:<div id="London"></div>
+Moscow:<div id="Moscow"></div>
+</body>
+</html>
