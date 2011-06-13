@@ -95,6 +95,7 @@ class Character extends CActiveRecord
     public function rules()
     {
         return array(
+            array('name', 'safe'),
             array('name, level, class, race', 'safe', 'on'=>'online'),
             array('name, level, class, race, honor_standing', 'safe', 'on'=>'pvp'),
             array('account, name, race, class, gender, level, money, playerBytes, playerBytes2', 'safe', 'on'=>'update'),

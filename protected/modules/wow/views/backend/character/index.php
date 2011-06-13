@@ -31,7 +31,6 @@ $('.search-form form').submit(function(){
 <?php $this->widget('zii.widgets.grid.CGridView', array(
     'id'=>'characters-grid',
     'dataProvider'=>$model->search(true),
-    'filter'=>$model,
     'columns'=>array(
         'name',
         array(
