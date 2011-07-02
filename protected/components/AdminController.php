@@ -2,9 +2,9 @@
 
 class AdminController extends CController
 {
-	public $menu = array();
-	public $backendmenu;
-	public $breadcrumbs=array();
+    public $menu = array();
+    public $breadcrumbs=array();
+    public $layout = '//layouts/backend';
 
     public function filters()
     {
@@ -26,14 +26,11 @@ class AdminController extends CController
     }
 
     public function init()
-	{
-		$menu = new Menu;
-        $this->backendmenu = $menu->getData('backendmenu');
-		$this->backendmenu['items'][] = array('label'=>'View Site', 'url'=>array('/site'));
-        Yii::app()->layout = 'backend2';
+    {
+        $cs = Yii::app()->clientScript;
+        $cs->registerPackage('jquery');
 
-		$log = new AdminAccess();
-		$log->action = Yii::app()->request->url;
-		$log->save();
+        $menu = new Menu;
+        $this->menu = $menu->getData('backendmenu');
     }
 }

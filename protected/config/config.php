@@ -4,7 +4,6 @@ return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'Hyperion\'s Sandbox',
     'language' => 'ru',
-    'theme' => 'wow',
 
     // preloading 'log' component
     'preload'=>array('log'),
@@ -13,9 +12,9 @@ return array(
     'import'=>array(
         'application.models.*',
         'application.components.*',
-		'application.modules.user.models.*',
-		'application.modules.user.components.*',
-		'application.modules.user.*',
+        'application.modules.user.models.*',
+        'application.modules.user.components.*',
+        'application.modules.user.*',
     ),
 
     // application components
@@ -33,23 +32,6 @@ return array(
         'request'=>array(
             //'enableCsrfValidation'=>true,
             'enableCookieValidation'=>true,
-        ),
-
-        'user'=>array(
-            'class' => 'application.modules.user.components.WebUser',
-            'allowAutoLogin'=>true,
-			'loginUrl'=>'/user/auth',
-        ),
-        'urlManager'=>array(
-            'urlFormat'=>'path',
-            'rules'=>array(
-                '<_c:\w+>/<id:\d+>'=>'<_c>/view',
-                '<_m:\w+>/<_c:\w+>/<id:\d+>'=>'<_m>/<_c>/view',
-                'doc/<section>/<page>'=>'doc/default/view',
-                'wow/<_c:character|guild>/<_a:\w+>/<realm>/<name:\w+>'=>'wow/<_c>/<_a>',
-                'wow/<_c:statistic>/<_a:\w+>/<realm>'=>'wow/<_c>/<_a>',
-            ),
-            'showScriptName' => false,
         ),
         'db'=>array(
             'connectionString' => 'mysql:host=localhost;dbname=cms',
@@ -78,7 +60,7 @@ return array(
             'SMTPAuth' => true,
             'SMTPSecure' => 'ssl',
             'Host' => 'smtp.gmail.com',
-            'Port' => 465, 
+            'Port' => 465,
             'Username' => 'test.valkyrie.wow@gmail.com',
             'CharSet' => 'UTF_8',
             'Password' => 'pdpfer56df56',
@@ -94,13 +76,10 @@ return array(
                 array(
                     'class'=>'CFileLogRoute',
                 ),
-                array(
-                    'class'=>'CWebLogRoute',
-                ),
             ),
         ),
     ),
-    
+
     'behaviors'=>array(
         'runEnd'=>array(
             'class'=>'application.components.WebApplicationEndBehavior',
