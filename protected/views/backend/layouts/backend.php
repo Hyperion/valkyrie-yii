@@ -3,7 +3,7 @@
     <div id="sidebar"><div id="sidebar-wrapper"> <!-- Sidebar with logo and menu -->
 
         <!-- Sidebar Profile links -->
-        <div id="profile-links" style="padding-top: 221px;">
+        <div id="profile-links" style="padding-top: 50px;">
             Hello, <?php echo CHtml::link(Yii::app()->user->name, array('user/user/view', 'id' => Yii::app()->user->id)); ?><br />
             <br />
             <a href="/" title="View the Site">View the Site</a> | <?php echo CHtml::link('Sign Out', array('/user/auth/logout')); ?>

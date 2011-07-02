@@ -3,7 +3,7 @@
 class Account extends CActiveRecord
 {
     public $password;
-    
+
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
@@ -11,8 +11,7 @@ class Account extends CActiveRecord
 
     public function getDbConnection()
     {
-        $db = new WowDatabase();
-        return $db->getDb('realmlist');
+        return Database::getConnection();
     }
 
     public function tableName()
@@ -58,7 +57,7 @@ class Account extends CActiveRecord
             'loc_selection' => 'Loc Selection',
         );
     }
-    
+
     public function search()
     {
         $criteria=new CDbCriteria;
@@ -102,7 +101,7 @@ class Account extends CActiveRecord
                 $this->sha_pass_hash = strtoupper(sha1(strtoupper($this->username).":".strtoupper($this->password)));
             if($this->locale != 0)
                 $this->loc_selection = 1;
-            else 
+            else
                 $this->loc_selection = 0;
             return true;
         }
@@ -127,10 +126,10 @@ class Account extends CActiveRecord
         $c = Yii::app()->db->createCommand()->select('count(1)')->from('{{user_accounts}}')->where('account_id = :id', array(':id' => $this->id))->queryScalar();
         if($c > 0)
             $this->addError('username','This account is already used!');
-        
+
         $this->setIsNewRecord(false);
     }
-    
+
     /*public function recoveryInfo($attribute,$params)
     {
         $model = self::model()->find('username=:username OR email=:email',
@@ -145,9 +144,9 @@ class Account extends CActiveRecord
         $this->setIsNewRecord(false);
     }
 
-    public static function generatePassword() { 
-        $consonants = array("b","c","d","f","g","h","j","k","l","m","n","p","r","s","t","v","w","x","y","z"); 
-        $vocals = array("a","e","i","o","u"); 
+    public static function generatePassword() {
+        $consonants = array("b","c","d","f","g","h","j","k","l","m","n","p","r","s","t","v","w","x","y","z");
+        $vocals = array("a","e","i","o","u");
 
         $password = '';
 

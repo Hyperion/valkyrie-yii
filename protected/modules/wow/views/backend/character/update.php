@@ -22,7 +22,7 @@ $this->breadcrumbs=array(
 
 ?>
 
-<h1>Update Characters <?php echo $model->guid; ?></h1>
+<h1>Update Character <?php echo $model->name; ?></h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 

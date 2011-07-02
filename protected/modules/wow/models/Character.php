@@ -105,8 +105,8 @@ class Character extends CActiveRecord
     public function relations()
     {
         return array(
-            'honor' => array(self::HAS_ONE,  'CharacterHonorStatic','guid'),
-            'stats' => array(self::HAS_ONE,  'CharacterStats', 'guid'),
+            'honor' => array(self::HAS_ONE, 'CharacterHonorStatic','guid'),
+            'stats' => array(self::HAS_ONE, 'CharacterStats', 'guid'),
         );
     }
 
@@ -126,18 +126,18 @@ class Character extends CActiveRecord
 
             ),
             'races' => array(
-                '1' => 'human',
-                '2' => 'orc',
-                '3' => 'dwarf',
-                '4' => 'nightelf',
-                '5' => 'scourge',
-                '6' => 'tauren',
-                '7' => 'gnome',
-                '8' => 'troll',
+                1 => 'human',
+                2 => 'orc',
+                3 => 'dwarf',
+                4 => 'nightelf',
+                5 => 'scourge',
+                6 => 'tauren',
+                7 => 'gnome',
+                8 => 'troll',
             ),
             'genders' => array(
-                '0' => 'male',
-                '1' => 'female',
+                0 => 'male',
+                1 => 'female',
             ),
             'powers' => array(
                 self::POWER_MANA   => 'Mana',
@@ -375,7 +375,9 @@ class Character extends CActiveRecord
 
     public function isRangedWeapon()
     {
-        return(isset($this->items[self::EQUIPMENT_SLOT_RANGED]['class']) && $this->items[self::EQUIPMENT_SLOT_RANGED]['class'] == ItemTemplate::ITEM_CLASS_WEAPON);
+        return(
+            isset($this->items[self::EQUIPMENT_SLOT_RANGED]['class']) &&
+            $this->items[self::EQUIPMENT_SLOT_RANGED]['class'] == ItemTemplate::ITEM_CLASS_WEAPON);
     }
 
     public function getPowerType()

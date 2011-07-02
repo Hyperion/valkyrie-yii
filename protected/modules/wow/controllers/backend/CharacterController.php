@@ -1,6 +1,6 @@
 <?php
 
-class CharacterController extends Controller
+class CharacterController extends AdminController
 {
 
     public function actionView($realm, $id)
@@ -31,8 +31,10 @@ class CharacterController extends Controller
             }
         }
 
-        if(isset($_GET['Character']))
-            $model->attributes=$_GET['Character'];
+        if(isset($_GET['Character']['name']))
+        {
+            $model->name=$_GET['Character']['name'];
+        }
 
         $this->render('update',array(
             'model'=>$model,

@@ -5,7 +5,7 @@ $(document).ready(function(){
         $("#main-nav li ul").hide(); // Hide all sub menus
         $("#main-nav li.active").parent().show(); // Slide down the current menu item's sub menu
         $("#main-nav li.active").parent().parent().find("a.nav-top-item:first")
-            .css({"background-image": "url('images/bg-menu-item-current.gif')",
+            .css({"background-image": "url('/backend/images/bg-menu-item-current.gif')",
                 "color": "#333",
                 "font-weight": "bold"});
 

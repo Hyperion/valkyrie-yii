@@ -1,9 +1,10 @@
-<script type="text/javascript"> 
+<script type="text/javascript">
 /*<![CDATA[*/
 updateForm = function(id){
         var settings = $.fn.yiiGridView.settings[id];
         var values = [];
-        $('#'+id+' .'+settings.tableClass+' > tbody > tr.selected > td').each(function(i){
+        $('#'+id+' .'+settings.tableClass+' > tbody > tr.selected > td')
+            .each(function(i){
                  values.push($(this).text());
         });
         if($('#AccountBanForm_method').val() == 0)
@@ -20,58 +21,72 @@ $this->breadcrumbs=array(
     'Ban',
 );
 
-$this->menu=array(
-    array('label'=>'Create Account', 'url'=>array('create')),
-    array('label'=>'Manage Accounts', 'url'=>array('admin')),
-);
-
 ?>
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'account-ban-form-account-form',
-	'enableAjaxValidation'=>false,
+    'id'=>'account-ban-form-account-form',
+    'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'value'); ?>
-		<?php echo $form->textField($model,'value'); ?>
-		<?php echo $form->error($model,'value'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'method'); ?>
-		<?php echo $form->dropDownList($model,'method',array('0'=>'Ban by id', '1' => 'Ban by ip')); ?>
-		<?php echo $form->error($model,'method'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'time'); ?>
-		<?php echo $form->textField($model,'time'); ?>
-		<?php echo $form->error($model,'time'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'reason'); ?>
-		<?php echo $form->textField($model,'reason'); ?>
-		<?php echo $form->error($model,'reason'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'active'); ?>
-		<?php echo $form->dropDownList($model,'method',array('0'=>'Active', '1' => 'Not Active'));; ?>
-		<?php echo $form->error($model,'active'); ?>
-	</div>
-
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton('Banhammer!'); ?>
-	</div>
-
+<table>
+<tr>
+<td colspan="2"><div class="row">
+    <p class="note">
+        Fields with <span class="required">*</span> are required.
+    </p>
+    <?php echo $form->errorSummary($model); ?>
+</div></td>
+</tr>
+<tr>
+<td width="50%"><div class="row">
+    <?php echo $form->labelEx($model,'value'); ?>
+    <?php echo $form->textField($model,'value', array(
+        'class' => 'text-input large-input'
+    )); ?>
+    <?php echo $form->error($model,'value'); ?>
+</div></td>
+<td width="50%"><div class="row">
+    <?php echo $form->labelEx($model,'method'); ?>
+    <?php echo $form->dropDownList($model,'method',array(
+        '0' => 'Ban by id',
+        '1' => 'Ban by ip'
+    )); ?>
+    <?php echo $form->error($model,'method'); ?>
+</div></td>
+</tr>
+<tr>
+<td><div class="row">
+    <?php echo $form->labelEx($model,'time'); ?>
+    <?php echo $form->textField($model,'time', array(
+        'class' => 'text-input large-input'
+    )); ?>
+    <?php echo $form->error($model,'time'); ?>
+</div></td>
+<td><div class="row">
+    <?php echo $form->labelEx($model,'reason'); ?>
+    <?php echo $form->textField($model,'reason', array(
+        'class' => 'text-input large-input'
+    )); ?>
+    <?php echo $form->error($model,'reason'); ?>
+</div></td>
+</tr>
+<tr>
+<td colspan="2"><div class="row">
+    <?php echo $form->labelEx($model,'active'); ?>
+    <?php echo $form->dropDownList($model,'method',array(
+        '0' => 'Active',
+        '1' => 'Not Active'
+    )); ?>
+    <?php echo $form->error($model,'active'); ?>
+</div></td>
+</tr>
+<tr>
+<td colspan="2"><div class="row">
+    <?php echo CHtml::submitButton('Banhammer!', array('class' => 'button')); ?>
+</div></td>
+</tr>
+</table>
 <?php $this->endWidget(); ?>
 
 </div>
@@ -95,5 +110,5 @@ $this->menu=array(
             'mutetime',
             'locale',
         ),
-        'selectionChanged' => 'updateForm', 
+        'selectionChanged' => 'updateForm',
 )); ?>
