@@ -11,7 +11,7 @@ return CMap::mergeArray(
             'user'=>array(
                 'class' => 'application.modules.user.components.WebUser',
                 'allowAutoLogin'=>true,
-                'loginUrl'=>'/user/auth',
+                'loginUrl'=>array('/user/auth'),
             ),
             'urlManager'=>array(
                 'urlFormat'=>'path',

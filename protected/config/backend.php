@@ -19,7 +19,7 @@ return CMap::mergeArray(
             'user'=>array(
                 'class' => 'application.modules.user.components.WebUser',
                 'allowAutoLogin'=>false,
-                'loginUrl'=>'index.php/user/auth',
+                'loginUrl'=>array('/user/auth'),
             ),
         ),
     )

@@ -36,7 +36,9 @@ class UserModule extends CWebModule
     const LOGIN_BY_EMAIL        = 2;
     const LOGIN_BY_OPENID       = 4;
     const LOGIN_BY_FACEBOOK     = 8;
-    public $loginType = 3;
+    const LOGIN_BY_IPBOARD      = 16;
+
+    public $loginType = 19;
 
     public $passwordRequirements = array(
         'minLen' => 8,
@@ -52,6 +54,14 @@ class UserModule extends CWebModule
         'maxLen'=>30,
         'match' => '/^[A-Za-z0-9_]+$/u',
         'dontMatchMessage' => 'Incorrect symbol\'s. (A-z0-9)',
+    );
+
+    public $ipbConfig = array(
+        'connectionString' => 'mysql:host=localhost;dbname=val_ipbforum',
+        'username' => 'root',
+        'password' => 'ktutylf0pb',
+        'charset' => 'utf8',
+        'tablePrefix'=>'ipb_',
     );
 
     public function init()

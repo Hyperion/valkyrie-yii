@@ -7,33 +7,34 @@ class AuthController extends AdminController
 
     public function accessRules() {
         return array(
-                array('allow',
-                    'actions'=>array('login'),
-                    'users'=>array('*'),
-                    ),
-                array('allow',
-                    'actions'=>array('logout'),
-                    'users'=>array('@'),
-                    ),
-                array('deny',
-                    'users'=>array('*'),
-                    ),
-                );
+            array('allow',
+                'actions'=>array('login'),
+                'users'=>array('*'),
+            ),
+            array('allow',
+                'actions'=>array('logout'),
+                'users'=>array('@'),
+            ),
+            array('deny',
+                'users'=>array('*'),
+            ),
+        );
     }
 
-    public function loginByUsername() {
+    public function loginByUsername()
+    {
         if($this->module->caseSensitiveUsers)
             $user = User::model()->find('username = :username', array(
-                        ':username' => $this->loginForm->username));
+                ':username' => $this->loginForm->username));
         else
             $user = User::model()->find('upper(username) = :username', array(
-                        ':username' => strtoupper($this->loginForm->username)));
+                ':username' => strtoupper($this->loginForm->username)));
 
         if($user)
             return $this->authenticate($user);
         else
             $this->loginForm->addError('password',
-                    Yii::t('UserModule.user', 'Username or Password is incorrect'));
+                Yii::t('UserModule.user', 'Username or Password is incorrect'));
 
         return false;
     }
@@ -68,11 +69,41 @@ class AuthController extends AdminController
         }
     }
 
-    public function loginByEmail() {
+    public function loginByEmail()
+    {
         $profile = Profile::model()->find('email = :email', array(
             ':email' => $this->loginForm->username));
         if($profile && $profile->user)
             return $this->authenticate($profile->user);
+
+        return false;
+    }
+
+    public function loginByIpBoard()
+    {
+        $bridge = new IpbBridge;
+        $bridge->db = $this->module->ipbConfig;
+        if($bridge->getUserData(
+            $this->loginForm->username,
+            $this->loginForm->password)
+        )
+        {
+            $user    = new User;
+            $profile = new Profile;
+
+            $user->name      = $bridge->username;
+            $user->superuser = $bridge->userRole;
+            $user->status    = User::STATUS_ACTIVATED;
+            $user->setPassword($this->loginForm->password);
+
+            $user->save();
+            $profile->user_id = $user->id;
+            if(isset($profile->email))
+                $profile->email = $bridge->email;
+            $profile->save();
+
+            return $this->authenticate($user);
+        }
 
         return false;
     }
@@ -90,32 +121,34 @@ class AuthController extends AdminController
         $success = false;
         $action = 'login';
         $login_type = null;
-        if (isset($_POST['FLogin'])) {
+        if(isset($_POST['FLogin']))
+        {
             $this->loginForm->attributes = $_POST['FLogin'];
             // validate user input for the rest of login methods
-            if ($this->loginForm->validate()) {
-                if ($this->module->loginType & UserModule::LOGIN_BY_USERNAME) {
+            if($this->loginForm->validate())
+            {
+                if($this->module->loginType & UserModule::LOGIN_BY_USERNAME)
+                {
                     $success = $this->loginByUsername();
-                    if ($success)
+                    if($success)
                         $login_type = 'username';
                 }
-                if ($this->module->loginType & UserModule::LOGIN_BY_EMAIL && !$success) {
+                if($this->module->loginType & UserModule::LOGIN_BY_EMAIL && !$success)
+                {
                     $success = $this->loginByEmail();
-                    if ($success)
+                    if($success)
                         $login_type = 'email';
+                }
+                if($this->module->loginType & UserModule::LOGIN_BY_IPBOARD && !$success)
+                {
+                    $success = $this->loginByIpBoard();
+                    if($success)
+                        $login_type = 'ipboard';
                 }
             }
         }
-        if ($success instanceof User) {
-            //cookie with login type for later flow control in app
-            if ($login_type) {
-                $cookie = new CHttpCookie('login_type', serialize($login_type));
-                $cookie->domain = 'localhost';
-                $cookie->expire = time() + (3600*24*30);
-                Yii::app()->request->cookies['login_type'] = $cookie;
-            }
+        if ($success instanceof User)
             $this->redirect(Yii::app()->user->returnUrl);
-        }
 
         $this->render('login', array(
             'model' => $this->loginForm));

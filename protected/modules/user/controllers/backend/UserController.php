@@ -28,7 +28,7 @@ class UserController extends AdminController
         $passwordform = new FChangePassword;
 
         if(!isset($model->status))
-            $model->status = 1;
+            $model->status = User::STATUS_ACTIVATED;
 
         if(isset($_POST['User'])) {
             $model->attributes=$_POST['User'];
@@ -55,7 +55,9 @@ class UserController extends AdminController
             $profile->validate();
             if(!$model->hasErrors()
                     && !$profile->hasErrors()
-                    && !$passwordform->hasErrors()) {
+                    && !$passwordform->hasErrors()
+            )
+            {
                 $model->save();
                 $profile->user_id = $model->id;
                 $profile->save();
@@ -64,10 +66,10 @@ class UserController extends AdminController
         }
 
         $this->render('create',array(
-                    'model' => $model,
-                    'passwordform' => $passwordform,
-                    'profile' => $profile,
-                    ));
+            'model' => $model,
+            'passwordform' => $passwordform,
+            'profile' => $profile,
+        ));
     }
 
     public function actionUpdate()
@@ -80,12 +82,12 @@ class UserController extends AdminController
         if(isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
 
-
             if(isset($_POST['Profile']) )
                 $profile->attributes = $_POST['Profile'];
 
             if(isset($_POST['FChangePassword'])
-                    && $_POST['FChangePassword']['password'] != '') {
+                && $_POST['FChangePassword']['password'] != '')
+            {
                 $passwordform->attributes = $_POST['FChangePassword'];
                 if($passwordform->validate())
                     $model->setPassword($_POST['FChangePassword']['password']);
@@ -101,10 +103,10 @@ class UserController extends AdminController
         }
 
         $this->render('update', array(
-                    'model'=>$model,
-                    'passwordform' =>$passwordform,
-                    'profile' => isset($profile) ? $profile : false,
-                    ));
+            'model'=>$model,
+            'passwordform' =>$passwordform,
+            'profile' => isset($profile) ? $profile : false,
+        ));
     }
 
     public function actionDelete()

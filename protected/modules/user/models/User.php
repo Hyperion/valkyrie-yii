@@ -1,6 +1,7 @@
 <?php
 
-class User extends CActiveRecord {
+class User extends CActiveRecord
+{
     const STATUS_NOTACTIVE = 0;
     const STATUS_ACTIVATED = 1;
     const STATUS_ACTIVE_FIRST_VISIT = 2;
@@ -92,13 +93,14 @@ class User extends CActiveRecord {
 
     public function beforeValidate()
     {
-        if ($this->isNewRecord)
+        if($this->isNewRecord)
             $this->createtime = time();
 
         return true;
     }
 
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         if ($password != '') {
             $this->password = User::encrypt($password);
             $this->lastpasswordchange = time();
@@ -112,7 +114,8 @@ class User extends CActiveRecord {
         return 'users';
     }
 
-    public function rules() {
+    public function rules()
+    {
         $passwordRequirements = Yii::app()->getModule('user')->passwordRequirements;
         $usernameRequirements = Yii::app()->getModule('user')->usernameRequirements;
 
