@@ -91,7 +91,7 @@ class AuthController extends AdminController
             $user    = new User;
             $profile = new Profile;
 
-            $user->username      = $bridge->username;
+            $user->username  = $bridge->username;
             $user->superuser = $bridge->userRole;
             $user->status    = User::STATUS_ACTIVATED;
             $user->setPassword($this->loginForm->password);

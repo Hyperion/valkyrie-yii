@@ -48,9 +48,8 @@ class IpbBridge extends externalBridge
     {
         switch($this->_data['member_group_id'])
         {
-            case '6': return 1; break;
-            case '4':
-            case '3': default: return 0; break;
+            case '4': return 1; break;
+            case '6': case '3': default: return 0; break;
         }
     }
 
