@@ -17,17 +17,17 @@
                 <url>#</url>
                 <items>
                     <realms>
-                        <label>Realms Manangment</label>
+                        <label>Realms Management</label>
                         <sort_order>1</sort_order>
                         <url>/wow/realm/index</url>
                     </realms>
                     <accounts>
-                        <label>Account Manangment</label>
+                        <label>Account Management</label>
                         <sort_order>2</sort_order>
                         <url>/wow/account/index</url>
                     </accounts>
                     <characters>
-                        <label>Characters Manangment</label>
+                        <label>Characters Management</label>
                         <sort_order>3</sort_order>
                         <url>/wow/character/index</url>
                     </characters>
