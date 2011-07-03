@@ -82,34 +82,23 @@ class Menu extends CActiveRecord
         ));
     }
 
-    public function refreshCache($menu = 'mainmenu')
-    {
-        $fh = fopen(YiiBase::getPathOfAlias('application.runtime.cache')."/".$menu.".ser", "w");
-        fwrite($fh, serialize($this->toArray($menu)));
-        fclose($fh);
-    }
-
     public function getData($menu = 'mainmenu')
     {
-        $fname = YiiBase::getPathOfAlias('application.runtime.cache.'.$menu).'.ser';
-        if(!file_exists($fname))
+        $data = Yii::app()->cache->get("menu_$menu");
+
+        if(!$data)
         {
             if($menu == 'backendmenu')
-                $this->refreshXmlMenu('admin');
+                $this->refreshXmlMenu('backendmenu');
             elseif($menu == 'usermenu')
-                $this->refreshXmlMenu('cp');
+                $this->refreshXmlMenu('usermenu');
             else
-            {
-                $fh = fopen($fname, "w");
-                fwrite($fh, serialize($this->toArray($menu)));
-                fclose($fh);
-            }
-        }
-        // Read file content and return array of menu
-        $outputMenu = file_get_contents($fname);
-        $outputMenu = unserialize($outputMenu);
+                Yii::app()->cache->set("menu_$menu", $this->toArray($menu));
 
-        return $outputMenu;
+            $data = Yii::app()->cache->get("menu_$menu");
+        }
+
+        return $data;
     }
 
     private function toArray($menu = 'mainmenu')
@@ -133,22 +122,22 @@ class Menu extends CActiveRecord
     protected function afterCreate()
     {
         parent::afterCreate();
-        $this->refreshCache($this->menu);
+        Yii::app()->cache->set("menu_{$this->menu}", $this->toArray($this->menu));
     }
 
     protected function afterSave()
     {
         parent::afterSave();
-        $this->refreshCache($this->menu);
+        Yii::app()->cache->set("menu_{$this->menu}", $this->toArray($this->menu));
     }
 
     protected function afterDelete()
     {
         parent::afterDelete();
-        $this->refreshCache($this->menu);
+        Yii::app()->cache->set("menu_{$this->menu}", $this->toArray($this->menu));
     }
 
-    public function refreshXmlMenu($type = 'admin')
+    public function refreshXmlMenu($type = 'backendmenu')
     {
         $totalBackendMenuArray = array();
 
@@ -158,10 +147,10 @@ class Menu extends CActiveRecord
             $config = new SimpleXMLElement($singleConfigFile, NULL, true);
             switch($type)
             {
-                case 'admin':
+                case 'backendmenu':
                     $nodes = $config->xpath('/config/adminhtml/menu/*');
                     break;
-                case 'cp':
+                case 'usermenu':
                     $nodes = $config->xpath('/config/cphtml/menu/*');
                     break;
                 default:
@@ -177,22 +166,11 @@ class Menu extends CActiveRecord
         $this->sortingMenuItems($totalBackendMenuArray);
         $outputMenu = $this->convertXmlMenuFormatToOutputFormat($totalBackendMenuArray);
 
-        switch($type)
-        {
-            case 'admin':
-                $fh = fopen(YiiBase::getPathOfAlias('application.runtime.cache.backendmenu').'.ser', "w");
-                for($i = 0; $i < count($outputMenu); $i++)
-                    $outputMenu[$i]['linkOptions'] = array('class' => 'nav-top-item');
-                break;
-            case 'cp':
-                $fh = fopen(YiiBase::getPathOfAlias('application.runtime.cache.usermenu').'.ser', "w");
-                break;
-            default:
-                return;
-                break;
-        }
-        fwrite($fh, serialize($outputMenu));
-        fclose($fh);
+        if($type == 'backendmenu')
+            for($i = 0; $i < count($outputMenu); $i++)
+                $outputMenu[$i]['linkOptions'] = array('class' => 'nav-top-item');
+
+        Yii::app()->cache->set("menu_$type", $outputMenu);
     }
 
     protected function convertXmlMenuFormatToOutputFormat($xmlMenuFormat)
