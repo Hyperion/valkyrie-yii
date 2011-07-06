@@ -792,4 +792,23 @@ class Character extends CActiveRecord
         ksort($storage[1118]);
         return $storage;
     }
+
+    public function getTitle($rank)
+    {
+        $rank = $rank - 4;
+        if($rank < 1) return 'Нет';
+
+        $column = 'title_';
+        if($this->gender == 0)
+            $column .= 'M_';
+        else
+            $column .= 'F_';
+        $column .= Yii::app()->language;
+
+        $id = 14 * $this->faction + $rank;
+        return Yii::app()->db
+                ->createCommand("SELECT $column
+                    FROM `wow_titles` WHERE `id` = $id")
+                ->queryScalar();
+    }
 }

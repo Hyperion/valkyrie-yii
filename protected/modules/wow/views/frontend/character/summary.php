@@ -13,7 +13,11 @@ $this->breadcrumbs = array(
                         <div class="name">
                             <?=CHtml::link($model['name'], array('/wow/character/simple', 'realm' => Database::$realm, 'name' => $model['name']))?>
                         </div>
-                        <div class="title-guild"></div>
+                        <div class="title-guild">
+                        <?php if($model->honorRank > 4): ?>
+                            <div class="title"><?=$model->getTitle($model->honorRank)?></div>
+                        <?php endif; ?>
+                        </div>
                         <span class="clear"><!-- --></span>
                         <div class="under-name color-c<?=$model['class']?>">
                             <a href="/wow/game/race/<?=$model['race']?>" class="race"><?=$model['race_text']?></a> -

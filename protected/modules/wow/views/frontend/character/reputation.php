@@ -66,9 +66,7 @@ $this->breadcrumbs = array(
     <div class="profile-section-header">
         <h3 class="category ">Репутация</h3>
     </div>
-
     <div class="profile-section">
-
     <ul class="reputation-list">
 <?php foreach($model->factions as $categoryId => $categories): ?>
 <li class="reputation-category">
@@ -118,6 +116,6 @@ $this->breadcrumbs = array(
 </li>
 <?php endforeach; ?>
     </ul>
-
+    </div>
 </div>
 </div>
