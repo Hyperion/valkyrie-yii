@@ -67,7 +67,32 @@ $this->breadcrumbs = array(
     </div>
 
     <div class="profile-section">
+    <?php $bar = $model->honorBar; ?>
     <ul>
+    <h3 class="pvp-title">
+        <?php if($model->honorRank > 4): ?>
+        <img src="/images/wow/icons/rank/PvPRank0<?=$model->honorRank?>.png">
+        <?php endif; ?>
+        <?=$model->getTitle($model->honorRank)?>
+        <?php if($model->honorRank > 4): ?>
+         (Ранг <?=$model->honorRank - 4 ?>)
+        <?php endif; ?>
+    </h3>
+    <div class="pvp-standing">
+        <div class="pvp-bar">
+            <div class="pvp-score"><?=$model->honor_rank_points?>/<?=$bar['cap']?></div>
+            <div class="pvp-fill" style="width: <?=$bar['percent']?>%;"></div>
+        </div>
+    </div>
+    <h4 class="pvp-header">Общий прогресс</h4>
+<?php if($model->honor_rank_points < 0) $percent = 0;
+    else $percent = round($model->honor_rank_points/650); ?>
+    <div class="pvp-standing">
+        <div class="pvp-bar">
+            <div class="pvp-score"><?=$model->honor_rank_points?>/65000</div>
+            <div class="pvp-bar-gold" style="width: <?=$percent?>%;"></div>
+        </div>
+    </div>
     <h4 class="pvp-header">Сегодня</h4>
     <span class="clear"></span>
     <li class="pvp-details">
@@ -133,8 +158,7 @@ $this->breadcrumbs = array(
         <span class="pvp-value negative"><?=$model->honor->dk?></span>
         <span class="clear"></span>
     </li>
-        </li>
-        <li class="pvp-details">
+    <li class="pvp-details">
         <span class="pvp-item">Высший ранг</span>
         <span class="pvp-value neutral"><?=$model->getTitle($model->honor_highest_rank)?></span>
         <span class="clear"></span>

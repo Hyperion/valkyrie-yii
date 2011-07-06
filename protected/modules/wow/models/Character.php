@@ -238,6 +238,43 @@ class Character extends CActiveRecord
         return $rank;
     }
 
+    public function getHonorBar()
+    {
+        $bar['percent'] = 0;
+        $bar['cap'] = 0;
+        if ($this->honor_rank_points <= -2000.0)
+            $bar['cap'] = -2000;
+        else if($this->honor_rank_points <= -1000.0)
+        {
+            $bar['percent'] = round((2000 + $this->honor_rank_points)/10);
+            $bar['cap'] = -1000;
+        }
+        else if($this->honor_rank_points <= -500.0)
+        {
+            $bar['percent'] = round((1000 + $this->honor_rank_points)/5);
+            $bar['cap'] = -500;
+        }
+        else if($this->honor_rank_points < 0.0)
+            $bar['percent'] = round((500 + $this->honor_rank_points)/5);
+        else if($this->honor_rank_points <  2000.00)
+        {
+            $bar['percent'] = round($this->honor_rank_points/20);
+            $bar['cap'] = 2000;
+        }
+        else if($this->honor_rank_points > (13)*5000)
+        {
+            $bar['percent'] = 100;
+            $bar['cap'] = 65000;
+        }
+        else
+        {
+            $bar['percent'] = round($this->honor_rank_points % 50);
+            $bar['cap'] = floor($this->honor_rank_points / 5000)*5000 + 5000;
+        }
+
+        return $bar;
+    }
+
     public function loadAdditionalData()
     {
         $column = 'name_'.Yii::app()->language;
@@ -795,8 +832,17 @@ class Character extends CActiveRecord
 
     public function getTitle($rank)
     {
+        switch($rank)
+        {
+            case 1: $title = 'Pariah'; break;
+            case 2: $title = 'Outlaw'; break;
+            case 3: $title = 'Exiled'; break;
+            case 4: $title = 'Dishonored'; break;
+            default: $title = 'None'; break;
+        }
+
         $rank = $rank - 4;
-        if($rank < 1) return 'Нет';
+        if($rank < 1) return $title;
 
         $column = 'title_';
         if($this->gender == 0)
