@@ -91,6 +91,20 @@ class CharacterController extends Controller
         ));
     }
 
+    public function actionReputation($realm, $name)
+    {
+        Database::$realm = (string) $realm;
+        $model = $this->loadModel((string)$name);
+        $model->loadAdditionalData();
+        $this->registerFiles();
+        $this->_cs->registerCssFile('/css/wow/character/reputation.css');
+        $this->_cs->registerScriptFile('/js/wow/character/reputation.js', CClientScript::POS_END);
+
+        $this->render('reputation',array(
+            'model'=>$model,
+        ));
+    }
+
     public function loadModel($name)
     {
         $this->_model = Character::model()->find('name = ?', array($name));

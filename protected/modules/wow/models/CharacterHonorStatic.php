@@ -40,9 +40,4 @@ class CharacterHonorStatic extends CActiveRecord
             'thisWeek_kills' => 'Week HK',
         );
     }
-    public function relations()
-    {
-        return array(
-        );
-    }
 }

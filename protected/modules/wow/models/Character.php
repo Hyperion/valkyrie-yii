@@ -107,6 +107,13 @@ class Character extends CActiveRecord
         return array(
             'honor' => array(self::HAS_ONE, 'CharacterHonorStatic','guid'),
             'stats' => array(self::HAS_ONE, 'CharacterStats', 'guid'),
+            'reputation' => array(
+                self::HAS_MANY,
+                'CharacterReputation',
+                'guid',
+                'condition' => '`reputation`.`flags` & '.CharacterReputation::FACTION_FLAG_VISIBLE,
+                'index' => 'faction',
+            ),
         );
     }
 
@@ -650,5 +657,139 @@ class Character extends CActiveRecord
              }
 
         return $feed;
+    }
+
+    public function getFactions()
+    {
+        $_factions = array();
+        foreach($this->reputation as $id => $data)
+            $_factions[] = $id;
+
+        $_factions = implode(', ', $_factions);
+
+        $column = 'name_'.Yii::app()->language;
+        $factions = Yii::app()->db
+                ->createCommand("SELECT `id`, `category`, $column AS `name`
+                    FROM `wow_factions` WHERE `id` IN ($_factions)
+                    ORDER BY `id` DESC")
+                ->queryAll();
+
+        // Default categories
+        $categories = array(
+            // World of Warcraft (Classic)
+            1118 => array(
+                // Horde
+                67 => array(
+                    'order' => 1,
+                    'side'  => CharacterReputation::FACTION_HORDE
+                ),
+                // Horde Forces
+                892 => array(
+                    'order' => 2,
+                    'side'  => CharacterReputation::FACTION_HORDE
+                ),
+                // Alliance
+                469 => array(
+                    'order' => 1,
+                    'side'  => CharacterReputation::FACTION_ALLIANCE
+                ),
+                // Alliance Forces
+                891 => array(
+                    'order' => 2,
+                    'side'  => CharacterReputation::FACTION_ALLIANCE
+                ),
+                // Steamwheedle Cartel
+                169 => array(
+                    'order' => 3,
+                    'side'  => -1
+                )
+            ),
+            // Other
+            0 => array(
+                // Wintersaber trainers
+                589 => array(
+                    'order' => 1,
+                    'side'  => CharacterReputation::FACTION_ALLIANCE
+                ),
+                // Syndicat
+                70 => array(
+                    'order' => 2,
+                    'side'  => -1
+                )
+            )
+        );
+        $storage = array();
+        $i = 0;
+        foreach($factions as $faction) {
+            // Standing & adjusted values
+            $standing = min(42999, $this->reputation[$faction['id']]['standing']);
+            $type = CharacterReputation::REP_EXALTED;
+            $rep_cap = 999;
+            $rep_adjusted = $standing - 42000;
+            if($standing < CharacterReputation::REPUTATION_VALUE_HATED) {
+                $type = CharacterReputation::REP_HATED;
+                $rep_cap = 36000;
+                $rep_adjusted = $standing + 42000;
+            }
+            elseif($standing < CharacterReputation::REPUTATION_VALUE_HOSTILE) {
+                $type = CharacterReputation::REP_HOSTILE;
+                $rep_cap = 3000;
+                $rep_adjusted = $standing + 6000;
+            }
+            elseif($standing < CharacterReputation::REPUTATION_VALUE_UNFRIENDLY) {
+                $type = CharacterReputation::REP_UNFRIENDLY;
+                $rep_cap = 3000;
+                $rep_adjusted = $standing + 3000;
+            }
+            elseif($standing < CharacterReputation::REPUTATION_VALUE_NEUTRAL) {
+                $type = CharacterReputation::REP_NEUTRAL;
+                $rep_cap = 3000;
+                $rep_adjusted = $standing;
+            }
+            elseif($standing < CharacterReputation::REPUTATION_VALUE_FRIENDLY) {
+                $type = CharacterReputation::REP_FRIENDLY;
+                $rep_cap = 6000;
+                $rep_adjusted = $standing - 3000;
+            }
+            elseif($standing < CharacterReputation::REPUTATION_VALUE_HONORED) {
+                $type = CharacterReputation::REP_HONORED;
+                $rep_cap = 12000;
+                $rep_adjusted = $standing - 9000;
+            }
+            elseif($standing < CharacterReputation::REPUTATION_VALUE_REVERED) {
+                $type = CharacterReputation::REP_REVERED;
+                $rep_cap = 21000;
+                $rep_adjusted = $standing - 21000;
+            }
+            $faction['standing'] = $this->reputation[$faction['id']]['standing'];
+            $faction['type'] = $type;
+            $faction['cap'] = $rep_cap;
+            $faction['adjusted'] = $rep_adjusted;
+            $faction['percent'] = round($rep_adjusted * 100 / $rep_cap);
+
+            if(isset($categories[$faction['category']])
+                and $faction['id'] != 67
+                and $faction['id'] != 469)
+            {
+                if(!isset($storage[$faction['category']]))
+                    $storage[$faction['category']] = array();
+                $storage[$faction['category']][$i++] = $faction;
+            }
+
+            else {
+                foreach($categories as $catId => $subcat) {
+                    if(isset($categories[$catId][$faction['category']]))
+                        if($subcat[$faction['category']]['side'] == -1
+                        or $subcat[$faction['category']]['side'] == $this->faction)
+                        {
+                            if(!isset($categories[$catId][$faction['category']]))
+                                $categories[$catId][$faction['category']] = array();
+                            $storage[$catId][$faction['category']][] = $faction;
+                        }
+                }
+            }
+        }
+        ksort($storage[1118]);
+        return $storage;
     }
 }
