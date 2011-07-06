@@ -268,7 +268,7 @@ class Character extends CActiveRecord
         }
         else
         {
-            $bar['percent'] = round($this->honor_rank_points % 50);
+            $bar['percent'] = round(($this->honor_rank_points % 5000)/50);
             $bar['cap'] = floor($this->honor_rank_points / 5000)*5000 + 5000;
         }
 
