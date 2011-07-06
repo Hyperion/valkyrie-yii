@@ -3,7 +3,7 @@ $this->breadcrumbs = array(
     'Game' => array('/wow/'),
     'Characters' => array('/wow/character/'),
     Database::$realm.' @ '.$model->name => array('/wow/character/simple', 'realm' => Database::$realm, 'name' => $model['name']),
-    'Reputation' => array('/wow/character/reputation', 'realm' => Database::$realm, 'name' => $model['name']),
+    'PvP' => array('/wow/character/pvp', 'realm' => Database::$realm, 'name' => $model['name']),
 ); ?>
 <div class="profile-sidebar-anchor">
     <div class="profile-sidebar-outer">
@@ -104,7 +104,7 @@ $this->breadcrumbs = array(
         <span class="pvp-value neutral"><?=$model->honor->thisWeek_cp?></span>
         <span class="clear"></span>
     </li>
-    <h4 class="pvp-header">Предидущая неделя</h4>
+    <h4 class="pvp-header">Предыдущая неделя</h4>
     <span class="clear"></span>
     <li class="pvp-details">
         <span class="pvp-item">Почетных убийств</span>
