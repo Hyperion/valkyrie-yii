@@ -1,0 +1,190 @@
+-- phpMyAdmin SQL Dump
+-- version 3.3.7deb5
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Jul 06, 2011 at 11:01 PM
+-- Server version: 5.1.49
+-- PHP Version: 5.3.3-7
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `cms`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wow_titles`
+--
+
+CREATE TABLE IF NOT EXISTS `wow_titles` (
+  `id` int(11) NOT NULL,
+  `title_M_de` text NOT NULL,
+  `title_M_en` text NOT NULL,
+  `title_M_es` text NOT NULL,
+  `title_M_fr` text NOT NULL,
+  `title_M_ru` text NOT NULL,
+  `title_F_de` text NOT NULL,
+  `title_F_en` text NOT NULL,
+  `title_F_es` text NOT NULL,
+  `title_F_fr` text NOT NULL,
+  `title_F_ru` text NOT NULL,
+  `place` varchar(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `wow_titles`
+--
+
+INSERT INTO `wow_titles` (`id`, `title_M_de`, `title_M_en`, `title_M_es`, `title_M_fr`, `title_M_ru`, `title_F_de`, `title_F_en`, `title_F_es`, `title_F_fr`, `title_F_ru`, `place`) VALUES
+(1, 'Gefreiter', 'Private', 'Soldado', 'Soldat', 'Рядовой', 'Gefreite', 'Private', 'Soldado', 'Soldat', 'Рядовой', 'prefix'),
+(2, 'Fu&#223;knecht', 'Corporal', 'Cabo', 'Caporal', 'Капрал', 'Fu&#223;knecht', 'Corporal', 'Cabo', 'Caporal', 'Капрал', 'prefix'),
+(3, 'Landsknecht', 'Sergeant', 'Sargento', 'Sergent', 'Сержант', 'Landsknecht', 'Sergeant', 'Sargento', 'Sergent', 'Сержант', 'prefix'),
+(4, 'Feldwebel', 'Master Sergeant', 'Sargento primero', 'Sergent-chef', 'Старший сержант', 'Feldwebel', 'Master Sergeant', 'Sargento primera', 'Sergent-chef', 'Старший сержант', 'prefix'),
+(5, 'F&#228;hnrich', 'Sergeant Major', 'Alf&#233;rez', 'Sergent-major', 'Старшина', 'F&#228;hnrich', 'Sergeant Major', 'Alf&#233;rez', 'Sergent-major', 'Старшина', 'prefix'),
+(6, 'Leutnant', 'Knight', 'Caballero', 'Chevalier', 'Рыцарь', 'Leutnant', 'Knight', 'Caballero', 'Chevalier', 'Рыцарь', 'prefix'),
+(7, 'Hauptmann', 'Knight-Lieutenant', 'Teniente caballero', 'Chevalier-lieutenant', 'Рыцарь-лейтенант', 'Hauptmann', 'Knight-Lieutenant', 'Teniente caballero', 'Chevalier-lieutenant', 'Рыцарь-лейтенант', 'prefix'),
+(8, 'K&#252;rassier', 'Knight-Captain', 'Capit&#225;n caballero', 'Chevalier-capitaine', 'Рыцарь-капитан', 'K&#252;rassier', 'Knight-Captain', 'Capitana caballero', 'Chevalier-capitaine', 'Рыцарь-капитан', 'prefix'),
+(9, 'Ritter der Allianz', 'Knight-Champion', 'Campe&#243;n caballero', 'Chevalier-champion', 'Рыцарь-защитник', 'Ritter der Allianz', 'Knight-Champion', 'Campeona caballero', 'Chevalier-champion', 'Рыцарь-защитник', 'prefix'),
+(10, 'Feldkommandant', 'Lieutenant Commander', 'Teniente coronel', 'Lieutenant-commandant', 'Лейтенант-командор', 'Feldkommandantin', 'Lieutenant Commander', 'Teniente coronel', 'Lieutenant-commandant', 'Лейтенант-командор', 'prefix'),
+(11, 'Rittmeister', 'Commander', 'Comandante', 'Commandant', 'Командор', 'Rittmeisterin', 'Commander', 'Comandante', 'Commandant', 'Командор', 'prefix'),
+(12, 'Marschall', 'Marshal', 'Mariscal', 'Mar&#233;chal', 'Маршал', 'Marschall', 'Marshal', 'Mariscal', 'Mar&#233;chal', 'Маршал', 'prefix'),
+(13, 'Feldmarschall', 'Field Marshal', 'Mariscal de campo', 'Grand mar&#233;chal', 'Фельдмаршал', 'Feldmarschall', 'Field Marshal', 'Mariscal de campo', 'Grand mar&#233;chal', 'Фельдмаршал', 'prefix'),
+(14, 'Gro&#223;marschall', 'Grand Marshal', 'Gran mariscal', 'Conn&#233;table', 'Главнокомандующий', 'Gro&#223;marschall', 'Grand Marshal', 'Gran mariscal', 'Conn&#233;table', 'Главнокомандующий', 'prefix'),
+(15, 'Sp&#228;her', 'Scout', 'Rastreador', 'Eclaireur', 'Разведчик', 'Sp&#228;herin', 'Scout', 'Rastreadora', 'Eclaireur', 'Разведчица', 'prefix'),
+(16, 'Grunzer', 'Grunt', 'Bruto', 'Grunt', 'Пехотинец', 'Grunzerin', 'Grunt', 'Bruta', 'Grunt', 'Пехотинец', 'prefix'),
+(17, 'Waffentr&#228;ger', 'Sergeant', 'Capataz', 'Sergent', 'Сержант', 'Waffentr&#228;gerin', 'Sergeant', 'Capataz', 'Sergent', 'Сержант', 'prefix'),
+(18, 'Schlachtrufer', 'Senior Sergeant', 'Capataz primero', 'Sergent-chef', 'Старший сержант', 'Schlachtruferin', 'Senior Sergeant', 'Capataz primera', 'Sergent-chef', 'Старший сержант', 'prefix'),
+(19, 'Rottenmeister', 'First Sergeant', 'Gran capataz', 'Adjudant', 'Старшина', 'Rottenmeisterin', 'First Sergeant', 'Gran capataz', 'Adjudant', 'Старшина', 'prefix'),
+(20, 'Steingardist', 'Stone Guard', 'Guardia de piedra', 'Garde de pierre', 'Каменный страж', 'Steingardistin', 'Stone Guard', 'Guardia de piedra', 'Garde de pierre', 'Каменный страж', 'prefix'),
+(21, 'Blutgardist', 'Blood Guard', 'Guardia de sangre', 'Garde de sang', 'Кровавый страж', 'Blutgardistin', 'Blood Guard', 'Guardia de sangre', 'Garde de sang', 'Кровавая стражница', 'prefix'),
+(22, 'Zornbringer', 'Legionnaire', 'Legionario', 'L&#233;gionnaire', 'Легионер', 'Zornbringerin', 'Legionnaire', 'Legionaria', 'L&#233;gionnaire', 'Легионер', 'prefix'),
+(23, 'Klinge der Horde', 'Centurion', 'Centuri&#243;n', 'Centurion', 'Центурион', 'Klinge der Horde', 'Centurion', 'Centuri&#243;n', 'Centurion', 'Центурион', 'prefix'),
+(24, 'Feldherr', 'Champion', 'Campe&#243;n', 'Champion', 'Защитник', 'Feldherrin', 'Champion', 'Campeona', 'Championne', 'Защитница', 'prefix'),
+(25, 'Sturmreiter', 'Lieutenant General', 'General', 'Lieutenant-g&#233;n&#233;ral', 'Генерал-лейтенант', 'Sturmreiterin', 'Lieutenant General', 'General', 'Lieutenant-g&#233;n&#233;ral', 'Генерал-лейтенант', 'prefix'),
+(26, 'Kriegsherr', 'General', 'Gran general', 'G&#233;n&#233;ral', 'Генерал', 'Kriegsherrin', 'General', 'Gran general', 'G&#233;n&#233;ral', 'Генерал', 'prefix'),
+(27, 'Kriegsf&#252;rst', 'Warlord', 'Se&#241;or de la Guerra', 'Seigneur de guerre', 'Вождь', 'Kriegsf&#252;rstin', 'Warlord', 'Se&#241;ora de la Guerra', 'Seigneur de guerre', 'Вождь', 'prefix'),
+(28, 'Oberster Kriegsf&#252;rst', 'High Warlord', 'Gran Se&#241;or de la Guerra', 'Grand seigneur de guerre', 'Верховный вождь', 'Oberste Kriegsf&#252;rstin', 'High Warlord', 'Gran Se&#241;ora de la Guerra', 'Grand seigneur de guerre', 'Верховный вождь', 'prefix'),
+(29, 'Gladiator', 'Gladiator', 'Gladiador', 'Gladiateur', 'Гладиатор', 'Gladiatorin', 'Gladiator', 'Gladiadora', 'Gladiateur', 'Гладиатор', 'prefix'),
+(30, 'Duellant', 'Duelist', 'Duelista', 'Duelliste', 'Дуэлянт', 'Duellantin', 'Duelist', 'Duelista', 'Duelliste', 'Дуэлянт', 'prefix'),
+(31, 'Rivale', 'Rival', 'Rival', 'Rival', 'Фаворит', 'Rivalin', 'Rival', 'Rival', 'Rivale', 'Фаворит', 'prefix'),
+(32, 'Herausforderer', 'Challenger', 'Contendiente', 'Comp&#233;titeur', 'Претендент', 'Herausforderin', 'Challenger', 'Contendiente', 'Comp&#233;titrice', 'Претендент', 'prefix'),
+(33, 'Skarab&#228;usf&#252;rst', 'Scarab Lord', 'Se&#241;or Escarabajo', 'Seigneur scarab&#233;e', 'Повелитель Скарабеев', 'Skarab&#228;usf&#252;rstin', 'Scarab Lord', 'Se&#241;ora Escarabajo', 'Seigneur scarab&#233;e', 'Повелительница Скарабеев', 'prefix'),
+(34, 'Eroberer', 'Conqueror', 'Conquistador', 'Conqu&#233;rant', 'Завоеватель', 'Eroberin', 'Conqueror', 'Conquistadora', 'Conqu&#233;rante', 'Завоевательница', 'prefix'),
+(35, 'Vollstrecker', 'Justicar', 'Justicar', 'Justicier', 'Вершитель правосудия', 'Vollstreckerin', 'Justicar', 'Justicar', 'Justici&#232;re', 'Вершительница правосудия', 'prefix'),
+(36, ', Champion der Naaru', ', Champion of the Naaru', ', Campe&#243;n de los naaru', ', champion des naaru', ', защитник Наару', ', Champion der Naaru', ', Champion of the Naaru', ', Campeona de los naaru', ', championne des naaru', ', защитница Наару', 'suffix'),
+(37, 'Erbarmungsloser Gladiator', 'Merciless Gladiator', 'Gladiador despiadado', 'Gladiateur impitoyable', 'Безжалостный гладиатор', 'Erbarmungslose Gladiatorin', 'Merciless Gladiator', 'Gladiadora despiadada', 'Gladiateur impitoyable', 'Безжалостный гладиатор', 'prefix'),
+(38, 'von der Zerschmetterten Sonne', 'of the Shattered Sun', 'del Sol Devastado', 'du Soleil bris&#233;', 'из Расколотого Солнца', 'von der Zerschmetterten Sonne', 'of the Shattered Sun', 'del Sol Devastado', 'du Soleil bris&#233;', 'из Расколотого Солнца', 'suffix'),
+(39, ', Hand von A''dal', ', Hand of A''dal', ', Mano de A''dal', ', Main d''A''dal', ', Длань А''дала', ', Hand von A''dal', ', Hand of A''dal', ', Mano de A''dal', ', Main d''A''dal', ', Длань А''дала', 'suffix'),
+(40, 'Rachs&#252;chtiger Gladiator', 'Vengeful Gladiator', 'Gladiador vengativo', 'Gladiateur vengeur', 'Мстительный гладиатор', 'Rachs&#252;chtige Gladiatorin', 'Vengeful Gladiator', 'Gladiadora vengativa', 'Gladiateur vengeur', 'Мстительный гладиатор', 'prefix'),
+(41, 'Kampfmeister', 'Battlemaster', 'Maestro de batalla', 'Ma&#238;tre de guerre', 'Военачальник', 'Kampfmeisterin', 'Battlemaster', 'Maestra de batalla', 'Ma&#238;tre de guerre', 'Военачальник', 'prefix'),
+(43, '&#196;ltester', 'Elder', 'Ancestro', 'Ancien', 'Премудрый', '&#196;lteste', 'Elder', 'Ancestro', 'Ancienne', 'Премудрая', 'prefix'),
+(44, 'Flammenw&#228;chter', 'Flame Warden', 'Celador de las llamas', 'Gardien des flammes', 'Страж огня', 'Flammenw&#228;chterin', 'Flame Warden', 'Celadora de las llamas', 'Gardienne des flammes', 'Страж огня', 'prefix'),
+(45, 'Flammenbewahrer', 'Flame Keeper', 'Vigilante de las llamas', 'Garde-flammes', 'Хранитель огня', 'Flammenbewahrerin', 'Flame Keeper', 'Vigilante de las llamas', 'Garde-flammes', 'Хранительница огня', 'prefix'),
+(46, 'der Ehrfurchtgebietende', 'the Exalted', 'el Exaltado', 'l''exalt&#233;', 'Превозносимый', 'die Ehrfurchtgebietende', 'the Exalted', 'la Exaltada', 'l''exalt&#233;e', 'Превозносимая', 'prefix'),
+(47, 'der Entdecker', 'the Explorer', 'el Explorador', 'l''explorateur', 'Исследователь', 'die Entdeckerin', 'the Explorer', 'la Exploradora', 'l''exploratrice', 'Исследовательница', 'prefix'),
+(48, 'Diplomat', 'the Diplomat', 'el Diplom&#225;tico', 'le diplomate', 'Дипломат', 'Diplomatin', 'the Diplomat', 'la Diplom&#225;tica', 'la diplomate', 'Дипломат', 'prefix'),
+(49, 'Brutaler Gladiator', 'Brutal Gladiator', 'Gladiador brutal', 'Gladiateur brutal', 'Жестокий гладиатор', 'Brutale Gladiatorin', 'Brutal Gladiator', 'Gladiadora brutal', 'Gladiateur brutal', 'Жестокий гладиатор', 'prefix'),
+(42, 'der Unerm&#252;dliche', 'the Seeker', 'el Buscador', 'Chercheur', 'Искатель', 'die Unerm&#252;dliche', 'the Seeker', 'la Buscadora', 'Chercheuse', 'Искательница', 'prefix'),
+(50, 'Arenameister', 'Arena Master', 'Maestro de arena', 'Ma&#238;tre de l''ar&#232;ne', 'Повелитель арены', 'Arenameisterin', 'Arena Master', 'Maestra de arena', 'Ma&#238;tre de l''ar&#232;ne', 'Повелительница арены', 'prefix'),
+(51, ', Schrecken der Meere', 'Salty', 'el Salado', 'Loup de mer', 'Морской дьявол', ', Schrecken der Meere', 'Salty', 'la Salada', 'Louve de mer', 'Морской дьявол', 'prefix'),
+(52, 'Chefkoch', 'Chef', 'Jefe de cocina', 'Chef', 'Шеф-повар', 'Chefk&#246;chin', 'Chef', 'Jefa de cocina', 'Chef', 'Шеф-повар', 'prefix'),
+(53, 'der Gro&#223;e', 'the Supreme', 'el Supremo', 'le supr&#234;me', 'Первейший', 'die Gro&#223;e', 'the Supreme', 'la Suprema', 'la supr&#234;me', 'Первейшая', 'prefix'),
+(54, 'von den zehn St&#252;rmen', 'of the Ten Storms', 'de las Diez Tormentas', 'des dix temp&#234;tes', ', повелитель штормов', 'von den zehn St&#252;rmen', 'of the Ten Storms', 'de las Diez Tormentas', 'des dix temp&#234;tes', ', повелительница штормов', 'suffix'),
+(55, 'vom Smaragdgr&#252;nen Traum', 'of the Emerald Dream', 'del Sue&#241;o Esmeralda', 'du R&#234;ve d''&#233;meraude', 'Изумрудный Сновидец', 'vom Smaragdgr&#252;nen Traum', 'of the Emerald Dream', 'del Sue&#241;o Esmeralda', 'du R&#234;ve d''&#233;meraude', 'Изумрудная Сновидица', 'prefix'),
+(57, 'Prophet', 'Prophet', 'Profeta', 'Proph&#232;te', 'Пророк', 'Prophetin', 'Prophet', 'Profeta', 'Proph&#232;te', 'Пророчица', 'prefix'),
+(58, 'der B&#246;sartige', 'the Malefic', 'el Mal&#233;fico', 'le mal&#233;fique', 'Тлетворный', 'die B&#246;sartige', 'the Malefic', 'la Mal&#233;fica', 'la mal&#233;fique', 'Тлетворная', 'prefix'),
+(59, 'Pirscher', 'Stalker', 'Acechador', 'Traqueur', 'Ловчий', 'Pirscherin', 'Stalker', 'Acechadora', 'Traqueuse', 'Ловчий', 'prefix'),
+(60, 'von der Schwarzen Klinge', 'of the Ebon Blade', 'de los Espada de &#201;bano', 'de la Lame d''&#233;b&#232;ne', 'из Черного Клинка', 'von der Schwarzen Klinge', 'of the Ebon Blade', 'de los Espada de &#201;bano', 'de la Lame d''&#233;b&#232;ne', 'из Черного Клинка', 'suffix'),
+(61, 'Erzmagier', 'Archmage', 'Archimago', 'Archimage', 'Верховный маг', 'Erzmagierin', 'Archmage', 'Archimaga', 'Archimage', 'Верховный маг', 'prefix'),
+(62, 'Kriegshetzer', 'Warbringer', 'Belisario', 'Porteguerre', 'Вестник войны', 'Kriegshetzerin', 'Warbringer', 'Belisaria', 'Porteguerre', 'Вестница войны', 'prefix'),
+(63, 'Assassine', 'Assassin', 'Asesino', 'Assassin', 'Ассасин', 'Assassine', 'Assassin', 'Asesina', 'Assassin', 'Ассасин', 'prefix'),
+(64, ', Gro&#223;meister der Alchemie', 'Grand Master Alchemist', 'Gran maestro alquimista', 'Grand ma&#238;tre alchimiste', 'Великий алхимик', ', Gro&#223;meisterin der Alchemie', 'Grand Master Alchemist', 'Gran maestra alquimista', 'Grand ma&#238;tre alchimiste', 'Великий алхимик', 'prefix'),
+(65, ', Gro&#223;meister der Schmiedekunst', 'Grand Master Blacksmith', 'Gran maestro herrero', 'Grand ma&#238;tre forgeron', 'Великий кузнец', ', Gro&#223;meisterin der Schmiedekunst', 'Grand Master Blacksmith', 'Gran maestra herrera', 'Grand ma&#238;tre forgeron', 'Великий кузнец', 'prefix'),
+(66, 'Eiserner Chefkoch', 'Iron Chef', 'Chef de hierro', 'Cordon bleu', 'Великий шеф-повар', 'Eiserne Chefk&#246;chin', 'Iron Chef', 'Chef de hierro', 'Cordon bleu', 'Великий шеф-повар', 'prefix'),
+(67, ', Gro&#223;meister der Verzauberkunst', 'Grand Master Enchanter', 'Gran maestro encantador', 'Grand ma&#238;tre enchanteur', 'Великий зачаровыватель', ', Gro&#223;meisterin der Verzauberkunst', 'Grand Master Enchanter', 'Gran maestra encantadora', 'Grand ma&#238;tre enchanteur', 'Великая зачаровывательница', 'prefix'),
+(68, ', Ingenieursgro&#223;meister', 'Grand Master Engineer', 'Gran maestro ingerniero', 'Grand ma&#238;tre ing&#233;nieur', 'Великий инженер', ', Ingenieursgro&#223;meisterin', 'Grand Master Engineer', 'Gran maestra ingerniera', 'Grand ma&#238;tre ing&#233;nieur', 'Великий инженер', 'prefix'),
+(69, 'Doktor', 'Doctor', 'Doctor', 'Docteur', 'Доктор', 'Doktor', 'Doctor', 'Doctora', 'Docteur', 'Доктор', 'prefix'),
+(70, ', Gro&#223;meister des Angelns', 'Grand Master Angler', 'Gran maestro pescador', 'Grand ma&#238;tre p&#234;cheur', 'Великий рыболов', ', Gro&#223;meisterin des Angelns', 'Grand Master Angler', 'Gran maestra pescadora', 'Grand ma&#238;tre p&#234;cheur', 'Великий рыболов', 'prefix'),
+(71, ', Gro&#223;meister der Kr&#228;uterkunde', 'Grand Master Herbalist', 'Gran maestro herborista', 'Grand ma&#238;tre herboriste', 'Великий травник', ', Gro&#223;meisterin der Kr&#228;uterkunde', 'Grand Master Herbalist', 'Gran maestra herborista', 'Grand ma&#238;tre herboriste', 'Великая травница', 'prefix'),
+(72, ', Gro&#223;meister der Inschriftenkunde', 'Grand Master Scribe', 'Gran maestro escriba', 'Grand ma&#238;tre scribe', 'Великий начертатель', ', Gro&#223;meisterin der Inschriftenkunde', 'Grand Master Scribe', 'Gran maestra escriba', 'Grand ma&#238;tre scribe', 'Великая начертательница', 'prefix'),
+(73, ', Gro&#223;meister der Juwelierskunst', 'Grand Master Jewelcrafter', 'Gran maestro joyero', 'Grand ma&#238;tre joaillier', 'Великий ювелир', ', Gro&#223;meisterin der Juwelierskunst', 'Grand Master Jewelcrafter', 'Gran maestra joyera', 'Grand ma&#238;tre joaillier', 'Великий ювелир', 'prefix'),
+(74, ', Gro&#223;meister der Lederverarbeitung', 'Grand Master Leatherworker', 'Gran maestro peletero', 'Grand ma&#238;tre travailleur du cuir', 'Великий кожевник', ', Gro&#223;meisterin der Lederverarbeitung', 'Grand Master Leatherworker', 'Gran maestra peletera', 'Grand ma&#238;tre travailleur du cuir', 'Великая кожевница', 'prefix'),
+(75, ', Gro&#223;meister des Bergbaus', 'Grand Master Miner', 'Gran maestro minero', 'Grand ma&#238;tre mineur', 'Великий мастер горного дела', ', Gro&#223;meisterin des Bergbaus', 'Grand Master Miner', 'Gran maestra minera', 'Grand ma&#238;tre mineur', 'Великий мастер горного дела', 'prefix'),
+(76, ', Gro&#223;meister der K&#252;rschnerei', 'Grand Master Skinner', 'Gran maestro desollador', 'Grand ma&#238;tre d&#233;peceur', 'Великий мастер снятия шкур', ', Gro&#223;meisterin der K&#252;rschnerei', 'Grand Master Skinner', 'Gran maestra desolladora', 'Grand ma&#238;tre d&#233;peceur', 'Великий мастер снятия шкур', 'prefix'),
+(77, ', Gro&#223;meister der Schneiderei', 'Grand Master Tailor', 'Gran maestro sastre', 'Grand ma&#238;tre tailleur', 'Великий портной', ', Gro&#223;meisterin der Schneiderei', 'Grand Master Tailor', 'Gran maestra sastre', 'Grand ma&#238;tre tailleur', 'Великий портной', 'prefix'),
+(78, 'von Quel''Thalas', 'of Quel''Thalas', 'de Quel''Thalas', 'de Quel''Thalas', ', сын Кель''Таласа', 'von Quel''Thalas', 'of Quel''Thalas', 'de Quel''Thalas', 'de Quel''Thalas', ', дочь Кель''Таласа', 'suffix'),
+(79, 'von Argus', 'of Argus', 'de Argus', 'd''Argus', ', сын Аргуса', 'von Argus', 'of Argus', 'de Argus', 'd''Argus', ', дочь Аргуса', 'suffix'),
+(80, 'von Khaz Modan', 'of Khaz Modan', 'de Khaz Modan', 'de Khaz Modan', ', сын Каз Модана', 'von Khaz Modan', 'of Khaz Modan', 'de Khaz Modan', 'de Khaz Modan', ', дочь Каз Модана', 'suffix'),
+(81, 'von Gnomeregan', 'of Gnomeregan', 'de Gnomeregan', 'de Gnomeregan', 'Гномреганский', 'von Gnomeregan', 'of Gnomeregan', 'de Gnomeregan', 'de Gnomeregan', 'Гномреганская', 'suffix'),
+(82, 'L&#246;wenherz', 'the Lion Hearted', 'Coraz&#243;n de Le&#243;n', 'au c&#339;ur de lion', 'Львиное Сердце', 'L&#246;wenherz', 'the Lion Hearted', 'Coraz&#243;n de Le&#243;n', 'au c&#339;ur de lion', 'Львиное Сердце', 'prefix'),
+(83, ', Elunes Champion', ', Champion of Elune', ', Campe&#243;n de Elune', ', champion d''Elune', ', защитник Элуны', ', Elunes Champion', ', Champion of Elune', ', Campeona de Elune', ', championne d''Elune', ', защитница Элуны', 'suffix'),
+(84, ', Held von Orgrimmar', ', Hero of Orgrimmar', ', H&#233;roe de Orgrimmar', ', h&#233;ros d''Orgrimmar', ', герой Оргриммара', ', Heldin von Orgrimmar', ', Hero of Orgrimmar', ', Hero&#237;na de Orgrimmar', ', h&#233;ro&#239;ne d''Orgrimmar', ', героиня Оргриммара', 'suffix'),
+(85, 'Ebenenl&#228;ufer', 'Plainsrunner', 'Correllanuras', 'le coureur des plaines', ', хозяин лугов', 'Ebenenl&#228;uferin', 'Plainsrunner', 'Correllanuras', 'la coureuse des plaines', ', хозяйка лугов', 'suffix'),
+(86, 'von den Dunkelspeer', 'of the Darkspear', 'de los Lanza Negra', 'des Sombrelances', 'из Черного Копья', 'von den Dunkelspeer', 'of the Darkspear', 'de los Lanza Negra', 'des Sombrelances', 'из Черного Копья', 'suffix'),
+(87, 'von den Verlassenen', 'the Forsaken', 'el Renegado', 'le r&#233;prouv&#233;', 'Отрекшийся', 'von den Verlassenen', 'the Forsaken', 'la Renegada', 'la r&#233;prouv&#233;e', 'Отрекшаяся', 'prefix'),
+(88, 'der Magiesuchende', 'the Magic Seeker', 'el Buscador de Magia', 'le cherche-magie', ', искатель магии', 'die Magiesuchende', 'the Magic Seeker', 'la Buscadora de Magia', 'la cherche-magie', ', искательница магии', 'suffix'),
+(89, 'Zwielichtbezwinger', 'Twilight Vanquisher', ', Vencedor del Crep&#250;sculo', 'Vainqueur du cr&#233;puscule', ', покоритель сумрака', 'Zwielichtbezwingerin', 'Twilight Vanquisher', ', Vencedora del Crep&#250;sculo', 'Vainqueur du cr&#233;puscule', ', покорительница сумрака', 'suffix'),
+(90, ', Bezwinger von Naxxramas', ', Conqueror of Naxxramas', ', Conquistador de Naxxramas', ', conqu&#233;rant de Naxxramas', ', Завоеватель Наксрамаса', ', Bezwingerin von Naxxramas', ', Conqueror of Naxxramas', ', Conquistadora de Naxxramas', ', conqu&#233;rante de Naxxramas', ', Завоевательница Наксрамаса', 'suffix'),
+(91, ', Held Nordends', ', Hero of Northrend', ', H&#233;roe de Rasganorte', ', h&#233;ros du Norfendre', ', Герой Нордскола', ', Heldin Nordends', ', Hero of Northrend', ', Hero&#237;na de Rasganorte', ', h&#233;ro&#239;ne du Norfendre', ', Герой Нордскола', 'suffix'),
+(92, 'Nachtschrecken', 'the Hallowed', 'el Santificado', 'le Sanssaint', 'Тыквер', 'Nachtschrecken', 'the Hallowed', 'la Santificada', 'la Sanssainte', 'Тыквер', 'prefix'),
+(93, 'Meister der Lehren', 'Loremaster', 'Maestro cultural', 'Ma&#238;tre des traditions', 'Хранитель мудрости', 'Meisterin der Lehren', 'Loremaster', 'Maestra cultural', 'Ma&#238;tre des traditions', 'Хранительница мудрости', 'prefix'),
+(94, 'von der Allianz', 'of the Alliance', 'de la Alianza', 'de l''Alliance', ', сын Альянса', 'von der Allianz', 'of the Alliance', 'de la Alianza', 'de l''Alliance', ', дочь Альянса', 'suffix'),
+(95, 'von der Horde', 'of the Horde', 'de la Horda', 'de la Horde', ', сын Орды', 'von der Horde', 'of the Horde', 'de la Horda', 'de la Horde', ', дочь Орды', 'suffix'),
+(96, 'Triumphator', 'the Flawless Victor', 'el ganador impecable', 'l''infaillible vainqueur', 'Всепобеждающий', 'Triumphator', 'the Flawless Victor', 'la ganadora impecable', 'l''infaillible vainqueur', 'Всепобеждающая', 'prefix'),
+(97, ', Held der eisigen Weiten', ', Champion of the Frozen Wastes', ', Campe&#243;n de los bald&#237;os helados', ', champion des terres gel&#233;es', ', защитник ледяных пустошей', ', Heldin der eisigen Weiten', ', Champion of the Frozen Wastes', ', Campeona de los bald&#237;os helados', ', championne des terres gel&#233;es', ', защитница ледяных пустошей', 'suffix'),
+(98, 'Botschafter', 'Ambassador', 'Embajador', 'Ambassadeur', 'Посланник', 'Botschafterin', 'Ambassador', 'Embajadora', 'Ambassadrice', 'Посланница', 'prefix'),
+(99, 'der Argentumchampion', 'the Argent Champion', 'el Campe&#243;n Argenta', ', champion d''argent', ', Серебряный защитник', 'der Argentumchampion', 'the Argent Champion', 'la Campeona Argenta', ', championne d''argent', ', Серебряная защитница', 'suffix'),
+(100, ', W&#228;chter des Cenarius', ', Guardian of Cenarius', ', Guardi&#225;n de Cenarius', ', gardien de C&#233;narius', ', защитник Кенария', ', W&#228;chterin des Cenarius', ', Guardian of Cenarius', ', Guardiana de Cenarius', ', gardienne de C&#233;narius', ', защитница Кенария', 'suffix'),
+(101, 'Braumeister', 'Brewmaster', 'Maestro cervecero', 'Ma&#238;tre brasseur', 'Хмелевар', 'Braumeisterin', 'Brewmaster', 'Maestra cervecera', 'Ma&#238;tre brasseur', 'Хмелевар', 'prefix'),
+(102, 'Winterhauchengel', 'Merrymaker', 'Juerguista', 'le joyeux', 'Весельчак', 'Winterhauchengel', 'Merrymaker', 'Juerguista', 'la joyeuse', 'Хохотушка', 'prefix'),
+(103, 'Liebesgott', 'the Love Fool', 'el Loco de amor', 'au c&#339;ur d''artichaut', 'Безумно влюбленный', 'Liebesg&#246;ttin', 'the Love Fool', 'la Loca de amor', 'au c&#339;ur d''artichaut', 'Безумно влюбленная', 'prefix'),
+(104, 'Patron', 'Matron', 'Matrona', 'Marraine', 'Благодетельница', 'Matrone', 'Matron', 'Matrona', 'Marraine', 'Благодетельница', 'prefix'),
+(105, 'Patron', 'Patron', 'Patr&#243;n', 'Parrain', 'Благодетель', 'Matrone', 'Patron', 'Patr&#243;n', 'Parrain', 'Благодетель', 'prefix'),
+(106, 'Obsidianvernichter', 'Obsidian Slayer', ', Destripador obsidiana', ', tueur de l''obsidien', 'Покоритель Обсидианового святилища', 'Obsidianvernichterin', 'Obsidian Slayer', ', Destripadora obsidiana', ', tueuse de l''obsidien', 'Покорительница Обсидианового святилища', 'prefix'),
+(107, 'Nachtherr', 'of the Nightfall', 'del Anochecer', 'du cr&#233;puscule', 'Сумеречный', 'Nachtherrin', 'of the Nightfall', 'del Anochecer', 'du cr&#233;puscule', 'Сумеречная', 'prefix'),
+(108, 'der Unsterbliche', 'the Immortal', 'el Inmortal', 'l''immortel', 'Бессмертный', 'die Unsterbliche', 'the Immortal', 'la Inmortal', 'l''immortelle', 'Бессмертная', 'prefix'),
+(109, 'der Unverw&#252;stliche', 'the Undying', 'el Indestructible', 'l''increvable', 'Неумирающий', 'die Unverw&#252;stliche', 'the Undying', 'la Indestructible', 'l''increvable', 'Неумирающая', 'prefix'),
+(110, 'Jenkins', 'Jenkins', 'Jenkins', 'Jenkins', 'Дженкинс', 'Jenkins', 'Jenkins', 'Jenkins', 'Jenkins', 'Дженкинс', 'suffix'),
+(111, 'Blutsegeladmiral', 'Bloodsail Admiral', 'Almirante Velasangre', 'Amiral de la Voile sanglante', 'Адмирал Кровавого Паруса', 'Blutsegeladmiral', 'Bloodsail Admiral', 'Almirante Velasangre', 'Amiral de la Voile sanglante', 'Адмирал Кровавого Паруса', 'prefix'),
+(112, 'der Wahnsinnige', 'the Insane', 'el Demente', 'le grand malade', 'Чокнутый', 'die Wahnsinnige', 'the Insane', 'la Demente', 'la grande malade', 'Чокнутая', 'suffix'),
+(113, 'von der Exodar', 'of the Exodar', 'de El Exodar', 'de l''Exodar', 'Экзодарский', 'von der Exodar', 'of the Exodar', 'de El Exodar', 'de l''Exodar', 'Экзодарская', 'suffix'),
+(114, 'von Darnassus', 'of Darnassus', 'de Darnassus', 'de Darnassus', 'Дарнасский', 'von Darnassus', 'of Darnassus', 'de Darnassus', 'de Darnassus', 'Дарнасская', 'suffix'),
+(115, 'von Eisenschmiede', 'of Ironforge', 'de Forjaz', 'de Forgefer', 'Стальгорнский', 'von Eisenschmiede', 'of Ironforge', 'de Forjaz', 'de Forgefer', 'Стальгорнская', 'suffix'),
+(116, 'von Sturmwind', 'of Stormwind', 'de Ventormenta', 'de Hurlevent', 'Штормградский', 'von Sturmwind', 'of Stormwind', 'de Ventormenta', 'de Hurlevent', 'Штормградская', 'suffix'),
+(117, 'von Orgrimmar', 'of Orgrimmar', 'de Orgrimmar', 'd''Orgrimmar', 'Оргриммарский', 'von Orgrimmar', 'of Orgrimmar', 'de Orgrimmar', 'd''Orgrimmar', 'Оргриммарская', 'suffix'),
+(118, 'von Sen''jin', 'of Sen''jin', 'de Sen''jin', 'de Sen''jin', 'Сен''джинский', 'von Sen''jin', 'of Sen''jin', 'de Sen''jin', 'de Sen''jin', 'Сен''джинская', 'suffix'),
+(119, 'von Silbermond', 'of Silvermoon', 'de Lunargenta', 'de Lune-d''argent', 'из Луносвета', 'von Silbermond', 'of Silvermoon', 'de Lunargenta', 'de Lune-d''argent', 'из Луносвета', 'suffix'),
+(120, 'von Donnerfels', 'of Thunder Bluff', 'de Cima del Trueno', 'des Pitons du Tonnerre', 'из Громового Утеса', 'von Donnerfels', 'of Thunder Bluff', 'de Cima del Trueno', 'des Pitons du Tonnerre', 'из Громового Утеса', 'suffix'),
+(121, 'von Unterstadt', 'of the Undercity', 'de Entra&#241;as', 'de Fossoyeuse', 'из Подгорода', 'von Unterstadt', 'of the Undercity', 'de Entra&#241;as', 'de Fossoyeuse', 'из Подгорода', 'suffix'),
+(122, 'der Noble', 'the Noble', 'el Noble', 'Noble', 'Чудесный', 'die Noble', 'the Noble', 'la Noble', 'Noble', 'Чудесная', 'prefix'),
+(123, 'Kreuzfahrer', 'Crusader', 'Cruzado', 'Crois&#233;', 'Крестоносец', 'Kreuzfahrerin', 'Crusader', 'Cruzada', 'Crois&#233;e', 'Крестоносец', 'prefix'),
+(56, 'T&#246;dlicher Gladiator', 'Deadly Gladiator', 'Gladiador mortal', 'Gladiateur fatal', 'Смертоносный гладиатор', 'T&#246;dliche Gladiatorin', 'Deadly Gladiator', 'Gladiadora mortal', 'Gladiateur fatal', 'Смертоносный гладиатор', 'prefix'),
+(124, 'Todesbote', ', Death''s Demise', ', Ejecutor de la muerte', ', faucheur de la Mort', ', победивший смерть', 'Todesbotin', ', Death''s Demise', ', Ejecutora de la muerte', ', faucheuse de la Mort', ', победившая смерть', 'suffix'),
+(125, 'der Himmelsverteidiger', 'the Celestial Defender', 'el Defensor celestial', 'le d&#233;fenseur c&#233;leste', ', небесный заступник', 'die Himmelsverteidigerin', 'the Celestial Defender', 'la Defensora celestial', 'le d&#233;fenseur c&#233;leste', ', небесная заступница', 'suffix'),
+(126, ', Eroberer von Ulduar', ', Conqueror of Ulduar', ', Conquistador de Ulduar', ', conqu&#233;rant d''Ulduar', ', завоеватель Ульдуара', ', Eroberin von Ulduar', ', Conqueror of Ulduar', ', Conquistadora de Ulduar', ', conqu&#233;rante d''Ulduar', ', завоевательница Ульдуара', 'suffix'),
+(127, ', Champion von Ulduar', ', Champion of Ulduar', ', Campe&#243;n de Ulduar', ', champion d''Ulduar', ', защитник Ульдуара', ', Champion von Ulduar', ', Champion of Ulduar', ', Campeona de Ulduar', ', championne d''Ulduar', ', защитница Ульдуара', 'suffix'),
+(128, 'Bezwinger', 'Vanquisher', 'Vencedor', 'Vainqueur', 'Покоритель', 'Bezwingerin', 'Vanquisher', 'Vencedora', 'Vainqueur', 'Покорительница', 'prefix'),
+(129, 'Sternenrufer', 'Starcaller', 'Llamaestrellas', 'Mande-&#233;toile', ', говорящий со звездами', 'Sternenruferin', 'Starcaller', 'Llamaestrellas', 'Mande-&#233;toile', ', говорящая со звездами', 'suffix'),
+(130, 'Astralwandler', 'the Astral Walker', 'el Caminante astral', 'le marcheur astral', ', звездный странник', 'Astralwandlerin', 'the Astral Walker', 'la Caminante astral', 'la marcheuse astrale', ', звездная странница', 'suffix'),
+(131, ', Herold der Titanen', ', Herald of the Titans', ', Heraldo de los titanes', ', h&#233;raut des titans', ', посланник титанов', ', Herold der Titanen', ', Herald of the Titans', ', Heraldo de los titanes', ', h&#233;raut des titans', ', посланница титанов', 'suffix'),
+(132, 'W&#252;tender Gladiator', 'Furious Gladiator', 'Gladiador furioso', 'Gladiateur furieux', 'Гневный гладиатор', 'W&#252;tende Gladiatorin', 'Furious Gladiator', 'Gladiadora furiosa', 'Gladiateur furieux', 'Гневный гладиатор', 'prefix'),
+(133, 'der Pilger', 'the Pilgrim', 'el Peregrino', 'le p&#232;lerin', 'Странник', 'die Pilgerin', 'the Pilgrim', 'la Peregrina', 'la p&#232;lerine', 'Странница', 'prefix'),
+(134, 'Unerbittlicher Gladiator', 'Relentless Gladiator', 'Gladiador incansable', 'Gladiateur implacable', 'Неумолимый гладиатор', 'Unerbittliche Gladiatorin', 'Relentless Gladiator', 'Gladiadora incansable', 'Gladiateur implacable', 'Неумолимый гладиатор', 'prefix'),
+(135, 'Oberster Kreuzfahrer', 'Grand Crusader', 'Gran cruzado', 'Grand crois&#233;', 'Великий крестоносец', 'Oberste Kreuzfahrerin', 'Grand Crusader', 'Gran cruzada', 'Grande crois&#233;e', 'Великий крестоносец', 'prefix'),
+(136, 'der Argentumverteidiger', 'the Argent Defender', 'el Defensor Argenta', 'le d&#233;fenseur d''argent', ', Серебряный заступник', 'die Argentumverteidigerin', 'the Argent Defender', 'la Defensora Argenta', 'le d&#233;fenseur d''argent', ', Серебряная заступница', 'suffix'),
+(137, 'der Geduldige', 'the Patient', 'el Paciente', 'l''assidu', 'Терпеливый', 'die Geduldige', 'the Patient', 'la Paciente', 'l''assidue', 'Терпеливая', 'suffix'),
+(138, ', das Licht des Morgens', 'the Light of Dawn', ', la Luz del Alba', ', lumi&#232;re de l''aube', ', Сияние Рассвета', ', das Licht des Morgens', 'the Light of Dawn', ', la Luz del Alba', ', lumi&#232;re de l''aube', ', Сияние Рассвета', 'suffix'),
+(139, ', Bezwinger des gefallenen K&#246;nigs', ', Bane of the Fallen King', ', la Perdici&#243;n del Rey ca&#237;do', ', tourment du roi d&#233;chu', ', победивший падшего Короля', ', Bezwingerin des gefallenen K&#246;nigs', ', Bane of the Fallen King', ', la Perdici&#243;n del Rey ca&#237;do', ', tourment du roi d&#233;chu', ', победившая падшего Короля', 'suffix'),
+(140, 'der K&#246;nigsm&#246;rder', 'the Kingslayer', 'el Matarreyes', 'le r&#233;gicide', ', свергнувший Короля', 'die K&#246;nigsm&#246;rderin', 'the Kingslayer', 'la Matarreyes', 'la r&#233;gicide', ', свергнувшая Короля', 'suffix'),
+(141, 'vom &#196;schernen Verdikt', 'of the Ashen Verdict', 'del Veredicto Cin&#233;reo', 'du Verdict des cendres', 'из Пепельного союза', 'vom &#196;schernen Verdikt', 'of the Ashen Verdict', 'del Veredicto Cin&#233;reo', 'du Verdict des cendres', 'из Пепельного союза', 'suffix'),
+(142, 'Zornerf&#252;llter Gladiator', 'Wrathful Gladiator', 'Gladiador col&#233;rico', 'Gladiateur courrouc&#233;', 'Разгневанный гладиатор', 'Zornerf&#252;llte Gladiatorin', 'Wrathful Gladiator', 'Gladiadora col&#233;rica', 'Gladiateur courrouc&#233;', 'Разгневанный гладиатор', 'prefix');
