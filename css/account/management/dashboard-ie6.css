@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+/* general layout */
+
+.dashboard { background: #d3d1ce; }
+.dashboard .primary { height: 336px; }
+.dashboard .section.account-details { overflow: hidden; }
+.dashboard .section.box-art { overflow: hidden; }
+
+/* lightweight dashboard */
+.dashboard .lightweight-actions { display: inline; }
+
+/* download button */
+a.disabled,
+a.disabled:hover,
+a.disabled:focus { filter:alpha(opacity=50); }
+
+/* more downloads */
+a.more-downloads { white-space: nowrap; }
+
+/* disabled button */
+.game-upgrade ul li a.unavailable,
+.game-upgrade ul li a.unavailable:hover,
+.game-upgrade ul li a.unavailable:focus { filter:alpha(opacity=25); }
+
+/* dashboard inline form */
+div.dashboard-form form { height: 264px; }
+.dashboard-form form .pay-options label { height: 50px; }
+
+/* wow services */
+div.service-links ul { height: 1%; }
+
+/* game upgrade */
+.game-upgrade { background-image: none; }
+.game-upgrade ul { height: 116px; }
+.game-upgrade ul li,
+.game-upgrade ul li a { margin:0; height: 1%; }
+.upgrade-available { background: url("../../images/dashboard/upgrade/upgrade-available-ie6.png") no-repeat 0 0; }
+.upgrade-pending { background: url("../../images/dashboard/upgrade/upgrade-pending-arrow-msie.png") no-repeat 54px top; }
+.upgrade-pending .upgrade-message { background-color: #fff; }
+.active-trial { background: url("../../images/dashboard/trial/trial-ie6.png") no-repeat 0 0; }
+.trial-time-remaining { background: url("../../images/dashboard/trial/trial-blank-ie6.png") no-repeat 0 0; }
+
+/* upgrade options */
+.upgrade-details,
+.upgrade-options,
+.single-upgrade { position: relative; zoom: 1; }
+.upgrade-title { display: inline; zoom: 1; }
+

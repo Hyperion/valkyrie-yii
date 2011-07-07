@@ -1,0 +1,13 @@
+
+#lobby-account .lobby-box { _height: 32px; }
+#games-list li.trial .account-info{width: 240px;}
+#games-list li.disabled { filter: alpha(opacity=40); }
+#games-list li.trial { background-color: #e0dfdd; }
+#games-list li.trial .account-id,
+#games-list li.trial .account-region,
+#games-list li.trial em { filter: alpha(opacity=40); }
+#games-list li.purchase-promotion,
+#games-list li.upgrade-promotion,
+#games-list li.promotion-target { background-color: #ededeb; }
+
+#games-list .game-icon .flag { _background-image: url("../../images/icons/trial-upgrade-ie6.png"); }

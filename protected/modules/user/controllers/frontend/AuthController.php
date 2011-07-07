@@ -123,6 +123,37 @@ class AuthController extends Controller
         return false;
     }
 
+    public function loginByIpBoard()
+    {
+        $bridge = new IpbBridge;
+        $bridge->db = $this->module->ipbConfig;
+        if($bridge->getUserData(
+            $this->loginForm->username,
+            $this->loginForm->password)
+        )
+        {
+            $user    = new User;
+
+            $user->username  = $bridge->username;
+            $user->superuser = $bridge->userRole;
+            $user->status    = $bridge->userStatus;
+            $user->setPassword($this->loginForm->password);
+
+            if($user->save())
+            {
+                $profile = new Profile;
+                $profile->user_id = $user->id;
+                $profile->email   = $bridge->email;
+                $profile->save();
+            }
+
+            return $this->authenticate($user);
+        }
+
+        return false;
+    }
+
+
     public function actionLogin()
     {
         // If the user is already logged in send them to the users logged homepage
@@ -147,6 +178,12 @@ class AuthController extends Controller
                     $success = $this->loginByEmail();
                     if ($success)
                         $login_type = 'email';
+                }
+                if($this->module->loginType & UserModule::LOGIN_BY_IPBOARD && !$success)
+                {
+                    $success = $this->loginByIpBoard();
+                    if($success)
+                        $login_type = 'ipboard';
                 }
             }
         }

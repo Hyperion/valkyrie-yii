@@ -27,27 +27,31 @@
 <body class="<?=$this->body_class?>">
 <div id="wrapper">
     <div id="header">
+
         <div id="search-bar">
-        <form action="/wow/search" method="get" id="search-form">
-        <div>
-        <input type="submit" id="search-button" value="" tabindex="41"/>
-        <input type="text" name="q" id="search-field" maxlength="200" tabindex="40" alt="Search characters, items, forums and more…" value="Search characters, items, forums and more…" />
-        </div>
-        </form>
+            <form action="/wow/search" method="get" id="search-form">
+            <div>
+                <input type="submit" id="search-button" value="" tabindex="41"/>
+                <input type="text" name="q" id="search-field" maxlength="200" tabindex="40" alt="Search characters, items, forums and more…" value="Search characters, items, forums and more…" />
+            </div>
+            </form>
         </div>
 
         <h1 id="logo"><a href="/">World of Warcraft</a></h1>
 
         <div class="header-plate">
-        <div class="user-plate ajax-update">
-        <a href="?login" class="card-login"
-        onclick="BnetAds.trackImpression('Battle.net Login', 'Character Card', 'New'); return Login.open('https://eu.battle.net/login/login.frag');">
-        <strong>Log in now</strong> to enhance and personalize your experience!
-        </a>
-        <div class="card-overlay"></div>
+            <div class="user-plate ajax-update">
+            <?php if(Yii::app()->user->isGuest): ?>
+                <a href="#" class="card-login"
+                onclick='$("#userloginwidget").dialog("open"); return false;'>
+                    <strong>Log in now</strong> to enhance and personalize your experience!
+                </a>
+            <?php $this->widget('application.modules.user.components.WUserLogin',array('visible'=>Yii::app()->user->isGuest)); ?>
+            <?php endif; ?>
+                <div class="card-overlay"></div>
+            </div>
         </div>
     </div>
-</div>
     <div id="content">
         <div class="content-top">
             <?php if(!empty($this->breadcrumbs)): ?>
@@ -62,6 +66,30 @@ $this->widget('WBreadcrumbs', array(
             <?php endif; ?>
             <div class="content-bot"><?php echo $content; ?></div>
         </div>
+    </div>
+    <div id="service">
+    <ul class="service-bar">
+        <li class="service-cell service-home">
+            <a href="/" tabindex="50" title="Battle.net"> </a>
+        </li>
+        <li class="service-cell service-welcome">
+        <?php if(Yii::app()->user->isGuest): ?>
+            <a href="#" onclick='$("#userloginwidget").dialog("open"); return false;'>Авторизуйтесь</a> или <a href="#">создайте новую запись</a>
+        <?php else: ?>
+            Здравствуйте, <?=Yii::app()->user->name?>! |  <?=CHtml::link('выход', array('/user/auth/logout'), array('tabindex' => 50))?>
+        <?php endif; ?>
+        </li>
+        <li class="service-cell service-account" style="padding-right: 20px;">
+            <a href="/account" tabindex="50" accesskey="3">Учетная запись</a>
+        </li>
+    </ul>
+    </div>
+    <div id="warnings-wrapper">
+    <noscript>
+        <div id="javascript-warning" class="warning warning-red">
+            <div class="warning-inner2">Для просмотра сайта требуется поддержка JavaScript.</div>
+        </div>
+    </noscript>
     </div>
 </div>
 <script type="text/javascript" src="/js/local-common/menu.js"></script>

@@ -89,18 +89,19 @@ class AuthController extends AdminController
         )
         {
             $user    = new User;
-            $profile = new Profile;
 
             $user->username  = $bridge->username;
             $user->superuser = $bridge->userRole;
-            $user->status    = User::STATUS_ACTIVATED;
+            $user->status    = $bridge->userStatus;
             $user->setPassword($this->loginForm->password);
 
-            $user->save();
-            $profile->user_id = $user->id;
-            if(isset($profile->email))
-                $profile->email = $bridge->email;
-            $profile->save();
+            if($user->save())
+            {
+                $profile = new Profile;
+                $profile->user_id = $user->id;
+                $profile->email   = $bridge->email;
+                $profile->save();
+            }
 
             return $this->authenticate($user);
         }
