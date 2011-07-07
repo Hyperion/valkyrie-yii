@@ -27,9 +27,9 @@ class CpController extends Controller
     {
         $this->_cs = Yii::app()->clientScript;
         $this->_cs->registerPackage('jquery');
-        $this->_cs->registerScriptFile('/js/account/local-common/core.js');
-        $this->_cs->registerScriptFile('/js/account/local-common/tooltip.js');
+        $this->_cs->registerScriptFile('/js/local-common/core.js');
+        $this->_cs->registerScriptFile('/js/local-common/tooltip.js');
         $this->_cs->registerScriptFile('/js/account/bam.js', CClientScript::POS_END);
-        $this->_cs->registerScriptFile('/js/account/local-common/menu.js', CClientScript::POS_END);
+        $this->_cs->registerScriptFile('/js/local-common/menu.js', CClientScript::POS_END);
     }
 }
