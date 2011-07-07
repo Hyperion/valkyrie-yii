@@ -706,7 +706,7 @@ class Character extends CActiveRecord
 
         $column = 'name_'.Yii::app()->language;
         $factions = Yii::app()->db
-                ->createCommand("SELECT `id`, `category`, $column AS `name`
+                ->createCommand("SELECT `id`, `category`, $column AS `name`, `baseValue`
                     FROM `wow_factions` WHERE `id` IN ($_factions)
                     ORDER BY `id` DESC")
                 ->queryAll();
@@ -757,9 +757,10 @@ class Character extends CActiveRecord
         );
         $storage = array();
         $i = 0;
-        foreach($factions as $faction) {
+        foreach($factions as $faction)
+        {
             // Standing & adjusted values
-            $standing = min(42999, $this->reputation[$faction['id']]['standing']);
+            $standing = min(42999, $this->reputation[$faction['id']]['standing'] + $faction['baseValue']);
             $type = CharacterReputation::REP_EXALTED;
             $rep_cap = 999;
             $rep_adjusted = $standing - 42000;
