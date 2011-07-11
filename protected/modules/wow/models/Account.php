@@ -24,7 +24,6 @@ class Account extends CActiveRecord
         return array(
             array('locale, gmlevel, mutetime, locked', 'numerical', 'integerOnly'=>true),
             array('username', 'length', 'max'=>32),
-            array('email', 'email'),
             array('username, password', 'required', 'on'=>'login'),
             array('password', 'authenticate', 'on'=>'login'),
             array('locale, email', 'required', 'on'=>'update, create, edit'),
@@ -93,6 +92,7 @@ class Account extends CActiveRecord
             'criteria'=>$criteria,
         ));
     }
+
     protected function beforeSave()
     {
         if(parent::beforeSave())
@@ -115,13 +115,13 @@ class Account extends CActiveRecord
         $model = self::model()->find('username=:username', array(':username'=>$this->username));
         if($model===null)
         {
-            $this->addError('password','Incorrect username or password.');
+            $this->addError('password','Incorrect username.');
             return;
         }
         $this->attributes = $model->attributes;
         $this->id = $model->id;
-        if($sha_pass_hash != $model->sha_pass_hash)
-            $this->addError('password','Incorrect username or password.');
+        if($sha_pass_hash != strtoupper($model->sha_pass_hash))
+            $this->addError('password','Incorrect password.');
 
         $c = Yii::app()->db->createCommand()->select('count(1)')->from('{{user_accounts}}')->where('account_id = :id', array(':id' => $this->id))->queryScalar();
         if($c > 0)
@@ -164,10 +164,10 @@ class Account extends CActiveRecord
     {
         $c = Yii::app()->db
             ->createCommand('INSERT INTO {{user_accounts}} (user_id, account_id) VALUES (:user_id, :account_id)');
-        $user_id = Yii::app()->user->id;
-        $account_id = $this->id;
-        $c->bindParam(':user_id', $user_id);
-        $c->bindParam(':account_id', $account_id);
+        $userId = Yii::app()->user->id;
+        $accountId = $this->id;
+        $c->bindParam(':user_id', $userId);
+        $c->bindParam(':account_id', $accountId);
         $c->execute();
     }
 }

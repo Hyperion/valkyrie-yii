@@ -30,7 +30,6 @@ class AdminController extends CController
         $cs = Yii::app()->clientScript;
         $cs->registerPackage('jquery');
 
-        $menu = new Menu;
-        $this->menu = $menu->getData('backendmenu');
+        $this->menu = Menu::getData('backendmenu');
     }
 }

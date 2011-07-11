@@ -40,18 +40,7 @@
         <div id="navigation">
             <div id="page-menu" class="large">
                 <h2><a href="/account/management/">Личный кабинет</a></h2>
-                <?php $this->widget('WUserMenu', array(
-                    'items' =>array(
-                        array('label' => 'Параметры', 'id' => 'settings', 'items' => array(
-                            array('label' => 'Смена E-mail', 'url' => array('/account/index')),
-                            array('label' => 'Смена пароля', 'url' => array('/account/index')),
-                            array('label' => 'Смена языка', 'url' => array('/account/index')),
-                        )),
-                        array('label' => 'WoW', 'id' => 'game', 'items' => array(
-                            array('label' => 'Прикрепление / конвертация игры', 'url' => array('/wow/index')),
-                        )),
-                    ),
-                )); ?>
+                <?php $this->widget('WUserMenu', array('items' => $this->menu)); ?>
                 <span class="clear"><!-- --></span>
             </div>
             <span class="clear"></span>

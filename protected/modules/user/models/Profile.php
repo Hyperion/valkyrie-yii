@@ -1,30 +1,14 @@
 <?php
 
-Yii::import('application.modules.user.components.Compare');
 class Profile extends CActiveRecord
 {
     const PRIVACY_PRIVATE = 'private';
     const PRIVACY_PUBLIC = 'public';
 
-    /**
-     * @var array of ProfileFields
-     */
     static $fields=null;
 
-    public function init()
+    public function recentComments($count = 3)
     {
-        parent::init();
- // load profile fields only once
-        $this->loadProfileFields();
-    }
-
-    public function behaviors()  {
-        return array_merge(parent::behaviors(), array(
-            'Compare' => array(
-                'class' => 'Compare')));
-    }
-
-    public function recentComments($count = 3) {
         $criteria = new CDbCriteria;
         $criteria->condition = 'id = ' .$this->id;
         $criteria->order = 'createtime DESC';
@@ -166,7 +150,7 @@ class Profile extends CActiveRecord
         );
 
         $fields = Yii::app()->db->createCommand(
-                "select * from ".ProfileField::model()->tableName()." where field_type = 'DROPDOWNLIST'")->queryAll();
+                "SELECT * FROM ".ProfileField::model()->tableName()." WHERE field_type = 'DROPDOWNLIST'")->queryAll();
 
         foreach($fields as $field) {
             $relations[ucfirst($field['varname'])] = array(
@@ -178,7 +162,8 @@ class Profile extends CActiveRecord
 
     }
 
-    public function getProfileCommentators() {
+    public function getProfileCommentators()
+    {
         $commentators = array();
         foreach($this->comments as $comment)
             if($comment->user_id != Yii::app()->user->id)

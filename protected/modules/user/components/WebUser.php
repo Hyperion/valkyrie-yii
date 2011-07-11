@@ -72,6 +72,11 @@ class WebUser extends CWebUser
             return new User();
     }
 
+    public function getEmail()
+    {
+        return User::model()->findByPk($this->id)->getEmail();
+    }
+
     /**
      * Return admin status.
      * @return boolean

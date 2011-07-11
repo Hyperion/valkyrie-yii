@@ -88,12 +88,10 @@ class Menu extends CActiveRecord
 
         if(!$data)
         {
-            if($menu == 'backendmenu')
-                $this->refreshXmlMenu('backendmenu');
-            elseif($menu == 'usermenu')
-                $this->refreshXmlMenu('usermenu');
+            if($menu == 'backendmenu' || $menu == 'usermenu')
+                self::refreshXmlMenu($menu);
             else
-                Yii::app()->cache->set("menu_$menu", $this->toArray($menu));
+                Yii::app()->cache->set("menu_$menu", self::toArray($menu));
 
             $data = Yii::app()->cache->get("menu_$menu");
         }
@@ -101,7 +99,7 @@ class Menu extends CActiveRecord
         return $data;
     }
 
-    private function toArray($menu = 'mainmenu')
+    private static function toArray($menu = 'mainmenu')
     {
         $menu = $this::model()->findAll(array(
             'order'=>'position',
@@ -122,105 +120,87 @@ class Menu extends CActiveRecord
     protected function afterCreate()
     {
         parent::afterCreate();
-        Yii::app()->cache->set("menu_{$this->menu}", $this->toArray($this->menu));
+        Yii::app()->cache->set("menu_{$this->menu}", self::toArray($this->menu));
     }
 
     protected function afterSave()
     {
         parent::afterSave();
-        Yii::app()->cache->set("menu_{$this->menu}", $this->toArray($this->menu));
+        Yii::app()->cache->set("menu_{$this->menu}", self::toArray($this->menu));
     }
 
     protected function afterDelete()
     {
         parent::afterDelete();
-        Yii::app()->cache->set("menu_{$this->menu}", $this->toArray($this->menu));
+        Yii::app()->cache->set("menu_{$this->menu}", self::toArray($this->menu));
     }
 
-    public function refreshXmlMenu($type = 'backendmenu')
+    public static function refreshXmlMenu($type = 'backendmenu')
     {
-        $totalBackendMenuArray = array();
+        $menu = array();
 
         $configFileList = glob(YiiBase::getPathOfAlias('application.modules').'/*/config/*.xml');
-        foreach ($configFileList as $singleConfigFile)
+        foreach ($configFileList as $configFile)
         {
-            $config = new SimpleXMLElement($singleConfigFile, NULL, true);
+            $config = new SimpleXMLElement($configFile, NULL, true);
             switch($type)
             {
                 case 'backendmenu':
-                    $nodes = $config->xpath('/config/adminhtml/menu/*');
-                    break;
                 case 'usermenu':
-                    $nodes = $config->xpath('/config/cphtml/menu/*');
+                    $nodes = $config->xpath("/config/$type/*");
                     break;
                 default:
                     return;
                     break;
             }
 
-
-            $menuItemsForModule = $this->parsingXmlMenu($nodes);
-            $totalBackendMenuArray = CMap::mergeArray($totalBackendMenuArray, $menuItemsForModule);
+            $menuItems = self::parseXmlMenu($nodes);
+            $menu = CMap::mergeArray($menu, $menuItems);
 
         }
-        $this->sortingMenuItems($totalBackendMenuArray);
-        $outputMenu = $this->convertXmlMenuFormatToOutputFormat($totalBackendMenuArray);
+
+        self::sortMenuItems($menu);
 
         if($type == 'backendmenu')
-            for($i = 0; $i < count($outputMenu); $i++)
-                $outputMenu[$i]['linkOptions'] = array('class' => 'nav-top-item');
+            foreach($menu as $i=>$v)
+                $menu[$i]['linkOptions'] = array('class' => 'nav-top-item');
 
-        Yii::app()->cache->set("menu_$type", $outputMenu);
+        Yii::app()->cache->set("menu_$type", $menu);
     }
 
-    protected function convertXmlMenuFormatToOutputFormat($xmlMenuFormat)
+    protected static function parseXmlMenu($nodeElements)
     {
-        $outputMenu = array();
-        foreach($xmlMenuFormat as $single)
-        {
-            $menuItem = array();
-            $menuItem['label'] = $single['label'];
-            if(isset($single['url']))
-                $menuItem['url'] = array($single['url']);
-
-            if(isset($single['items']))
-                $menuItem['items'] = $this->convertXmlMenuFormatToOutputFormat($single['items']);
-            $outputMenu[] = $menuItem;
-        }
-        return $outputMenu;
-    }
-
-    protected function parsingXmlMenu($nodeElements)
-    {
-        $returnArray = array();
+        $menu = array();
         foreach($nodeElements as $element)
         {
-
-            $nodeName = $element->getName();
-            $returnArray[$nodeName] = array();
+            $item = array();
             if($element->label)
-                $returnArray[$nodeName]['label'] = $element->label."";
+                $item['label'] = $element->label."";
             if($element->sort_order)
-                $returnArray[$nodeName]['sort_order'] = $element->sort_order."";
+                $item['sort_order'] = $element->sort_order."";
             if($element->url)
-                $returnArray[$nodeName]['url'] = $element->url."";
+                $item['url'] = array($element->url."");
+            if($element->id)
+                $item['id'] = $element->id."";
             if($element->items)
-                $returnArray[$nodeName]['items'] = $this->parsingXmlMenu($element->xpath("items/*"));
+                $item['items'] = self::parseXmlMenu($element->xpath("items/*"));
+
+            $menu[] = $item;
         }
-        return $returnArray;
+        return $menu;
     }
 
-    protected function sortingMenuItems(&$menuItems)
+    protected static function sortMenuItems(&$menuItems)
     {
-        uasort($menuItems, "Menu::sortingByKeySortOrder");
+        uasort($menuItems, "Menu::sortBySortOrder");
         foreach($menuItems as $key => $item)
         {
             if(isset($item['items']))
-                $this->sortingMenuItems($menuItems[$key]['items']);
+                self::sortMenuItems($menuItems[$key]['items']);
         }
     }
 
-    public static function sortingByKeySortOrder($a, $b)
+    public static function sortBySortOrder($a, $b)
     {
         if ($a['sort_order'] == $b['sort_order']) return 0;
         return ($a['sort_order'] > $b['sort_order']) ? 1 : -1;

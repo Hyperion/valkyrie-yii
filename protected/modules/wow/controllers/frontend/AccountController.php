@@ -1,26 +1,7 @@
 <?php
 
-class CpController extends Controller
+class AccountController extends CpController
 {
-
-    public $layout='//layouts/cp';
-    public $usermenu = array();
-
-    public function init()
-    {
-		WowDatabase::$name = 'Valkyrie 1.12 Classic';
-		
-        parent::init();
-        $menu = new Menu;
-		$this->usermenu = $menu->getData('usermenu');
-    }
-
-    public function filters()
-    {
-        return array(
-            'accessControl',
-        );
-    }
 
     public function accessRules()
     {
@@ -31,7 +12,7 @@ class CpController extends Controller
             ),
             array('allow',
                 'actions'=>array('edit', 'view', 'characters', 'repair'),
-                'roles' => array('editAccount'),
+                'expression'=>'$user->haveAccount()',
             ),
             array('deny',
                 'users'=>array('*'),
@@ -39,38 +20,40 @@ class CpController extends Controller
         );
     }
 
-	public function actionIndex()
-	{
+    public function actionIndex()
+    {
         $model = new Account('login');
         $model->unsetAttributes();
 
         if(isset($_POST['Account']))
         {
-            $model->attributes=$_POST['Account'];
+            $model->attributes = $_POST['Account'];
             if($model->validate())
             {
                 $model->email = Yii::app()->user->email;
-                $model->save();
-                $model->saveUserRelation();
+                if($model->save())
+                    $model->saveUserRelation();
             }
         }
 
         $this->render('index', array('model' => $model));
-	}
+    }
 
     public function actionCharacters($id)
     {
-        $mapper = new CharacterMapper();
-        $mapper->setSearchParams(array('account' => $id));
+        Database::$realm = Database::model()->find('type = "characters"')->title;
+        $model = new Character('search');
+        $model->unsetAttributes();
+        $model->account = $id;
         $this->render('characters',array(
-            'dataProvider' => $mapper->search(null, true),
+            'dataProvider' => $model->search(true),
         ));
     }
 
     public function actionView($id)
     {
         $this->render('view',array(
-            'model'=>$this->loadModel($id),
+            'model'=>$this->loadModel(),
         ));
     }
 
@@ -103,7 +86,7 @@ class CpController extends Controller
 
     public function actionEdit($id)
     {
-        $model=$this->loadModel($id);
+        $model=$this->loadModel();
         $model->setScenario('edit');
 
         if(isset($_POST['Account']))
@@ -126,13 +109,5 @@ class CpController extends Controller
         if($mapper->repair((int) $_GET['guid'], (int) $_GET['id']))
             $this->redirect(array('characters','id'=>$id));
         else throw new CHttpException(404,'The requested character does not exist on your account.');
-    }
-
-    private function loadModel($id)
-    {
-        $model=Account::model()->findByPk((int)$id);
-        if($model===null)
-            throw new CHttpException(404,'The requested page does not exist.');
-        return $model;
     }
 }

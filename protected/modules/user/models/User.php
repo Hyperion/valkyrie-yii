@@ -35,6 +35,11 @@ class User extends CActiveRecord
         }
     }
 
+    public function getEmail()
+    {
+        return $this->profile->email;
+    }
+
     public function getLogins()
     {
         $sql = "SELECT COUNT(*) FROM ACTIVITIES WHERE user_id = {$this->id} AND action = 'login'";
@@ -191,9 +196,6 @@ class User extends CActiveRecord
             ':uid' => $this->id));
     }
 
-    // Friends can not be retrieve via the relations() method because a friend
-    // can either be in the invited_id or in the friend_id column.
-    // set $everything to true to also return pending and rejected friendships
     public function getFriends($everything = false)
     {
         if ($everything)
@@ -254,12 +256,14 @@ class User extends CActiveRecord
         return false;
     }
 
-    public function isPasswordExpired() {
+    public function isPasswordExpired()
+    {
         $distance = Yii::app()->getModule('user')->password_expiration_time * 60 * 60;
         return $this->lastpasswordchange - $distance > time();
     }
 
-    public function activate($email=null, $key=null) {
+    public function activate($email=null, $key=null)
+    {
         if ($email != null && $key != null) {
             if($profile = Profile::model()->find("email = '{$email}'")) {
                 if($user = $profile->user) {
@@ -355,8 +359,10 @@ class User extends CActiveRecord
         return $returnarray;
     }
 
-    public function getAvatar($thumb = false) {
-        if($this->profile) {
+    public function getAvatar($thumb = false)
+    {
+        if($this->profile)
+        {
             $return = '<div class="avatar">';
 
             $options = array();
@@ -370,9 +376,9 @@ class User extends CActiveRecord
                         . $this->avatar, 'Avatar', $options);
             else
                 $return .= CHtml::image(Yii::app()->getAssetManager()->publish(
-                            Yii::getPathOfAlias('application.modules.user.assets.images') . ($thumb ? '/no_avatar_available_thumb.jpg' : '/no_avatar_available.jpg'),
-                            Yii::t('UserModule.user', 'No image available'), array(
-                                'title' => Yii::t('UserModule.user', 'No image available'))));
+                    Yii::getPathOfAlias('application.modules.user.assets.images') . ($thumb ? '/no_avatar_available_thumb.jpg' : '/no_avatar_available.jpg'),
+                    Yii::t('UserModule.user', 'No image available'), array(
+                        'title' => Yii::t('UserModule.user', 'No image available'))));
             $return .= '</div><!-- avatar -->';
             return $return;
         }

@@ -3,6 +3,7 @@
 class CpController extends Controller
 {
     public $layout='//layouts/cp';
+    public $menu = array();
 
     public function filters()
     {
@@ -31,5 +32,7 @@ class CpController extends Controller
         $this->_cs->registerScriptFile('/js/local-common/tooltip.js');
         $this->_cs->registerScriptFile('/js/account/bam.js', CClientScript::POS_END);
         $this->_cs->registerScriptFile('/js/local-common/menu.js', CClientScript::POS_END);
+
+        $this->menu = Menu::getData('usermenu');
     }
 }

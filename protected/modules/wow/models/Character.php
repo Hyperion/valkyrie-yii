@@ -96,6 +96,7 @@ class Character extends CActiveRecord
     {
         return array(
             array('name', 'safe'),
+            array('account', 'safe', 'on' => 'search'),
             array('name, level, class, race', 'safe', 'on'=>'online'),
             array('name, level, class, race, honor_standing', 'safe', 'on'=>'pvp'),
             array('account, name, race, class, gender, level, money, playerBytes, playerBytes2', 'safe', 'on'=>'update'),
@@ -170,6 +171,7 @@ class Character extends CActiveRecord
 
         $criteria->compare('name',$this->name,true);
         $criteria->compare('race',$this->race);
+        $criteria->compare('account',$this->account);
         $criteria->compare('class',$this->class);
         $criteria->compare('level',$this->level);
         $criteria->compare('online',$this->online);

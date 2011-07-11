@@ -448,7 +448,7 @@ tr:hover .fansite-link,
 .table-options { color: #855b47; padding: 0 10px; height: 40px; line-height: 40px; background: url("/images/wow/content/table-options-bg.jpg") 50% 0 no-repeat }
 .table-options strong { color: #FEF092 }
 .table-options .input { padding: 1px }
-.table-options .option { float: right; padding: 15px 10px}
+.table-options .option { float: right; }
 .table-options .option .input { padding-right: 2px }
 .table-options .ui-pagination { padding: 0; background: none; height: 20px; display: inline }
 .table-options .ui-pagination a { height: 20px; line-height: 20px; color: #ffae00 }
@@ -456,7 +456,7 @@ tr:hover .fansite-link,
 .table-filters { padding: 15px; background: url("/images/wow/form/filter-bg.png") 0 0 no-repeat; -moz-border-radius: 7px; -webkit-border-radius: 7px; border-radius: 7px; -moz-box-shadow: 0 0 5px #0e0905; -webkit-box-shadow: 0 0 5px #0e0905; box-shadow: 0 0 5px #0e0905; }
 .table-filters .filter { float: left; margin: 0 15px 15px 0; }
 .table-filters .filter label { display: block; padding-bottom: 3px; }
-.table-filters .filter-buttons { clear: both; text-align: center; } 
+.table-filters .filter-buttons { clear: both; text-align: center; }
 .table-filters.inline .filter { margin-bottom: 0; }
 .table-filters.inline .filter label { display: inline-block; padding: 0 8px 4px 0; }
 .table-filters.inline .filter-buttons { padding-top: 10px; }
@@ -508,127 +508,127 @@ tr:hover .fansite-link,
 
 /* wow colors */
 
-	/* item details and tooltips */
-	.color-tooltip-yellow { color: #ffd100 !important; }
-	.color-tooltip-red { color: #f00 !important; }
-	.color-tooltip-green { color: #0f0 !important; }
-	.color-tooltip-blue { color: #71D5FF !important; }
-	.color-tooltip-beige { color: #FFFF98 !important; }
+    /* item details and tooltips */
+    .color-tooltip-yellow { color: #ffd100 !important; }
+    .color-tooltip-red { color: #f00 !important; }
+    .color-tooltip-green { color: #0f0 !important; }
+    .color-tooltip-blue { color: #71D5FF !important; }
+    .color-tooltip-beige { color: #FFFF98 !important; }
 
-	/* faction */
-	.color-tooltip-alliance { color: #0078ff; }
-	.color-tooltip-horde { color: #b30000; }
+    /* faction */
+    .color-tooltip-alliance { color: #0078ff; }
+    .color-tooltip-horde { color: #b30000; }
 
-	/* item quality */
-	.color-q0, .color-q0 a { color: #9d9d9d !important; } /* poor (gray) */
-	.color-q1, .color-q1 a { color: #ffffff !important; } /* common (white) */
-	.color-q2, .color-q2 a { color: #1eff00 !important; } /* uncommon (green) */
-	.color-q3, .color-q3 a { color: #0081ff !important; } /* #0070dd rare (blue) */
-	.color-q4, .color-q4 a { color: #c600ff !important; } /* #a335ee epic (purple) */
-	.color-q5, .color-q5 a { color: #ff8000 !important; } /* lengendary (orange) */
-	.color-q6, .color-q6 a { color: #e5cc80 !important; } /* artifact (gold) */
-	.color-q7, .color-q7 a { color: #e5cc80 !important; } /* heirloom (gold) */
+    /* item quality */
+    .color-q0, .color-q0 a { color: #9d9d9d !important; } /* poor (gray) */
+    .color-q1, .color-q1 a { color: #ffffff !important; } /* common (white) */
+    .color-q2, .color-q2 a { color: #1eff00 !important; } /* uncommon (green) */
+    .color-q3, .color-q3 a { color: #0081ff !important; } /* #0070dd rare (blue) */
+    .color-q4, .color-q4 a { color: #c600ff !important; } /* #a335ee epic (purple) */
+    .color-q5, .color-q5 a { color: #ff8000 !important; } /* lengendary (orange) */
+    .color-q6, .color-q6 a { color: #e5cc80 !important; } /* artifact (gold) */
+    .color-q7, .color-q7 a { color: #e5cc80 !important; } /* heirloom (gold) */
 
-	/* class */
-	.color-c1,  .color-c1 a { color: #c69b6d !important; } /* warrior */
-	.color-c2,  .color-c2 a { color: #f48cba !important; } /* paladin */
-	.color-c3,  .color-c3 a, .color-g2 { color: #aad372 !important; } /* hunter */
-	.color-c4,  .color-c4 a, .color-g1 { color: #fff468 !important; } /* rogue */
-	.color-c5,  .color-c5 a { color: #f0ebe0 !important; } /* priest */
-	.color-c6,  .color-c6 a { color: #c41e3b !important; } /* death knight */
-	.color-c7,  .color-c7 a { color: #2359ff !important; } /* shaman */
-	.color-c8,  .color-c8 a, .color-g3 { color: #68ccef !important; } /* mage */
-	.color-c9,  .color-c9 a { color: #9382c9 !important; } /* warlock */
-	.color-c11, .color-c11 a, .color-g4 { color: #ff7c0a !important; } /* druid */
+    /* class */
+    .color-c1,  .color-c1 a { color: #c69b6d !important; } /* warrior */
+    .color-c2,  .color-c2 a { color: #f48cba !important; } /* paladin */
+    .color-c3,  .color-c3 a, .color-g2 { color: #aad372 !important; } /* hunter */
+    .color-c4,  .color-c4 a, .color-g1 { color: #fff468 !important; } /* rogue */
+    .color-c5,  .color-c5 a { color: #f0ebe0 !important; } /* priest */
+    .color-c6,  .color-c6 a { color: #c41e3b !important; } /* death knight */
+    .color-c7,  .color-c7 a { color: #2359ff !important; } /* shaman */
+    .color-c8,  .color-c8 a, .color-g3 { color: #68ccef !important; } /* mage */
+    .color-c9,  .color-c9 a { color: #9382c9 !important; } /* warlock */
+    .color-c11, .color-c11 a, .color-g4 { color: #ff7c0a !important; } /* druid */
 
-	/* expansion */
-	.color-exp0 { color: #fff468 !important; } /* classic */
-	.color-exp1 { color: #aad372 !important; } /* the burning crusade */
-	.color-exp2 { color: #68ccef !important; } /* wrath of the lich king */
-	.color-exp3 { color: #ff7c0a !important; } /* cataclysm */
+    /* expansion */
+    .color-exp0 { color: #fff468 !important; } /* classic */
+    .color-exp1 { color: #aad372 !important; } /* the burning crusade */
+    .color-exp2 { color: #68ccef !important; } /* wrath of the lich king */
+    .color-exp3 { color: #ff7c0a !important; } /* cataclysm */
 
-	/* 50% opaque dotted underlines for links with a tooltip */
-	.color-c1  a.tip { border-bottom: 1px dotted #634e37; }
-	.color-c2  a.tip { border-bottom: 1px dotted #7a465d; }
-	.color-c3  a.tip { border-bottom: 1px dotted #556a39; }
-	.color-c4  a.tip { border-bottom: 1px dotted #807a34; }
-	.color-c5  a.tip { border-bottom: 1px dotted #808080; }
-	.color-c6  a.tip { border-bottom: 1px dotted #620f1e; }
-	.color-c7  a.tip { border-bottom: 1px dotted #122d80; }
-	.color-c8  a.tip { border-bottom: 1px dotted #346678; }
-	.color-c9  a.tip { border-bottom: 1px dotted #4a4165; }
-	.color-c11 a.tip { border-bottom: 1px dotted #803e05; }
+    /* 50% opaque dotted underlines for links with a tooltip */
+    .color-c1  a.tip { border-bottom: 1px dotted #634e37; }
+    .color-c2  a.tip { border-bottom: 1px dotted #7a465d; }
+    .color-c3  a.tip { border-bottom: 1px dotted #556a39; }
+    .color-c4  a.tip { border-bottom: 1px dotted #807a34; }
+    .color-c5  a.tip { border-bottom: 1px dotted #808080; }
+    .color-c6  a.tip { border-bottom: 1px dotted #620f1e; }
+    .color-c7  a.tip { border-bottom: 1px dotted #122d80; }
+    .color-c8  a.tip { border-bottom: 1px dotted #346678; }
+    .color-c9  a.tip { border-bottom: 1px dotted #4a4165; }
+    .color-c11 a.tip { border-bottom: 1px dotted #803e05; }
 
-	a.tip {  }
-	.color-c1  a.tip, .border-c1  { border-color: #634e37; }
-	.color-c2  a.tip, .border-c2  { border-color: #7a465d; }
-	.color-c3  a.tip, .border-c3  { border-color: #556a39; }
-	.color-c4  a.tip, .border-c4  { border-color: #807a34; }
-	.color-c5  a.tip, .border-c5  { border-color: #808080; }
-	.color-c6  a.tip, .border-c6  { border-color: #620f1e; }
-	.color-c7  a.tip, .border-c7  { border-color: #122d80; }
-	.color-c8  a.tip, .border-c8  { border-color: #346678; }
-	.color-c9  a.tip, .border-c9  { border-color: #4a4165; }
-	.color-c11 a.tip, .border-c11 { border-color: #803e05; }
+    a.tip {  }
+    .color-c1  a.tip, .border-c1  { border-color: #634e37; }
+    .color-c2  a.tip, .border-c2  { border-color: #7a465d; }
+    .color-c3  a.tip, .border-c3  { border-color: #556a39; }
+    .color-c4  a.tip, .border-c4  { border-color: #807a34; }
+    .color-c5  a.tip, .border-c5  { border-color: #808080; }
+    .color-c6  a.tip, .border-c6  { border-color: #620f1e; }
+    .color-c7  a.tip, .border-c7  { border-color: #122d80; }
+    .color-c8  a.tip, .border-c8  { border-color: #346678; }
+    .color-c9  a.tip, .border-c9  { border-color: #4a4165; }
+    .color-c11 a.tip, .border-c11 { border-color: #803e05; }
 
-	/* difficulty */
-	.color-d1, .color-d1 a { color: #ff8040 !important; } /* orange */
-	.color-d2, .color-d2 a { color: #ffff00 !important; } /* yellow */
-	.color-d3, .color-d3 a { color: #40bf40 !important; } /* green */
-	.color-d4, .color-d4 a { color: #808080 !important; } /* gray */
-	.color-d5, .color-d5 a { color: #88aaff !important; } /* light blue */
-	.color-d6, .color-d6 a { color: #ff0000 !important; } /* red */
+    /* difficulty */
+    .color-d1, .color-d1 a { color: #ff8040 !important; } /* orange */
+    .color-d2, .color-d2 a { color: #ffff00 !important; } /* yellow */
+    .color-d3, .color-d3 a { color: #40bf40 !important; } /* green */
+    .color-d4, .color-d4 a { color: #808080 !important; } /* gray */
+    .color-d5, .color-d5 a { color: #88aaff !important; } /* light blue */
+    .color-d6, .color-d6 a { color: #ff0000 !important; } /* red */
 
-	/* expansion */
-	.color-ex0 { color: #f7ad01 }
-	.color-ex1 { color: #5b9b17 }
-	.color-ex2 { color: #2588c0 }
-	.color-ex3 { color: #DD6800 }
+    /* expansion */
+    .color-ex0 { color: #f7ad01 }
+    .color-ex1 { color: #5b9b17 }
+    .color-ex2 { color: #2588c0 }
+    .color-ex3 { color: #DD6800 }
 
-	/* profession skills */
-	.color-s1 { color: #FF8040; }
-	.color-s2 { color: #FFFF00; }
-	.color-s3 { color: #40BF40; }
-	.color-s4 { color: #808080; }
+    /* profession skills */
+    .color-s1 { color: #FF8040; }
+    .color-s2 { color: #FFFF00; }
+    .color-s3 { color: #40BF40; }
+    .color-s4 { color: #808080; }
 
-	/* link hover color for the above */
-	a.color-q0:hover, a.color-q1:hover, a.color-q2:hover, a.color-q3:hover, a.color-q4:hover, a.color-q5:hover, a.color-q6:hover, a.color-q7:hover,
-	.color-q0 a:hover, .color-q1 a:hover, .color-q2 a:hover, .color-q3 a:hover, .color-q4 a:hover, .color-q5 a:hover, .color-q6 a:hover, .color-q7 a:hover,
-	a.color-c1:hover, a.color-c2:hover, a.color-c3:hover, a.color-c4:hover, a.color-c5:hover, a.color-c6:hover, a.color-c7:hover, a.color-c8:hover, a.color-c9:hover, a.color-c11:hover,
-	.color-c1 a:hover, .color-c2 a:hover, .color-c3 a:hover, .color-c4 a:hover, .color-c5 a:hover, .color-c6 a:hover, .color-c7 a:hover, .color-c8 a:hover, .color-c9 a:hover, .color-c11 a:hover,
-	a.color-d1:hover, a.color-d2:hover, a.color-d3:hover, a.color-d4:hover, a.color-d5:hover, a.color-d6:hover,
-	.color-d1 a:hover, .color-d2 a:hover, .color-d3 a:hover, .color-d4 a:hover, .color-d5 a:hover, .color-d6 a:hover
-	{ color: #fff !important }
+    /* link hover color for the above */
+    a.color-q0:hover, a.color-q1:hover, a.color-q2:hover, a.color-q3:hover, a.color-q4:hover, a.color-q5:hover, a.color-q6:hover, a.color-q7:hover,
+    .color-q0 a:hover, .color-q1 a:hover, .color-q2 a:hover, .color-q3 a:hover, .color-q4 a:hover, .color-q5 a:hover, .color-q6 a:hover, .color-q7 a:hover,
+    a.color-c1:hover, a.color-c2:hover, a.color-c3:hover, a.color-c4:hover, a.color-c5:hover, a.color-c6:hover, a.color-c7:hover, a.color-c8:hover, a.color-c9:hover, a.color-c11:hover,
+    .color-c1 a:hover, .color-c2 a:hover, .color-c3 a:hover, .color-c4 a:hover, .color-c5 a:hover, .color-c6 a:hover, .color-c7 a:hover, .color-c8 a:hover, .color-c9 a:hover, .color-c11 a:hover,
+    a.color-d1:hover, a.color-d2:hover, a.color-d3:hover, a.color-d4:hover, a.color-d5:hover, a.color-d6:hover,
+    .color-d1 a:hover, .color-d2 a:hover, .color-d3 a:hover, .color-d4 a:hover, .color-d5 a:hover, .color-d6 a:hover
+    { color: #fff !important }
 
 /* wow borders */
 
-	/* item quality */
-	.border-q0 { border-color: #9d9d9d; } /* poor (gray) */
-	.border-q1 { border-color: #ffffff; } /* common (white) */
-	.border-q2 { border-color: #1eff00; } /* uncommon (green) */
-	.border-q3 { border-color: #0070dd; } /* rare (blue) */
-	.border-q4 { border-color: #a335ee; } /* epic (purple) */
-	.border-q5 { border-color: #ff8000; } /* lengendary (orange) */
-	.border-q6 { border-color: #e5cc80; } /* artifact (gold) */
-	.border-q7 { border-color: #e5cc80; } /* heirloom (gold) */
+    /* item quality */
+    .border-q0 { border-color: #9d9d9d; } /* poor (gray) */
+    .border-q1 { border-color: #ffffff; } /* common (white) */
+    .border-q2 { border-color: #1eff00; } /* uncommon (green) */
+    .border-q3 { border-color: #0070dd; } /* rare (blue) */
+    .border-q4 { border-color: #a335ee; } /* epic (purple) */
+    .border-q5 { border-color: #ff8000; } /* lengendary (orange) */
+    .border-q6 { border-color: #e5cc80; } /* artifact (gold) */
+    .border-q7 { border-color: #e5cc80; } /* heirloom (gold) */
 
 /* wow background colors */
 
-	/* gem */
-	.bgcolor-g1 { background-color: gray; } /* Meta */
-	.bgcolor-g2 { background-color: red; } /* Red */
-	.bgcolor-g4 { background-color: yellow; } /* Yellow */
-	.bgcolor-g8 { background-color: blue; } /* Blue */
-	.bgcolor-g6 { background-color: orange; } /* Orange */
-	.bgcolor-g10 { background-color: purple; } /* Purple */
-	.bgcolor-g12 { background-color: green; } /* Green */
-	.bgcolor-g14 { background-color: white; } /* Prismatic */
+    /* gem */
+    .bgcolor-g1 { background-color: gray; } /* Meta */
+    .bgcolor-g2 { background-color: red; } /* Red */
+    .bgcolor-g4 { background-color: yellow; } /* Yellow */
+    .bgcolor-g8 { background-color: blue; } /* Blue */
+    .bgcolor-g6 { background-color: orange; } /* Orange */
+    .bgcolor-g10 { background-color: purple; } /* Purple */
+    .bgcolor-g12 { background-color: green; } /* Green */
+    .bgcolor-g14 { background-color: white; } /* Prismatic */
 
 /* reusable icons */
-.icon-wowhead	{ padding-left: 20px; background: url("/images/wow/icons/wowhead.png") 0 50% no-repeat; }
-.icon-gold		{ padding-right: 15px; background: url("/images/wow/icons/gold.gif") 100% 50% no-repeat; }
-.icon-silver	{ padding-right: 15px; padding-left: 3px; background: url("/images/wow/icons/silver.gif") 100% 50% no-repeat; }
-.icon-copper	{ padding-right: 15px; padding-left: 3px; background: url("/images/wow/icons/copper.gif") 100% 50% no-repeat; }
+.icon-wowhead   { padding-left: 20px; background: url("/images/wow/icons/wowhead.png") 0 50% no-repeat; }
+.icon-gold      { padding-right: 15px; background: url("/images/wow/icons/gold.gif") 100% 50% no-repeat; }
+.icon-silver    { padding-right: 15px; padding-left: 3px; background: url("/images/wow/icons/silver.gif") 100% 50% no-repeat; }
+.icon-copper    { padding-right: 15px; padding-left: 3px; background: url("/images/wow/icons/copper.gif") 100% 50% no-repeat; }
 .icon-rss       { background: url("/images/wow/icons/rss.gif") left center no-repeat; }
 .icon-next      { background: url("/images/wow/icons/next.gif") 0 0 no-repeat; }
 .icon-next:hover{ background-position:0 -18px; }
@@ -754,10 +754,10 @@ tr:hover .fansite-link,
 .activity-feed li .icon { left: 1px; }
 .activity-tooltip { min-width: 220px; }
 .activity-feed li .icon {width: 20px; height: 20px; display: block; background: url(/images/wow/profile/feed-icons.gif) no-repeat; }
-.activity-feed li.crit .icon           	{ background-position:     0 0; }
-.activity-feed li.bosskill .icon       	{ background-position: -20px 0; }
+.activity-feed li.crit .icon            { background-position:     0 0; }
+.activity-feed li.bosskill .icon        { background-position: -20px 0; }
 .activity-feed li.guild-levelup .icon,
-.activity-feed li.guild-created .icon 	{ background-position: -40px 0; }
+.activity-feed li.guild-created .icon   { background-position: -40px 0; }
 
 /* class icons */
 .class-icon-56 { display:block; width:56px; height:56px; background:url(/images/wow/icons/class/classes-56.jpg) no-repeat; padding:0 }

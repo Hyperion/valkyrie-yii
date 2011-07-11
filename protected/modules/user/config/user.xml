@@ -9,39 +9,36 @@
     <copyright></copyright>
     <license></license>
     <description>User module</description>
-    <adminhtml>
-        <menu>
-            <user>
-                <label>Users Managment</label>
-                <sort_order>2</sort_order>
-                <url>#</url>
-                <items>
-                    <realms>
-                        <label>Statistic</label>
-                        <sort_order>1</sort_order>
-                        <url>/user/statistics/index</url>
-                    </realms>
-                    <accounts>
-                        <label>Users Management</label>
-                        <sort_order>2</sort_order>
-                        <url>/user/user/index</url>
-                    </accounts>
-                    <characters>
-                        <label>Profile Fields Management</label>
-                        <sort_order>3</sort_order>
-                        <url>/user/fields/index</url>
-                    </characters>
-                </items>
-            </user>
-        </menu>
-    </adminhtml>
-    <cphtml>
-        <menu>
-            <user>
-                <label>Account Managment</label>
-                <sort_order>2</sort_order>
-                <url>/wow/cp</url>
-            </user>
-        </menu>
-    </cphtml>
+    <backendmenu>
+        <user>
+            <label>Users Managment</label>
+            <sort_order>2</sort_order>
+            <url>#</url>
+            <items>
+                <realms>
+                    <label>Statistic</label>
+                    <sort_order>1</sort_order>
+                    <url>/user/statistics/index</url>
+                </realms>
+                <accounts>
+                    <label>Users Management</label>
+                    <sort_order>2</sort_order>
+                    <url>/user/user/index</url>
+                </accounts>
+                <characters>
+                    <label>Profile Fields Management</label>
+                    <sort_order>3</sort_order>
+                    <url>/user/fields/index</url>
+                </characters>
+            </items>
+        </user>
+    </backendmenu>
+    <usermenu>
+        <user>
+            <label>Settings</label>
+            <sort_order>1</sort_order>
+            <url>/wow/cp</url>
+            <id>setting</id>
+        </user>
+    </usermenu>
 </config>

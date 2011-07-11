@@ -3,10 +3,6 @@ $this->breadcrumbs=array(
     'Accounts',
 );
 
-$this->menu=array(
-    array('label'=>'create account', 'url'=>array('create')),
-);
-
 Yii::app()->clientScript->registerScript('add', "
 $('.add-button').click(function(){
     $('.add-form').toggle();
