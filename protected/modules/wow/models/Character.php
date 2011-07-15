@@ -694,7 +694,6 @@ class Character extends CActiveRecord
                     $feed[$i]['equipped'] = $this->isEquipped($feed[$i]['data']);
                     break;
                 case 3:
-                    $feed[$i]['data'] = CreatureTemplate::model()->findByPk($feed[$i]['data']);
                     $feed[$i]['count'] = $this->dbConnection
                         ->createCommand("SELECT COUNT(1)
                             FROM character_feed_log
@@ -704,6 +703,7 @@ class Character extends CActiveRecord
                                 AND data = {$feed[$i]['data']}
                                 AND date <= {$feed[$i]['date']}")
                         ->queryScalar();
+                    $feed[$i]['data'] = CreatureTemplate::model()->findByPk($feed[$i]['data']);
                     break;
              }
 
