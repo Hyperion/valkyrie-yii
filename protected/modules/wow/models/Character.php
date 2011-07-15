@@ -683,7 +683,7 @@ class Character extends CActiveRecord
         $feed = array();
 
         $feed = $this->dbConnection
-            ->createCommand("SELECT * FROM character_feed_log WHERE guid = {$this->guid} ORDER BY date DESC LIMIT 5")
+            ->createCommand("SELECT * FROM character_feed_log WHERE guid = {$this->guid} ORDER BY date ASC LIMIT 5")
             ->queryAll();
 
         for($i = 0; $i < count($feed); $i++)

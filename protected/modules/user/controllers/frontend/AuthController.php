@@ -22,6 +22,37 @@ class AuthController extends Controller
         );
     }
 
+    public function authenticate($user)
+    {
+        $identity = new UserIdentity($user->username, $this->loginForm->password);
+        $identity->authenticate();
+        switch($identity->errorCode) {
+            case UserIdentity::ERROR_NONE:
+                $duration = $this->loginForm->rememberMe ? 3600*24*30 : 0; // 30 days
+                Yii::app()->user->login($identity,$duration);
+                return $user;
+                break;
+            case UserIdentity::ERROR_EMAIL_INVALID:
+                $this->loginForm->addError("password",Yii::t('UserModule.user', 'Username or Password is incorrect'));
+                break;
+            case UserIdentity::ERROR_STATUS_NOTACTIVE:
+                $this->loginForm->addError("status",Yii::t('UserModule.user', 'This account is not activated.'));
+                break;
+            case UserIdentity::ERROR_STATUS_BANNED:
+                $this->loginForm->addError("status",Yii::t('UserModule.user', 'This account is blocked.'));
+                break;
+            case UserIdentity::ERROR_STATUS_REMOVED:
+                $this->loginForm->addError('status', Yii::t('UserModule.user', 'Your account has been deleted.'));
+                break;
+
+            case UserIdentity::ERROR_PASSWORD_INVALID:
+                if(!$this->loginForm->hasErrors())
+                    $this->loginForm->addError("password",Yii::t('UserModule.user', 'Username or Password is incorrect'));
+                break;
+                return false;
+        }
+    }
+
     public function loginByFacebook() {
         if (!$this->module->loginType & UserModule::LOGIN_BY_FACEBOOK)
             throw new Exception('actionFacebook was called, but is not activated in application configuration');
