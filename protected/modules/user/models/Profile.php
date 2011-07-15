@@ -7,6 +7,12 @@ class Profile extends CActiveRecord
 
     static $fields=null;
 
+    public function init()
+    {
+        parent::init();
+        $this->loadProfileFields();
+    }
+
     public function recentComments($count = 3)
     {
         $criteria = new CDbCriteria;
