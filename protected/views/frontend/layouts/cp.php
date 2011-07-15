@@ -39,7 +39,7 @@
         <h1 id="logo"><a href="http://eu.battle.net/" tabindex="50" accesskey="h">Battle.net</a></h1>
         <div id="navigation">
             <div id="page-menu" class="large">
-                <h2><a href="/account/management/">Личный кабинет</a></h2>
+                <h2><a href="/wow/account/management/">Личный кабинет</a></h2>
                 <?php $this->widget('WUserMenu', array('items' => $this->menu)); ?>
                 <span class="clear"><!-- --></span>
             </div>
@@ -59,7 +59,7 @@
         <?php endif; ?>
         </li>
         <li class="service-cell service-account" style="padding-right: 20px;">
-            <a href="/account" tabindex="50" accesskey="3">Учетная запись</a>
+            <a href="/wow/account" tabindex="50" accesskey="3">Учетная запись</a>
         </li>
     </ul>
     </div>

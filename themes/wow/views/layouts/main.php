@@ -79,7 +79,7 @@ $this->widget('WBreadcrumbs', array(
         <?php endif; ?>
         </li>
         <li class="service-cell service-account" style="padding-right: 20px;">
-            <a href="/account" tabindex="50" accesskey="3">Учетная запись</a>
+            <a href="/wow/account" tabindex="50" accesskey="3">Учетная запись</a>
         </li>
     </ul>
     </div>
