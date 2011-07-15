@@ -100,10 +100,9 @@ class AuthController extends AdminController
                 $profile = new Profile;
                 $profile->user_id = $user->id;
                 $profile->email   = $bridge->email;
-                $profile->save();
+                if($profile->save())
+                    return $this->authenticate($user);
             }
-
-            return $this->authenticate($user);
         }
 
         return false;

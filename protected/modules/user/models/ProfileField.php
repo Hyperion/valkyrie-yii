@@ -6,11 +6,6 @@ class ProfileField extends CActiveRecord
     const VISIBLE_REGISTER_USER=2;
     const VISIBLE_ALL=4;
 
-    /**
-     * Returns the static model of the specified AR class.
-     * @param string $className
-     * @return ProfileField
-     */
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
@@ -31,15 +26,6 @@ class ProfileField extends CActiveRecord
         return false;
     }
 
-
-    /**
-     * Returns resolved table name (incl. table prefix when it is set in db configuration)
-     * Following algorith of searching valid table name is implemented:
-     *  - try to find out table name stored in currently used module
-     *  - if not found try to get table name from UserModule configuration
-     *  - if not found user default {{profile_fields}} table name
-     * @return string
-     */
     public function tableName()
     {
         return 'profile_fields';
@@ -102,7 +88,8 @@ class ProfileField extends CActiveRecord
     }
 
 
-    public static function itemAlias($type,$code=NULL) {
+    public static function itemAlias($type,$code=NULL)
+    {
         $_items = array(
             'field_type' => array(
                 'INTEGER' => Yii::t('UserModule.user', 'INTEGER'),

@@ -73,9 +73,8 @@ class FieldsController extends AdminController
             // we only allow deletion via POST request
             $model = $this->loadModel();
             $sql = 'ALTER TABLE '.Profile::model()->tableName().' DROP `'.$model->varname.'`';
-            if ($model->dbConnection->createCommand($sql)->execute()) {
+            if($model->dbConnection->createCommand($sql)->execute())
                 $model->delete();
-            }
 
             if(!isset($_POST['ajax']))
                 $this->redirect(array('index'));
