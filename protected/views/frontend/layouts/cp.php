@@ -39,7 +39,7 @@
         <h1 id="logo"><a href="http://eu.battle.net/" tabindex="50" accesskey="h">Battle.net</a></h1>
         <div id="navigation">
             <div id="page-menu" class="large">
-                <h2><a href="/wow/account/management/">Личный кабинет</a></h2>
+                <h2><a href="/wow/account/index/">Личный кабинет</a></h2>
                 <?php $this->widget('WUserMenu', array('items' => $this->menu)); ?>
                 <span class="clear"><!-- --></span>
             </div>
