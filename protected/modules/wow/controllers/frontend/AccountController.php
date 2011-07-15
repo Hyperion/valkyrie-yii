@@ -7,12 +7,12 @@ class AccountController extends CpController
     {
         return array(
             array('allow',
-                'actions'=>array('index', 'create'),
+                'actions'=>array('index', 'register', 'add'),
                 'users'=>array('@'),
             ),
             array('allow',
-                'actions'=>array('edit', 'view', 'characters', 'repair'),
-                'expression'=>'$user->haveAccount()',
+                'actions'=>array('edit', 'dashboard', 'characters', 'repair'),
+                'expression'=>'$user->hasAccount()',
             ),
             array('deny',
                 'users'=>array('*'),
@@ -20,23 +20,16 @@ class AccountController extends CpController
         );
     }
 
+    public function init()
+    {
+        parent::init();
+        $this->_cs->registerCssFile('/css/account/inputs.css');
+    }
+
     public function actionIndex()
     {
-        $model = new Account('login');
-        $model->unsetAttributes();
-
-        if(isset($_POST['Account']))
-        {
-            $model->attributes = $_POST['Account'];
-            if($model->validate())
-            {
-                $model->email = Yii::app()->user->email;
-                if($model->save())
-                    $model->saveUserRelation();
-            }
-        }
-
-        $this->render('index', array('model' => $model));
+        $this->_cs->registerCssFile('/css/account/management/lobby.css');
+        $this->render('index');
     }
 
     public function actionCharacters($id)
@@ -50,55 +43,87 @@ class AccountController extends CpController
         ));
     }
 
-    public function actionView($id)
+    public function actionDashboard($name)
     {
-        $this->render('view',array(
-            'model'=>$this->loadModel(),
+        $this->_cs->registerCssFile('/css/account/management/dashboard.css');
+        $this->_cs->registerCssFile('/css/account/management/wow/dashboard.css');
+        $this->_cs->registerScriptFile('/js/account/management/dashboard.js', CClientScript::POS_END);
+        $this->_cs->registerScriptFile('/js/account/management/wow/dashboard.js', CClientScript::POS_END);
+
+        $model = $this->loadModel($name);
+        $fAccChangePass = new FAccountChangePassword;
+        $fAccChangePass->username = $name;
+
+        if(isset($_POST['FAccountChangePassword']))
+        {
+            $fAccChangePass->attributes=$_POST['FAccountChangePassword'];
+            if($fAccChangePass->validate())
+            {
+                $model->password = $fAccChangePass->newPassword;
+                if($model->save())
+                    $this->redirect(array('dashboard','name'=>$model->username));
+            }
+            else
+                $this->_cs->registerScript('show-form','DashboardForm.show($(\'#change-password\'));', CClientScript::POS_END);
+        }
+
+        if(isset($_POST['Account']))
+        {
+            $model->attributes=$_POST['Account'];
+            if($model->save())
+                $this->redirect(array('dashboard','name'=>$model->username));
+            else
+                $this->_cs->registerScript('show-form','DashboardForm.show($(\'#change-locale\'));', CClientScript::POS_END);
+        }
+
+        $this->render('dashboard',array(
+            'model'=>$model,
+            'change_password_form'=>$fAccChangePass,
         ));
     }
 
-    public function actionCreate()
+    public function actionRegister()
     {
-        $form = new AccountCreateForm();
+        $form = new FAccountCreate();
 
-        if(isset($_POST['AccountCreateForm']))
+        if(isset($_POST['FAccountCreate']))
         {
-            $form->attributes=$_POST['AccountCreateForm'];
+            $form->attributes=$_POST['FAccountCreate'];
             if($form->validate())
             {
-                $model = new Account('create');
+                $model = new Account;
                 $model->attributes = $form->getAttributes();
                 $model->email = Yii::app()->user->email;
                 $model->password = $form->password;
                 if($model->save())
                 {
                     $model->saveUserRelation();
-                    $this->redirect(array('view','id'=>$model->id));
+                    $this->redirect(array('dashboard','name'=>$model->username));
                 }
             }
         }
 
-        $this->render('create',array(
-            'form'=>$form,
+        $this->render('register',array(
+            'model'=>$form,
         ));
     }
 
-
-    public function actionEdit($id)
+    public function actionAdd()
     {
-        $model=$this->loadModel();
-        $model->setScenario('edit');
+        $model = new Account('add');
 
         if(isset($_POST['Account']))
         {
             $model->attributes=$_POST['Account'];
-            if($_POST['change_pass'] == 1)
-                $model->password = $_POST['Account']['password'];
+            $model->email = Yii::app()->user->email;
             if($model->save())
-                $this->redirect(array('view','id'=>$model->id));
+            {
+                $model->saveUserRelation();
+                $this->redirect(array('dashboard','name'=>$model->username));
+            }
         }
 
-        $this->render('edit',array(
+        $this->render('add',array(
             'model'=>$model,
         ));
     }
@@ -109,5 +134,13 @@ class AccountController extends CpController
         if($mapper->repair((int) $_GET['guid'], (int) $_GET['id']))
             $this->redirect(array('characters','id'=>$id));
         else throw new CHttpException(404,'The requested character does not exist on your account.');
+    }
+
+    private function loadModel($name)
+    {
+        $model = Account::model()->find('username = ?', array($name));
+        if($model===null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+        return $model;
     }
 }

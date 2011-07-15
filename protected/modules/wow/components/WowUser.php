@@ -7,15 +7,15 @@ class WowUser extends WebUser
     {
         return Yii::app()->db
             ->createCommand("
-                SELECT account_id
+                SELECT account
                 FROM user_accounts
                 WHERE user_id = ".$this->id)
             ->queryColumn();
     }
 
-    public function haveAccount()
+    public function hasAccount()
     {
-        return in_array($_GET['id'], $this->accounts);
+        return in_array($_GET['name'], $this->accounts);
     }
 }
 

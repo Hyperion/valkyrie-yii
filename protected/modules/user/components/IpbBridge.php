@@ -58,7 +58,7 @@ class IpbBridge extends externalBridge
         switch($this->_data['member_group_id'])
         {
             case '1': return User::STATUS_NOTACTIVE; break;
-            case '5': return User::STATUS_BANNED;    break;
+            //case '5': return User::STATUS_BANNED;    break;
             default:  return User::STATUS_ACTIVATED; break;
         }
     }

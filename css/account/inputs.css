@@ -2,7 +2,7 @@
 
 /* icons */
 .icon-16-label { line-height: 16px; display: inline-block; vertical-align: middle; }
-.icon-16 { width: 16px; height: 16px; overflow: hidden; display: inline-block; vertical-align: middle; background: url("../images/icons/sprite.png"); }
+.icon-16 { width: 16px; height: 16px; overflow: hidden; display: inline-block; vertical-align: middle; background: url("/images/account/icons/sprite.png"); }
 .icon-close-small { background-position: 0 -96px; }
 .icon-back-small { background-position: -16px -96px; }
 .icon-help-small { background-position: 0 -112px; }
@@ -29,7 +29,7 @@
 .icon-account-add { background-position: -208px -64px; }
 
 .icon-32-label { line-height: 32px; display: inline-block; vertical-align: middle; }
-.icon-32 { width: 32px; height: 32px; overflow: hidden; display: inline-block; vertical-align: middle; background: url("../images/icons/sprite.png"); }
+.icon-32 { width: 32px; height: 32px; overflow: hidden; display: inline-block; vertical-align: middle; background: url("/images/account/icons/sprite.png"); }
 .icon-alert-error { background-position: 0 0; }
 .icon-alert-warning { background-position: -32px 0; }
 .icon-alert-success { background-position: -64px 0; }
@@ -38,7 +38,7 @@
 .icon-captcha-image { background-position: -160px 0; }
 
 .icon-64-label { line-height: 64px; display: inline-block; vertical-align: middle; }
-.icon-64 { width: 64px; height: 64px; overflow: hidden; display: inline-block; vertical-align: middle; background: url("../images/icons/sprite.png"); }
+.icon-64 { width: 64px; height: 64px; overflow: hidden; display: inline-block; vertical-align: middle; background: url("/images/account/icons/sprite.png"); }
 .icon-page-error { background-position: 0 -32px; }
 .icon-page-warning { background-position: -64px -32px; }
 .icon-page-success { background-position: -128px -32px; }
@@ -88,9 +88,9 @@ textarea { resize: none; }
 
 .input-note { background: #4d606d; color: #c4d2db; position: relative; }
 .input-note-arrow,
-.input-note-arrow-up { width: 16px; height: 8px; overflow: hidden; position: absolute; top: -8px; left: 146px; background: url("../images/icons/sprite.png") no-repeat -144px -104px; }
-.input-note-arrow-left { width: 8px; height: 16px; overflow: hidden; position: absolute; top: 8px; left: -8px; background: url("../images/icons/sprite.png") no-repeat -152px -112px; }
-.input-note-arrow-right { width: 8px; height: 16px; overflow: hidden; position: absolute; top: 8px; right: -8px; background: url("../images/icons/sprite.png") no-repeat -144px -112px; }
+.input-note-arrow-up { width: 16px; height: 8px; overflow: hidden; position: absolute; top: -8px; left: 146px; background: url("/images/account/icons/sprite.png") no-repeat -144px -104px; }
+.input-note-arrow-left { width: 8px; height: 16px; overflow: hidden; position: absolute; top: 8px; left: -8px; background: url("/images/account/icons/sprite.png") no-repeat -152px -112px; }
+.input-note-arrow-right { width: 8px; height: 16px; overflow: hidden; position: absolute; top: 8px; right: -8px; background: url("/images/account/icons/sprite.png") no-repeat -144px -112px; }
 .input-note .caption { font-weight: normal; color: #fff; font-size: 14px; letter-spacing: normal; }
 .input-note-content { display: block; padding: 12px 16px; }
 .input-note-content a { color: #eee; }
@@ -159,7 +159,7 @@ textarea { resize: none; }
 
 .input-separator { display: inline-block; vertical-align: middle; height: 32px; font: normal 14px/32px "Lucida Sans Unicode","Lucida Grande", "Arial", sans-serif; color: #4a4a4a; text-align: center; padding-right: 8px; }
 
-.input-text input { background: #fff url("../images/form/input-bg.gif") repeat-x; font: 14px "Lucida Sans Unicode", "Lucida Grande", "Arial", sans-serif; color: #5a5a5a; padding: 0 7px; height: 32px; border: 1px solid #c0c0c0; width: 250px; margin: 0; display: block; }
+.input-text input { background: #fff url("/images/account/form/input-bg.gif") repeat-x; font: 14px "Lucida Sans Unicode", "Lucida Grande", "Arial", sans-serif; color: #5a5a5a; padding: 0 7px; height: 32px; border: 1px solid #c0c0c0; width: 250px; margin: 0; display: block; }
 .input-error .input-text input { border-color: #730202; }
 .input-text input:hover { background: #fff; }
 .input-text input:focus { background: #fff; border-color: #175e7c; color: #5a5a5a; }
@@ -174,7 +174,7 @@ textarea { resize: none; }
 .input-text input:-moz-placeholder { color: #999 !important; }
 .input-text input::-webkit-input-placeholder { color: #999 !important; }
 
-.input-textarea textarea { padding: 6px; background: #fff url("../images/form/input-bg.gif") 0 0 repeat-x; border: 1px solid #9c9b9a; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: #888 0 0 4px; -webkit-box-shadow: #888 0 0 4px; box-shadow: #888 0 0 4px; }
+.input-textarea textarea { padding: 6px; background: #fff url("/images/account/form/input-bg.gif") 0 0 repeat-x; border: 1px solid #9c9b9a; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: #888 0 0 4px; -webkit-box-shadow: #888 0 0 4px; box-shadow: #888 0 0 4px; }
 .input-error .input-textarea textarea { border-color: #730202; }
 .input-textarea textarea:hover { background: #fff; }
 .input-textarea textarea:focus { background: #fff; border-color: #175e7c; color: #444; }
@@ -187,8 +187,8 @@ textarea { resize: none; }
 
 .input-select select { background: #fff; font: 14px "Lucida Sans Unicode", "Lucida Grande", "Arial", sans-serif; color: #5a5a5a; padding: 4px 4px 4px 7px; height: 34px; border: 1px solid #c0c0c0; width: 250px; margin: 0; }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-	/* Safari does not like to apply certain styles (e.g., padding) to select elements. */
-	.input-select select { line-height: 28px; }
+    /* Safari does not like to apply certain styles (e.g., padding) to select elements. */
+    .input-select select { line-height: 28px; }
 }
 .input-select select option { padding: 0 5px; font: 14px "Lucida Sans Unicode", "Lucida Grande", "Arial", sans-serif; color: #5a5a5a; }
 .input-select select optgroup { border-bottom: 1px dotted #a4a4a4; }
@@ -230,7 +230,7 @@ textarea { resize: none; }
 .input-static-extra-large .static { width: 586px; }
 
 .input-radio,
-.input-checkbox { width: 32px; height: 32px; overflow: hidden; display: inline-block; vertical-align: top; background: url("../images/icons/sprite.png"); cursor: pointer; }
+.input-checkbox { width: 32px; height: 32px; overflow: hidden; display: inline-block; vertical-align: top; background: url("/images/account/icons/sprite.png"); cursor: pointer; }
 
 .input-radio { background-position: 0 -128px; }
 .input-error .input-radio { background-position: -128px -128px; }

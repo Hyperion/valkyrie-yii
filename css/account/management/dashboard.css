@@ -2,23 +2,23 @@
 
 /* general layout */
 .dashboard { position: relative; }
-.dashboard .primary { overflow: visible; min-height: 335px; padding: 11px 0 0 0; margin: 0 0 30px 0; background: url("../../images/dashboard/game-space/default.png") no-repeat top right; position: relative; }
+.dashboard .primary { overflow: visible; min-height: 335px; padding: 11px 0 0 0; margin: 0 0 30px 0; background: url("/images/account/dashboard/game-space/default.png") no-repeat top right; position: relative; }
 .dashboard .secondary { overflow: hidden; clear: both; }
 
 /* diablo 2 */
-.dashboard.d2dv .primary { background: url("../../images/dashboard/game-space/d2dv.png") no-repeat top right; }
+.dashboard.d2dv .primary { background: url("/images/account/dashboard/game-space/d2dv.png") no-repeat top right; }
 
 /* diablo 2 expansion */
-.dashboard.d2xp .primary { background: url("../../images/dashboard/game-space/d2xp.png") no-repeat top right; }
+.dashboard.d2xp .primary { background: url("/images/account/dashboard/game-space/d2xp.png") no-repeat top right; }
 
 /* starcraft */
-.dashboard.star .primary { background: url("../../images/dashboard/game-space/star.png") no-repeat top right; }
+.dashboard.star .primary { background: url("/images/account/dashboard/game-space/star.png") no-repeat top right; }
 
 /* warcraft 3 */
-.dashboard.war3 .primary { background: url("../../images/dashboard/game-space/war3.png") no-repeat top right; }
+.dashboard.war3 .primary { background: url("/images/account/dashboard/game-space/war3.png") no-repeat top right; }
 
 /* warcraft 3 expansion */
-.dashboard.w3xp .primary { background: url("../../images/dashboard/game-space/w3xp.png") no-repeat top right; }
+.dashboard.w3xp .primary { background: url("/images/account/dashboard/game-space/w3xp.png") no-repeat top right; }
 
 /* headers */
 .dashboard .header { height: 48px; overflow: hidden; border-bottom: 1px solid #b2b0af; position: relative; padding: 0 0 0 56px; width: 686px; }
@@ -50,7 +50,7 @@
 .account-details dl dd em { font-style: normal; display: block; }
 .account-details dl dd.account em { color: #727272; padding-right: 4em; }
 .account-details dl dd.account-status em { color: #727272; }
-.account-details dl dd.account em.loading { background: url("../../images/icons/loading-light-small.gif") no-repeat left center; min-height: 14px; }
+.account-details dl dd.account em.loading { background: url("/images/account/icons/loading-light-small.gif") no-repeat left center; min-height: 14px; }
 .account-details dl dd a { display: block; }
 
 .account-details dl dd strong.active,
@@ -68,7 +68,7 @@
 .account-details dl dd strong.unsubscribed { color: #cd6001; }
 
 /* extended license information */
-.account-details dl dd span.account-history { display: inline-block; cursor: pointer; padding-right: 16px; background: url("../../images/icons/plus-minus.png") no-repeat right 0; }
+.account-details dl dd span.account-history { display: inline-block; cursor: pointer; padding-right: 16px; background: url("/images/account/icons/plus-minus.png") no-repeat right 0; }
 .account-details dl dd span.account-history:hover { background-position: right -100px; }
 .account-details dl dd span.account-history.expanded { background-position: right -200px; }
 .account-details dl dd span.account-history.expanded:hover { background-position: right -300px; }
@@ -78,7 +78,7 @@
 /* manage game time */
 .game-time { font-size: 11px; }
 .game-time li { margin: 0 0 1em 0; list-style: none; line-height: 1.5; }
-.game-time li a { display: inline-block; padding: 0 0 0 22px; line-height: 16px; height: 16px; background: url("../../images/dashboard/icons/account-actions.png") no-repeat 0 0; }
+.game-time li a { display: inline-block; padding: 0 0 0 22px; line-height: 16px; height: 16px; background: url("/images/account/dashboard/icons/account-actions.png") no-repeat 0 0; }
 .game-time li.raf-status a { background-position: 0 0; }
 .game-time li.buy-time a,
 .game-time li.change-payment-method a { background-position: 0 -16px; }
@@ -107,7 +107,7 @@
 .download a.disabled-download:focus,
 .download a.disabled-download:active { color: #7f7e7d; cursor: default; }
 
-.download a .icon { display: block; width: 32px; height: 32px; overflow: hidden; background: url("../../images/icons/os.png") no-repeat 0 0; position: absolute; z-index: 2; top: 0; left: 0; }
+.download a .icon { display: block; width: 32px; height: 32px; overflow: hidden; background: url("/images/account/icons/os.png") no-repeat 0 0; position: absolute; z-index: 2; top: 0; left: 0; }
 
 .download.win a .icon { background-position: 0 0; }
 .download.win a:hover .icon,
@@ -187,15 +187,15 @@
 .game-upgrade ul li.learn-more a { background: none; color: #ffb400; display: inline; padding: 0; width: auto; font-size: 11px; text-transform: none; text-decoration: underline; }
 .game-upgrade ul li.learn-more a:hover,
 .game-upgrade ul li.learn-more a:focus { color: #fff; }
-.upgrade-option .game-upgrade ul li.preorder-button a { text-align: center; background: url("../../images/account/lobby/add-game-button.png") repeat-x scroll 0 0 #4A8102; color: #fff; }
+.upgrade-option .game-upgrade ul li.preorder-button a { text-align: center; background: url("/images/account/account/lobby/add-game-button.png") repeat-x scroll 0 0 #4A8102; color: #fff; }
 .upgrade-option .game-upgrade ul li.preorder-button a:hover,
-.upgrade-option .game-upgrade ul li.preorder-button a:focus { background: url("../../images/account/lobby/add-game-button.png") repeat-x scroll 0 -40px #4A8102; }
+.upgrade-option .game-upgrade ul li.preorder-button a:focus { background: url("/images/account/account/lobby/add-game-button.png") repeat-x scroll 0 -40px #4A8102; }
 
-.upgrade-available { cursor: help; display: block; width: 102px; height: 137px; overflow: hidden; background: url("../../images/dashboard/upgrade/upgrade-available.png") no-repeat 0 0; position: absolute; right: 0; bottom: 0; }
-.upgrade-pending { cursor: default; display: block; width: 194px; padding-top: 6px; position: absolute; right: 24px; bottom: 14px; text-align: center; background: url("../../images/dashboard/upgrade/upgrade-pending-arrow.png") no-repeat 54px top; }
+.upgrade-available { cursor: help; display: block; width: 102px; height: 137px; overflow: hidden; background: url("/images/account/dashboard/upgrade/upgrade-available.png") no-repeat 0 0; position: absolute; right: 0; bottom: 0; }
+.upgrade-pending { cursor: default; display: block; width: 194px; padding-top: 6px; position: absolute; right: 24px; bottom: 14px; text-align: center; background: url("/images/account/dashboard/upgrade/upgrade-pending-arrow.png") no-repeat 54px top; }
 .upgrade-pending .upgrade-message { display: block; padding: 8px 12px; background-color: #fff; background-color: rgba(255,255,255,.85); color: #4a4a4a; }
-.active-trial { cursor: help; display: block; width: 102px; height: 137px; overflow: hidden; background: url("../../images/dashboard/trial/trial.png") no-repeat 0 0; position: absolute; right: 0; bottom: 0; }
-.trial-time-remaining { cursor: help; display: block; width: 97px; padding-right: 5px; height: 137px; overflow: hidden; background: url("../../images/dashboard/trial/trial-blank.png") no-repeat 0 0; position: absolute; right: 0; bottom: 0; text-align: center; line-height: 100px; font-size: 24px; font-weight: bold; color: #fff; letter-spacing: -.1em; }
+.active-trial { cursor: help; display: block; width: 102px; height: 137px; overflow: hidden; background: url("/images/account/dashboard/trial/trial.png") no-repeat 0 0; position: absolute; right: 0; bottom: 0; }
+.trial-time-remaining { cursor: help; display: block; width: 97px; padding-right: 5px; height: 137px; overflow: hidden; background: url("/images/account/dashboard/trial/trial-blank.png") no-repeat 0 0; position: absolute; right: 0; bottom: 0; text-align: center; line-height: 100px; font-size: 24px; font-weight: bold; color: #fff; letter-spacing: -.1em; }
 
 /* unavailable upgrade */
 .game-upgrade ul.upgrade-options li a.disabled,
@@ -218,7 +218,7 @@ ul.upgrade-options { padding: 0; }
 .single-upgrade { position: relative; padding: 0 0 10px 0; }
 .upgrade-package-hover .upgrade-details { background-color: #f7f7f6; }
 .selected-upgrade .upgrade-details { background: #f7f7f6 no-repeat right top; }
-.selected-upgrade .upgrade-details.upgrade-package-wowx3 { background-image: url('../../images/dashboard/game-space/wowx3-light.png'); }
+.selected-upgrade .upgrade-details.upgrade-package-wowx3 { background-image: url('/images/account/dashboard/game-space/wowx3-light.png'); }
 .upgrade-details .upgrade-price { position: absolute; bottom: 10px; right: 20px; text-align: right; }
 .single-upgrade .upgrade-price { position: absolute; bottom: 60px; right: 20px; text-align: right }
 .upgrade-price .old-price,
@@ -245,7 +245,7 @@ fieldset.purchase-actions { margin: 0; width: auto; }
 .form-option label { cursor: pointer; }
 .form-option .input-radio { display: inline-block; vertical-align: top; width: 5%; height: 30px; text-align: center; }
 .form-option .input-radio input { display: none; }
-.form-option .input-radio .js-radio { display: block; width: 30px; height: 30px; background: url('../../images/form/input-radio.png') no-repeat 0 0; }
+.form-option .input-radio .js-radio { display: block; width: 30px; height: 30px; background: url('/images/account/form/input-radio.png') no-repeat 0 0; }
 .form-option .input-radio .js-radio-selected { background-position: -30px 0; }
 .form-option .input-radio-hover .js-radio { background-position: 0 -30px; }
 .form-option .input-radio-hover .js-radio-selected { background-position: -30px -30px; }

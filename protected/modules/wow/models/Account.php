@@ -24,12 +24,11 @@ class Account extends CActiveRecord
         return array(
             array('locale, gmlevel, mutetime, locked', 'numerical', 'integerOnly'=>true),
             array('username', 'length', 'max'=>32),
-            array('username, password', 'required', 'on'=>'login'),
-            array('password', 'authenticate', 'on'=>'login'),
-            array('locale, email', 'required', 'on'=>'update, create, edit'),
+            array('username, password', 'required', 'on'=>'add'),
+            array('password', 'authenticate', 'on'=>'add'),
             array('username, password', 'required', 'on'=>'create'),
             //array('username, email', 'recoveryInfo', 'on'=>'recovery'),
-            array('gmlevel, mutetime, locked', 'required', 'on'=>'update'),
+            array('gmlevel, mutetime, locked, locale', 'required', 'on'=>'update'),
             array('username', 'safe', 'on'=>'search'),
         );
     }
@@ -52,8 +51,8 @@ class Account extends CActiveRecord
             'last_login' => 'Last Login',
             'active_realm_id' => 'Active Realm',
             'mutetime' => 'Mutetime',
-            'locale' => 'Locale',
-            'loc_selection' => 'Loc Selection',
+            'locale' => 'Локаль',
+            'loc_selection' => 'Loc Selection'
         );
     }
 
@@ -83,12 +82,12 @@ class Account extends CActiveRecord
         ));
     }
 
-    public function userRelated()
+    public static function userRelated()
     {
 
         $criteria=new CDbCriteria;
-        $criteria->addInCondition('id', Yii::app()->user->accounts);
-        return new CActiveDataProvider(get_class($this), array(
+        $criteria->addInCondition('username', Yii::app()->user->accounts);
+        return new CActiveDataProvider(self::model(), array(
             'criteria'=>$criteria,
         ));
     }
@@ -115,17 +114,22 @@ class Account extends CActiveRecord
         $model = self::model()->find('username=:username', array(':username'=>$this->username));
         if($model===null)
         {
-            $this->addError('password','Incorrect username.');
+            $this->addError('username','Аккаунт с даным логином не найден.');
             return;
         }
         $this->attributes = $model->attributes;
         $this->id = $model->id;
         if($sha_pass_hash != strtoupper($model->sha_pass_hash))
-            $this->addError('password','Incorrect password.');
+            $this->addError('password','Неверный пароль.');
 
-        $c = Yii::app()->db->createCommand()->select('count(1)')->from('{{user_accounts}}')->where('account_id = :id', array(':id' => $this->id))->queryScalar();
+        $c = Yii::app()->db
+            ->createCommand()
+            ->select('count(1)')
+            ->from('{{user_accounts}}')
+            ->where('account = :username', array(':username' => $this->username))
+            ->queryScalar();
         if($c > 0)
-            $this->addError('username','This account is already used!');
+            $this->addError('username','Этот аккаунт уже привязан!');
 
         $this->setIsNewRecord(false);
     }
@@ -163,11 +167,11 @@ class Account extends CActiveRecord
     public function saveUserRelation()
     {
         $c = Yii::app()->db
-            ->createCommand('INSERT INTO {{user_accounts}} (user_id, account_id) VALUES (:user_id, :account_id)');
+            ->createCommand('INSERT INTO {{user_accounts}} (user_id, account) VALUES (:user_id, :account)');
         $userId = Yii::app()->user->id;
-        $accountId = $this->id;
+        $account = $this->username;
         $c->bindParam(':user_id', $userId);
-        $c->bindParam(':account_id', $accountId);
+        $c->bindParam(':account', $account);
         $c->execute();
     }
 }

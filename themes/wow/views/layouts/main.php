@@ -46,7 +46,6 @@
                 onclick='$("#userloginwidget").dialog("open"); return false;'>
                     <strong>Log in now</strong> to enhance and personalize your experience!
                 </a>
-            <?php $this->widget('application.modules.user.components.WUserLogin',array('visible'=>Yii::app()->user->isGuest)); ?>
             <?php endif; ?>
                 <div class="card-overlay"></div>
             </div>
@@ -163,7 +162,6 @@ first: 'Первая стр.',
 last: 'Последняя стр.'
 },
 fansite: {
-achievement: 'Достжение',
 character: 'Персонаж',
 faction: 'Фракция',
 'class': 'Класс',
@@ -174,7 +172,6 @@ quest: 'Задание',
 spell: 'Заклинания',
 event: 'Событие',
 title: 'Звание',
-arena: 'Команда Арены',
 guild: 'Гильдия',
 zone: 'Территория',
 item: 'Предмет',
@@ -185,4 +182,7 @@ pet: 'Питомец'
 };
 //]]>
 </script>
+<div style="visibility: hidden;">
+<?php $this->widget('application.modules.user.components.WUserLogin',array('visible'=>Yii::app()->user->isGuest)); ?>
+</div>
 </body></html>
