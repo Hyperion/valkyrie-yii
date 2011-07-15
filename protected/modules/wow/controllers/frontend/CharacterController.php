@@ -118,6 +118,19 @@ class CharacterController extends Controller
         ));
     }
 
+    public function actionFeed($realm, $name)
+    {
+        Database::$realm = (string) $realm;
+        $model = $this->loadModel((string)$name);
+        $model->loadAdditionalData();
+        $this->registerFiles();
+        $this->_cs->registerCssFile('/css/wow/character/pvp.css');
+
+        $this->render('feed',array(
+            'model'=>$model,
+        ));
+    }
+
     public function loadModel($name)
     {
         $this->_model = Character::model()->find('name = ?', array($name));

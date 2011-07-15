@@ -3,7 +3,7 @@ $this->breadcrumbs = array(
     'Game' => array('/wow/'),
     'Characters' => array('/wow/character/'),
     Database::$realm.' @ '.$model->name => array('/wow/character/simple', 'realm' => Database::$realm, 'name' => $model['name']),
-    'Reputation' => array('/wow/character/reputation', 'realm' => Database::$realm, 'name' => $model['name']),
+    'Лента новостей' => array('/wow/character/feed', 'realm' => Database::$realm, 'name' => $model['name']),
 ); ?>
 <div class="profile-sidebar-anchor">
     <div class="profile-sidebar-outer">
@@ -66,60 +66,41 @@ $this->breadcrumbs = array(
     </div>
 </div>
 <div class="profile-contents">
-<div class="reputation reputation-simple" id="reputation">
     <div class="profile-section-header">
-        <h3 class="category ">Репутация</h3>
+        <h3 class="category ">Лента новостей</h3>
     </div>
+
     <div class="profile-section">
-    <ul class="reputation-list">
-<?php foreach($model->factions as $categoryId => $categories): ?>
-<li class="reputation-category">
-    <h3 class="category-header"><?=CharacterReputation::getFactionNameFromDB($categoryId)?></h3>
-    <ul class="reputation-entry">
-<?php foreach($categories as $subcatId => $subcategories):
-    if(isset($subcategories['id'])): ?>
-        <li class="faction-details">
-        <div class="rank-<?=$subcategories['type']?>">
-            <span class="faction-name"><?=$subcategories['name']?></span>
-            <div class="faction-standing">
-                <div class="faction-bar">
-                    <div class="faction-score"><?=$subcategories['adjusted']?>/<?=$subcategories['cap']?></div>
-                    <div class="faction-fill" style="width: <?=$subcategories['percent']?>%;"></div>
-                </div>
-            </div>
-            <div class="faction-level"><?=CharacterReputation::itemAlias('rank', $subcategories['type'])?></div>
-            <span class="clear"><!-- --></span>
-        </div>
-        </li>
-<?php elseif(isset($subcategories[0])): ?>
-        <li class="reputation-subcategory">
-        <div class="faction-details faction-subcategory-details ">
-            <h4 class="faction-header"><?=CharacterReputation::getFactionNameFromDB($subcatId)?></h4>
-            <span class="clear"><!-- --></span>
-        </div>
-        <ul class="factions">
-<?php foreach($subcategories as $catid => $cat): ?>
-            <li class="faction-details">
-            <div class="rank-<?=$cat['type']?>">
-                <span class="faction-name"><?=$cat['name']?></span>
-                <div class="faction-standing">
-                    <div class="faction-bar">
-                        <div class="faction-score"><?=$cat['adjusted']?>/<?=$cat['cap']?></div>
-                        <div class="faction-fill" style="width: <?=$cat['percent']?>%;"></div>
-                    </div>
-                </div>
-                <div class="faction-level"><?=CharacterReputation::itemAlias('rank', $cat['type'])?></div>
-                <span class="clear"><!-- --></span>
-            </div>
-            </li>
-<?php endforeach; ?>
-        </ul></li>
-<?php endif; ?>
-<?php endforeach;?>
-</ul>
-</li>
-<?php endforeach; ?>
+    <ul class="activity-feed activity-feed-wide">
+<?php
+$i=0;
+foreach($model->getFeed(50) as $event):
+    switch($event['type'])
+    {
+        case 2:
+?>
+    <li><dl>
+    <dd><a href="/wow/item/<?=$event['data']?>" class="color-q<?=$event['item']->Quality?>" data-item="">
+        <span  class="icon-frame frame-18" style='background-image: url("http://eu.battle.net/wow-assets/static/images/icons/18/<?=$event['item']->icon?>.jpg");'></span></a>
+        Получено <a href="/wow/item/<?=$event['data']?>" class="color-q<?=$event['item']->Quality?>" data-item=""><?=$event['item']->name?></a>
+    </dd>
+    <dt><?=date('d/m/Y', $event['date'])?></dt>
+    </dl></li>
+<?php
+        break;
+        case 3:
+?>
+    <li class="bosskill"><dl>
+    <dd><span class="icon"></span><?=$event['count']?> <?=CHtml::link($event['data']->name, array('/wow/creature/view', 'id' => $event['data']->entry))?> <?=($event['count'] > 1) ? 'убийств' : 'убийство'?></dd>
+    <dt><?=date('d/m/Y', $event['date'])?></dt>
+    </dl></li>
+<?php
+        break;
+    }
+    $i++;
+endforeach;
+?>
     </ul>
+    <div class="activity-note">Отображаются <?=$i?> последних событий, связанных с персонажем.</div>
     </div>
-</div>
 </div>

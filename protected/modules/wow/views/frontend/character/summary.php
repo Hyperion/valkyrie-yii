@@ -46,6 +46,10 @@ $this->breadcrumbs = array(
             'label'=>'PvP',
             'url'=>array('/wow/character/pvp', 'realm'=>Database::$realm, 'name'=>$model->name)
         ),
+        array(
+            'label'=>'Лента новостей',
+            'url'=>array('/wow/character/feed', 'realm'=>Database::$realm, 'name'=>$model->name)
+        ),
     ),
 )); ?>
             </div>

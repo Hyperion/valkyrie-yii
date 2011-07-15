@@ -678,12 +678,12 @@ class Character extends CActiveRecord
         return $this->_item_level;
     }
 
-    public function getFeed()
+    public function getFeed($count)
     {
         $feed = array();
 
         $feed = $this->dbConnection
-            ->createCommand("SELECT * FROM character_feed_log WHERE guid = {$this->guid} ORDER BY date ASC LIMIT 5")
+            ->createCommand("SELECT * FROM character_feed_log WHERE guid = {$this->guid} ORDER BY date ASC LIMIT {$count}")
             ->queryAll();
 
         for($i = 0; $i < count($feed); $i++)
@@ -692,6 +692,17 @@ class Character extends CActiveRecord
                 case 2:
                     $feed[$i]['item'] = ItemTemplate::model()->findByPk($feed[$i]['data']);
                     $feed[$i]['equipped'] = $this->isEquipped($feed[$i]['data']);
+                    break;
+                case 3:
+                    $feed[$i]['data'] = CreatureTemplate::model()->findByPk($feed[$i]['data']);
+                    $feed[$i]['count'] = $this->dbConnection
+                        ->createCommand("SELECT COUNT(1)
+                            FROM character_feed_log
+                            WHERE
+                                guid = {$this->guid}
+                                AND type = 3
+                                AND date <= {$feed[$i]['date']}")
+                        ->queryScalar();
                     break;
              }
 
