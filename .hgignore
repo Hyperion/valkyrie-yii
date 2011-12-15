@@ -1,6 +1,10 @@
 syntax: glob
 
 assets/*
+backend/assets/*
 protected/runtime/*
 protected/yiic*
 protected/modules/doc/pages/*
+nbproject/*
+protected/config/local.conf
+.directory

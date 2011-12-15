@@ -3,7 +3,6 @@
 return CMap::mergeArray(
     require(dirname(__FILE__).'/main.php'),
     array(
-        'theme' => 'wow',
         'components' => array(
             'errorHandler'=>array(
                 'errorAction'=>'site/error',

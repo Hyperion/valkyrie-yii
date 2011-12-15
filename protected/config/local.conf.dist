@@ -1,0 +1,16 @@
+<?php
+
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'armory');
+
+define('DB_FORUM_HOST', 'localhost');
+define('DB_FORUM_USER', 'root');
+define('DB_FORUM_PASS', '');
+define('DB_FORUM_NAME', 'forum');
+
+define('DB_WORLD_HOST', 'localhost');
+define('DB_WORLD_USER', 'root');
+define('DB_WORLD_PASS', '');
+define('DB_WORLD_NAME', 'zp_world'); 

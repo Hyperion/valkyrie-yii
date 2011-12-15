@@ -8,5 +8,5 @@ return array(
 	'commentNeedApproval'=>false,
 	'copyrightInfo'=>'Copyright &copy; 2011 by My Company.',
 	'allowExternalLogin'=>false,
-    	'externalLoginMethod'=>'ipb',
+    'externalLoginMethod'=>'ipb',
 );
