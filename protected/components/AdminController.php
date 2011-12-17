@@ -5,13 +5,14 @@ class AdminController extends CController
     public $menu = array();
     public $breadcrumbs=array();
     public $layout = '//layouts/backend';
-
-    public function filters()
+    public $defaultAction = 'admin';
+    
+    /*public function filters()
     {
         return array(
-            'accessControl', // perform access control for CRUD operations
+            'accessControl',
         );
-    }
+    }*/
 
     public function accessRules()
     {
@@ -29,9 +30,10 @@ class AdminController extends CController
     {
         $cs = Yii::app()->clientScript;
         $cs->registerPackage('jquery');
+        $cs->registerPackage('jquery.ui');
 
-        $menu = new Menu;
-
-        $this->menu = $menu->getData('backendmenu');
+        Yii::import("application.components.AdminMenu");
+        
+        $this->menu = AdminMenu::getData();
     }
 }

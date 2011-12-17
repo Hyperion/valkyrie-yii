@@ -28,7 +28,7 @@
                 <characters>
                     <label>Characters Management</label>
                     <sort_order>3</sort_order>
-                    <url>/wow/character/index</url>
+                    <url>/wow/character/admin</url>
                 </characters>
             </items>
         </wow>

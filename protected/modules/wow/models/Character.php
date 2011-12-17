@@ -95,9 +95,7 @@ class Character extends CActiveRecord
     public function rules()
     {
         return array(
-            array('name', 'safe'),
-            array('account', 'safe', 'on' => 'search'),
-            array('name, level, class, race', 'safe', 'on'=>'online'),
+            array('account, name, guid, level, class, race', 'safe', 'on' => 'search'),
             array('name, level, class, race, honor_standing', 'safe', 'on'=>'pvp'),
             array('account, name, race, class, gender, level, money, playerBytes, playerBytes2', 'safe', 'on'=>'update'),
         );
@@ -169,6 +167,7 @@ class Character extends CActiveRecord
         $criteria = new CDbCriteria;
         $sort = new CSort;
 
+        $criteria->compare('guid',$this->guid);
         $criteria->compare('name',$this->name,true);
         $criteria->compare('race',$this->race);
         $criteria->compare('account',$this->account);
