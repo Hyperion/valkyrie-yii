@@ -96,7 +96,7 @@ class Character extends CActiveRecord
     {
         return array(
             array('account, name, guid, level, class, race', 'safe', 'on' => 'search'),
-            array('name, level, class, race, honor_standing', 'safe', 'on'=>'pvp'),
+            array('name, level, class, race, honor_standing', 'safe', 'on'=>'pvp, pvp_current'),
             array('account, name, race, class, gender, level, money, playerBytes, playerBytes2', 'safe', 'on'=>'update'),
         );
     }
@@ -177,10 +177,14 @@ class Character extends CActiveRecord
         $criteria->compare('honor_standing',$this->honor_standing);
         $criteria->compare('account','>0');
 
-        if($this->scenario == 'pvp')
+        if($this->scenario == 'pvp' or $this->scenario == 'pvp_current')
         {
-            $criteria->compare('honor_standing','>0');
             $criteria->with = 'honor';
+            if($this->scenario == 'pvp')
+                $criteria->compare('honor_standing','>0');
+            else
+                $criteria->compare('honor.thisWeek_kills','>25');
+            
             $sort->attributes = array(
                 'name'                 => 'name',
                 'honor.hk'             => 'honor.hk',

@@ -2,8 +2,11 @@
 $this->breadcrumbs=array(
 	'Game'                    => array('/wow'),
     'Statistic'				  => array('/wow/statistic'),
-	Database::$realm.' @ PvP' => array('/wow/statistic/pvp', 'realm' => Database::$realm),
 );
+if($current)
+    $this->breadcrumbs[Database::$realm.' @ PvP Current'] = array('/wow/statistic/pvpcurrent', 'realm' => Database::$realm);
+else
+    $this->breadcrumbs[Database::$realm.' @ PvP'] = array('/wow/statistic/pvp', 'realm' => Database::$realm);    
 ?>
 
 <?php $this->widget('WGridWow', array(
