@@ -24,7 +24,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Table structure for table `wow_titles`
 --
-
+DROP TABLE IF EXISTS `wow_titles`;
 CREATE TABLE IF NOT EXISTS `wow_titles` (
   `id` int(11) NOT NULL,
   `title_M_de` text NOT NULL,
