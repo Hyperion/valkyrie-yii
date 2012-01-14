@@ -1,8 +1,0 @@
-@charset "utf-8";
-
-/* view options */
-#profile-view-options-talents li { position: relative; }
-#profile-view-options-talents .active-spec { position: absolute; left: 8px; top: 13px; width: 15px; height: 11px; background: url(../../images/character/summary/talents-check.gif) no-repeat; }
-
-/* character talents */
-.character-talents { }

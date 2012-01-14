@@ -31,7 +31,9 @@ class StatisticController extends Controller
         $model->unsetAttributes();
 
         if(isset($_GET['Character']))
+        {
             $model->attributes = $_GET['Character'];
+        }
 
         $this->render('pvp', array(
             'model' => $model,

@@ -11,8 +11,7 @@ if(isset($model->InventoryType) && $model->class == $model::ITEM_CLASS_ARMOR)
     $this->breadcrumbs[$model::itemAlias('invtype', $model->InventoryType)] = array("/wow/item?classId={$model->class}&subClassId={$model->subclass}&invType={$model->InventoryType}");
 ?>
 
-<?php $this->widget('WGridWow', array(
-    'id'=>'items-grid',
+<?php $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider'=>$model->search(),
     'enableSorting'=>true,
     'columns'=>array(

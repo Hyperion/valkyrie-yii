@@ -7,6 +7,7 @@ class Controller extends CController
     protected $body_class;
 
     public $breadcrumbs;
+    public $layout='//layouts/column1';
 
     public function init()
     {

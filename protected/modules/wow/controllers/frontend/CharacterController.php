@@ -2,8 +2,6 @@
 
 class CharacterController extends Controller
 {
-    public $layout='//layouts/profile_wrapper';
-
     public function actionSimple($realm, $name)
     {
         Database::$realm = (string)$realm;
