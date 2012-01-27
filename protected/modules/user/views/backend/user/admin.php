@@ -1,51 +1,54 @@
 <?php
-$this->breadcrumbs = array(
-    Yii::t('UserModule.user', 'Users') => array('index'),
-    Yii::t('UserModule.user', 'Manage'));
+$this->breadcrumbs=array(
+	UserModule::t('Users')=>array('admin'),
+	UserModule::t('Manage'),
+);
+?>
+<h1><?php echo UserModule::t("Manage Users"); ?></h1>
 
-if(Yii::app()->user->hasFlash('adminMessage'))
-printf('<div class="errorSummary">%s</div>',
-        Yii::app()->user->getFlash('adminMessage'));
+<?php echo $this->renderPartial('_menu', array(
+		'list'=> array(
+			CHtml::link(UserModule::t('Create User'),array('create')),
+		),
+	));
+?>
 
-$this->widget('zii.widgets.grid.CGridView', array(
-    'dataProvider'=>$model->search(),
-    'filter' => $model,
-        'columns'=>array(
-            array(
-                'name'=>'id',
-                'filter' => false,
-                'type'=>'raw',
-                'value'=>'CHtml::link(CHtml::encode($data->id),
-                array("update","id"=>$data->id))',
-            ),
-            array(
-                'name'=>'username',
-                'visible' => $this->module->loginType & UserModule::LOGIN_BY_USERNAME,
-                'type'=>'raw',
-                'value'=>'CHtml::link(CHtml::encode($data->username),
-                array("view","id"=>$data->id))',
-            ),
-            array(
-                'name'=>'email',
-                'visible' => $this->module->loginType & UserModule::LOGIN_BY_EMAIL,
-                'value'=> 'isset($data->profile) ? $data->profile->email : "No email set"',
-            ),
-            array(
-                'name'=>'createtime',
-                'filter' => false,
-                'value'=>'date(UserModule::$dateFormat,$data->createtime)',
-            ),
-            array(
-                'name'=>'lastvisit',
-                'filter' => false,
-                'value'=>'date(UserModule::$dateFormat,$data->lastvisit)',
-            ),
-            array(
-                'name'=>'status',
-                'filter' => false,
-                'value'=>'User::itemAlias("UserStatus",$data->status)',
-            ),
-            array(
-                'class'=>'CButtonColumn',
-            ),
-)));
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+	'dataProvider'=>$model->search(),
+	'columns'=>array(
+		array(
+			'name' => 'id',
+			'type'=>'raw',
+			'value' => 'CHtml::link(CHtml::encode($data->id),array("admin/update","id"=>$data->id))',
+		),
+		array(
+			'name' => 'username',
+			'type'=>'raw',
+			'value' => 'CHtml::link(CHtml::encode($data->username),array("admin/view","id"=>$data->id))',
+		),
+		array(
+			'name'=>'email',
+			'type'=>'raw',
+			'value'=>'CHtml::link(CHtml::encode($data->email), "mailto:".$data->email)',
+		),
+		array(
+			'name' => 'createtime',
+			'value' => 'date("d.m.Y H:i:s",$data->createtime)',
+		),
+		array(
+			'name' => 'lastvisit',
+			'value' => '(($data->lastvisit)?date("d.m.Y H:i:s",$data->lastvisit):UserModule::t("Not visited"))',
+		),
+		array(
+			'name'=>'status',
+			'value'=>'User::itemAlias("UserStatus",$data->status)',
+		),
+		array(
+			'name'=>'superuser',
+			'value'=>'User::itemAlias("AdminStatus",$data->superuser)',
+		),
+		array(
+			'class'=>'CButtonColumn',
+		),
+	),
+)); ?>

@@ -1,207 +1,173 @@
 <?php
 
-class Profile extends CActiveRecord
+class Profile extends UActiveRecord
 {
-    const PRIVACY_PRIVATE = 'private';
-    const PRIVACY_PUBLIC = 'public';
+	/**
+	 * The followings are the available columns in table 'profiles':
+	 * @var integer $user_id
+	 * @var boolean $regMode
+	 */
+	public $regMode = false;
+	
+	private $_model;
+	private $_modelReg;
 
-    static $fields=null;
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @return CActiveRecord the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
 
-    public function init()
-    {
-        parent::init();
-        $this->loadProfileFields();
-    }
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return Yii::app()->getModule('user')->tableProfiles;
+	}
 
-    public function recentComments($count = 3)
-    {
-        $criteria = new CDbCriteria;
-        $criteria->condition = 'id = ' .$this->id;
-        $criteria->order = 'createtime DESC';
-        $criteria->limit = $count;
-        return ProfileComment::model()->findAll($criteria);
-    }
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		$required = array();
+		$numerical = array();		
+		$rules = array();
+		
+		$model=$this->getFields();
+		
+		foreach ($model as $field) {
+			$field_rule = array();
+			if ($field->required==ProfileField::REQUIRED_YES_NOT_SHOW_REG||$field->required==ProfileField::REQUIRED_YES_SHOW_REG)
+				array_push($required,$field->varname);
+			if ($field->field_type=='FLOAT'||$field->field_type=='INTEGER')
+				array_push($numerical,$field->varname);
+			if ($field->field_type=='VARCHAR'||$field->field_type=='TEXT') {
+				$field_rule = array($field->varname, 'length', 'max'=>$field->field_size, 'min' => $field->field_size_min);
+				if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+				array_push($rules,$field_rule);
+			}
+			if ($field->other_validator) {
+				if (strpos($field->other_validator,'{')===0) {
+					$validator = (array)CJavaScript::jsonDecode($field->other_validator);
+					foreach ($validator as $name=>$val) {
+						$field_rule = array($field->varname, $name);
+						$field_rule = array_merge($field_rule,(array)$validator[$name]);
+						if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+						array_push($rules,$field_rule);
+					}
+				} else {
+					$field_rule = array($field->varname, $field->other_validator);
+					if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+					array_push($rules,$field_rule);
+				}
+			} elseif ($field->field_type=='DATE') {
+				$field_rule = array($field->varname, 'type', 'type' => 'date', 'dateFormat' => 'yyyy-mm-dd', 'allowEmpty'=>true);
+				if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+				array_push($rules,$field_rule);
+			}
+			if ($field->match) {
+				$field_rule = array($field->varname, 'match', 'pattern' => $field->match);
+				if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+				array_push($rules,$field_rule);
+			}
+			if ($field->range) {
+				$field_rule = array($field->varname, 'in', 'range' => self::rangeRules($field->range));
+				if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+				array_push($rules,$field_rule);
+			}
+		}
+		
+		array_push($rules,array(implode(',',$required), 'required'));
+		array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
+		return $rules;
+	}
 
-    public function beforeValidate() {
-        $this->timestamp = time();
-        return parent::beforeValidate();
-    }
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		$relations = array(
+			'user'=>array(self::HAS_ONE, 'User', 'id'),
+		);
+		if (isset(Yii::app()->getModule('user')->profileRelations)) $relations = array_merge($relations,Yii::app()->getModule('user')->profileRelations);
+		return $relations;
+	}
 
-    /**
-     * @param string $className
-     * @return Profile
-     */
-    public static function model($className=__CLASS__)
-    {
-        return parent::model($className);
-    }
-
-    // be obtained and returned for the use in the profile view
-    public function getPublicFields()
-    {
-        $fields = array();
-
-        foreach(ProfileField::model()->findAll() as $field) {
-            if($field->visible != 0)
-                $fields[] = $field;
-        }
-
-        return $fields;
-    }
-
-    public function tableName()
-    {
-        return 'profiles';
-    }
-
-    public function rules()
-    {
-        $required = array();
-        $numerical = array();
-        $rules = array();
-        $safe = array();
-
-        foreach (self::$fields as $field)
-        {
-            $field_rule = array();
-
-            if ($field->required == 1)
-                array_push($required, $field->varname);
-
-            if ($field->field_type == 'int'
-                    || $field->field_type == 'FLOAT'
-                    || $field->field_type =='INTEGER')
-                array_push($numerical,$field->varname);
-
-            if ($field->field_type == 'DROPDOWNLIST')
-                array_push($safe, $field->varname);
-
-            if ($field->field_type =='VARCHAR'
-                    ||$field->field_type=='TEXT')
-            {
-                $field_rule = array($field->varname,
-                        'length',
-                        'max'=>$field->field_size,
-                        'min' => $field->field_size_min);
-
-                if ($field->error_message)
-                    $field_rule['message'] = Yii::t('UserModule.user', $field->error_message);
-                array_push($rules,$field_rule);
-            }
-
-            if ($field->field_type=='DATE')
-            {
-                $field_rule = array($field->varname,
-                        'type',
-                        'type' => 'date',
-                        'dateFormat' => 'yyyy-mm-dd');
-
-                if ($field->error_message)
-                    $field_rule['message'] = Yii::t('UserModule.user',  $field->error_message);
-                array_push($rules,$field_rule);
-            }
-
-            if ($field->match)
-            {
-                $field_rule = array($field->varname,
-                        'match',
-                        'pattern' => $field->match);
-
-                if ($field->error_message)
-                    $field_rule['message'] = Yii::t('UserModule.user',  $field->error_message);
-                array_push($rules,$field_rule);
-            }
-            if ($field->range)
-            {
-                // allow using commas and semicolons
-                $range=explode(';',$field->range);
-                if(count($range)===1)
-                    $range=explode(',',$field->range);
-                $field_rule = array($field->varname,'in','range' => $range);
-
-                if ($field->error_message)
-                    $field_rule['message'] = Yii::t('UserModule.user',  $field->error_message);
-                array_push($rules,$field_rule);
-            }
-
-            if ($field->other_validator)
-            {
-                $field_rule = array($field->varname,
-                        $field->other_validator);
-
-                if ($field->error_message)
-                    $field_rule['message'] = Yii::t('UserModule.user',  $field->error_message);
-                array_push($rules, $field_rule);
-            }
-
-        }
-
-        array_push($rules,
-                array(implode(',',$required), 'required'));
-        array_push($rules,
-                array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
-        array_push($rules,
-                array(implode(',',$safe), 'safe'));
-
-        $rules[] = array('allow_comments, show_friends', 'numerical');
-
-        return $rules;
-    }
-
-    public function relations()
-    {
-        $relations = array(
-            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-            'comments' => array(self::HAS_MANY, 'ProfileComment', 'profile_id'),
-        );
-
-        $fields = Yii::app()->db->createCommand(
-                "SELECT * FROM ".ProfileField::model()->tableName()." WHERE field_type = 'DROPDOWNLIST'")->queryAll();
-
-        foreach($fields as $field) {
-            $relations[ucfirst($field['varname'])] = array(
-                    self::BELONGS_TO, ucfirst($field['varname']), $field['varname']);
-
-        }
-
-        return $relations;
-
-    }
-
-    public function getProfileCommentators()
-    {
-        $commentators = array();
-        foreach($this->comments as $comment)
-            if($comment->user_id != Yii::app()->user->id)
-                $commentators[$comment->user_id] = $comment->user;
-
-        return $commentators;
-    }
-
-    public function attributeLabels()
-    {
-        $labels = array(
-            'id' => Yii::t('UserModule.user', 'Profile ID'),
-            'user_id' => Yii::t('UserModule.user', 'User ID'),
-            'show_friends' => Yii::t('UserModule.user', 'Show friends'),
-            'allow_comments' => Yii::t('UserModule.user', 'Allow profile comments'),
-        );
-
-        if(self::$fields)
-            foreach (self::$fields as $field)
-                $labels[$field->varname] = Yii::t('UserModule.user', $field->title);
-
-        return $labels;
-    }
-
-    public function loadProfileFields()
-    {
-        if(self::$fields===null)
-        {
-            self::$fields=ProfileField::model()->findAll();
-            if(self::$fields==null)
-                self::$fields=array();
-        }
-        return self::$fields;
-    }
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		$labels = array(
+			'user_id' => UserModule::t('User ID'),
+		);
+		$model=$this->getFields();
+		
+		foreach ($model as $field)
+			$labels[$field->varname] = ((Yii::app()->getModule('user')->fieldsMessage)?UserModule::t($field->title,array(),Yii::app()->getModule('user')->fieldsMessage):UserModule::t($field->title));
+			
+		return $labels;
+	}
+	
+	private function rangeRules($str) {
+		$rules = explode(';',$str);
+		for ($i=0;$i<count($rules);$i++)
+			$rules[$i] = current(explode("==",$rules[$i]));
+		return $rules;
+	}
+	
+	static public function range($str,$fieldValue=NULL) {
+		$rules = explode(';',$str);
+		$array = array();
+		for ($i=0;$i<count($rules);$i++) {
+			$item = explode("==",$rules[$i]);
+			if (isset($item[0])) $array[$item[0]] = ((isset($item[1]))?$item[1]:$item[0]);
+		}
+		if (isset($fieldValue)) 
+			if (isset($array[$fieldValue])) return $array[$fieldValue]; else return '';
+		else
+			return $array;
+	}
+	
+	public function widgetAttributes() {
+		$data = array();
+		$model=$this->getFields();
+		
+		foreach ($model as $field) {
+			if ($field->widget) $data[$field->varname]=$field->widget;
+		}
+		return $data;
+	}
+	
+	public function widgetParams($fieldName) {
+		$data = array();
+		$model=$this->getFields();
+		
+		foreach ($model as $field) {
+			if ($field->widget) $data[$field->varname]=$field->widgetparams;
+		}
+		return $data[$fieldName];
+	}
+	
+	public function getFields() {
+		if ($this->regMode) {
+			if (!$this->_modelReg)
+				$this->_modelReg=ProfileField::model()->forRegistration()->findAll();
+			return $this->_modelReg;
+		} else {
+			if (!$this->_model)
+				$this->_model=ProfileField::model()->forOwner()->findAll();
+			return $this->_model;
+		}
+	}
 }

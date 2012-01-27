@@ -899,7 +899,8 @@ body{
     font-size: 13px;
 }
 
-#content .bloc div.form input.text-input, 
+#content .bloc div.form input[type="text"],
+#content .bloc div.form input[type="password"], 
 #content .bloc div.form select,
 #content .bloc div.form textarea
 {
@@ -919,7 +920,10 @@ form .medium-input {
     width: 50% !important;
 }
 
-form .large-input {
+form .large-input,
+form  input[type="text"],
+form  input[type="password"]
+{
     width: 97.5% !important;
 }
 

@@ -2,45 +2,55 @@
 
 class Create extends CAction
 {
+
     private $_model;
 
     public function run()
     {
         $controller = $this->getController();
-        $model = new $controller->_class('create');
-        $this->_model= $model;
+        $model      = new $controller->class('create');
+        $this->_model = $model;
 
-        if (isset($_GET[$controller->_class])) {
-            $model->attributes = $_GET[$controller->_class];
+        if (isset($_GET[$controller->class]))
+        {
+            $model->attributes = $_GET[$controller->class];
         }
 
-        if (isset($_POST[$controller->_class])) {
+        if (isset($_POST[$controller->class]))
+        {
             $model->beforeSave();
-            $model->attributes = $_POST[$controller->_class];
+            $model->attributes = $_POST[$controller->class];
             $controller->performUploads($model);
-            if ($model->save()) {
+            if ($model->save())
+            {
                 $controller->setFlash('default', 'Запись успешно добавлена');
                 $controller->performUploadsSaveToDisk($model);
 
-                if (method_exists($controller, 'onCreateAfterSave')) {
+                if (method_exists($controller, 'onCreateAfterSave'))
+                {
                     $controller->onCreateAfterSave(get_defined_vars());
-                } else {
+                }
+                else
+                {
                     $this->afterSave();
                 }
-            } else {
+            }
+            else
+            {
 //              echo '<pre>';
 //              print_r($model);
 //              echo '</pre>';
             }
         }
 
-        if (method_exists($controller, 'onCreateBeforeRender')) {
+        if (method_exists($controller, 'onCreateBeforeRender'))
+        {
             $controller->onCreateBeforeRender(get_defined_vars());
         }
 
         $controller->render('create', array(
-                                           'model' => $model,
-                                      ));
+            'model' => $model,
+        ));
     }
 
     protected function afterSave()
@@ -48,15 +58,20 @@ class Create extends CAction
         $controller = $this->getController();
 
         $redirect_to = 'admin';
-        if (!empty($_POST['redirect_to'])) {
-            if ($_POST['redirect_to'] == 'refresh') {
+        if (!empty($_POST['redirect_to']))
+        {
+            if ($_POST['redirect_to'] == 'refresh')
+            {
                 $this->_model->refresh();
-                $controller->redirect($controller->createUrl('update',array('id'=>$this->_model->id)));
-            } else {
+                $controller->redirect($controller->createUrl('update', array('id' => $this->_model->id)));
+            }
+            else
+            {
                 $redirect_to = $_POST['redirect_to'];
             }
         }
         $controller->redirect(array($redirect_to));
         //        $this->getController()->redirect(array('admin'));
     }
+
 }

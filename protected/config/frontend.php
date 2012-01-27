@@ -8,7 +8,7 @@ return CMap::mergeArray(
                 'errorAction'=>'site/error',
             ),
             'user'=>array(
-                'class' => 'application.modules.wow.components.WowUser',
+                //'class' => 'application.modules.wow.components.WowUser',
                 'allowAutoLogin'=>true,
                 'loginUrl'=>array('/user/auth'),
             ),

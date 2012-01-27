@@ -43,7 +43,7 @@
         Hi, 
         <?php echo CHtml::link(Yii::app()->user->name, array('user/user/view', 'id' => Yii::app()->user->id)); ?>
         |
-        <a href="/" title="View the Site">View the Site</a> | <?php echo CHtml::link('Logout', array('/user/auth/logout')); ?>
+        <a href="/" title="View the Site">View the Site</a> | <?php echo CHtml::link('Logout', array('/user/logout')); ?>
     </div>
     <div class="right">
         <form action="#" id="search" class="search placeholder">

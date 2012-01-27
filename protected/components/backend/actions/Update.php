@@ -10,9 +10,9 @@ class Update extends CAction
         $model = $controller->loadModel($params['id']);
         $model->setScenario('update');
 
-        if(isset($_POST[$controller->_class]))
+        if(isset($_POST[$controller->class]))
         {
-            $model->attributes = $_POST[$controller->_class];
+            $model->attributes = $_POST[$controller->class];
             if($model->save())
             {
                 $controller->setFlash('default', 'Запись успешно обновлена');

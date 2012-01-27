@@ -1,7 +1,14 @@
 <?php
 
-class DefaultController extends AdminController
+class DefaultController extends BackendController
 {
+    public $defaultAction = 'index';
+    
+    public function actions()
+    {
+        return array();
+    }
+    
     public function actionIndex()
     {
         $this->render('index', array(

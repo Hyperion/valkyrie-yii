@@ -7,7 +7,7 @@ class BackendController extends CController
     public $breadcrumbs = array();
     public $layout = '//layouts/backend';
     public $defaultAction = 'admin';
-    protected $_class = '';
+    public $class = '';
 
     public function filters()
     {
@@ -33,7 +33,7 @@ class BackendController extends CController
     {
         return array(
             array('allow',
-                'expression' => '$user->isSuperuser',
+                'expression' => 'Yii::app()->getModule(\'user\')->isAdmin()',
             ),
             array('deny',
                 'users' => array('*'),
@@ -45,7 +45,7 @@ class BackendController extends CController
     {
         parent::init();
 
-        $this->_class = ($this->_class) ? $this->_class : ucfirst($this->id);
+        $this->class = ($this->class) ? $this->class : ucfirst($this->id);
         $cs = Yii::app()->clientScript;
         $cs->registerPackage('jquery');
         $cs->registerPackage('jquery.ui');
@@ -69,7 +69,7 @@ class BackendController extends CController
     
     public function loadModel($id)
     {
-        $model = CActiveRecord::model($this->_class)->findByPk($id);
+        $model = CActiveRecord::model($this->class)->findByPk($id);
         if($model === null)
         {
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -79,7 +79,7 @@ class BackendController extends CController
     
     protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax'] === strtolower($this->_class) . '-form')
+		if(isset($_POST['ajax']) && $_POST['ajax'] === strtolower($this->class) . '-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

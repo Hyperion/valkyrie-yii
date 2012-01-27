@@ -4,7 +4,6 @@ class Controller extends CController
 {
     protected $_model;
     protected $_cs;
-    protected $body_class;
 
     public $breadcrumbs;
     public $layout='//layouts/column1';

@@ -17,9 +17,9 @@ return CMap::mergeArray(
                 'showScriptName' => true,
             ),
             'user'=>array(
-                'class' => 'application.modules.user.components.WebUser',
+                //'class' => 'application.modules.user.components.WebUser',
                 'allowAutoLogin'=>false,
-                'loginUrl'=>array('/user/auth'),
+                'loginUrl'=>array('/user/login'),
             ),
         ),
     )

@@ -12,16 +12,16 @@ $this->breadcrumbs = array(
     $this->widget('zii.widgets.grid.CGridView', array(
         'id' => 'characters-grid',
         'pagerCssClass' => 'pagination',
-        'pager' => array(
-            'class'=>'CLinkPager',
-            'cssFile' => false,
-            'firstPageLabel' => '<<',
-            'lastPageLabel' => '>>',
-            'prevPageLabel' => '<',
-            'nextPageLabel' => '>',
-            'header' => false,
-        ),
-        'cssFile' => false,
+    'pager'         => array(
+        'class'          => 'CLinkPager',
+        'cssFile'        => false,
+        'firstPageLabel' => '<<',
+        'lastPageLabel'  => '>>',
+        'prevPageLabel'  => '<',
+        'nextPageLabel'  => '>',
+        'header'         => false,
+    ),
+    'cssFile'        => false,
         'dataProvider' => $model->search(true),
         'filter' => $model,
         'columns' => array(
