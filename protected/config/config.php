@@ -1,11 +1,15 @@
 <?php
 
 return array(
-    'basePath' => dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-    'name'     => 'Hyperion\'s Sandbox',
-    'language' => 'ru',
+    'basePath'       => dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
+    'name'           => 'Hyperion\'s Sandbox',
+    //'language' => 'ru',
+    'sourceLanguage' => 'en',
     // preloading 'log' component
-    'preload'  => array('log'),
+    'preload'        => array(
+        'log',
+        'bootstrap',
+    ),
     // autoloading model and component classes
     'import' => array(
         'application.models.*',
@@ -13,21 +17,12 @@ return array(
         'application.modules.user.models.*',
         'application.modules.user.components.*',
         'application.modules.user.*',
+        'ext.bootstrap.widgets.*',
     ),
     // application components
     'components' => array(
-        'ipbBridge' => array(
-            'class' => 'IpbBridge',
-            'db'    => array(
-                'connectionString' => 'mysql:host='.DB_FORUM_HOST.';dbname='.DB_FORUM_NAME,
-                'username'         => DB_FORUM_USER,
-                'password'         => DB_FORUM_PASS,
-                'charset'          => 'utf8',
-                'tablePrefix'      => '',
-            ),
-        ),
-        'request'          => array(
-            //'enableCsrfValidation'=>true,
+        'request' => array(
+            'enableCsrfValidation'   => true,
             'enableCookieValidation' => true,
         ),
         'db'                     => array(
@@ -37,7 +32,6 @@ return array(
             'password'              => DB_PASS,
             'charset'               => 'utf8',
             'tablePrefix'           => '',
-            'schemaCachingDuration' => 3600,
         ),
         'db_world'              => array(
             'class'                 => 'CDbConnection',
@@ -60,10 +54,16 @@ return array(
                 ),
             ),
         ),
+        'bootstrap' => array(
+            'class'     => 'ext.bootstrap.components.Bootstrap',
+        ),
     ),
     'behaviors' => array(
         'runEnd' => array(
-            'class'  => 'application.components.WebApplicationEndBehavior',
+            'class'          => 'application.components.behaviors.WebApplicationEndBehavior',
+        ),
+        'onBeginRequest' => array(
+            'class'  => 'application.components.behaviors.BeginRequest'
         ),
     ),
     'params' => require(dirname(__FILE__).'/params.php'),

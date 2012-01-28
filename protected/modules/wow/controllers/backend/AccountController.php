@@ -1,6 +1,6 @@
 <?php
 
-class AccountController extends AdminController
+class AccountController extends BackendController
 {
     public function actionUpdate($id)
     {

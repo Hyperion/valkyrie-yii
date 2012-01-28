@@ -1,18 +1,14 @@
 <?php
-$this->breadcrumbs=array(
-	UserModule::t('Users')=>array('admin'),
-	UserModule::t('Create'),
+$this->breadcrumbs = array(
+    UserModule::t('Users') => array('admin'),
+    UserModule::t('Create'),
 );
 ?>
 <h1><?php echo UserModule::t("Create User"); ?></h1>
-<div class="bloc">
-    <div class="title"></div>
-    <div class="content">
-<?php 
-	echo $this->renderPartial('_menu',array(
-		'list'=> array(),
-	));
-	echo $this->renderPartial('_form', array('model'=>$model,'profile'=>$profile));
+
+<?php
+echo $this->renderPartial('_menu', array(
+    'list' => array(),
+));
+echo $this->renderPartial('_form', array('model'   => $model, 'profile' => $profile));
 ?>
-    </div>
-</div>

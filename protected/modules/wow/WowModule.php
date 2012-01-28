@@ -9,7 +9,7 @@ class WowModule extends CWebModule
 			'wow.components.*',
 		));
         
-        Yii::app()->db_world->active = true;
+        //Yii::app()->db_world->active = true;
         
         Yii::app()->onModuleCreate(new CEvent($this));
 

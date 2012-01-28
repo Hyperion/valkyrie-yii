@@ -13,18 +13,18 @@ $this->breadcrumbs=array(
 	));
 ?>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php $this->widget('BootGridView', array(
 	'dataProvider'=>$model->search(),
 	'columns'=>array(
 		array(
 			'name' => 'id',
 			'type'=>'raw',
-			'value' => 'CHtml::link(CHtml::encode($data->id),array("admin/update","id"=>$data->id))',
+			'value' => 'CHtml::link(CHtml::encode($data->id),array("user/update","id"=>$data->id))',
 		),
 		array(
 			'name' => 'username',
 			'type'=>'raw',
-			'value' => 'CHtml::link(CHtml::encode($data->username),array("admin/view","id"=>$data->id))',
+			'value' => 'CHtml::link(CHtml::encode($data->username),array("user/view","id"=>$data->id))',
 		),
 		array(
 			'name'=>'email',

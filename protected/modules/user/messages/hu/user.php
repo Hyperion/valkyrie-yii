@@ -74,7 +74,7 @@ return array(
 	'Create User' => 'Új felhasználó',
 	'Create' => 'Létrehoz',
 	'Manage' => 'Kezelés',
-	'Manage User' => 'Felhasználó kezelés',
+	'Manage Users' => 'Felhasználó kezelés',
 	'Users' => 'Felhasználók',
 	'Update User' => 'Felhasználó módosítása',
 	'Delete User' => 'Felhasználó törlés',

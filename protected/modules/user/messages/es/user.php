@@ -76,7 +76,7 @@ return array(
     'Create User' => 'Crear Nuevo Usuario',
     'Create' => 'Crear nuevo',
     'Manage' => 'Administrar',
-	'Manage User' => 'Administrar Usuarios',
+	'Manage Users' => 'Administrar Usuarios',
     'Users' => 'Usuarios',
     'Update User' => 'Editar Usuario',
     'Delete User' => 'Eliminar Usuario',

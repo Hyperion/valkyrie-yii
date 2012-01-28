@@ -17,8 +17,7 @@ class UserController extends BackendController
             $model->activkey = Yii::app()->controller->module->encrypting(microtime().$model->password);
             $model->createtime = time();
             $model->lastvisit = time();
-            if (isset($_POST['Profile']))
-                $profile->attributes = $_POST['Profile'];
+            $profile->attributes = (isset($_POST['Profile'])) ? $_POST['Profile'] : array();
             $profile->user_id = 0;
             if ($model->validate() && $profile->validate())
             {
@@ -50,8 +49,7 @@ class UserController extends BackendController
         if (isset($_POST['User']))
         {
             $model->attributes = $_POST['User'];
-            if (isset($_POST['Profile']))
-                $profile->attributes = $_POST['Profile'];
+            $profile->attributes = (isset($_POST['Profile'])) ? $_POST['Profile'] : array();
 
             if ($model->validate() && $profile->validate())
             {
@@ -89,7 +87,7 @@ class UserController extends BackendController
             $model->delete();
             // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if (!isset($_POST['ajax']))
-                $this->redirect(array('/user/admin'));
+                $this->redirect(array('/user/user'));
         }
         else
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');

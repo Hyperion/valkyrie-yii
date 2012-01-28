@@ -8,7 +8,13 @@ class LoginController extends Controller
 	/**
 	 * Displays the login page
 	 */
-	public function actionLogin()
+    public function init()
+    {
+        parent::init();
+        Yii::app()->clientScript->registerCssFile(Yii::app()->request->baseUrl.'/css/login.css');
+    }
+    
+    public function actionLogin()
 	{
 		if (Yii::app()->user->isGuest) {
 			$model=new UserLogin;

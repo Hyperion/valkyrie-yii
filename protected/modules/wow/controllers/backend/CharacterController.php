@@ -1,6 +1,6 @@
 <?php
 
-class CharacterController extends AdminController
+class CharacterController extends BackendController
 {
 
     public function actionView($realm, $id)

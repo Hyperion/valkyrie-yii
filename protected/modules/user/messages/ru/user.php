@@ -74,7 +74,7 @@ return array(
 	'Create User' => 'Новый',
 	'Create' => 'Добавить',
 	'Manage' => 'Управление',
-	'Manage User' => 'Управление пользователями',
+	'Manage Users' => 'Управление пользователями',
 	'Users' => 'Пользователи',
 	'Update User' => 'Править',
 	'Delete User' => 'Удалить',

@@ -17,25 +17,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $criteria=new CDbCriteria(array(
-            'condition'=>'status="'.Material::STATUS_PUBLISHED.'" AND type="'.Material::TYPE_NEWS.'"',
-            'order'=>'update_time DESC',
-            'with'=>'commentCount',
-        ));
-
-        $dataProvider=new CActiveDataProvider('Material', array(
-            'pagination'=>array(
-                'pageSize'=>Yii::app()->params['postsPerPage'],
-            ),
-            'criteria'=>$criteria,
-        ));
-
-        $this->_cs->registerCssFile('/css/local-common/cms/homepage.css');
-        $this->registerFiles();
-
-        $this->render('index',array(
-            'dataProvider'=>$dataProvider,
-        ));
+        $this->render('index');
     }
 
     public function actionError()
@@ -79,14 +61,5 @@ class SiteController extends Controller
             'model'        => $model,
             'dataProvider' => (isset($dataProvider)) ? $dataProvider : false,
         ));
-    }
-
-    private function registerFiles()
-    {
-        //$this->_cs->registerCssFile('/css/local-common/cms/cms-common.css');
-        $this->_cs->registerCssFile('/css/local-common/cms/blog.css');
-        $this->_cs->registerCssFile('/css/wow/cms.css');
-        //$this->_cs->registerScriptFile('/js/wow/profile.js', CClientScript::POS_END);
-        //$this->_cs->registerScriptFile('/js/wow/character/summary.js', CClientScript::POS_END);
     }
 }

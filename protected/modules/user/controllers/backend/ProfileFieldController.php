@@ -45,14 +45,13 @@ class ProfileFieldController extends BackendController
      */
     public function registerScript()
     {
-        $basePath = Yii::getPathOfAlias('application.modules.user.views.asset');
+        $basePath = Yii::getPathOfAlias('application.modules.user.assets');
         $baseUrl  = Yii::app()->getAssetManager()->publish($basePath);
         $cs       = Yii::app()->getClientScript();
         $cs->registerCoreScript('jquery');
         $cs->registerCssFile($baseUrl.'/css/redmond/jquery-ui.css');
         $cs->registerCssFile($baseUrl.'/css/style.css');
         $cs->registerScriptFile($baseUrl.'/js/jquery-ui.min.js');
-        $cs->registerScriptFile($baseUrl.'/js/form.js');
         $cs->registerScriptFile($baseUrl.'/js/jquery.json.js');
 
         $widgets = self::getWidgets();

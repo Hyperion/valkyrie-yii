@@ -74,7 +74,7 @@ return array(
         'Create User' => 'Créer un utilisateur',
         'Create' => 'Créer',
         'Manage' => 'Gérer',
-        'Manage User' => 'Gérer les utilisateurs',
+        'Manage Users' => 'Gérer les utilisateurs',
         'Users' => 'Utilisateurs',
         'Update User' => 'Mise à jour User',
         'Delete User' => 'Supprimer l\'utilisateur',

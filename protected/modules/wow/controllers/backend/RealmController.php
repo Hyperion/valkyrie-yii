@@ -1,6 +1,6 @@
 <?php
 
-class RealmController extends AdminController
+class RealmController extends BackendController
 {
     public function actionIndex()
     {
