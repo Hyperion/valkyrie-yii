@@ -42,9 +42,6 @@ array_push($attributes, 'password', 'email', 'activkey', array(
     'name'  => 'lastvisit',
     'value' => (($model->lastvisit) ? date("d.m.Y H:i:s", $model->lastvisit) : UserModule::t("Not visited")),
         ), array(
-    'name'  => 'superuser',
-    'value' => User::itemAlias("AdminStatus", $model->superuser),
-        ), array(
     'name'  => 'status',
     'value' => User::itemAlias("UserStatus", $model->status),
         )

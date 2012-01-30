@@ -44,10 +44,6 @@ $this->breadcrumbs=array(
 			'value'=>'User::itemAlias("UserStatus",$data->status)',
 		),
 		array(
-			'name'=>'superuser',
-			'value'=>'User::itemAlias("AdminStatus",$data->superuser)',
-		),
-		array(
 			'class'=>'CButtonColumn',
 		),
 	),

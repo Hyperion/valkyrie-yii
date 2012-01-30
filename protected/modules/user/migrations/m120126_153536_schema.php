@@ -14,11 +14,9 @@ class m120126_153536_schema extends CDbMigration
             'createtime' => 'integer NOT NULL DEFAULT "0"',
             'lastvisit'  => 'integer NOT NULL DEFAULT "0"',
             'status'     => 'boolean NOT NULL DEFAULT "0"',
-            'superuser'  => 'boolean NOT NULL DEFAULT "0"',
         ));
 
         $this->createIndex('status', 'users', 'status');
-        $this->createIndex('superuser', 'users', 'superuser');
 
         $this->createTable('profile_fields', array(
             'id'              => 'pk',

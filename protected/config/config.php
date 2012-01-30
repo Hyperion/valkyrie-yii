@@ -17,10 +17,15 @@ return array(
         'application.modules.user.models.*',
         'application.modules.user.components.*',
         'application.modules.user.*',
+        'application.modules.rights.*',
+        'application.modules.rights.components.*',
         'ext.bootstrap.widgets.*',
     ),
     // application components
     'components' => array(
+        'authManager' => array(
+            'class' => 'RDbAuthManager',
+        ),
         'request' => array(
             'enableCsrfValidation'   => true,
             'enableCookieValidation' => true,

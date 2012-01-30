@@ -12,7 +12,6 @@ $form = $this->beginWidget('BootActiveForm', array(
 <?php echo $form->textFieldRow($model, 'username'); ?>
 <?php echo $form->passwordFieldRow($model, 'password'); ?>
 <?php echo $form->textFieldRow($model, 'email'); ?>
-<?php echo $form->dropDownListRow($model, 'superuser', User::itemAlias('AdminStatus')); ?>
 <?php echo $form->dropDownListRow($model, 'status', User::itemAlias('UserStatus')); ?>
 <?php
 $profileFields = $profile->getFields();

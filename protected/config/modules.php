@@ -1,7 +1,10 @@
 <?php
 
 return array(
-    'modules' => array('wow', 'user',
+    'modules' => array(
+        'wow',
+        'user',
+        'rights',
         'gii' => array(
             'class'     => 'system.gii.GiiModule',
             'password'  => '123',

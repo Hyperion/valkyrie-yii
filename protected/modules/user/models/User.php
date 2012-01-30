@@ -16,7 +16,6 @@ class User extends CActiveRecord
      * @var string $activkey
      * @var integer $createtime
      * @var integer $lastvisit
-     * @var integer $superuser
      * @var integer $status
      */
 
@@ -52,12 +51,11 @@ class User extends CActiveRecord
         $rules[] = array('username', 'unique', 'message' => UserModule::t("This user's name already exists."));
         $rules[] = array('email', 'unique', 'message' => UserModule::t("This user's email address already exists."));
         $rules[] = array('username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u', 'message' => UserModule::t("Incorrect symbols (A-z0-9)."));
-        if (Yii::app()->getModule('user')->isAdmin())
+        if (Yii::app()->user->isSuperuser)
         {
             $rules[] = array('status', 'in', 'range' => array(self::STATUS_NOACTIVE, self::STATUS_ACTIVE, self::STATUS_BANED));
-            $rules[] = array('superuser', 'in', 'range' => array(0, 1));
-            $rules[] = array('username, email, createtime, lastvisit, superuser, status', 'required');
-            $rules[] = array('createtime, lastvisit, superuser, status', 'numerical', 'integerOnly' => true);
+            $rules[] = array('username, email, createtime, lastvisit, status', 'required');
+            $rules[] = array('createtime, lastvisit, status', 'numerical', 'integerOnly' => true);
         }
         elseif (Yii::app()->user->id == $this->id)
             $rules[] = array('username, email', 'required');
@@ -92,7 +90,6 @@ class User extends CActiveRecord
             'activkey'       => UserModule::t("activation key"),
             'createtime'     => UserModule::t("Registration date"),
             'lastvisit'      => UserModule::t("Last visit"),
-            'superuser'      => UserModule::t("Superuser"),
             'status'         => UserModule::t("Status"),
         );
     }
@@ -109,11 +106,8 @@ class User extends CActiveRecord
             'banned'    => array(
                 'condition' => 'status='.self::STATUS_BANED,
             ),
-            'superuser' => array(
-                'condition' => 'superuser=1',
-            ),
             'notsafe'   => array(
-                'select' => 'id, username, password, email, activkey, createtime, lastvisit, superuser, status',
+                'select' => 'id, username, password, email, activkey, createtime, lastvisit, status',
             ),
         );
     }
@@ -121,7 +115,7 @@ class User extends CActiveRecord
     public function defaultScope()
     {
         return array(
-            'select' => 'id, username, email, createtime, lastvisit, superuser, status',
+            'select' => 'id, username, email, createtime, lastvisit, status',
         );
     }
 
@@ -144,10 +138,6 @@ class User extends CActiveRecord
                 self::STATUS_NOACTIVE => UserModule::t('Not active'),
                 self::STATUS_ACTIVE   => UserModule::t('Active'),
                 self::STATUS_BANED    => UserModule::t('Banned'),
-            ),
-            'AdminStatus'         => array(
-                '0' => UserModule::t('No'),
-                '1' => UserModule::t('Yes'),
             ),
         );
         if (isset($code))

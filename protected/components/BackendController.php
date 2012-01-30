@@ -34,7 +34,7 @@ class BackendController extends CController
     {
         return array(
             array('allow',
-                'expression' => 'Yii::app()->getModule(\'user\')->isAdmin()',
+                'expression' => 'Yii::app()->user->isSuperuser',
             ),
             array('deny',
                 'users' => array('*'),
@@ -56,21 +56,33 @@ class BackendController extends CController
         Yii::import("application.components.AdminMenu");
 
         $this->menu = AdminMenu::getData();
-    }
-
-    public function setFlash($key, $value)
-    {
-        Yii::app()->user->setFlash($key, $value);
-    }
-
-    public function getFlash($key)
-    {
-        return Yii::app()->user->getFlash($key);
-    }
-
-    public function hasFlash($key)
-    {
-        return Yii::app()->user->hasFlash($key);
+        $this->menu = array_merge($this->menu, array(
+		array(
+			'label'=>Rights::t('core', 'Assignments'),
+			'url'=>array('/rights/assignment/view'),
+			'itemOptions'=>array('class'=>'item-assignments'),
+		),
+		array(
+			'label'=>Rights::t('core', 'Permissions'),
+			'url'=>array('/rights/authItem/permissions'),
+			'itemOptions'=>array('class'=>'item-permissions'),
+		),
+		array(
+			'label'=>Rights::t('core', 'Roles'),
+			'url'=>array('/rights/authItem/roles'),
+			'itemOptions'=>array('class'=>'item-roles'),
+		),
+		array(
+			'label'=>Rights::t('core', 'Tasks'),
+			'url'=>array('/rights/authItem/tasks'),
+			'itemOptions'=>array('class'=>'item-tasks'),
+		),
+		array(
+			'label'=>Rights::t('core', 'Operations'),
+			'url'=>array('/rights/authItem/operations'),
+			'itemOptions'=>array('class'=>'item-operations'),
+		),
+	));
     }
 
     public function loadModel($id)
