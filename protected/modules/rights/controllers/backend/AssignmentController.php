@@ -28,36 +28,6 @@ class AssignmentController extends BackendController
 	}
 
 	/**
-	* @return array action filters
-	*/
-	public function filters()
-	{
-		return array('accessControl');
-	}
-
-	/**
-	* Specifies the access control rules.
-	* This method is used by the 'accessControl' filter.
-	* @return array access control rules
-	*/
-	public function accessRules()
-	{
-		return array(
-			array('allow', // Allow superusers to access Rights
-				'actions'=>array(
-					'view',
-					'user',
-					'revoke',
-				),
-				'users'=>$this->_authorizer->getSuperusers(),
-			),
-			array('deny', // Deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
-
-	/**
 	* Displays an overview of the users and their assignments.
 	*/
 	public function actionView()

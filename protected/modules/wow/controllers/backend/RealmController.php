@@ -12,7 +12,7 @@ class RealmController extends BackendController
             $model->attributes = $_POST['Database'];
 			$model->type = 'realmlist';
 			if($model->save())
-				$this->redirect('/wow/realm/admin');
+				$this->redirect($this->createUrl('/wow/realm/admin'));
         }
 
         $this->render('index',array('model'=>$model));
@@ -41,7 +41,7 @@ class RealmController extends BackendController
             $model->attributes = $_POST['Database'];
             $model->type = 'characters';
             if($model->save())
-                $this->redirect('/wow/realm/admin');
+                $this->redirect($this->createUrl('/wow/realm/admin'));
         }
 		
 		$this->render('update',array(

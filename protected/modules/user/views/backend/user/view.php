@@ -35,7 +35,7 @@ if ($profileFields)
     }
 }
 
-array_push($attributes, 'password', 'email', 'activkey', array(
+array_push($attributes, 'email', 'activkey', array(
     'name'  => 'createtime',
     'value' => date("d.m.Y H:i:s", $model->createtime),
         ), array(
@@ -44,6 +44,9 @@ array_push($attributes, 'password', 'email', 'activkey', array(
         ), array(
     'name'  => 'status',
     'value' => User::itemAlias("UserStatus", $model->status),
+        ), array(
+    'name'  => 'superuser',
+    'value' => ($model->superuser) ? UserModule::t('Yes') : UserModule::t('No'),
         )
 );
 
@@ -51,4 +54,3 @@ $this->widget('BootDetailView', array(
     'data'       => $model,
     'attributes' => $attributes,
 ));
-?>

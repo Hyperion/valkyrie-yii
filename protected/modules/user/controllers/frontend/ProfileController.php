@@ -7,11 +7,6 @@ class ProfileController extends Controller
     public $layout        = '//layouts/column2';
 
     /**
-     * @var CActiveRecord the currently loaded data model instance.
-     */
-    private $_model;
-
-    /**
      * Shows a particular model.
      */
     public function init()

@@ -9,18 +9,17 @@ endif;
 ?>
 <div class="container">
     <div class="content">
-        <div>
+        <div class="form">
         <h1>Админ панель</h1>
         <p><?php echo UserModule::t("Please fill out the following form with your login credentials:"); ?></p>
         <?php
-        $form      = $this->beginWidget('BootActiveForm');
-        echo UserModule::t('Fields with <span class="required">*</span> are required.');
+        $form      = $this->beginWidget('BootActiveForm', array('type' => 'horizontal'));
         echo CHtml::errorSummary($model);
         echo $form->textFieldRow($model, 'username');
         echo $form->passwordFieldRow($model, 'password');
         ?>
-        <div class="actions">
-            <?php echo CHtml::submitButton(UserModule::t("Login"), array('class' => 'btn primary')); ?>
+        <div class="form-actions">
+            <?php echo CHtml::submitButton(UserModule::t("Login"), array('class' => 'btn btn-primary')); ?>
         </div>
         <?php $this->endWidget(); ?>
         </div>

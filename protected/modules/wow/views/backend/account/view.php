@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 
 <h1>View Account #<?php echo $model->id; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php $this->widget('BootDetailView', array(
     'data'=>$model,
     'attributes'=>array(
         'username',

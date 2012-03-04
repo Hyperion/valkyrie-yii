@@ -173,44 +173,6 @@ class UserModule extends CWebModule
     }
 
     /**
-     * Return admin status.
-     * @return boolean
-     */
-    public static function isAdmin()
-    {
-        if (Yii::app()->user->isGuest)
-            return false;
-        else
-        {
-            if (!isset(self::$_admin))
-            {
-                if (self::user()->superuser)
-                    self::$_admin = true;
-                else
-                    self::$_admin = false;
-            }
-            return self::$_admin;
-        }
-    }
-
-    /**
-     * Return admins.
-     * @return array syperusers names
-     */
-    public static function getAdmins()
-    {
-        if (!self::$_admins)
-        {
-            $admins      = User::model()->active()->superuser()->findAll();
-            $return_name = array();
-            foreach ($admins as $admin)
-                array_push($return_name, $admin->username);
-            self::$_admins = $return_name;
-        }
-        return self::$_admins;
-    }
-
-    /**
      * Send mail method
      */
     public static function sendMail($email, $subject, $message)

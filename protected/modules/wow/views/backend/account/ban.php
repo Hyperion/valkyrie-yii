@@ -22,93 +22,67 @@ $this->breadcrumbs=array(
 );
 
 ?>
-<div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php $form=$this->beginWidget('BootActiveForm', array(
     'id'=>'account-ban-form-account-form',
     'enableAjaxValidation'=>false,
 )); ?>
 
-<table>
+<table width="100%">
 <tr>
-<td colspan="2"><div class="row">
+<td colspan="2">
     <p class="note">
         Fields with <span class="required">*</span> are required.
     </p>
     <?php echo $form->errorSummary($model); ?>
-</div></td>
+</td>
 </tr>
 <tr>
-<td width="50%"><div class="row">
-    <?php echo $form->labelEx($model,'value'); ?>
-    <?php echo $form->textField($model,'value', array(
-        'class' => 'text-input large-input'
-    )); ?>
-    <?php echo $form->error($model,'value'); ?>
-</div></td>
-<td width="50%"><div class="row">
-    <?php echo $form->labelEx($model,'method'); ?>
-    <?php echo $form->dropDownList($model,'method',array(
+<td width="50%">
+    <?php echo $form->textFieldRow($model,'value'); ?>
+</td>
+<td width="50%">
+    <?php echo $form->dropDownListRow($model,'method',array(
         '0' => 'Ban by id',
         '1' => 'Ban by ip'
     )); ?>
-    <?php echo $form->error($model,'method'); ?>
-</div></td>
+</td>
 </tr>
 <tr>
-<td><div class="row">
-    <?php echo $form->labelEx($model,'time'); ?>
-    <?php echo $form->textField($model,'time', array(
-        'class' => 'text-input large-input'
-    )); ?>
-    <?php echo $form->error($model,'time'); ?>
-</div></td>
-<td><div class="row">
-    <?php echo $form->labelEx($model,'reason'); ?>
-    <?php echo $form->textField($model,'reason', array(
-        'class' => 'text-input large-input'
-    )); ?>
-    <?php echo $form->error($model,'reason'); ?>
-</div></td>
+<td>
+    <?php echo $form->textFieldRow($model,'time'); ?>
+</td>
+<td>
+    <?php echo $form->textFieldRow($model,'reason'); ?>
+</td>
 </tr>
 <tr>
-<td colspan="2"><div class="row">
-    <?php echo $form->labelEx($model,'active'); ?>
-    <?php echo $form->dropDownList($model,'method',array(
+<td colspan="2">
+    <?php echo $form->dropDownListRow($model,'method',array(
         '0' => 'Active',
         '1' => 'Not Active'
     )); ?>
-    <?php echo $form->error($model,'active'); ?>
-</div></td>
+</td>
 </tr>
 <tr>
-<td colspan="2"><div class="row">
-    <?php echo CHtml::submitButton('Banhammer!', array('class' => 'button')); ?>
+<td colspan="2"><div class="form-actions">
+    <?php echo CHtml::submitButton('Banhammer!', array('class' => 'btn btn-danger')); ?>
 </div></td>
 </tr>
 </table>
 <?php $this->endWidget(); ?>
 
-</div>
 <?php
     $model->unsetAttributes();
-    $this->widget('zii.widgets.grid.CGridView', array(
+    $this->widget('BootGridView', array(
         'id'=>'characters-grid',
         'dataProvider'=>$account->search(),
         'filter'=>$account,
         'columns'=>array(
             'id',
             'username',
-            'gmlevel',
             'email',
-            'joindate',
-            'last_ip',
-            'failed_logins',
-            'locked',
-            'last_login',
-            'active_realm_id',
-            'mutetime',
-            'locale',
+            'last_ip'
         ),
         'selectionChanged' => 'updateForm',
 )); ?>

@@ -1,42 +1,23 @@
-<div class="form">
+<?php
+$form = $this->beginWidget('BootActiveForm', array(
+    'id'                   => 'realmlist-form',
+    'type'                 => 'horizontal',
+    'enableAjaxValidation' => false,
+        ));
+?>
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-    'id'=>'realmlist-form',
-    'enableAjaxValidation'=>false,
-)); ?>
+<p class="note">Fields with <span class="required">*</span> are required.</p>
 
-    <p class="note">Fields with <span class="required">*</span> are required.</p>
+<?php echo $form->errorSummary($model); ?>
 
-    <?php echo $form->errorSummary($model); ?>
+<?php echo $form->textFieldRow($model, 'host'); ?>
+<?php echo $form->textFieldRow($model, 'user'); ?>
+<?php echo $form->textFieldRow($model, 'password'); ?>
+<?php echo $form->textFieldRow($model, 'dbname'); ?>
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'host'); ?>
-        <?php echo $form->textField($model,'host',array('class' => 'text-input medium-input')); ?>
-        <?php echo $form->error($model,'host'); ?>
-    </div>
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'user'); ?>
-        <?php echo $form->textField($model,'user',array('class' => 'text-input medium-input')); ?>
-        <?php echo $form->error($model,'user'); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $form->labelEx($model,'password'); ?>
-        <?php echo $form->textField($model,'password',array('class' => 'text-input medium-input')); ?>
-        <?php echo $form->error($model,'password'); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $form->labelEx($model,'dbname'); ?>
-        <?php echo $form->textField($model,'dbname',array('class' => 'text-input medium-input')); ?>
-        <?php echo $form->error($model,'dbname'); ?>
-    </div>
-
-    <div class="row buttons">
-        <?php echo CHtml::submitButton('Connect'); ?>
-    </div>
+<div class="form-actions">
+<?php echo CHtml::submitButton('Connect', array('class' => 'btn btn-primary')); ?>
+</div>
 
 <?php $this->endWidget(); ?>
-
-</div><!-- form -->

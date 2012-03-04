@@ -8,7 +8,8 @@ $this->breadcrumbs = array(
 $this->pageCaption = UserModule::t('View User').' "'.$model->username.'"';
 
 $this->menu = array(
-    array('label' => UserModule::t('List User'), 'url'   => array('index'))
+    array('label' => UserModule::t('List User'), 'url'   => array('index')),
+    array('label' => UserModule::t('Profile'), 'url'   => array('/user/profile')),
 );
 // For all users
 $attributes = array(

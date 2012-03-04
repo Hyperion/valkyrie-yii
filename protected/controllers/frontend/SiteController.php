@@ -2,15 +2,13 @@
 
 class SiteController extends Controller
 {
+
     public function actions()
     {
         return array(
-            'captcha'=>array(
-                'class'=>'CCaptchaAction',
-                'backColor'=>0xFFFFFF,
-            ),
-            'page'=>array(
-                'class'=>'CViewAction',
+            'captcha' => array(
+                'class'     => 'CCaptchaAction',
+                'backColor' => 0xFFFFFF,
             ),
         );
     }
@@ -22,44 +20,43 @@ class SiteController extends Controller
 
     public function actionError()
     {
-        if($error=Yii::app()->errorHandler->error)
+        $error = Yii::app()->errorHandler->error;
+        if($error)
         {
             if(Yii::app()->request->isAjaxRequest)
                 echo $error['message'];
             else
             {
-                $this->body_class = 'server-error';
                 $this->layout = 'main';
                 $this->render('error', $error);
             }
         }
     }
 
-    public function actionSearch()
+    public function actionPage($url)
     {
-        $model = new SearchForm;
-        if(isset($_POST['SearchForm']))
-        {
-            $model['attributes'] = $_POST['SearchForm'];
-            if($model->validate())
-            {
-                $criteria = new CDbCriteria(array(
-                    'condition' => 'status="'.Material::STATUS_PUBLISHED.'" AND type="'.Material::TYPE_POST.'"',
-                    'order'     => 'update_time DESC',
-                    'with'      => 'commentCount',
-                ));
-                $criteria->compare('title',$model['query'],true);
-                $dataProvider = new CActiveDataProvider('Material', array(
-                    'pagination' => array(
-                        'pageSize' => Yii::app()->params['postsPerPage'],
-                    ),
-                    'criteria'   => $criteria,
-                ));
-            }
-        }
-        $this->render('search',array(
-            'model'        => $model,
-            'dataProvider' => (isset($dataProvider)) ? $dataProvider : false,
+        $this->_model = Page::model()->findByAttributes(array('url' => $url));
+
+        $this->render('page', array(
+            'model' => $this->_model,
         ));
     }
+
+    public function actionContact()
+    {
+        $model = new ContactForm;
+        if(isset($_POST['ContactForm']))
+        {
+            $model->attributes = $_POST['ContactForm'];
+            if($model->validate())
+            {
+                $headers = "From: {$model->email}\r\nReply-To: {$model->email}";
+                mail(Yii::app()->config->get('adminEmail'), $model->subject, $model->body, $headers);
+                Yii::app()->user->setFlash('success', 'Спасибо за обращение. В скором времени Вам ответят.');
+                $this->refresh();
+            }
+        }
+        $this->render('contact', array('model' => $model));
+    }
+
 }

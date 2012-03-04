@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <name>user</name>
+    <backendmenu>
+        <label>Users</label>
+        <sort_order>1</sort_order>
+        <url>#</url>
+        <items>
+            <submenu>
+                <label>Manage Users</label>
+                <sort_order>1</sort_order>
+                <url>/user/user/admin</url>
+            </submenu>
+            <submenu>
+                <label>Manage Profile Fields</label>
+                <sort_order>2</sort_order>
+                <url>/user/profileField/admin</url>
+            </submenu>
+        </items>
+    </backendmenu>
+</config>

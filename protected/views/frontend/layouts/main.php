@@ -2,21 +2,25 @@
 <html>
     <head>
         <meta charset=utf-8>
-        <?php echo Yii::app()->bootstrap->registerCoreCss(); ?>
-        <?php $this->_cs->registerCssFile(Yii::app()->request->baseUrl.'/css/main.css'); ?>
+        <?php $this->_cs->registerCssFile(Yii::app()->request->baseUrl . '/css/main.css'); ?>
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     </head>
     <body>
         <?php
-        $this->widget('BootNav', array(
-            'primaryItems' => array(
-                array('label' => 'About', 'url'   => array('/site/page', 'view' => 'about')),
-                array('label' => 'Contact', 'url'   => array('/site/contact')),
-            ),
-            'secondaryItems' => array(
-                array('label' => 'Login', 'url'   => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
-                array('label' => 'Logout ('.Yii::app()->user->name.')', 'url'   => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest)
-            ),
+        $this->widget('BootNavbar', array(
+            'items' => array(
+                array(
+                    'class' => 'bootstrap.widgets.BootMenu',
+                    'items' => MenuTree::getItems(),
+                ),
+                array(
+                    'class'       => 'bootstrap.widgets.BootMenu',
+                    'htmlOptions' => array('class' => 'pull-right'),
+                    'items' => array(
+                        array('label' => 'Login', 'url'   => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
+                        array('label' => 'My profile', 'url'   => array('/user/profile'), 'visible' => !Yii::app()->user->isGuest),
+                        array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url'   => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest)
+                )))
         ));
         ?>
         <div class="container">

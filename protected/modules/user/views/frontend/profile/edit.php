@@ -8,12 +8,11 @@ $this->pageCaption = UserModule::t('Edit profile');
 ?>
 
 <?php
-$this->widget('BootAlert', array(
-    'template' => '<div class="alert-message block-message {key}"><p>{message}</p></div>',
-));
+$this->widget('BootAlert');
 
 $form      = $this->beginWidget('BootActiveForm', array(
     'id'                   => 'profile-form',
+    'type'                 => 'horizontal',
     'enableAjaxValidation' => true,
     'htmlOptions'          => array('enctype' => 'multipart/form-data'),
         ));
@@ -36,7 +35,7 @@ if ($profileFields) :
 endif;
 echo $form->textFieldRow($model, 'username');
 echo $form->textFieldRow($model, 'email'); ?>
-<div class="actions">
-    <?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save'), array('class' => 'btn primary')); ?>
+<div class="form-actions">
+    <?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save'), array('class' => 'btn btn-primary')); ?>
 </div>
 <?php $this->endWidget(); ?>

@@ -1,135 +1,140 @@
 <?php
 
-class MenuController extends AdminController
+/**
+ * Description of MenuController
+ *
+ * @author gabriel
+ */
+class MenuController extends BackendController
 {
 
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
+    public function actions()
+    {
+        return array();
+    }
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate()
-	{
-		$model=new Menu;
+    public function actionAdmin()
+    {
+        $cs = Yii::app()->clientScript;
+        $cs->registerScriptFile(Yii::app()->request->baseUrl . '/js/dynatree/jquery.dynatree.min.js');
+        $cs->registerScriptFile(Yii::app()->request->baseUrl . '/js/contextmenu/jquery.contextMenu-custom.js');
+        $cs->registerCssFile(Yii::app()->request->baseUrl . '/js/contextmenu/jquery.contextMenu.css');
+        $cs->registerCssFile(Yii::app()->request->baseUrl . '/js/dynatree/skin-vista/ui.dynatree.css');
+        
+        /*$root = new Menu();
+        $root->title = 'Menu';
+        $root->saveNode();*/
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+        $this->render('admin');
+    }
 
-		if(isset($_POST['Menu']))
-		{
-			$model->attributes=$_POST['Menu'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
+    public function actionUpdate($id)
+    {
+        $model = $this->loadModel($id);
+        if(isset($_POST['Menu']) and Yii::app()->request->isAjaxRequest)
+        {
+            $model->attributes = $_POST['Menu'];
+            if($model->saveNode())
+            {
+                echo 'complete';
+                Yii::app()->end();
+            }
+            else
+            {
+                echo CHtml::errorSummary($model);
+                Yii::app()->end();
+            }
+        }
+        echo $this->renderPartial('update', array('model' => $model), true);
+    }
 
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
+    public function actionCreate()
+    {
+        $model = new Menu();
+        if(isset($_POST['Menu']) and Yii::app()->request->isAjaxRequest)
+        {
+            $model->attributes = $_POST['Menu'];
+            $root = Menu::model()->findByPk((int) $_POST['root']);
+            if($model->appendTo($root))
+            {
+                $data_json = array('id'    => $model->id, 'title' => $model->title);
+                exit(json_encode($data_json));
+            }
+        }
+        echo $this->renderPartial('create', array('model' => $model, 'root'  => $_POST['root']), true);
+    }
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
+    public function actionDelete()
+    {
+        if(Yii::app()->request->isPostRequest)
+        {
+            $this->loadModel((int) $_POST['id'])->deleteNode();
+            exit('complete');
+        }
+        else
+        {
+            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+        }
+    }
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+    public function actionMove()
+    {
+        $node       = $_POST['node'];
+        $sourceNode = $_POST['sourceNode'];
+        $hitMode    = $_POST['hitMode'];
 
-		if(isset($_POST['Menu']))
-		{
-			$model->attributes=$_POST['Menu'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
+        $sourceNode = Menu::model()->findByPk($sourceNode['id']);
+        $node       = Menu::model()->findByPk($node['id']);
 
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
+        switch($hitMode)
+        {
+            case 'before':
+                $sourceNode->moveBefore($node);
+                break;
+            case 'after':
+                $sourceNode->moveAfter($node);
+                break;
+            case 'over':
+                $sourceNode->moveAsFirst($node);
+            default:
+                break;
+        }
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+        echo json_encode($_POST);
+        exit;
+    }
 
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-	}
+    public function actionJson()
+    {
+        $nodes = Menu::model()->findAll(array('order' => 'lft'));
+        $level  = 1;
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Menu');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
+        $path = array();
 
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new Menu('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Menu']))
-			$model->attributes=$_GET['Menu'];
+        foreach($nodes as $f)
+        {
+            $isFolder = false;
+            if($f->level > $level)
+            {
+                if($f->level != $level + 1 || !count($path[$level]))
+                    throw new CHttpException(404, 'Netsed set error.');
 
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
+                $path[$f->level]                                    = &$path[$level][count($path[$level]) - 1]['children'];
+                if($level < 2)
+                    $path[$level][count($path[$level]) - 1]['isFolder'] = true;
+                else
+                    $path[$level][count($path[$level]) - 1]['isFolder'] = false;
+            }
+            $path[$f->level][]                                  = array(
+                'id'       => $f->id,
+                'key'      => 'id' . $f->id,
+                'isFolder' => $isFolder,
+                'title'    => $f->title,
+                'children' => array());
+            $level = $f->level;
+        }
 
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer the ID of the model to be loaded
-	 */
-	public function loadModel($id)
-	{
-		$model=Menu::model()->findByPk((int)$id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
-	}
+        echo(json_encode($path[1]));
+    }
 
-	/**
-	 * Performs the AJAX validation.
-	 * @param CModel the model to be validated
-	 */
-	protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='menu-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
 }

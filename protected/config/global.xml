@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <name>global</name>
+    <backendmenu>
+        <label>Общие настройки</label>
+        <sort_order>1</sort_order>
+        <url>/</url>
+        <items>
+            <submenu>
+                <label>Управление страницами</label>
+                <sort_order>1</sort_order>
+                <url>/page/admin</url>
+            </submenu>
+            <submenu>
+                <label>Добавить страницу</label>
+                <sort_order>2</sort_order>
+                <url>/page/create</url>
+            </submenu>
+            <submenu>
+                <label>Управление меню</label>
+                <sort_order>3</sort_order>
+                <url>/menu/admin</url>
+            </submenu>
+        </items>
+    </backendmenu>
+</config>

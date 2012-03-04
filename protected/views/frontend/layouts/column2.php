@@ -1,23 +1,20 @@
 <?php $this->beginContent('//layouts/main'); ?>
-<?php if ($this->pageCaption !== '') : ?>
+<?php if($this->pageCaption !== '') : ?>
     <div class="page-header">
         <h1><?php echo CHtml::encode($this->pageCaption); ?> <small><?php echo CHtml::encode($this->pageDescription) ?></small></h1>
     </div>
 <?php endif; ?>
 <div class="row">
-    <div class="span12">
+    <div class="span9">
         <?php echo $content; ?>
     </div>
-    <div class="span4">
+    <div class="span3">
         <?php
-        $this->beginWidget('zii.widgets.CPortlet', array(
-            'title' => 'Operations',
+        $this->widget('BootMenu', array(
+            'type'  => 'list',
+            'items' => array_merge(
+                    array(array('label'       => 'Операции', 'itemOptions' => array('class' => 'nav-header'))), $this->menu),
         ));
-        $this->widget('zii.widgets.CMenu', array(
-            'items'       => $this->menu,
-            'htmlOptions' => array('class' => 'operations'),
-        ));
-        $this->endWidget();
         ?>
     </div>
 </div>

@@ -52,7 +52,6 @@ class Account extends CActiveRecord
             'active_realm_id' => 'Active Realm',
             'mutetime' => 'Mutetime',
             'locale' => 'Локаль',
-            'loc_selection' => 'Loc Selection'
         );
     }
 
@@ -75,7 +74,6 @@ class Account extends CActiveRecord
         $criteria->compare('active_realm_id',$this->active_realm_id,true);
         $criteria->compare('mutetime',$this->mutetime,true);
         $criteria->compare('locale',$this->locale);
-        $criteria->compare('loc_selection',$this->loc_selection);
 
        return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,
@@ -98,10 +96,6 @@ class Account extends CActiveRecord
         {
             if($this->password)
                 $this->sha_pass_hash = strtoupper(sha1(strtoupper($this->username).":".strtoupper($this->password)));
-            if($this->locale != 0)
-                $this->loc_selection = 1;
-            else
-                $this->loc_selection = 0;
             return true;
         }
         else

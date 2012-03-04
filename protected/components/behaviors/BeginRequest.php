@@ -21,7 +21,9 @@ class BeginRequest extends CBehavior
             $app->user->setState('_lang', $_POST['_lang']);
             $cookie = new CHttpCookie('_lang', $_POST['_lang']);
             $cookie->expire = time() + (60 * 60 * 24 * 365); // (1 year)
-            Yii::app()->request->cookies['_lang'] = $cookie;
+            $app->request->cookies['_lang'] = $cookie;
+            Yii::import("application.components.BackendMenu");
+            BackendMenu::refreshXmlMenu();
         }
         else if ($app->user->hasState('_lang'))
             $app->language = $app->user->getState('_lang');

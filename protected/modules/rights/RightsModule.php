@@ -129,4 +129,9 @@ class RightsModule extends CWebModule
         return '1.3.0';
     }
 
+    public static function t($str = '', $params = array(), $dic = 'core')
+    {
+        return Yii::t("RightsModule.".$dic, $str, $params);
+    }
+
 }

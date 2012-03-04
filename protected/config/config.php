@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'basePath'       => dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
+    'basePath'       => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name'           => 'Hyperion\'s Sandbox',
     //'language' => 'ru',
     'sourceLanguage' => 'en',
@@ -26,21 +26,17 @@ return array(
         'authManager' => array(
             'class' => 'RDbAuthManager',
         ),
-        'request' => array(
-            'enableCsrfValidation'   => true,
-            'enableCookieValidation' => true,
+        'db'    => array(
+            'connectionString' => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
+            'emulatePrepare'   => true,
+            'username'         => DB_USER,
+            'password'         => DB_PASS,
+            'charset'          => 'utf8',
+            'tablePrefix'      => '',
         ),
-        'db'                     => array(
-            'connectionString'      => 'mysql:host='.DB_HOST.';dbname='.DB_NAME,
-            'emulatePrepare'        => true,
-            'username'              => DB_USER,
-            'password'              => DB_PASS,
-            'charset'               => 'utf8',
-            'tablePrefix'           => '',
-        ),
-        'db_world'              => array(
+        'db_world'         => array(
             'class'                 => 'CDbConnection',
-            'connectionString'      => 'mysql:host='.DB_WORLD_HOST.';dbname='.DB_WORLD_NAME,
+            'connectionString'      => 'mysql:host=' . DB_WORLD_HOST . ';dbname=' . DB_WORLD_NAME,
             'username'              => DB_WORLD_USER,
             'password'              => DB_WORLD_PASS,
             'emulatePrepare'        => true,
@@ -60,7 +56,10 @@ return array(
             ),
         ),
         'bootstrap' => array(
-            'class'     => 'ext.bootstrap.components.Bootstrap',
+            'class'  => 'ext.bootstrap.components.Bootstrap',
+        ),
+        'config' => array(
+            'class'     => 'application.extensions.EConfig',
         ),
     ),
     'behaviors' => array(
@@ -71,5 +70,5 @@ return array(
             'class'  => 'application.components.behaviors.BeginRequest'
         ),
     ),
-    'params' => require(dirname(__FILE__).'/params.php'),
+    'params' => require(dirname(__FILE__) . '/params.php'),
 );

@@ -1,4 +1,5 @@
-<ul class="actions">
+<div class="well">
+<ul>
 	<li><?php echo CHtml::link(UserModule::t('Manage Users'),array('/user/user')); ?></li>
 	<li><?php echo CHtml::link(UserModule::t('Manage Profile Field'),array('admin')); ?></li>
 <?php 
@@ -8,3 +9,4 @@
 	}
 ?>
 </ul><!-- actions -->
+</div>

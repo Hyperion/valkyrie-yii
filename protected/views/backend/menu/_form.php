@@ -1,42 +1,36 @@
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'menu-form',
-	'enableAjaxValidation'=>false,
-)); ?>
+    <?php
+    $form = $this->beginWidget('BootActiveForm', array(
+        'enableAjaxValidation' => true,
+        'type' => 'horizontal',
+        'htmlOptions'          => array('enctype' => 'multipart/form-data', 'class'   => 'treenodeform'),
+            ));
+    ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+    <p class="note">Объязательные поля помечены звездочкой: <span class="required">*</span>.</p>
 
-	<?php echo $form->errorSummary($model); ?>
+    <?php echo CHtml::errorSummary($model); ?>
+    <?php
+    if(!$model->isNewRecord)
+        echo $form->hiddenField($model, 'id');
+    else
+        echo Chtml::hiddenField('root', $root);
+    ?>
+    <?php echo $form->textFieldRow($model, 'title'); ?>
+    <?php echo $form->textFieldRow($model, 'url'); ?>
+    <?php echo $form->textFieldRow($model, 'alt'); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'label'); ?>
-		<?php echo $form->textField($model,'label',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'label'); ?>
-	</div>
+    <div class="form-actions">
+        <?php
+        echo CHtml::button(
+                $model->isNewRecord ? 'Создать' : 'Сохранить', array('class'   => 'btn btn-primary', 'onclick' => $model->isNewRecord ? 'createNode()' : 'updateNode()')
+        );
+        ?>
+        <?php echo CHtml::button('Отмена', array('class'   => 'btn', 'onclick' => 'cancelNode()')); ?>
+        <a class="btn" id="url_button" onclick='$("#mydialog").dialog("open"); return false;' style="display: inline-block; float:none;"><span>Связать</span></a>
+    </div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'url'); ?>
-		<?php echo $form->textField($model,'url',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'url'); ?>
-	</div>
+    <?php $this->endWidget(); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'position'); ?>
-		<?php echo $form->textField($model,'position'); ?>
-		<?php echo $form->error($model,'position'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'menu'); ?>
-		<?php echo $form->textField($model,'menu',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'menu'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
-
-<?php $this->endWidget(); ?>
-
-</div><!-- form -->
+</div>

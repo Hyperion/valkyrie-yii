@@ -47,50 +47,36 @@ class BackendController extends CController
         parent::init();
 
         $this->class = ($this->class) ? $this->class : ucfirst($this->id);
-        Yii::app()->bootstrap->registerCoreCss();
         $cs = Yii::app()->clientScript;
         $cs->registerPackage('jquery');
         $cs->registerPackage('jquery.ui');
-        $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/main.css');
+        $cs->registerCssFile(Yii::app()->request->baseUrl . '/css/main.css');
+        $cs->registerCssFile(Yii::app()->request->baseUrl . '/css/custom-theme/jquery-ui-1.8.16.custom.css');
 
-        Yii::import("application.components.AdminMenu");
+        $this->menu = Yii::app()->cache->get('backendmenu');
 
-        $this->menu = AdminMenu::getData();
-        $this->menu = array_merge($this->menu, array(
-		array(
-			'label'=>Rights::t('core', 'Assignments'),
-			'url'=>array('/rights/assignment/view'),
-			'itemOptions'=>array('class'=>'item-assignments'),
-		),
-		array(
-			'label'=>Rights::t('core', 'Permissions'),
-			'url'=>array('/rights/authItem/permissions'),
-			'itemOptions'=>array('class'=>'item-permissions'),
-		),
-		array(
-			'label'=>Rights::t('core', 'Roles'),
-			'url'=>array('/rights/authItem/roles'),
-			'itemOptions'=>array('class'=>'item-roles'),
-		),
-		array(
-			'label'=>Rights::t('core', 'Tasks'),
-			'url'=>array('/rights/authItem/tasks'),
-			'itemOptions'=>array('class'=>'item-tasks'),
-		),
-		array(
-			'label'=>Rights::t('core', 'Operations'),
-			'url'=>array('/rights/authItem/operations'),
-			'itemOptions'=>array('class'=>'item-operations'),
-		),
-	));
+        if(!$this->menu)
+        {
+            Yii::import("application.components.BackendMenu");
+            BackendMenu::refreshXmlMenu();
+            $this->menu = Yii::app()->cache->get('backendmenu');
+        }
+    }
+
+    public function actionHandleUpload()
+    {
+        $file = CUploadedFile::getInstanceByName('imageName');
+        $name = md5($file->name . time()) . '.' . $file->extensionName;
+        $file->saveAs(Yii::getPathOfAlias('application') . '/../uploads/' . $name);
+        echo '<div id="image">/uploads/' . $name . '</div>';
     }
 
     public function loadModel($id)
     {
-        if ($this->_model === null)
+        if($this->_model === null)
         {
             $this->_model = CActiveRecord::model($this->class)->findByPk($id);
-            if ($this->_model === null)
+            if($this->_model === null)
                 throw new CHttpException(404, 'The requested page does not exist.');
         }
         return $this->_model;
@@ -98,7 +84,7 @@ class BackendController extends CController
 
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === strtolower($this->class).'-form')
+        if(isset($_POST['ajax']) && $_POST['ajax'] === strtolower($this->class) . '-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();
