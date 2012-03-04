@@ -15,7 +15,7 @@ $this->breadcrumbs = array(
                         </div>
                         <div class="title-guild">
                         <?php if($model->honorRank > 4): ?>
-                            <div class="title"><?=$model->getTitle($model->honorRank)?></div>
+                            <div class="title"><?=$model->getPvpTitle($model->honorRank)?></div>
                         <?php endif; ?>
                         </div>
                         <span class="clear"><!-- --></span>

@@ -903,7 +903,7 @@ class Character extends CActiveRecord
         return $storage;
     }
 
-    public function getTitle($rank)
+    public function getPvpTitle($rank)
     {
         switch($rank)
         {
