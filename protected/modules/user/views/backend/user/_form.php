@@ -15,7 +15,6 @@
     <?php echo $form->passwordFieldRow($model, 'password'); ?>
     <?php echo $form->textFieldRow($model, 'email'); ?>
     <?php echo $form->dropDownListRow($model, 'status', User::itemAlias('UserStatus')); ?>
-    <?php echo $form->dropDownListRow($model, 'superuser', User::itemAlias('AdminStatus')); ?>
 
     <?php
     $profileFields = $profile->getFields();

@@ -44,9 +44,6 @@ array_push($attributes, 'email', 'activkey', array(
         ), array(
     'name'  => 'status',
     'value' => User::itemAlias("UserStatus", $model->status),
-        ), array(
-    'name'  => 'superuser',
-    'value' => ($model->superuser) ? UserModule::t('Yes') : UserModule::t('No'),
         )
 );
 
