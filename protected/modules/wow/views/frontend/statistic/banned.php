@@ -1,6 +1,6 @@
 <h1>Account Banned</h1>
 
-<?php $this->widget('WGridWow', array(
+<?php $this->widget('BootGridWow', array(
     'id' => 'account-banned',
     'dataProvider' => $accountBanned->search(),
     'columns'=>array(

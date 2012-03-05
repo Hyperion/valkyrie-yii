@@ -1,21 +1,10 @@
 <?php
 
-Yii::import('zii.widgets.grid.CGridView');
-
-class WGridWow extends CGridView
+class WGridWow extends BootGridView
 {
     public function init()
     {
-        $this->cssFile = false;
-    	$this->rowCssClass = array('row1', 'row2');
-    	$this->pager = array(
-        	'htmlOptions' => array('class' => 'ui-pagination'),
-        	'cssFile' => false,
-        	'header' => false,
-    	);
-    	$this->pagerCssClass = 'option';
     	$this->template = '<div class="table-options">{pager}{summary}<span class="clear"><!-- --></span></div><div class="table full-width">{items}</div><div class="table-options">{pager}{summary}<span class="clear"><!-- --></span></div>';
-    	$this->summaryCssClass = false;
     	$this->summaryText = 'Результаты <strong class="results-start">{start}</strong>-<strong class="results-end">{end}</strong> из <strong class="results-total">{count}</strong>';
         parent::init();
     }

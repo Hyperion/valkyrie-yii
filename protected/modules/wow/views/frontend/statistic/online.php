@@ -4,8 +4,12 @@ $this->breadcrumbs=array(
     'Online',
 );
 ?>
-
-<?php $this->widget('WGridWow', array(
+<style>
+    select, input {
+        width: 50px;
+    }
+</style>
+<?php $this->widget('BootGridView', array(
     'id'=>'characters-grid',
     'filter' => $model,
     'dataProvider'=>$model->search(),
