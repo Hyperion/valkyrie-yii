@@ -77,7 +77,7 @@ $this->breadcrumbs = array(
         <?php if($model->honorRank > 4): ?>
         <img src="/images/wow/icons/rank/PvPRank0<?=$model->honorRank?>.png">
         <?php endif; ?>
-        <?=$model->getTitle($model->honorRank)?>
+        <?=$model->getPvpTitle($model->honorRank)?>
         <?php if($model->honorRank > 4): ?>
          (Ранг <?=$model->honorRank - 4 ?>)
         <?php endif; ?>
@@ -164,7 +164,7 @@ $this->breadcrumbs = array(
     </li>
     <li class="pvp-details">
         <span class="pvp-item">Высший ранг</span>
-        <span class="pvp-value neutral"><?=$model->getTitle($model->honor_highest_rank)?></span>
+        <span class="pvp-value neutral"><?=$model->getPvpTitle($model->honor_highest_rank)?></span>
         <span class="clear"></span>
     </li>
     </ul>

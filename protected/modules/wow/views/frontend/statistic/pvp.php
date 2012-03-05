@@ -8,12 +8,15 @@ if($current)
 else
     $this->breadcrumbs[Database::$realm.' @ PvP'] = array('/wow/statistic/pvp', 'realm' => Database::$realm);    
 ?>
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<style>
+    select {
+        width: 75px;
+    }
+</style>
+<?php $this->widget('BootGridView', array(
     'filter' => $model,
     'dataProvider'=>$model->search(40),
     'enableSorting'=>true,
-    'cssFile' => false,
     'columns'=>array(
         array(
             'type'=>'raw',
@@ -42,6 +45,12 @@ else
         ),
         array(
             'name'=>'honor.hk',
+        ),
+        array(
+            'name'=>'honor.thisWeek_cp',
+        ),
+                array(
+            'name'=>'honor.lastWeek_cp',
         ),
         'honor_standing',
         array(
