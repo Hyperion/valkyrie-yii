@@ -34,8 +34,6 @@ class Controller extends CController
     protected function beforeRender($view)
     {
         $this->pageTitle = Yii::app()->config->get('title');
-        $this->pageKeywords = Yii::app()->config->get('keywords');
-        $this->pageDescription = Yii::app()->config->get('description');
 
         if(is_object($this->_model))
         {
@@ -49,7 +47,12 @@ class Controller extends CController
             if(isset($this->_model->keywords) && $this->_model->keywords)
                 $this->pageKeywords = $this->_model->keywords;
         }
-
+        
+        if(!$this->pageDescription)
+            $this->pageDescription = Yii::app()->config->get('description');
+        if(!$this->pageKeywords)
+            $this->pageKeywords = Yii::app()->config->get('keywords');            
+        
         return parent::beforeRender($view);
     }
 

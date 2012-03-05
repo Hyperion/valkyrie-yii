@@ -1,3 +1,11 @@
+<?php
+$this->breadcrumbs = array(
+    'Слайдер' => array('admin'),
+    'Управление',
+);
+
+?>
+
 <?php $this->pageTitle = Yii::app()->name; ?>
 
 <h1>Single queued files upload example</h1>
@@ -6,17 +14,17 @@
         <div class="span7">
             <!-- The fileinput-button span is used to style the file input field as button -->
             <span class="btn btn-success fileinput-button">
-                <span><i class="icon-plus icon-white"></i> Add files...</span>
+                <span><i class="icon-plus icon-white"></i> Добавить файлы</span>
                 <input type="file" name="files[]" multiple>
             </span>
             <button type="submit" class="btn btn-primary start">
-                <i class="icon-upload icon-white"></i> Start upload
+                <i class="icon-upload icon-white"></i> Загрузить
             </button>
             <button type="reset" class="btn btn-warning cancel">
-                <i class="icon-ban-circle icon-white"></i> Cancel upload
+                <i class="icon-ban-circle icon-white"></i> Отмена
             </button>
             <button type="button" class="btn btn-danger delete">
-                <i class="icon-trash icon-white"></i> Delete
+                <i class="icon-trash icon-white"></i> Удалить
             </button>
             <input type="checkbox" class="toggle">
         </div>

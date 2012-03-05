@@ -5,9 +5,10 @@ $this->breadcrumbs = array(
     $model->username,
 );
 
-$this->pageCaption = UserModule::t('View User').' "'.$model->username.'"';
+$this->pageCaption = UserModule::t('View User') . ' "' . $model->username . '"';
 
 $this->menu = array(
+    array('label' => 'Операции', 'itemOptions' => array('class' => 'nav-header')),
     array('label' => UserModule::t('List User'), 'url'   => array('index')),
     array('label' => UserModule::t('Profile'), 'url'   => array('/user/profile')),
 );
@@ -17,9 +18,9 @@ $attributes = array(
 );
 
 $profileFields = ProfileField::model()->forAll()->sort()->findAll();
-if ($profileFields)
+if($profileFields)
 {
-    foreach ($profileFields as $field)
+    foreach($profileFields as $field)
     {
         array_push($attributes, array(
             'label' => UserModule::t($field->title),

@@ -21,6 +21,11 @@
                 <sort_order>3</sort_order>
                 <url>/menu/admin</url>
             </submenu>
+            <submenu>
+                <label>Управление слайдером</label>
+                <sort_order>4</sort_order>
+                <url>/slider/admin</url>
+            </submenu>
         </items>
     </backendmenu>
 </config>

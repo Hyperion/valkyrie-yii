@@ -1,6 +1,6 @@
 <h1>Account Banned</h1>
 
-<?php $this->widget('BootGridWow', array(
+<?php $this->widget('BootGridView', array(
     'id' => 'account-banned',
     'dataProvider' => $accountBanned->search(),
     'columns'=>array(
@@ -30,7 +30,7 @@
 
 <h1>Ip Banned</h1>
 
-<?php $this->widget('WGridWow', array(
+<?php $this->widget('BootGridView', array(
     'id' => 'ip-banned',
     'dataProvider' => $ipBanned->search(),
     'columns'=>array(

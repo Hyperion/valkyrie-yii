@@ -9,7 +9,7 @@ else
     $this->breadcrumbs[Database::$realm.' @ PvP'] = array('/wow/statistic/pvp', 'realm' => Database::$realm);    
 ?>
 <style>
-    select, input {
+    div.grid-view select, div.grid-view input {
         width: 50px;
     }
 </style>

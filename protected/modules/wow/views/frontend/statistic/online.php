@@ -5,8 +5,8 @@ $this->breadcrumbs=array(
 );
 ?>
 <style>
-    select, input {
-        width: 50px;
+    div.grid-view select, div.grid-view input {
+        width: 100px;
     }
 </style>
 <?php $this->widget('BootGridView', array(

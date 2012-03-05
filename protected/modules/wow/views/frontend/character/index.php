@@ -14,7 +14,7 @@ $this->breadcrumbs=array(
             'type'=>'raw',
             'value'=>'CHtml::link(
             	"<span class=\"icon-frame frame-18\">".CHtml::image("/images/wow/2d/avatar/$data->race-$data->gender.jpg", "", array("height" => 18, "width" => 18))."</span><strong>$data->name</strong>"
-            	,array("/wow/character/simple/", "realm" => Database::$realm, "name" => $data->name),
+            	,array("/wow/character/view/", "realm" => Database::$realm, "name" => $data->name),
             	array("class"=>"item-link color-c$data->class"))',
             'name'=>'name',
         ),

@@ -12,8 +12,7 @@
         <?php
         $this->widget('BootMenu', array(
             'type'  => 'list',
-            'items' => array_merge(
-                    array(array('label'       => 'Операции', 'itemOptions' => array('class' => 'nav-header'))), $this->menu),
+            'items' => $this->menu,
         ));
         ?>
     </div>

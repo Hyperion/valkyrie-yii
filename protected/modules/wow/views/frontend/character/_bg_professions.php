@@ -1,60 +1,42 @@
-<div class="summary-stats-bottom">
-	<div class="summary-battlegrounds">
-	<ul>
-		<li class="rating">
-			<span class="name">PvP Rank</span>
-			<span class="value">
-				<?php if($model->honorRank > 4): ?>
-					<img src="/images/wow/icons/rank/PvPRank0<?=$model->honorRank?>.png">
-				<?php else: ?>
-				None
-				<?php endif; ?>
-			</span>
-			<span class="clear"><!-- --></span>
-		</li>
-		<li class="kills">
-			<span class="name">Honorable Kills</span>
-			<span class="value"><?=$model->honor->hk?></span>
-			<span class="clear"><!-- --></span>
-		</li>
-	</ul>
-	</div>
-	<div class="summary-professions">
-	<ul>
-<?php 
+<ul>
+    <li>
+        <span>PvP Rank</span>
+        <span>
+            <?php if($model->honorRank > 4): ?>
+                <img src="/images/wow/icons/rank/PvPRank0<?php echo $model->honorRank; ?>.png">
+            <?php else: ?>
+                нет
+            <?php endif; ?>
+        </span>
+    </li>
+    <li class="kills">
+        <span>Honorable Kills</span>
+        <span><?php echo $model->honor->hk; ?></span>
+    </li>
+</ul>
+<ul>
+    <?php
 // Professions
-$professions = $model->professions;
-if(is_array($professions))
-	for($i = 0; $i < 2; $i++)
-    	if(!isset($professions[$i]))
-		{ ?>
-<li class="empty">
-	<span class="profession-details">
-		<span class="icon"> 
-			<span class="icon-frame frame-12">
-				<img src="http://eu.battle.net/wow-assets/static/images/icons/18/inv_misc_questionmark.jpg" alt="" width="12" height="12" />
-			</span>
-		</span>
-		<span class="name">No profession</span>
-	</span>
-</li>
-<?php } else { ?>
-<li><div class="profile-progress border-3 <?=(($professions[$i]['value'] == 300)?'completed':'')?>" >
-	<div class="bar border-3" style="width: <?=($professions[$i]['value']/3)?>%"></div>
-	<div class="bar-contents">
-	<span class="profession-details">
-		<span class="icon"> 
-			<span class="icon-frame frame-12">
-				<img src="http://eu.battle.net/wow-assets/static/images/icons/18/<?=$professions[$i]['icon']?>.jpg" alt="" width="12" height="12" />
-			</span>
-		</span>
-		<span class="name"><?=$professions[$i]['name']?></span>
-		<span class="value"><?=$professions[$i]['value']?></span>
-	</span>
-	</div>
-</div></li>
-<?php } ?>
-	</ul>
-	</div>
-	<span class="clear"><!-- --></span>
-</div>
+    $professions = $model->professions;
+    if(is_array($professions))
+        for($i = 0; $i < 2; $i++)
+            if(!isset($professions[$i])): ?>
+                <li>
+                    <span class="icon"> 
+                        <img src="http://eu.battle.net/wow-assets/static/images/icons/18/inv_misc_questionmark.jpg" width="12" height="12" />
+                    </span>
+                    <span>No profession</span>
+                </li>
+            <?php else: ?>
+                <li><div class="progress">
+                        <div class="bar" style="width: <?php echo ($professions[$i]['value'] / 3); ?>%"></div>
+                        <div>
+                            <span> 
+                                <img src="http://eu.battle.net/wow-assets/static/images/icons/18/<?php echo $professions[$i]['icon']; ?>.jpg" width="12" height="12" />
+                            </span>
+                            <span><?php echo$professions[$i]['name']; ?></span>
+                            <span><?php echo$professions[$i]['value']; ?></span>
+                        </div>
+                    </div></li>
+            <?php endif;  ?>
+</ul>

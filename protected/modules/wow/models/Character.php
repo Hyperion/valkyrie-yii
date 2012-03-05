@@ -3,85 +3,80 @@
 class Character extends CActiveRecord
 {
     /* Equipment Slots */
-    const EQUIPMENT_SLOT_START = 0;
-    const EQUIPMENT_SLOT_HEAD = 0;
-    const EQUIPMENT_SLOT_NECK = 1;
+
+    const EQUIPMENT_SLOT_START     = 0;
+    const EQUIPMENT_SLOT_HEAD      = 0;
+    const EQUIPMENT_SLOT_NECK      = 1;
     const EQUIPMENT_SLOT_SHOULDERS = 2;
-    const EQUIPMENT_SLOT_BODY = 3;
-    const EQUIPMENT_SLOT_CHEST = 4;
-    const EQUIPMENT_SLOT_WAIST = 5;
-    const EQUIPMENT_SLOT_LEGS = 6;
-    const EQUIPMENT_SLOT_FEET = 7;
-    const EQUIPMENT_SLOT_WRISTS = 8;
-    const EQUIPMENT_SLOT_HANDS = 9;
-    const EQUIPMENT_SLOT_FINGER1 = 10;
-    const EQUIPMENT_SLOT_FINGER2 = 11;
-    const EQUIPMENT_SLOT_TRINKET1 = 12;
-    const EQUIPMENT_SLOT_TRINKET2 = 13;
-    const EQUIPMENT_SLOT_BACK = 14;
-    const EQUIPMENT_SLOT_MAINHAND = 15;
-    const EQUIPMENT_SLOT_OFFHAND = 16;
-    const EQUIPMENT_SLOT_RANGED = 17;
-    const EQUIPMENT_SLOT_TABARD = 18;
-    const EQUIPMENT_SLOT_END = 19;
-
-    const CLASS_WARRIOR = 1;
-    const CLASS_PALADIN = 2;
-    const CLASS_HUNTER = 3;
-    const CLASS_ROGUE = 4;
-    const CLASS_PRIEST = 5;
-    const CLASS_DK = 6;
-    const CLASS_SHAMAN = 7;
-    const CLASS_MAGE = 8;
-    const CLASS_WARLOCK = 9;
-    const CLASS_DRUID = 11;
-    const MAX_CLASSES = 12;
-
-    const RACE_HUMAN = 1;
-    const RACE_ORC = 2;
-    const RACE_DWARF = 3;
-    const RACE_NIGHTELF = 4;
-    const RACE_UNDEAD = 5;
-    const RACE_TAUREN = 6;
-    const RACE_GNOME = 7;
-    const RACE_TROLL = 9;
-
-    const FACTION_ALLIANCE = 1;
-    const FACTION_HORDE = 2;
-
-    const POWER_HEALTH = 0xFFFFFFFE;
-    const POWER_MANA = 0;
-    const POWER_RAGE = 1;
-    const POWER_FOCUS = 2;
-    const POWER_ENERGY = 3;
-    const POWER_HAPPINESS = 4;
-    const POWER_RUNE = 5;
-    const POWER_RUNIC_POWER = 6;
-    const MAX_POWERS = 7;
-
-    const ROLE_MELEE = 1;
-    const ROLE_RANGED = 2;
-    const ROLE_CASTER = 3;
-    const ROLE_HEALER = 4;
-    const ROLE_TANK = 5;
-
-    const SKILL_BLACKSMITHING = 164;
-    const SKILL_LEATHERWORKING = 165;
-    const SKILL_ALCHEMY = 171;
-    const SKILL_HERBALISM = 182;
-    const SKILL_MINING = 186;
-    const SKILL_TAILORING = 197;
-    const SKILL_ENGINERING = 202;
-    const SKILL_ENCHANTING = 333;
-    const SKILL_SKINNING = 393;
-    const SKILL_JEWELCRAFTING = 755;
-    const SKILL_INSCRIPTION = 773;
+    const EQUIPMENT_SLOT_BODY      = 3;
+    const EQUIPMENT_SLOT_CHEST     = 4;
+    const EQUIPMENT_SLOT_WAIST     = 5;
+    const EQUIPMENT_SLOT_LEGS      = 6;
+    const EQUIPMENT_SLOT_FEET      = 7;
+    const EQUIPMENT_SLOT_WRISTS    = 8;
+    const EQUIPMENT_SLOT_HANDS     = 9;
+    const EQUIPMENT_SLOT_FINGER1   = 10;
+    const EQUIPMENT_SLOT_FINGER2   = 11;
+    const EQUIPMENT_SLOT_TRINKET1  = 12;
+    const EQUIPMENT_SLOT_TRINKET2  = 13;
+    const EQUIPMENT_SLOT_BACK      = 14;
+    const EQUIPMENT_SLOT_MAINHAND  = 15;
+    const EQUIPMENT_SLOT_OFFHAND   = 16;
+    const EQUIPMENT_SLOT_RANGED    = 17;
+    const EQUIPMENT_SLOT_TABARD    = 18;
+    const EQUIPMENT_SLOT_END       = 19;
+    const CLASS_WARRIOR            = 1;
+    const CLASS_PALADIN            = 2;
+    const CLASS_HUNTER             = 3;
+    const CLASS_ROGUE              = 4;
+    const CLASS_PRIEST             = 5;
+    const CLASS_DK                 = 6;
+    const CLASS_SHAMAN             = 7;
+    const CLASS_MAGE               = 8;
+    const CLASS_WARLOCK            = 9;
+    const CLASS_DRUID              = 11;
+    const MAX_CLASSES              = 12;
+    const RACE_HUMAN               = 1;
+    const RACE_ORC                 = 2;
+    const RACE_DWARF               = 3;
+    const RACE_NIGHTELF            = 4;
+    const RACE_UNDEAD              = 5;
+    const RACE_TAUREN              = 6;
+    const RACE_GNOME               = 7;
+    const RACE_TROLL               = 9;
+    const FACTION_ALLIANCE         = 1;
+    const FACTION_HORDE            = 2;
+    const POWER_HEALTH             = 0xFFFFFFFE;
+    const POWER_MANA               = 0;
+    const POWER_RAGE               = 1;
+    const POWER_FOCUS              = 2;
+    const POWER_ENERGY             = 3;
+    const POWER_HAPPINESS          = 4;
+    const POWER_RUNE               = 5;
+    const POWER_RUNIC_POWER        = 6;
+    const MAX_POWERS               = 7;
+    const ROLE_MELEE               = 1;
+    const ROLE_RANGED              = 2;
+    const ROLE_CASTER              = 3;
+    const ROLE_HEALER              = 4;
+    const ROLE_TANK                = 5;
+    const SKILL_BLACKSMITHING      = 164;
+    const SKILL_LEATHERWORKING     = 165;
+    const SKILL_ALCHEMY            = 171;
+    const SKILL_HERBALISM          = 182;
+    const SKILL_MINING             = 186;
+    const SKILL_TAILORING          = 197;
+    const SKILL_ENGINERING         = 202;
+    const SKILL_ENCHANTING         = 333;
+    const SKILL_SKINNING           = 393;
+    const SKILL_JEWELCRAFTING      = 755;
+    const SKILL_INSCRIPTION        = 773;
 
     public $class_text = false;
-    public $race_text = false;
-    public $realm = false;
+    public $race_text  = false;
+    public $realm      = false;
     public $faction;
-    private $_items = array();
+    private $_items     = array();
     private $_spells = array();
     private $_talents = array();
     private $_professions = false;
@@ -89,7 +84,7 @@ class Character extends CActiveRecord
     private $_role;
     private $_item_level;
 
-    public static function model($className=__CLASS__)
+    public static function model($className = __CLASS__)
     {
         return parent::model($className);
     }
@@ -124,7 +119,7 @@ class Character extends CActiveRecord
                 'CharacterReputation',
                 'guid',
                 'condition' => '`reputation`.`flags` & ' . CharacterReputation::FACTION_FLAG_VISIBLE,
-                'index' => 'faction',
+                'index'     => 'faction',
             ),
         );
     }
@@ -133,8 +128,8 @@ class Character extends CActiveRecord
     {
         return array(
             'honor_highest_rank' => 'Max Rank',
-            'honor_standing' => 'Standing',
-            'honor_rank_points' => 'RP',
+            'honor_standing'     => 'Standing',
+            'honor_rank_points'  => 'RP',
         );
     }
 
@@ -144,36 +139,36 @@ class Character extends CActiveRecord
             'classes' => array(
                 self::CLASS_WARRIOR => Yii::t('WowModule.character', 'Warrior'),
                 self::CLASS_PALADIN => Yii::t('WowModule.character', 'Paladin'),
-                self::CLASS_HUNTER => Yii::t('WowModule.character', 'Hunter'),
-                self::CLASS_ROGUE => Yii::t('WowModule.character', 'Rogue'),
-                self::CLASS_PRIEST => Yii::t('WowModule.character', 'Priest'),
-                self::CLASS_SHAMAN => Yii::t('WowModule.character', 'Shaman'),
-                self::CLASS_MAGE => Yii::t('WowModule.character', 'Mage'),
+                self::CLASS_HUNTER  => Yii::t('WowModule.character', 'Hunter'),
+                self::CLASS_ROGUE   => Yii::t('WowModule.character', 'Rogue'),
+                self::CLASS_PRIEST  => Yii::t('WowModule.character', 'Priest'),
+                self::CLASS_SHAMAN  => Yii::t('WowModule.character', 'Shaman'),
+                self::CLASS_MAGE    => Yii::t('WowModule.character', 'Mage'),
                 self::CLASS_WARLOCK => Yii::t('WowModule.character', 'Warlock'),
-                self::CLASS_DRUID => Yii::t('WowModule.character', 'Druid'),
+                self::CLASS_DRUID   => Yii::t('WowModule.character', 'Druid'),
             ),
-            'races' => array(
-                self::RACE_HUMAN => Yii::t('WowModule.character', 'Human'),
-                self::RACE_ORC => Yii::t('WowModule.character', 'Orc'),
-                self::RACE_DWARF => Yii::t('WowModule.character', 'Dwarf'),
+            'races'             => array(
+                self::RACE_HUMAN    => Yii::t('WowModule.character', 'Human'),
+                self::RACE_ORC      => Yii::t('WowModule.character', 'Orc'),
+                self::RACE_DWARF    => Yii::t('WowModule.character', 'Dwarf'),
                 self::RACE_NIGHTELF => Yii::t('WowModule.character', 'Night Elf'),
-                self::RACE_UNDEAD => Yii::t('WowModule.character', 'Undead'),
-                self::RACE_TAUREN => Yii::t('WowModule.character', 'Tauren'),
-                self::RACE_GNOME => Yii::t('WowModule.character', 'Gnome'),
-                self::RACE_TROLL => Yii::t('WowModule.character', 'Troll'),
+                self::RACE_UNDEAD   => Yii::t('WowModule.character', 'Undead'),
+                self::RACE_TAUREN   => Yii::t('WowModule.character', 'Tauren'),
+                self::RACE_GNOME    => Yii::t('WowModule.character', 'Gnome'),
+                self::RACE_TROLL    => Yii::t('WowModule.character', 'Troll'),
             ),
-            'genders' => array(
-                0 => 'male',
-                1 => 'female',
+            'genders'           => array(
+                0        => 'male',
+                1        => 'female',
             ),
             'powers' => array(
-                self::POWER_MANA => 'Mana',
-                self::POWER_RAGE => 'Rage',
+                self::POWER_MANA   => 'Mana',
+                self::POWER_RAGE   => 'Rage',
                 self::POWER_ENERGY => 'Energy',
             ),
-            'factions' => array(
+            'factions'         => array(
                 self::FACTION_ALLIANCE => Yii::t('WowModule.character', 'Alliance'),
-                self::FACTION_HORDE => Yii::t('WowModule.character', 'Horde'),
+                self::FACTION_HORDE    => Yii::t('WowModule.character', 'Horde'),
             ),
         );
 
@@ -186,7 +181,7 @@ class Character extends CActiveRecord
     public function search($all_realms = false)
     {
         $criteria = new CDbCriteria;
-        $sort = new CSort;
+        $sort     = new CSort;
 
         $criteria->compare('guid', $this->guid);
         $criteria->compare('name', $this->name, true);
@@ -207,15 +202,15 @@ class Character extends CActiveRecord
                 $criteria->compare('honor.thisWeek_kills', '>25');
 
             $sort->attributes = array(
-                'name' => 'name',
-                'honor.hk' => 'honor.hk',
-                'level' => 'level',
-                'race' => 'race',
-                'class' => 'class',
-                'honor_standing' => 'honor_standing',
-                'honor_highest_rank' => 'honor_highest_rank',
-                'honor_rank_points' => 'honor_rank_points',
-                'honor.thisWeek_cp' => 'honor.thisWeek_cp',
+                'name'                 => 'name',
+                'honor.hk'             => 'honor.hk',
+                'level'                => 'level',
+                'race'                 => 'race',
+                'class'                => 'class',
+                'honor_standing'       => 'honor_standing',
+                'honor_highest_rank'   => 'honor_highest_rank',
+                'honor_rank_points'    => 'honor_rank_points',
+                'honor.thisWeek_cp'    => 'honor.thisWeek_cp',
                 'honor.thisWeek_kills' => 'honor.thisWeek_kills',
             );
             $sort->defaultOrder = 'honor_standing ASC';
@@ -244,11 +239,11 @@ class Character extends CActiveRecord
 
         return new CMultirealmDataProvider(get_class($this), array(
                     'all_realms' => $all_realms,
-                    'criteria' => $criteria,
+                    'criteria'   => $criteria,
                     'pagination' => array(
                         'pageSize' => 40,
                     ),
-                    'sort' => $sort,
+                    'sort'     => $sort,
                 ));
     }
 
@@ -278,35 +273,35 @@ class Character extends CActiveRecord
     public function getHonorBar()
     {
         $bar['percent'] = 0;
-        $bar['cap'] = 0;
+        $bar['cap']     = 0;
         if($this->honor_rank_points <= -2000.0)
-            $bar['cap'] = -2000;
+            $bar['cap']     = -2000;
         else if($this->honor_rank_points <= -1000.0)
         {
             $bar['percent'] = round((2000 + $this->honor_rank_points) / 10);
-            $bar['cap'] = -1000;
+            $bar['cap']     = -1000;
         }
         else if($this->honor_rank_points <= -500.0)
         {
             $bar['percent'] = round((1000 + $this->honor_rank_points) / 5);
-            $bar['cap'] = -500;
+            $bar['cap']     = -500;
         }
         else if($this->honor_rank_points < 0.0)
             $bar['percent'] = round((500 + $this->honor_rank_points) / 5);
         else if($this->honor_rank_points < 2000.00)
         {
             $bar['percent'] = round($this->honor_rank_points / 20);
-            $bar['cap'] = 2000;
+            $bar['cap']     = 2000;
         }
         else if($this->honor_rank_points > (13) * 5000)
         {
             $bar['percent'] = 100;
-            $bar['cap'] = 65000;
+            $bar['cap']     = 65000;
         }
         else
         {
             $bar['percent'] = round(($this->honor_rank_points % 5000) / 50);
-            $bar['cap'] = floor($this->honor_rank_points / 5000) * 5000 + 5000;
+            $bar['cap']     = floor($this->honor_rank_points / 5000) * 5000 + 5000;
         }
 
         return $bar;
@@ -315,13 +310,15 @@ class Character extends CActiveRecord
     public function loadAdditionalData()
     {
         $column = 'name_' . Yii::app()->language;
+
         $connection = Yii::app()->db;
-        $command = $connection->createCommand()
+        $command    = $connection->createCommand()
                 ->select("r.$column AS race, c.$column AS class")
                 ->from('wow_races r, wow_classes c')
                 ->where('r.id = ? AND c.id = ?', array($this->race, $this->class))
                 ->limit(1);
         $row = $command->queryRow();
+
         $this->race_text = $row['race'];
         $this->class_text = $row['class'];
 
@@ -341,7 +338,7 @@ class Character extends CActiveRecord
             case self::RACE_HUMAN:
             case self::RACE_DWARF:
             case self::RACE_NIGHTELF:
-            case self::RACE_GNOME: 
+            case self::RACE_GNOME:
                 $this->faction = self::FACTION_ALLIANCE;
                 break;
             default :
@@ -381,24 +378,24 @@ class Character extends CActiveRecord
                 if($proto)
                 {
                     $item_data = array(
-                        'entry' => $proto->entry,
-                        'icon' => $proto->icon,
-                        'name' => $proto->name,
-                        'display_id' => $proto->displayid,
-                        'quality' => $proto->Quality,
-                        'item_level' => $proto->ItemLevel,
-                        'class' => $proto->class,
-                        'enchant_id' => $this->equipmentCache[$i + 1],
-                        'enchant_item' => 0,
-                        'enchant_text' => '',
-                        'slot' => $proto->InventoryType,
+                        'entry'         => $proto->entry,
+                        'icon'          => $proto->icon,
+                        'name'          => $proto->name,
+                        'display_id'    => $proto->displayid,
+                        'quality'       => $proto->Quality,
+                        'item_level'    => $proto->ItemLevel,
+                        'class'         => $proto->class,
+                        'enchant_id'    => $this->equipmentCache[$i + 1],
+                        'enchant_item'  => 0,
+                        'enchant_text'  => '',
+                        'slot'          => $proto->InventoryType,
                         'can_displayed' => !in_array($proto->InventoryType, array(2, 11, 12)),
                         'can_enchanted' => !in_array($j, array(3, 17, 1, 5, 10, 11, 12, 13, 16, 18)),
                     );
                     if($item_data['enchant_id'])
                     {
                         $column = 'text_' . Yii::app()->language;
-                        $info = Yii::app()->db
+                        $info   = Yii::app()->db
                                 ->createCommand("
                                 SELECT wow_enchantment.$column AS text, wow_spellenchantment.id AS spellId
                                 FROM wow_enchantment
@@ -429,20 +426,20 @@ class Character extends CActiveRecord
                             }
                         }
                     }
-                    $data = array();
+                    $data                      = array();
                     if($item_data['enchant_id'])
                         $data[] = "data[enchant_id]={$item_data['enchant_id']}";
 
                     if($proto->itemset)
                     {
-                        $set = Yii::app()->db_world
+                        $set        = Yii::app()->db_world
                                 ->createCommand("SELECT entry FROM item_template WHERE itemset = {$proto->itemset}")
                                 ->queryColumn();
                         $set_pieces = array();
-                        for($k = 0; $k < 37; $k += 2)
+                        for($k                 = 0; $k < 37; $k += 2)
                             if(in_array($this->equipmentCache[$k], $set))
-                                $set_pieces[] = $this->equipmentCache[$k];
-                        $data[] = 'data[set]=' . implode(',', $set_pieces);
+                                $set_pieces[]      = $this->equipmentCache[$k];
+                        $data[]            = 'data[set]=' . implode(',', $set_pieces);
                     }
                     $item_data['data'] = implode('&', $data);
                     $this->_items[$j] = $item_data;
@@ -505,7 +502,10 @@ class Character extends CActiveRecord
 
     public function getPowerValue()
     {
-        $power = $this->stats->{'maxpower' . ($this->powerType + 1)};
+        if(is_object($this->stats))
+            $power = $this->stats->{'maxpower' . ($this->powerType + 1)};
+        else
+            $power = $this->{'power' . ($this->powerType + 1)};
         if($this->class == self::CLASS_WARRIOR)
             $power /= 10;
         return $power;
@@ -528,11 +528,11 @@ class Character extends CActiveRecord
                 foreach($tree['talents'] as $k => $tal)
                 {
                     $checked = false;
-                    $points = 0;
+                    $points  = 0;
                     if($tal['keyAbility'])
                     {
-                        $tSpell = Spell::model()->findByPk($tal['ranks'][0]['id']);
-                        $name = $tSpell->spellname_loc0;
+                        $tSpell     = Spell::model()->findByPk($tal['ranks'][0]['id']);
+                        $name       = $tSpell->spellname_loc0;
                         $spellRanks = Yii::app()->db->createCommand(
                                         "SELECT spellID
                                 FROM wow_spells
@@ -546,7 +546,7 @@ class Character extends CActiveRecord
                             {
                                 $checked = true;
                                 $build .= 1;
-                                $points = 1;
+                                $points  = 1;
                                 $this->_talents[$i]['count']++;
                                 break;
                             }
@@ -558,7 +558,7 @@ class Character extends CActiveRecord
                             {
                                 $checked = true;
                                 $build .= $j + 1;
-                                $points = $j + 1;
+                                $points  = $j + 1;
                                 $this->_talents[$i]['count'] += $j + 1;
                                 break;
                             }
@@ -675,7 +675,7 @@ class Character extends CActiveRecord
             return false;
 
         $this->_professions = array();
-        $i = 0;
+        $i      = 0;
         $column = 'name_' . Yii::app()->language;
         foreach($professions as $prof)
         {
@@ -698,10 +698,10 @@ class Character extends CActiveRecord
             return $this->_item_level;
 
         $total_iLvl = 0;
-        $maxLvl = 0;
-        $minLvl = 500;
-        $i = 0;
-        $this->_item_level = array('avgEquipped' => 0, 'avg' => 0);
+        $maxLvl     = 0;
+        $minLvl     = 500;
+        $i          = 0;
+        $this->_item_level = array('avgEquipped' => 0, 'avg'         => 0);
         foreach($this->items as $slot => $item)
         {
             if(!in_array($slot, array(self::EQUIPMENT_SLOT_BODY, self::EQUIPMENT_SLOT_TABARD)))
@@ -739,11 +739,11 @@ class Character extends CActiveRecord
             switch($feed[$i]['type'])
             {
                 case 2:
-                    $feed[$i]['item'] = ItemTemplate::model()->findByPk($feed[$i]['data']);
+                    $feed[$i]['item']     = ItemTemplate::model()->findByPk($feed[$i]['data']);
                     $feed[$i]['equipped'] = $this->isEquipped($feed[$i]['data']);
                     break;
                 case 3:
-                    $feed[$i]['count'] = $this->dbConnection
+                    $feed[$i]['count']    = $this->dbConnection
                             ->createCommand("SELECT COUNT(1)
                             FROM character_feed_log
                             WHERE
@@ -752,7 +752,7 @@ class Character extends CActiveRecord
                                 AND data = {$feed[$i]['data']}
                                 AND date <= {$feed[$i]['date']}")
                             ->queryScalar();
-                    $feed[$i]['data'] = CreatureTemplate::model()->findByPk($feed[$i]['data']);
+                    $feed[$i]['data']     = CreatureTemplate::model()->findByPk($feed[$i]['data']);
                     break;
             }
 
@@ -767,7 +767,7 @@ class Character extends CActiveRecord
 
         $_factions = implode(', ', $_factions);
 
-        $column = 'name_' . Yii::app()->language;
+        $column   = 'name_' . Yii::app()->language;
         $factions = Yii::app()->db
                 ->createCommand("SELECT `id`, `category`, $column AS `name`, `baseValue`
                     FROM `wow_factions` WHERE `id` IN ($_factions)
@@ -781,40 +781,40 @@ class Character extends CActiveRecord
                 // Horde
                 67 => array(
                     'order' => 1,
-                    'side' => CharacterReputation::FACTION_HORDE
+                    'side'  => CharacterReputation::FACTION_HORDE
                 ),
                 // Horde Forces
-                892 => array(
+                892     => array(
                     'order' => 2,
-                    'side' => CharacterReputation::FACTION_HORDE
+                    'side'  => CharacterReputation::FACTION_HORDE
                 ),
                 // Alliance
-                469 => array(
+                469     => array(
                     'order' => 1,
-                    'side' => CharacterReputation::FACTION_ALLIANCE
+                    'side'  => CharacterReputation::FACTION_ALLIANCE
                 ),
                 // Alliance Forces
-                891 => array(
+                891     => array(
                     'order' => 2,
-                    'side' => CharacterReputation::FACTION_ALLIANCE
+                    'side'  => CharacterReputation::FACTION_ALLIANCE
                 ),
                 // Steamwheedle Cartel
-                169 => array(
+                169     => array(
                     'order' => 3,
-                    'side' => -1
+                    'side'  => -1
                 )
             ),
             // Other
-            0 => array(
+            0       => array(
                 // Wintersaber trainers
                 589 => array(
                     'order' => 1,
-                    'side' => CharacterReputation::FACTION_ALLIANCE
+                    'side'  => CharacterReputation::FACTION_ALLIANCE
                 ),
                 // Syndicat
-                70 => array(
-                    'order' => 2,
-                    'side' => -1
+                70      => array(
+                    'order'  => 2,
+                    'side'   => -1
                 )
             )
         );
@@ -823,57 +823,57 @@ class Character extends CActiveRecord
         foreach($factions as $faction)
         {
             // Standing & adjusted values
-            $standing = min(42999, $this->reputation[$faction['id']]['standing'] + $faction['baseValue']);
-            $type = CharacterReputation::REP_EXALTED;
-            $rep_cap = 999;
+            $standing     = min(42999, $this->reputation[$faction['id']]['standing'] + $faction['baseValue']);
+            $type         = CharacterReputation::REP_EXALTED;
+            $rep_cap      = 999;
             $rep_adjusted = $standing - 42000;
             if($standing < CharacterReputation::REPUTATION_VALUE_HATED)
             {
-                $type = CharacterReputation::REP_HATED;
-                $rep_cap = 36000;
+                $type         = CharacterReputation::REP_HATED;
+                $rep_cap      = 36000;
                 $rep_adjusted = $standing + 42000;
             }
             elseif($standing < CharacterReputation::REPUTATION_VALUE_HOSTILE)
             {
-                $type = CharacterReputation::REP_HOSTILE;
-                $rep_cap = 3000;
+                $type         = CharacterReputation::REP_HOSTILE;
+                $rep_cap      = 3000;
                 $rep_adjusted = $standing + 6000;
             }
             elseif($standing < CharacterReputation::REPUTATION_VALUE_UNFRIENDLY)
             {
-                $type = CharacterReputation::REP_UNFRIENDLY;
-                $rep_cap = 3000;
+                $type         = CharacterReputation::REP_UNFRIENDLY;
+                $rep_cap      = 3000;
                 $rep_adjusted = $standing + 3000;
             }
             elseif($standing < CharacterReputation::REPUTATION_VALUE_NEUTRAL)
             {
-                $type = CharacterReputation::REP_NEUTRAL;
-                $rep_cap = 3000;
+                $type         = CharacterReputation::REP_NEUTRAL;
+                $rep_cap      = 3000;
                 $rep_adjusted = $standing;
             }
             elseif($standing < CharacterReputation::REPUTATION_VALUE_FRIENDLY)
             {
-                $type = CharacterReputation::REP_FRIENDLY;
-                $rep_cap = 6000;
+                $type         = CharacterReputation::REP_FRIENDLY;
+                $rep_cap      = 6000;
                 $rep_adjusted = $standing - 3000;
             }
             elseif($standing < CharacterReputation::REPUTATION_VALUE_HONORED)
             {
-                $type = CharacterReputation::REP_HONORED;
-                $rep_cap = 12000;
+                $type         = CharacterReputation::REP_HONORED;
+                $rep_cap      = 12000;
                 $rep_adjusted = $standing - 9000;
             }
             elseif($standing < CharacterReputation::REPUTATION_VALUE_REVERED)
             {
-                $type = CharacterReputation::REP_REVERED;
-                $rep_cap = 21000;
-                $rep_adjusted = $standing - 21000;
+                $type                = CharacterReputation::REP_REVERED;
+                $rep_cap             = 21000;
+                $rep_adjusted        = $standing - 21000;
             }
             $faction['standing'] = $this->reputation[$faction['id']]['standing'];
-            $faction['type'] = $type;
-            $faction['cap'] = $rep_cap;
+            $faction['type']     = $type;
+            $faction['cap']      = $rep_cap;
             $faction['adjusted'] = $rep_adjusted;
-            $faction['percent'] = round($rep_adjusted * 100 / $rep_cap);
+            $faction['percent']  = round($rep_adjusted * 100 / $rep_cap);
 
             if(isset($categories[$faction['category']])
                     and $faction['id'] != 67
@@ -915,7 +915,7 @@ class Character extends CActiveRecord
                 break;
             case 4: $title = 'Dishonored';
                 break;
-            default: $title = 'None';
+            default: $title = false;
                 break;
         }
 
