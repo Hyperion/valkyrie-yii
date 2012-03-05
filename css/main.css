@@ -20,7 +20,9 @@ body {
     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
     box-shadow: 0 1px 2px rgba(0,0,0,.15);
 }
-
+footer {
+    margin-top: 30px
+}
 .content .span12,
 .content .span4 {
     min-height: 200px;
@@ -33,4 +35,57 @@ body {
 .captchaLink {
     padding: 10px 0px;
     display: block;
+}
+
+.slider-cont{
+	position:relative;
+	float:left;
+	padding:0px;
+    height: 275px;
+    display: block;
+    margin-bottom: 25px;
+}
+
+#slider ul {
+    list-style: none;
+    margin: 0px;
+}
+
+#slider ul li{
+    height: 275px;
+    width: 940px;
+}
+
+#prevBtn, #nextBtn{
+	position: absolute;
+	top: 122px;
+	display:block !important;
+    margin-left: 8px;
+    margin-right: 8px;
+	z-index:1000;
+}
+
+#prevBtn{left:0;}
+#nextBtn{right:0;}
+
+#prevBtn a, #nextBtn a{
+	line-height:0; 
+	font-size:0; 
+	overflow:hidden; 
+	text-indent:999px;
+	width: 31px;
+	height: 31px;
+}
+#prevBtn a{
+	display:block;
+	background: url(../images/icon_arrow_left.png) no-repeat 0 -31px;
+}
+#nextBtn a{
+	display:block;
+	background: url(../images/icon_arrow_right.png) no-repeat 0 -31px;
+}
+
+#prevBtn a:hover, #nextBtn a:hover
+{
+	background-position: 0 0;
 }

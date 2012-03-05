@@ -15,7 +15,9 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $this->render('index');
+        $this->_cs->registerScriptFile('/js/easySlider1.7.js');
+        $files = Slider::model()->findAll();
+        $this->render('index', array('files' => $files));
     }
 
     public function actionError()

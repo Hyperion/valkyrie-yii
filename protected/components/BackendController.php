@@ -9,6 +9,7 @@ class BackendController extends CController
     public $defaultAction = 'admin';
     public $class         = '';
     private $_model;
+    protected $_cs;
 
     public function filters()
     {
@@ -47,11 +48,11 @@ class BackendController extends CController
         parent::init();
 
         $this->class = ($this->class) ? $this->class : ucfirst($this->id);
-        $cs = Yii::app()->clientScript;
-        $cs->registerPackage('jquery');
-        $cs->registerPackage('jquery.ui');
-        $cs->registerCssFile(Yii::app()->request->baseUrl . '/css/main.css');
-        $cs->registerCssFile(Yii::app()->request->baseUrl . '/css/custom-theme/jquery-ui-1.8.16.custom.css');
+        $this->_cs = Yii::app()->clientScript;
+        $this->_cs->registerPackage('jquery');
+        $this->_cs->registerPackage('jquery.ui');
+        $this->_cs->registerCssFile(Yii::app()->request->baseUrl . '/css/main.css');
+        $this->_cs->registerCssFile(Yii::app()->request->baseUrl . '/css/custom-theme/jquery-ui-1.8.16.custom.css');
 
         $this->menu = Yii::app()->cache->get('backendmenu');
 

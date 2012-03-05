@@ -5,6 +5,7 @@ return array(
         'wow',
         'user',
         'rights',
+        'gallery',
         'gii' => array(
             'class'     => 'system.gii.GiiModule',
             'password'  => '123',

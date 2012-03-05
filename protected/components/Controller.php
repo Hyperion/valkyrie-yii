@@ -1,5 +1,4 @@
 <?php
-
 class Controller extends CController
 {
 
@@ -20,6 +19,7 @@ class Controller extends CController
         $this->class = ($this->class) ? $this->class : ucfirst($this->id);
         $this->_cs = Yii::app()->clientScript;
         $this->_cs->registerPackage('jquery');
+        $this->_cs->registerPackage('jquery.ui');
     }
 
     protected function performAjaxValidation($model, $form)
