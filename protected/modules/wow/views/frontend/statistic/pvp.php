@@ -9,8 +9,8 @@ else
     $this->breadcrumbs[Database::$realm.' @ PvP'] = array('/wow/statistic/pvp', 'realm' => Database::$realm);    
 ?>
 <style>
-    select {
-        width: 75px;
+    select, inpput {
+        width: 50px;
     }
 </style>
 <?php $this->widget('BootGridView', array(
