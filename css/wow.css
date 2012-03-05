@@ -24,7 +24,7 @@
 /* item details and tooltips */
 .color-tooltip-yellow { color: #ffd100 !important; }
 .color-tooltip-red { color: #f00 !important; }
-.color-tooltip-green { color: #0f0 !important; }
+.color-tooltip-green, .color-tooltip-green a { color: #0f0 !important; }
 .color-tooltip-blue { color: #71D5FF !important; }
 .color-tooltip-beige { color: #FFFF98 !important; }
 
@@ -42,17 +42,12 @@
 .color-q6, .color-q6 a { color: #e5cc80 !important; } /* artifact (gold) */
 .color-q7, .color-q7 a { color: #e5cc80 !important; } /* heirloom (gold) */
 
-/* class */
-.color-c1,  .color-c1 a { color: #c69b6d !important; } /* warrior */
-.color-c2,  .color-c2 a { color: #f48cba !important; } /* paladin */
-.color-c3,  .color-c3 a, .color-g2 { color: #aad372 !important; } /* hunter */
-.color-c4,  .color-c4 a, .color-g1 { color: #fff468 !important; } /* rogue */
-.color-c5,  .color-c5 a { color: #f0ebe0 !important; } /* priest */
-.color-c6,  .color-c6 a { color: #c41e3b !important; } /* death knight */
-.color-c7,  .color-c7 a { color: #2359ff !important; } /* shaman */
-.color-c8,  .color-c8 a, .color-g3 { color: #68ccef !important; } /* mage */
-.color-c9,  .color-c9 a { color: #9382c9 !important; } /* warlock */
-.color-c11, .color-c11 a, .color-g4 { color: #ff7c0a !important; } /* druid */
+.color-d1, .color-d1 a { color: #ff8040 !important; } /* orange */
+.color-d2, .color-d2 a { color: #ffff00 !important; } /* yellow */
+.color-d3, .color-d3 a { color: #40bf40 !important; } /* green */
+.color-d4, .color-d4 a { color: #808080 !important; } /* gray */
+.color-d5, .color-d5 a { color: #88aaff !important; } /* light blue */
+.color-d6, .color-d6 a { color: #ff0000 !important; } /* red */
 
 /* framed icons */
 .icon-frame { display: inline-block; overflow: hidden; padding: 1px; background-color: #000; background-position: 1px 1px; background-repeat: no-repeat; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border: 1px solid #434445; border-bottom-color: #2f3032; border-top-color: #b1b2b4; }

@@ -117,7 +117,7 @@ if($model->RequiredLevel):
     foreach($model->spells as $spell):
         ?>
         <li class="color-q2">
-            <a class = "has-tip" href="/wow/spell/<?php echo $spell['spellid'] ?>">
+            <a href="/wow/spell/<?php echo $spell['spellid'] ?>">
         <?php echo $model::itemAlias('spell_trigger', $spell['trigger']) ?>: <?php echo $spell['description'] ?>
             </a>
         </li>
@@ -155,12 +155,12 @@ if($model->itemset):
                 <li class="color-tooltip-yellow"><?php echo $model->set['name'] ?> (<?php echo $count ?>/<?php echo $model->set['count'] ?>)</li>
     <?php foreach($model->set['items'] as $item): ?>
                     <li class="indent">
-                        <a class="color-<?php echo ((in_array($item['entry'], $equipped)) ? 'tooltip-beige' : 'd4') ?> has-tip" href="/wow/item/<?php echo $item['entry'] ?>"><?php echo $item['name'] ?></a>
+                        <a class="color-<?php echo ((in_array($item['entry'], $equipped)) ? 'tooltip-beige' : 'd4') ?>" href="/wow/item/<?php echo $item['entry'] ?>"><?php echo $item['name'] ?></a>
                     </li>
     <?php endforeach; ?>
                 <li class="indent-top"></li>
     <?php foreach($model->set['bonuses'] as $piece => $spell): ?>
-                    <li class="color-<?php echo (($piece <= $count) ? 'tooltip-green' : 'd4') ?>">(<?php echo $piece ?>) Set: <a class = "has-tip" href="/wow/spell/<?php echo $spell->spellID ?>"><?php echo $spell->info ?></a></li>
+                    <li class="color-<?php echo (($piece <= $count) ? 'tooltip-green' : 'd4') ?>">(<?php echo $piece ?>) Set: <a href="/wow/spell/<?php echo $spell->spellID ?>"><?php echo $spell->info ?></a></li>
     <?php endforeach; ?>
             </ul>
         </li>
