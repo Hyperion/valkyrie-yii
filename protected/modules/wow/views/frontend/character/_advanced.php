@@ -36,21 +36,3 @@
 </div>
 <?php endforeach; ?>
 </div>
-<script type="text/javascript">
-//<![CDATA[
-$(document).ready(function() {
-	new Summary.Inventory({ view: "advanced" }, {
-<?php
-foreach($model->items as $slot => $item):
-	if(!isset($item['entry']))
-    	continue; ?>  
-<?php echo$slot?>: {
-	name: "<?php echo$item['name']?>",
-    quality: <?php echo$item['quality']?>,
-    icon: "<?php echo$item['icon']?>"
-},
-<?php endforeach; ?>
-	});
-});
-//]]>
-</script>

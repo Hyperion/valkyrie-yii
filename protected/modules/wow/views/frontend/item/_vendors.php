@@ -1,4 +1,4 @@
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php $this->widget('BootGridView', array(
     'dataProvider'=>$dataProvider,
     'columns'=>array(
 		array(

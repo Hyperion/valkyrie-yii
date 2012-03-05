@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<?php $this->widget('WGridWow', array(
+<?php $this->widget('BootGridView', array(
     'id'=>'items-grid',
     'dataProvider'=>$model->search(),
     'enableSorting'=>true,

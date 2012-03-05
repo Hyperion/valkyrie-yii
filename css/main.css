@@ -2,8 +2,9 @@ html, body {
     background-color: #eee;
 }
 body {
-    padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
+    padding-top: 40px; 
 }
+
 .container > footer p {
     text-align: center; /* center align it with the container */
 }
@@ -37,11 +38,10 @@ footer {
     display: block;
 }
 
-.slider-cont{
-	position:relative;
-	float:left;
-	padding:0px;
-    height: 275px;
+.slider-cont {
+    position:relative;
+    float:left;
+    padding:0px;
     display: block;
     margin-bottom: 25px;
 }
@@ -51,41 +51,32 @@ footer {
     margin: 0px;
 }
 
-#slider ul li{
+#slider ul li {
     height: 275px;
     width: 940px;
 }
 
-#prevBtn, #nextBtn{
-	position: absolute;
-	top: 122px;
-	display:block !important;
+#prevBtn, #nextBtn {
+    position: absolute;
+    top: 122px;
+    display:block !important;
     margin-left: 8px;
     margin-right: 8px;
-	z-index:1000;
+    z-index:1000;
 }
 
-#prevBtn{left:0;}
-#nextBtn{right:0;}
+#prevBtn { left:0; }
+#nextBtn { right:0; }
 
-#prevBtn a, #nextBtn a{
-	line-height:0; 
-	font-size:0; 
-	overflow:hidden; 
-	text-indent:999px;
-	width: 31px;
-	height: 31px;
+#prevBtn a, #nextBtn a {
+    line-height:0; 
+    font-size:0; 
+    overflow:hidden; 
+    text-indent:999px;
+    width: 31px;
+    height: 31px;
+    display:block;
 }
-#prevBtn a{
-	display:block;
-	background: url(../images/icon_arrow_left.png) no-repeat 0 -31px;
-}
-#nextBtn a{
-	display:block;
-	background: url(../images/icon_arrow_right.png) no-repeat 0 -31px;
-}
-
-#prevBtn a:hover, #nextBtn a:hover
-{
-	background-position: 0 0;
-}
+#prevBtn a { background: url(../images/icon_arrow_left.png) no-repeat 0 -31px; }
+#nextBtn a { background: url(../images/icon_arrow_right.png) no-repeat 0 -31px; }
+#prevBtn a:hover, #nextBtn a:hover { background-position: 0 0; }

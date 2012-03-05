@@ -20,7 +20,7 @@ else
     'columns'=>array(
         array(
             'type'=>'raw',
-            'value'=>'CHtml::link($data->name, array("/wow/character/simple/", "realm" => Database::$realm, "name" => $data->name))',
+            'value'=>'WowModule::charUrl($data)',
             'name'=>'name',
         ),
         'level',

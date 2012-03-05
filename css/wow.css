@@ -1,0 +1,87 @@
+/* tooltip */
+.ui-tooltip { position: absolute; z-index: 9005; width: auto; height: auto; max-width: 300px; }
+.ui-tooltip .tooltip-content { width: auto; height: auto; }
+.tooltip-frame { background: transparent; border: none; display: none; height: 0; position: absolute; z-index: 999; width: auto; height: auto; max-width: 300px; }
+
+/* tooltip */
+.ui-tooltip { border: 1px solid #353837; color: #fff; background-color: rgba(15, 15, 15, 0.9); padding: 10px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: #000 0 0 15px; -webkit-box-shadow: #000 0 0 15px; box-shadow: #000 0 0 15px; font-size: 12px; }
+.ui-tooltip h3 { font-size: 16px; font-weight: normal; } /* title of the tooltip */
+.ui-tooltip li { clear: both; }
+.ui-tooltip a { color: white; }
+.ui-tooltip ol, .ui-tooltip ul { list-style: none; }
+.ui-tooltip .float-right { float: right; }
+.ui-tooltip .tip { border-bottom: 0; }
+/*.ui-tooltip .float-right { padding-left: 30px; }*/
+.ui-tooltip .frame-32 { position: absolute; left: -60px; top: -10px; }
+.ui-tooltip .frame-36 { position: absolute; left: -56px; top: -10px; }
+.ui-tooltip .frame-56 { position: absolute; left: -75px; top: -10px; }
+.ui-tooltip .frame-150 { position: absolute; left: -175px; top: -10px; }
+.ui-tooltip .tooltip-content { position: relative; }
+.ui-tooltip .tooltip-list { margin-top: 10px; }
+.ui-tooltip .tooltip-list li { margin: 1px 0; }
+.ui-tooltip .tooltip-list .icon-frame { float: left; margin-right: 5px; }
+
+/* item details and tooltips */
+.color-tooltip-yellow { color: #ffd100 !important; }
+.color-tooltip-red { color: #f00 !important; }
+.color-tooltip-green { color: #0f0 !important; }
+.color-tooltip-blue { color: #71D5FF !important; }
+.color-tooltip-beige { color: #FFFF98 !important; }
+
+/* faction */
+.color-tooltip-alliance { color: #247FAA; }
+.color-tooltip-horde { color: #b30000; }
+
+/* item quality */
+.color-q0, .color-q0 a { color: #9d9d9d !important; } /* poor (gray) */
+.color-q1, .color-q1 a { color: #ffffff !important; } /* common (white) */
+.color-q2, .color-q2 a { color: #1eff00 !important; } /* uncommon (green) */
+.color-q3, .color-q3 a { color: #0081ff !important; } /* #0070dd rare (blue) */
+.color-q4, .color-q4 a { color: #c600ff !important; } /* #a335ee epic (purple) */
+.color-q5, .color-q5 a { color: #ff8000 !important; } /* lengendary (orange) */
+.color-q6, .color-q6 a { color: #e5cc80 !important; } /* artifact (gold) */
+.color-q7, .color-q7 a { color: #e5cc80 !important; } /* heirloom (gold) */
+
+/* class */
+.color-c1,  .color-c1 a { color: #c69b6d !important; } /* warrior */
+.color-c2,  .color-c2 a { color: #f48cba !important; } /* paladin */
+.color-c3,  .color-c3 a, .color-g2 { color: #aad372 !important; } /* hunter */
+.color-c4,  .color-c4 a, .color-g1 { color: #fff468 !important; } /* rogue */
+.color-c5,  .color-c5 a { color: #f0ebe0 !important; } /* priest */
+.color-c6,  .color-c6 a { color: #c41e3b !important; } /* death knight */
+.color-c7,  .color-c7 a { color: #2359ff !important; } /* shaman */
+.color-c8,  .color-c8 a, .color-g3 { color: #68ccef !important; } /* mage */
+.color-c9,  .color-c9 a { color: #9382c9 !important; } /* warlock */
+.color-c11, .color-c11 a, .color-g4 { color: #ff7c0a !important; } /* druid */
+
+/* framed icons */
+.icon-frame { display: inline-block; overflow: hidden; padding: 1px; background-color: #000; background-position: 1px 1px; background-repeat: no-repeat; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border: 1px solid #434445; border-bottom-color: #2f3032; border-top-color: #b1b2b4; }
+.icon-frame img { display: block; vertical-align: bottom; }
+.icon-frame.frame-36,
+.icon-frame.frame-50,
+.icon-frame.frame-56 { height: 56px; width: 56px; -moz-box-shadow: #000 0 0 10px; -webkit-box-shadow: #000 0 0 10px; box-shadow: #000 0 0 10px; }
+
+/* tooltips */
+.character-tooltip { min-width: 150px; }
+.wiki-tooltip { min-width: 250px; }
+.wiki-tooltip .wiki-list { margin-top: 10px; }
+.wiki-tooltip .wiki-list li { margin: 2px 0; }
+.wiki-tooltip .wiki-list .item-link { line-height: 16px; }
+.wiki-tooltip .wiki-list .item-link .frame-14 { float: left; margin-right: 5px; }
+.wiki-tooltip .indent { padding-left: 10px }
+.wiki-tooltip .indent-small { padding-left: 5px }
+
+.item-specs .item-link { height: 22px; line-height: 22px; margin: 2px 0; font-weight: normal; background-repeat: no-repeat; }
+.item-specs { margin-top: 10px; }
+.item-specs li { margin: 1px 0; padding: 0; }
+.item-specs .indent { padding-left: 10px }
+.item-specs .indent-small { padding-left: 5px }
+.item-specs .indent-top { padding-top: 10px }
+.item-specs .icon-socket { float: left; margin-right: 4px; margin-top: 1px; }
+.item-specs .reforge-arrow { position: relative; top: -1px; font-size: 10px; }
+.item-specs a.color-q1:hover { text-decoration: underline; }
+.item-specs .transmog-name { color:#ff80ff }
+
+.icon-gold		{ padding-right: 15px; background: url("/images/wow/icons/gold.gif") right center no-repeat; }
+.icon-silver	{ padding-right: 15px; padding-left: 3px; background: url("/images/wow/icons/silver.gif") right center no-repeat; }
+.icon-copper	{ padding-right: 15px; padding-left: 3px; background: url("/images/wow/icons/copper.gif") right center no-repeat; }

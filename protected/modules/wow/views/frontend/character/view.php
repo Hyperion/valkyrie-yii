@@ -57,7 +57,7 @@ $this->breadcrumbs = array(
                     break;
             }
 
-            $this->renderPartial('_stats_js', array('model' => $model->stats));
+            //$this->renderPartial('_stats_js', array('model' => $model->stats));
             ?>
         </div>
         <?php $this->renderPartial('_bg_professions', array('model' => $model)); ?>

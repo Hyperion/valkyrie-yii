@@ -19,5 +19,13 @@ class WowModule extends CWebModule
     {
         return Yii::t("WowModule.".$dic, $str, $params);
     }
+    
+    public static function charUrl($model)
+    {
+        return CHtml::link(
+            	"<span class=\"icon-frame frame-18\">"./*CHtml::image("/images/wow/2d/avatar/$data->race-$data->gender.jpg", "", array("height" => 18, "width" => 18)).*/"</span><strong>$model->name</strong>"
+            	,array("/wow/character/view/", "realm" => Database::$realm, "name" => $model->name),
+            	array("class"=>"item-link color-c$model->class"));
+    }
 
 }

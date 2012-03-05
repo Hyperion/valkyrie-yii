@@ -20,6 +20,11 @@ class Controller extends CController
         $this->_cs = Yii::app()->clientScript;
         $this->_cs->registerPackage('jquery');
         $this->_cs->registerPackage('jquery.ui');
+        $this->_cs->registerScriptFile('/js/wow/page.js');
+        $this->_cs->registerScriptFile('/js/wow/tooltip.js');
+        $this->_cs->registerScriptFile('/js/wow/wow.js');
+        $this->_cs->registerScriptFile('/js/init.js');
+        $this->_cs->registerCssFile('/css/wow.css');
     }
 
     protected function performAjaxValidation($model, $form)
