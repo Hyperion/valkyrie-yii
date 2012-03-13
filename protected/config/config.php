@@ -3,7 +3,7 @@
 return array(
     'basePath'       => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name'           => 'Hyperion\'s Sandbox',
-    //'language' => 'ru',
+    'language'       => 'ru',
     'sourceLanguage' => 'en',
     // preloading 'log' component
     'preload'        => array(
@@ -21,19 +21,21 @@ return array(
         'application.modules.rights.*',
         'application.modules.rights.components.*',
         'ext.bootstrap.widgets.*',
+        'ext.yiiext.filters.setReturnUrl.ESetReturnUrlFilter',
     ),
     // application components
     'components' => array(
         'authManager' => array(
             'class' => 'RDbAuthManager',
+            'defaultRoles'=>array('Guest'),
         ),
         'image' => array(
-            'class' => 'application.extensions.image.CImageComponent',
-            'driver'=>'ImageMagick',
+            'class'  => 'ext.image.ImageComponent',
+            'driver' => 'Imagick',
         ),
-        'db'    => array(
+        'db'     => array(
             'connectionString' => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
-            'emulatePrepare'   => true,
+            //'emulatePrepare'   => true,
             'username'         => DB_USER,
             'password'         => DB_PASS,
             'charset'          => 'utf8',
@@ -64,10 +66,17 @@ return array(
             'class'  => 'ext.bootstrap.components.Bootstrap',
         ),
         'config' => array(
-            'class'     => 'application.extensions.EConfig',
+            'class'            => 'ext.CmsSettings',
+            'cacheComponentId' => 'cache',
+            'cacheId'          => 'cms.config',
+            'cacheTime'        => 84000,
+            'tableName'        => '{{config}}',
+            'dbComponentId'    => 'db',
+            'createTable'      => true,
+            'dbEngine'         => 'InnoDB',
         ),
     ),
-    'behaviors' => array(
+    'behaviors'        => array(
         'runEnd' => array(
             'class'          => 'application.components.behaviors.WebApplicationEndBehavior',
         ),

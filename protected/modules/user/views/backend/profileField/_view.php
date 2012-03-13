@@ -1,31 +1,31 @@
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
+	<b><?php echo CHtml::encode($model->getAttributeLabel('id')); ?>:</b>
+	<?php echo CHtml::link(CHtml::encode($model->id), array('view', 'id'=>$model->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('varname')); ?>:</b>
-	<?php echo CHtml::encode($data->varname); ?>
+	<b><?php echo CHtml::encode($model->getAttributeLabel('varname')); ?>:</b>
+	<?php echo CHtml::encode($model->varname); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('title')); ?>:</b>
-	<?php echo CHtml::encode($data->title); ?>
+	<b><?php echo CHtml::encode($model->getAttributeLabel('title')); ?>:</b>
+	<?php echo CHtml::encode($model->title); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('field_type')); ?>:</b>
-	<?php echo CHtml::encode($data->field_type); ?>
+	<b><?php echo CHtml::encode($model->getAttributeLabel('field_type')); ?>:</b>
+	<?php echo CHtml::encode($model->field_type); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('field_size')); ?>:</b>
-	<?php echo CHtml::encode($data->field_size); ?>
+	<b><?php echo CHtml::encode($model->getAttributeLabel('field_size')); ?>:</b>
+	<?php echo CHtml::encode($model->field_size); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('field_size_min')); ?>:</b>
-	<?php echo CHtml::encode($data->field_size_min); ?>
+	<b><?php echo CHtml::encode($model->getAttributeLabel('field_size_min')); ?>:</b>
+	<?php echo CHtml::encode($model->field_size_min); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('required')); ?>:</b>
-	<?php echo CHtml::encode($data->required); ?>
+	<b><?php echo CHtml::encode($model->getAttributeLabel('required')); ?>:</b>
+	<?php echo CHtml::encode($model->required); ?>
 	<br />
 
 	<?php /*

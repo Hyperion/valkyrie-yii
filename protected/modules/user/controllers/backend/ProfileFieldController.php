@@ -9,16 +9,6 @@ class ProfileFieldController extends BackendController
     private static $_widgets = array();
 
     /**
-     * @return array action filters
-     */
-    public function filters()
-    {
-        return CMap::mergeArray(parent::filters(), array(
-                    'accessControl', // perform access control for CRUD operations
-                ));
-    }
-
-    /**
      * Register Script
      */
     public function registerScript()
@@ -27,24 +17,24 @@ class ProfileFieldController extends BackendController
         $baseUrl  = Yii::app()->getAssetManager()->publish($basePath);
         $cs       = Yii::app()->getClientScript();
         $cs->registerCoreScript('jquery');
-        $cs->registerCssFile($baseUrl.'/css/redmond/jquery-ui.css');
-        $cs->registerCssFile($baseUrl.'/css/style.css');
-        $cs->registerScriptFile($baseUrl.'/js/jquery-ui.min.js');
-        $cs->registerScriptFile($baseUrl.'/js/jquery.json.js');
+        $cs->registerCssFile($baseUrl . '/css/redmond/jquery-ui.css');
+        $cs->registerCssFile($baseUrl . '/css/style.css');
+        $cs->registerScriptFile($baseUrl . '/js/jquery-ui.min.js');
+        $cs->registerScriptFile($baseUrl . '/js/jquery.json.js');
 
         $widgets = self::getWidgets();
 
         $wgByTypes = ProfileField::itemAlias('field_type');
-        foreach ($wgByTypes as $k => $v)
+        foreach($wgByTypes as $k => $v)
         {
             $wgByTypes[$k] = array();
         }
 
-        foreach ($widgets[1] as $widget)
+        foreach($widgets[1] as $widget)
         {
-            if (isset($widget['fieldType']) && count($widget['fieldType']))
+            if(isset($widget['fieldType']) && count($widget['fieldType']))
             {
-                foreach ($widget['fieldType'] as $type)
+                foreach($widget['fieldType'] as $type)
                 {
                     array_push($wgByTypes[$type], $widget['name']);
                 }
@@ -58,9 +48,9 @@ class ProfileFieldController extends BackendController
 	allFields = $([]).add(name).add(value),
 	tips = $('.validateTips');
 	
-	var listWidgets = jQuery.parseJSON('".str_replace("'", "\'", CJavaScript::jsonEncode($widgets[0]))."');
-	var widgets = jQuery.parseJSON('".str_replace("'", "\'", CJavaScript::jsonEncode($widgets[1]))."');
-	var wgByType = jQuery.parseJSON('".str_replace("'", "\'", CJavaScript::jsonEncode($wgByTypes))."');
+	var listWidgets = jQuery.parseJSON('" . str_replace("'", "\'", CJavaScript::jsonEncode($widgets[0])) . "');
+	var widgets = jQuery.parseJSON('" . str_replace("'", "\'", CJavaScript::jsonEncode($widgets[1])) . "');
+	var wgByType = jQuery.parseJSON('" . str_replace("'", "\'", CJavaScript::jsonEncode($wgByTypes)) . "');
 	
 	var fieldType = {
 			'INTEGER':{
@@ -113,7 +103,7 @@ class ProfileFieldController extends BackendController
 				'val':{
 					'field_size':0,
 					'default':0,
-					'range':'1==".UserModule::t('Yes').";0==".UserModule::t('No')."',
+					'range':'1==" . UserModule::t('Yes') . ";0==" . UserModule::t('No') . "',
 					'widgetparams':''
 				}
 			},
@@ -139,7 +129,7 @@ class ProfileFieldController extends BackendController
 			
 	function showWidgetList(type) {
 		$('div.widget select').empty();
-		$('div.widget select').append('<option value=\"\">".UserModule::t('No')."</option>');
+		$('div.widget select').append('<option value=\"\">" . UserModule::t('No') . "</option>');
 		if (wgByType[type]) {
 			for (var k in wgByType[type]) {
 				$('div.widget select').append('<option value=\"'+wgByType[type][k]+'\">'+widgets[wgByType[type][k]]['label']+'</option>');
@@ -149,7 +139,7 @@ class ProfileFieldController extends BackendController
 		
 	function setFields(type) {
 		if (fieldType[type]) {
-			if (".((isset($_GET['id'])) ? 0 : 1).") {
+			if (" . ((isset($_GET['id'])) ? 0 : 1) . ") {
 				showWidgetList(type);
 				$('#widgetlist option:first').attr('selected', 'selected');
 			}
@@ -161,10 +151,10 @@ class ProfileFieldController extends BackendController
 			}
 			$('div.toshow').show(500);
 			$('div.tohide').hide(500);
-			".((!isset($_GET['id'])) ? "
+			" . ((!isset($_GET['id'])) ? "
 			for (var k in fieldType[type].val) { 
 				$('div.'+k+' input').val(fieldType[type].val[k]);
-			}" : '')."
+			}" : '') . "
 		}
 	}
 	
@@ -181,7 +171,7 @@ class ProfileFieldController extends BackendController
 		width: 400,
 		modal: true,
 		buttons: {
-			'".UserModule::t('Save')."': function() {
+			'" . UserModule::t('Save') . "': function() {
 				var wparam = {};
 				var fparam = {};
 				$('#dialog-form fieldset .wparam').each(function(){
@@ -199,7 +189,7 @@ class ProfileFieldController extends BackendController
 				
 				$(this).dialog('close');
 			},
-			'".UserModule::t('Cancel')."': function() {
+			'" . UserModule::t('Cancel') . "': function() {
 				$(this).dialog('close');
 			}
 		},
@@ -266,7 +256,7 @@ class ProfileFieldController extends BackendController
 	});
 	
 	// show all function 
-	$('div.form p.note').append('<br/><a href=\"#\" id=\"showAll\">".UserModule::t('Show all')."</a>');
+	$('div.form p.note').append('<br/><a href=\"#\" id=\"showAll\">" . UserModule::t('Show all') . "</a>');
  	$('#showAll').click(function(){
 		$('div.row').show(500);
 		return false;
@@ -276,7 +266,7 @@ class ProfileFieldController extends BackendController
 	setFields($('#field_type').val());
 	
 	";
-        $cs->registerScript(__CLASS__.'#dialog', $js);
+        $cs->registerScript(__CLASS__ . '#dialog', $js);
     }
 
     /**
@@ -287,35 +277,35 @@ class ProfileFieldController extends BackendController
     {
         $model  = new ProfileField;
         $scheme = get_class(Yii::app()->db->schema);
-        if (isset($_POST['ProfileField']))
+        if(isset($_POST['ProfileField']))
         {
             $model->attributes = $_POST['ProfileField'];
 
-            if ($model->validate())
+            if($model->validate())
             {
-                $sql = 'ALTER TABLE '.Profile::model()->tableName().' ADD `'.$model->varname.'` ';
+                $sql = 'ALTER TABLE ' . Profile::model()->tableName() . ' ADD `' . $model->varname . '` ';
                 $sql .= $this->fieldType($model->field_type);
-                if (
-                        $model->field_type != 'TEXT'
-                        && $model->field_type != 'DATE'
-                        && $model->field_type != 'BOOL'
-                        && $model->field_type != 'BLOB'
-                        && $model->field_type != 'BINARY'
+                if(
+                    $model->field_type != 'TEXT'
+                    && $model->field_type != 'DATE'
+                    && $model->field_type != 'BOOL'
+                    && $model->field_type != 'BLOB'
+                    && $model->field_type != 'BINARY'
                 )
-                    $sql .= '('.$model->field_size.')';
+                    $sql .= '(' . $model->field_size . ')';
                 $sql .= ' NOT NULL ';
 
-                if ($model->field_type != 'TEXT' && $model->field_type != 'BLOB' || $scheme != 'CMysqlSchema')
+                if($model->field_type != 'TEXT' && $model->field_type != 'BLOB' || $scheme != 'CMysqlSchema')
                 {
-                    if ($model->default)
-                        $sql .= " DEFAULT '".$model->default."'";
+                    if($model->default)
+                        $sql .= " DEFAULT '" . $model->default . "'";
                     else
                         $sql .= ((
-                                $model->field_type == 'TEXT'
-                                || $model->field_type == 'VARCHAR'
-                                || $model->field_type == 'BLOB'
-                                || $model->field_type == 'BINARY'
-                                ) ? " DEFAULT ''" : (($model->field_type == 'DATE') ? " DEFAULT '0000-00-00'" : " DEFAULT 0"));
+                            $model->field_type == 'TEXT'
+                            || $model->field_type == 'VARCHAR'
+                            || $model->field_type == 'BLOB'
+                            || $model->field_type == 'BINARY'
+                            ) ? " DEFAULT ''" : (($model->field_type == 'DATE') ? " DEFAULT '0000-00-00'" : " DEFAULT 0"));
                 }
                 $model->dbConnection->createCommand($sql)->execute();
                 $model->save();
@@ -336,10 +326,10 @@ class ProfileFieldController extends BackendController
     public function actionUpdate($id)
     {
         $model = $this->loadModel($id);
-        if (isset($_POST['ProfileField']))
+        if(isset($_POST['ProfileField']))
         {
             $model->attributes = $_POST['ProfileField'];
-            if ($model->save())
+            if($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
         $this->registerScript();
@@ -355,12 +345,12 @@ class ProfileFieldController extends BackendController
      */
     public function actionDelete($id)
     {
-        if (Yii::app()->request->isPostRequest)
+        if(Yii::app()->request->isPostRequest)
         {
             // we only allow deletion via POST request
             $scheme = get_class(Yii::app()->db->schema);
             $model  = $this->loadModel($id);
-            if ($scheme == 'CSqliteSchema')
+            if($scheme == 'CSqliteSchema')
             {
                 $attr        = Profile::model()->attributes;
                 unset($attr[$model->varname]);
@@ -372,52 +362,52 @@ class ProfileFieldController extends BackendController
                 {
                     $sql = '';
                     $connection->createCommand(
-                            "CREATE TEMPORARY TABLE ".Profile::model()->tableName()."_backup (".implode(',', $attr).")"
+                        "CREATE TEMPORARY TABLE " . Profile::model()->tableName() . "_backup (" . implode(',', $attr) . ")"
                     )->execute();
 
                     $connection->createCommand(
-                            "INSERT INTO ".Profile::model()->tableName()."_backup SELECT ".implode(',', $attr)." FROM ".Profile::model()->tableName()
+                        "INSERT INTO " . Profile::model()->tableName() . "_backup SELECT " . implode(',', $attr) . " FROM " . Profile::model()->tableName()
                     )->execute();
 
                     $connection->createCommand(
-                            "DROP TABLE ".Profile::model()->tableName()
+                        "DROP TABLE " . Profile::model()->tableName()
                     )->execute();
 
                     $connection->createCommand(
-                            "CREATE TABLE ".Profile::model()->tableName()." (".implode(',', $attr).")"
+                        "CREATE TABLE " . Profile::model()->tableName() . " (" . implode(',', $attr) . ")"
                     )->execute();
 
                     $connection->createCommand(
-                            "INSERT INTO ".Profile::model()->tableName()." SELECT ".implode(',', $attr)." FROM ".Profile::model()->tableName()."_backup"
+                        "INSERT INTO " . Profile::model()->tableName() . " SELECT " . implode(',', $attr) . " FROM " . Profile::model()->tableName() . "_backup"
                     )->execute();
 
                     $connection->createCommand(
-                            "DROP TABLE ".Profile::model()->tableName()."_backup"
+                        "DROP TABLE " . Profile::model()->tableName() . "_backup"
                     )->execute();
 
                     $transaction->commit();
                 }
-                catch (Exception $e)
+                catch(Exception $e)
                 {
                     $transaction->rollBack();
                     $status = false;
                 }
-                if ($status)
+                if($status)
                 {
                     $model->delete();
                 }
             }
             else
             {
-                $sql = 'ALTER TABLE '.Profile::model()->tableName().' DROP `'.$model->varname.'`';
-                if ($model->dbConnection->createCommand($sql)->execute())
+                $sql = 'ALTER TABLE ' . Profile::model()->tableName() . ' DROP `' . $model->varname . '`';
+                if($model->dbConnection->createCommand($sql)->execute())
                 {
                     $model->delete();
                 }
             }
 
             // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-            if (!isset($_POST['ajax']))
+            if(!isset($_POST['ajax']))
                 $this->redirect(array('admin'));
         }
         else
@@ -430,13 +420,13 @@ class ProfileFieldController extends BackendController
     public function actionAdmin()
     {
         $dataProvider = new CActiveDataProvider('ProfileField', array(
-                    'pagination' => array(
-                        'pageSize' => Yii::app()->controller->module->fields_page_size,
-                    ),
-                    'sort'     => array(
-                        'defaultOrder' => 'position',
-                    ),
-                ));
+                'pagination' => array(
+                    'pageSize' => Yii::app()->controller->module->fields_page_size,
+                ),
+                'sort'     => array(
+                    'defaultOrder' => 'position',
+                ),
+            ));
 
         $this->render('admin', array(
             'dataProvider' => $dataProvider,
@@ -459,27 +449,27 @@ class ProfileFieldController extends BackendController
         $basePath = Yii::getPathOfAlias('application.modules.user.components');
         $widgets  = array();
         $list = array('' => UserModule::t('No'));
-        if (self::$_widgets)
+        if(self::$_widgets)
         {
             $widgets = self::$_widgets;
         }
         else
         {
             $d    = dir($basePath);
-            while (false !== ($file = $d->read()))
+            while(false !== ($file = $d->read()))
             {
-                if (strpos($file, 'UW') === 0)
+                if(strpos($file, 'UW') === 0)
                 {
                     list($className) = explode('.', $file);
-                    if (class_exists($className))
+                    if(class_exists($className))
                     {
                         $widgetClass = new $className;
-                        if ($widgetClass->init())
+                        if($widgetClass->init())
                         {
                             $widgets[$className] = $widgetClass->init();
-                            if ($fieldType)
+                            if($fieldType)
                             {
-                                if (in_array($fieldType, $widgets[$className]['fieldType']))
+                                if(in_array($fieldType, $widgets[$className]['fieldType']))
                                     $list[$className] = $widgets[$className]['label'];
                             } else
                             {

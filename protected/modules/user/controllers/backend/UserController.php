@@ -11,6 +11,9 @@ class UserController extends BackendController
     {
         $model   = new User;
         $profile = new Profile;
+        
+        $this->performAjaxValidation($model);
+        
         if (isset($_POST['User']))
         {
             $model->attributes = $_POST['User'];
@@ -46,6 +49,9 @@ class UserController extends BackendController
     {
         $model   = $this->loadModel($id);
         $profile = $model->profile;
+        
+        $this->performAjaxValidation($model);
+        
         if (isset($_POST['User']))
         {
             $model->attributes = $_POST['User'];

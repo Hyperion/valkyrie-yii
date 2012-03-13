@@ -4,13 +4,15 @@ class LogoutController extends Controller
 {
 	public $defaultAction = 'logout';
 	
-	/**
-	 * Logout the current user and redirect to returnLogoutUrl.
-	 */
+    public function filters()
+    {
+        return array();
+    }
+
 	public function actionLogout()
 	{
 		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->controller->module->returnLogoutUrl);
+		$this->redirect(Yii::app()->user->returnUrl);
 	}
 
 }

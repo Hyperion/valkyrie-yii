@@ -90,15 +90,6 @@ class TreeMenu extends CWidget
             ),
             "children" => $this->treeList(0, "pages", $cnt),
         );
-        $data[]    = array(
-            "text"        =>
-            '<a onClick="changeURL(\'http://'.$_SERVER['SERVER_NAME'].'/site/contact\'); return false;" href="#" alt="Контакты" title="Контакты">Контакты</a>',
-            "id"          => $cnt + 1,
-            'htmlOptions' => array(
-                'class'    => 'treeview-gray',
-            ),
-            "children" => '',
-        );
         $this->render('treeMenu', array('tree_data' => $data));
     }
 

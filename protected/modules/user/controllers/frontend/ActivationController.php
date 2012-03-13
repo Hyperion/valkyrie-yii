@@ -5,9 +5,6 @@ class ActivationController extends Controller
 
     public $defaultAction = 'activation';
 
-    /**
-     * Activation user account
-     */
     public function actionActivation()
     {
         $email    = $_GET['email'];

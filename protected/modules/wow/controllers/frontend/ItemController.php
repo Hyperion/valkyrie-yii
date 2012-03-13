@@ -3,12 +3,8 @@
 class ItemController extends Controller
 {
 
-    public function actionView($id)
-    {
-        $model = $this->loadModel($id);
-        $this->render('view', array('model' => $model));
-    }
-
+    protected $_class = 'ItemTemplate';
+    
     public function actionIndex()
     {
         $model = new ItemTemplate('search');
@@ -23,17 +19,6 @@ class ItemController extends Controller
             $model->InventoryType = (int) $_GET['invType'];
 
         $this->render('index', array('model' => $model));
-    }
-
-    public function actionTooltip($id)
-    {
-        $model = $this->loadModel($id);
-        $data = array();
-
-        if(isset($_REQUEST['data']))
-            $data = $_REQUEST['data'];
-
-        $this->renderPartial('tooltip', array('model' => $model, 'data' => $data));
     }
 
     public function actionDropCreatures($id)
@@ -67,13 +52,4 @@ class ItemController extends Controller
 
         $this->renderPartial('_items', array('dataProvider' => $dataProvider));
     }
-
-    public function loadModel($id)
-    {
-        $model = ItemTemplate::model()->findByPk($id);
-        if($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
-        return $model;
-    }
-
 }

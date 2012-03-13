@@ -1,5 +1,42 @@
-footer {
+footer
+{
     margin-top: 45px;
     padding: 35px 0 36px;
     border-top: 1px solid #E5E5E5;
+}
+
+#update-dialog
+{
+    width: 900px;
+    margin-left: -450px;
+}
+
+div.thumbnail
+{
+    display: inline-block;
+    margin: 5px;
+    vertical-align: middle;
+}
+
+div.thumbnail h5
+{
+    margin-top: 5px;
+    text-align: center;
+}
+
+.editable
+{
+    vertical-align: middle;
+}
+
+.editable button
+{
+    padding: 4px 10px 4px;
+    font-size: 13px;
+    line-height: 18px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    background-color: whiteSmoke;
+    margin-left: 5px;
+    margin-top: -7px;
 }

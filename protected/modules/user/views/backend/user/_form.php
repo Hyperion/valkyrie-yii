@@ -2,9 +2,10 @@
     <?php
     $form = $this->beginWidget('BootActiveForm', array(
         'enableAjaxValidation' => true,
+        'id'                   => 'user-form',
         'type'                 => 'horizontal',
         'htmlOptions'          => array('enctype' => 'multipart/form-data'),
-            ));
+        ));
     ?>
 
     <p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>

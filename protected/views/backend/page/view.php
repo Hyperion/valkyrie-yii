@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Сраницы' => array('admin'),
+    'Страницы' => array('admin'),
     $model->title,
 );
 ?>

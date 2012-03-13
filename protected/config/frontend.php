@@ -9,7 +9,7 @@ return CMap::mergeArray(
                 'user'        => array(
                     'class' => 'RWebUser',
                     'allowAutoLogin' => true,
-                    'loginUrl'       => array('/user/auth'),
+                    'loginUrl'       => array('/user/login'),
                 ),
                 'request' => array(
                     'enableCsrfValidation'   => true,

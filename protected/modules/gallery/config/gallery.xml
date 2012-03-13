@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <name>gallery</name>
+    <backendmenu>
+        <label>Gallery</label>
+        <sort_order>1</sort_order>
+        <url>/gallery</url>
+        <items>
+            <submenu>
+                <label>Manage Albums</label>
+                <sort_order>1</sort_order>
+                <url>/gallery/album/admin</url>
+            </submenu>
+            <submenu>
+                <label>Manage Images</label>
+                <sort_order>2</sort_order>
+                <url>/gallery/image/admin</url>
+            </submenu>
+        </items>
+    </backendmenu>
+</config>

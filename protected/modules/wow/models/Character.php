@@ -930,7 +930,7 @@ class Character extends CActiveRecord
             $column .= 'F_';
         $column .= Yii::app()->language;
 
-        $id = 14 * $this->faction + $rank;
+        $id = 14 * ($this->faction - 1) + $rank;
         return Yii::app()->db
                         ->createCommand("SELECT $column
                     FROM `wow_titles` WHERE `id` = $id")

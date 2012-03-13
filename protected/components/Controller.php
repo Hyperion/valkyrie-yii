@@ -1,44 +1,39 @@
 <?php
-class Controller extends CController
-{
 
-    protected $_cs;
-    protected $_model;
-    public $breadcrumbs = array();
+class Controller extends BController
+{
     public $layout = '//layouts/column1';
-    public $class;
-    public $menu   = array();
+    public $user_guid;
     private $_pageDescription = null;
     private $_pageKeywords    = null;
     private $_pageCaption     = null;
 
+    public function allowedActions()
+    {
+        return 'index, create, view';
+    }
+
     public function init()
     {
         parent::init();
+        
+        if(!$this->isAjax && Yii::app()->user->isGuest)
+            $this->ajaxLinks = array('.ajax-login');
 
-        $this->class = ($this->class) ? $this->class : ucfirst($this->id);
-        $this->_cs = Yii::app()->clientScript;
-        $this->_cs->registerPackage('jquery');
-        $this->_cs->registerPackage('jquery.ui');
-        $this->_cs->registerScriptFile('/js/wow/page.js');
-        $this->_cs->registerScriptFile('/js/wow/tooltip.js');
-        $this->_cs->registerScriptFile('/js/wow/wow.js');
-        $this->_cs->registerScriptFile('/js/init.js');
-        $this->_cs->registerCssFile('/css/wow.css');
-    }
-
-    protected function performAjaxValidation($model, $form)
-    {
-        if(isset($_POST['ajax']) && $_POST['ajax'] == $form)
+        if(isset(Yii::app()->request->cookies['user_guid']))
+            $this->user_guid = Yii::app()->request->cookies['user_guid']->value;
+        else
         {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
+            $cookie = new CHttpCookie('user_guid', uniqid());
+            $cookie->expire = time() + 3600 * 24 * 30;
+            Yii::app()->request->cookies['user_guid'] = $cookie;
+            $this->user_guid = $cookie->value;
         }
     }
 
     protected function beforeRender($view)
     {
-        $this->pageTitle = Yii::app()->config->get('title');
+        $this->pageTitle = Yii::app()->config->get('system', 'title');
 
         if(is_object($this->_model))
         {
@@ -47,30 +42,18 @@ class Controller extends CController
                 $this->pageTitle .= ' - ' . $this->_model->title;
                 $this->pageCaption = $this->_model->title;
             }
-            if(isset($this->_model->meta) && $this->_model->meta)
-                $this->pageDescription = $this->_model->meta;
+            if(isset($this->_model->description) && $this->_model->description)
+                $this->pageDescription = $this->_model->description;
             if(isset($this->_model->keywords) && $this->_model->keywords)
                 $this->pageKeywords = $this->_model->keywords;
         }
-        
+
         if(!$this->pageDescription)
-            $this->pageDescription = Yii::app()->config->get('description');
+            $this->pageDescription = Yii::app()->config->get('system', 'description');
         if(!$this->pageKeywords)
-            $this->pageKeywords = Yii::app()->config->get('keywords');            
-        
+            $this->pageKeywords = Yii::app()->config->get('system', 'keywords');
+
         return parent::beforeRender($view);
-    }
-
-    public function loadModel($id)
-    {
-        if($this->_model === null)
-        {
-            $this->_model = CActiveRecord::model($this->class)->findByPk($id);
-            if($this->_model === null)
-                throw new CHttpException(404, 'The requested page does not exist.');
-        }
-
-        return $this->_model;
     }
 
     public function getPageDescription()

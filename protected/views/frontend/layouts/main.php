@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset=utf-8>
-        <?php $this->_cs->registerCssFile(Yii::app()->request->baseUrl . '/css/main.css'); ?>
+        <?php $this->cs->registerCssFile(Yii::app()->request->baseUrl . '/css/main.css'); ?>
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     </head>
     <body>
@@ -17,7 +17,7 @@
                     'class'       => 'bootstrap.widgets.BootMenu',
                     'htmlOptions' => array('class' => 'pull-right'),
                     'items' => array(
-                        array('label' => 'Login', 'url'   => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
+                        array('label' => 'Login', 'url'   => array('/user/login'), 'visible' => Yii::app()->user->isGuest, 'linkOptions' => array('class' => 'ajax-login', 'data-ajax-dialog-title' => 'Вход')),
                         array('label' => 'My profile', 'url'   => array('/user/profile'), 'visible' => !Yii::app()->user->isGuest),
                         array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url'   => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest)
                 )))
@@ -42,6 +42,10 @@
                 <?php echo Yii::powered(); ?>
             </footer><!-- footer -->
 
-        </div><!-- page -->
+        </div>
+       <?php $this->widget('application.components.widgets.BAjaxDialog', array(
+           'ajaxLinks' => $this->ajaxLinks,
+           'options' => $this->ajaxOptions,
+           )); ?>
     </body>
 </html>

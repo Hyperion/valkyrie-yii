@@ -47,4 +47,10 @@ $this->widget('BootNavbar', array(
         </div>
     </div>
 </div>
+<?php
+$this->widget('application.components.widgets.BAjaxDialog', array(
+    'ajaxLinks' => $this->ajaxLinks,
+    'options'   => $this->ajaxOptions,
+));
+?>
 <?php $this->endContent(); ?>

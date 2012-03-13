@@ -12,19 +12,24 @@
                 <url>/page/admin</url>
             </submenu>
             <submenu>
-                <label>Добавить страницу</label>
-                <sort_order>2</sort_order>
-                <url>/page/create</url>
-            </submenu>
-            <submenu>
                 <label>Управление меню</label>
-                <sort_order>3</sort_order>
+                <sort_order>2</sort_order>
                 <url>/menu/admin</url>
             </submenu>
             <submenu>
                 <label>Управление слайдером</label>
-                <sort_order>4</sort_order>
+                <sort_order>3</sort_order>
                 <url>/slider/admin</url>
+            </submenu>
+            <submenu>
+                <label>Управление жалобами</label>
+                <sort_order>4</sort_order>
+                <url>/report/admin</url>
+            </submenu>
+            <submenu>
+                <label>Управление черным списком IP</label>
+                <sort_order>5</sort_order>
+                <url>/blockedip/admin</url>
             </submenu>
         </items>
     </backendmenu>

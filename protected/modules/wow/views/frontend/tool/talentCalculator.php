@@ -42,14 +42,14 @@ $this->widget('WProfileSidebarMenu', array('items' => $links));?>
     <div class="talentcalc-tree-header" style="visibility: visible; ">
         <span class="icon">
         <span class="icon-frame-treeheader ">
-            <img src="http://eu.media.blizzard.com/wow/icons/36/<?=$data[$i]['icon']?>.jpg" alt="" width="36" height="36" />
+            <img src="http://eu.media.blizzard.com/wow/icons/36/<?=$model[$i]['icon']?>.jpg" alt="" width="36" height="36" />
             <span class="frame"></span>
         </span>
         </span>
         <span class="points">
             <span class="value">0</span>
         </span>
-        <span class="name"><?=$data[$i]['name']?></span>
+        <span class="name"><?=$model[$i]['name']?></span>
         <span class="clear"><!-- --></span>
     </div>
 
@@ -58,7 +58,7 @@ $this->widget('WProfileSidebarMenu', array('items' => $links));?>
 
 <?php
 $j = 0;
-foreach($data[$i]['talents'] as $tal):
+foreach($model[$i]['talents'] as $tal):
     $class = '';
     if(isset($tal['req']))
         $class .= ' talent-arrow';
@@ -75,7 +75,7 @@ foreach($data[$i]['talents'] as $tal):
         <span class="points"><span class="frame"></span><span class="value">0</span></span>
 <?php if(isset($tal['req'])):
 
-    foreach($data[$i]['talents'] as $prev):
+    foreach($model[$i]['talents'] as $prev):
         if($prev['id'] == $tal['req'])
             break;
     endforeach;

@@ -193,6 +193,7 @@ class Spell extends CActiveRecord
 
         private function RegExpS($match)
         {
+            $match[5] = ($match[5]) ? $match[5] : '1';
             if ($match[2])
             {
                 if ($match[3])

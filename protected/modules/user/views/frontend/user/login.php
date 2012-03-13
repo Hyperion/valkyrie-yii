@@ -1,13 +1,15 @@
 <?php
-$this->breadcrumbs = array(
-    UserModule::t("Login"),
-);
-$this->pageCaption = UserModule::t("Login");
-$this->pageTitle = Yii::app()->name . ' - ' . $this->pageCaption;
-$this->pageDescription = "You've been here before, haven't you?";
+if(!Yii::app()->request->isAjaxRequest):
+    $this->breadcrumbs = array(
+        UserModule::t("Login"),
+    );
+    $this->pageCaption = UserModule::t("Login");
+    $this->pageTitle = Yii::app()->name . ' - ' . $this->pageCaption;
+    $this->pageDescription = "You've been here before, haven't you?";
 
-if(Yii::app()->user->hasFlash('success')):
-    $this->widget('BootAlert');
+    if(Yii::app()->user->hasFlash('success')):
+        $this->widget('BootAlert');
+    endif;
 endif;
 ?>
 
@@ -23,7 +25,9 @@ echo $form->passwordFieldRow($model, 'password');
     <?php echo CHtml::link(UserModule::t("Register"), Yii::app()->getModule('user')->registrationUrl); ?> | <?php echo CHtml::link(UserModule::t("Lost Password?"), Yii::app()->getModule('user')->recoveryUrl); ?>
 </p>
 <?php echo $form->checkBoxRow($model, 'rememberMe'); ?>
+<?php if(!Yii::app()->request->isAjaxRequest): ?>
 <div class="form-actions">
     <?php echo CHtml::submitButton(UserModule::t("Login"), array('class' => 'btn btn-primary')); ?>
 </div>
+<?php endif; ?>
 <?php $this->endWidget(); ?>

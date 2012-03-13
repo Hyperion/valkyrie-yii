@@ -3,32 +3,49 @@
 class LoginController extends Controller
 {
 
+    function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
+
     public $defaultAction = 'login';
 
-    /**
-     * Displays the login page
-     */
     public function actionLogin()
     {
-        if (Yii::app()->user->isGuest)
+        if(Yii::app()->user->isGuest)
         {
             $model = new UserLogin;
             // collect user input data
-            if (isset($_POST['UserLogin']))
+            if(isset($_POST['UserLogin']))
             {
                 $model->attributes = $_POST['UserLogin'];
                 // validate user input and redirect to previous page if valid
-                if ($model->validate())
+                if($model->validate())
                 {
                     $this->lastViset();
-                    if (strpos(Yii::app()->user->returnUrl, '/index.php') !== false)
-                        $this->redirect(Yii::app()->controller->module->returnUrl);
+                    if(Yii::app()->request->isajaxRequest)
+                        echo CJSON::encode(array(
+                            'status' => 'success',
+                        ));
                     else
                         $this->redirect(Yii::app()->user->returnUrl);
+                    Yii::app()->end();
                 }
             }
             // display the login form
-            $this->render('/user/login', array('model' => $model));
+            if(Yii::app()->request->isajaxRequest)
+                echo CJSON::encode(array(
+                    'status'  => 'render',
+                    'content' => $this->renderPartial('/user/login', array('model' => $model), true, true),
+                    'buttons' => array(
+                    CHtml::link('Закрыть', '#', array('class' => 'btn', 'data-dismiss' => 'modal')),
+                    CHtml::link('Вход', '#', array('class' => 'btn btn-primary', 'type' => 'submit')),
+                ),
+                ));
+            else
+                $this->render('/user/login', array('model' => $model));
         } else
             $this->redirect(Yii::app()->controller->module->returnUrl);
     }

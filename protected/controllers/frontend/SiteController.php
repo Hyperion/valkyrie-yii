@@ -13,9 +13,14 @@ class SiteController extends Controller
         );
     }
 
+    public function allowedActions()
+    {
+        return '*';
+    }
+
     public function actionIndex()
     {
-        $this->_cs->registerScriptFile('/js/easySlider1.7.js');
+        $this->cs->registerScriptFile('/js/easySlider1.7.js');
         $files = Slider::model()->findAll();
         $this->render('index', array('files' => $files));
     }
@@ -25,7 +30,7 @@ class SiteController extends Controller
         $error = Yii::app()->errorHandler->error;
         if($error)
         {
-            if(Yii::app()->request->isAjaxRequest)
+            if($this->isAjax)
                 echo $error['message'];
             else
             {
@@ -43,22 +48,4 @@ class SiteController extends Controller
             'model' => $this->_model,
         ));
     }
-
-    public function actionContact()
-    {
-        $model = new ContactForm;
-        if(isset($_POST['ContactForm']))
-        {
-            $model->attributes = $_POST['ContactForm'];
-            if($model->validate())
-            {
-                $headers = "From: {$model->email}\r\nReply-To: {$model->email}";
-                mail(Yii::app()->config->get('adminEmail'), $model->subject, $model->body, $headers);
-                Yii::app()->user->setFlash('success', 'Спасибо за обращение. В скором времени Вам ответят.');
-                $this->refresh();
-            }
-        }
-        $this->render('contact', array('model' => $model));
-    }
-
 }

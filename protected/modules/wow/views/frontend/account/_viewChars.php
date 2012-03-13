@@ -1,9 +1,9 @@
 <div class="view">
     <b>Имя:</b>
-    <?=CHtml::link($data->name, array(
+    <?=CHtml::link($model->name, array(
         '/wow/character/simple',
-        'realm'=>$data->realm,
-        'name'=>$data->name
+        'realm'=>$model->realm,
+        'name'=>$model->name
     ))?>
     <br />
 </div>
