@@ -61,9 +61,10 @@ class Database extends CActiveRecord
         $dsn = 'mysql:host='.$model->host.';dbname='.$model->dbname;
 
         $db = new CDbConnection($dsn, $model->user, $model->password);
+        $db->queryCachingDuration = 300;
         $db->active = true;
         $db->charset = 'utf8';
-
+        
         self::$connection[$realm] = $db;
 
         return $db;

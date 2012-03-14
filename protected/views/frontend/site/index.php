@@ -1,3 +1,4 @@
+<?php if(count($files)): ?>
 <div class="slider-cont">
     <div id="slider">
         <ul>
@@ -10,4 +11,5 @@
 <script>
     $("#slider").easySlider();
 </script>
+<?php endif; ?>
 <?php echo Yii::app()->config->get('main_page'); ?>
