@@ -4,6 +4,11 @@ class RegistrationController extends Controller
 {
 
     public $defaultAction = 'registration';
+    
+    public function allowedActions()
+    {
+        return '*';
+    }
 
     public function actions()
     {

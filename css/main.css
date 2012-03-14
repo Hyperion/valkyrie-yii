@@ -5,6 +5,10 @@ body {
     padding-top: 40px; 
 }
 
+.detail-view img.full {
+    width: 100%;
+}
+
 .container > footer p {
     text-align: center; /* center align it with the container */
 }

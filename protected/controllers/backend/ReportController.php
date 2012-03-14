@@ -7,6 +7,7 @@ class ReportController extends BackendController
     {
         return array(
             'admin'  => 'application.components.actions.Admin',
+            'update'  => 'application.components.actions.Update',
             'delete' => 'application.components.actions.Delete',
         );
     }
@@ -18,21 +19,7 @@ class ReportController extends BackendController
         $assets  = Yii::getPathOfAlias('application.assets');
         $baseUrl = Yii::app()->assetManager->publish($assets);
         if(is_dir($assets))
-            $this->cs->registerScriptFile($baseUrl . '/jquery.jeditable.min.js');
-    }
-
-    public function actionUpdate()
-    {
-        if($this->isAjax)
-        {
-            $model = $this->loadModel($_POST['id']);
-            $model->setStatus($_POST['status']);
-            $model->save(array('status'));
-            
-            echo $model->statusText;
-            
-            Yii::app()->end();
-        }
+            $this->cs->registerScriptFile($baseUrl . '/jquery.inplacerowedit.js');
     }
 }
 

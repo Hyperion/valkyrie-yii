@@ -6,6 +6,11 @@ class ProfileController extends Controller
     public $defaultAction = 'profile';
     public $layout        = '//layouts/column2';
 
+    public function allowedActions()
+    {
+        return '*';
+    }
+
     /**
      * Shows a particular model.
      */

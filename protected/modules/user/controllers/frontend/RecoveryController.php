@@ -4,7 +4,12 @@ class RecoveryController extends Controller
 {
 
     public $defaultAction = 'recovery';
-
+    
+    public function allowedActions()
+    {
+        return '*';
+    }
+    
     public function actionRecovery()
     {
         $form = new UserRecoveryForm;

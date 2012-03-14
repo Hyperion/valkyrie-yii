@@ -1,5 +1,10 @@
 <?php
 
+use Imagine\Image\Box;
+use Imagine\Image\Point;
+use Imagine\Image\Color;
+use Imagine\Imagick\Font;
+
 class ImageController extends Controller
 {
 
@@ -16,15 +21,6 @@ class ImageController extends Controller
     
     public function actionCreate()
     {
-        $baseUrl = Yii::app()->request->baseUrl;
-
-        $this->cs->registerScriptFile($baseUrl . '/js/fileupload-ui/jquery.iframe-transport.js', CClientScript::POS_END);
-        $this->cs->registerScriptFile($baseUrl . '/js/fileupload-ui/jquery.fileupload.js', CClientScript::POS_END);
-        $this->cs->registerScriptFile($baseUrl . '/js/fileupload-ui/jquery.fileupload-ip.js', CClientScript::POS_END);
-        $this->cs->registerScriptFile($baseUrl . '/js/fileupload-ui/jquery.fileupload-ui.js', CClientScript::POS_END);
-        $this->cs->registerScriptFile($baseUrl . '/js/fileupload-ui/locale.js', CClientScript::POS_END);
-        $this->cs->registerCssFile($baseUrl . '/css/fileupload-ui/jquery.fileupload-ui.css');
-
         $this->_form = new ImageParamsForm;
 
         if(isset($_POST['ImageParamsForm']))
@@ -68,14 +64,14 @@ class ImageController extends Controller
                     $image = Yii::app()->image->open($this->_filename);
                     if($this->_form->use_resize)
                         $image = $image->thumbnail(
-                                new Imagine\Image\Box((int) $this->_form->resize, (int) $this->_form->resize)
+                                new Box((int) $this->_form->resize, (int) $this->_form->resize)
                             )->save((string) $this->_filename);
 
                     $model->height = $image->getSize()->getHeight();
                     $model->width = $image->getSize()->getWidth();
 
                     $image->thumbnail(
-                        new Imagine\Image\Box((int) $this->_form->thumb_resize, (int) $this->_form->thumb_resize)
+                        new Box((int) $this->_form->thumb_resize, (int) $this->_form->thumb_resize)
                     )->save((string) $this->_path . 'thumbs/' . $name);
 
                     if($this->_form->use_watermark)
@@ -134,10 +130,10 @@ class ImageController extends Controller
         if(!file_exists($font))
             throw new CException(404, 'Font file doesn\'t exists!');
 
-        $color = new Imagine\Image\Color((string) $this->_form->watermark_color, (int) $this->_form->watermark_alfa);
+        $color = new Color((string) $this->_form->watermark_color, (int) $this->_form->watermark_alfa);
 
         $image->draw()->text(
-            $this->_form->watermark, new Imagine\Imagick\Font($imagick, $font, $this->_form->watermark_size, $color), new Imagine\Image\Point($this->_form->watermark_left, $this->_form->watermark_top)
+            $this->_form->watermark, new Font($imagick, $font, $this->_form->watermark_size, $color), new Point($this->_form->watermark_left, $this->_form->watermark_top)
         );
 
         $image->save($this->_filename);

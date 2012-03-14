@@ -3,7 +3,7 @@
 class ItemController extends Controller
 {
 
-    protected $_class = 'ItemTemplate';
+    public $class = 'ItemTemplate';
     
     public function actionIndex()
     {

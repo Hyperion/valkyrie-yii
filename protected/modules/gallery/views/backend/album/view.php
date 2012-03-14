@@ -36,31 +36,6 @@ $this->widget('BootDetailView', array(
 ));
 ?>
 
-<?php
-$this->beginWidget('bootstrap.widgets.BootModal', array(
-    'id'          => 'modal-gallery',
-    'htmlOptions' => array('class' => 'modal modal-gallery hide fade'),
-));
-?>
-<div class="modal-header">
-    <a class="close" data-dismiss="modal">&times;</a>
-    <h3 class="modal-title"></h3>
-</div>
-<div class="modal-body"><div class="modal-image"></div></div>
-<div class="modal-footer">
-    <a class="btn btn-primary modal-next">Next <i class="icon-arrow-right icon-white"></i></a>
-    <a class="btn btn-info modal-prev"><i class="icon-arrow-left icon-white"></i> Previous</a>
-    <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000"><i class="icon-play icon-white"></i> Slideshow</a>
-    <a class="btn modal-download" target="_blank"><i class="icon-download"></i> Download</a>
-</div>
-<?php $this->endWidget(); ?>
-
 <h4>Изображения в этом альбоме:</h4>
 
-<?php
-$this->widget('BootThumbs', array(
-    'dataProvider' => $model->images(),
-    'itemView'     => '/image/_thumb',
-    'htmlOptions' => array('data-toggle' => 'modal-gallery', 'data-target' => '#modal-gallery'),
-));
-?>
+<?php $this->widget('application.components.widgets.BBootGallery', array('showViewLink' => true, 'images' => $model->images())); ?>

@@ -5,7 +5,7 @@ echo CHtml::link(
     ), $data->url, array(
     'title'    => $data->image,
     'rel'      => 'gallery',
-    'data-link' => $this->createUrl('/gallery/image/view', array('id' => $data->id)),
+    'data-link' => $this->controller->createUrl('/gallery/image/view', array('id' => $data->id)),
     )
 );
 ?>

@@ -19,7 +19,7 @@ $this->widget('BootDetailView', array(
     'attributes' => array(
         array(
             'name'  => 'image',
-            'value' => CHtml::image($model->url),
+            'value' => CHtml::image($model->url, '', array('class' => 'full')),
             'type'  => 'raw',
         ),
         'width',

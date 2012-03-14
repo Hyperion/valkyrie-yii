@@ -4,7 +4,7 @@ $this->widget('BootDetailView', array(
     'data'       => $model,
     'attributes' => array(
         array(
-            'value' => CHtml::image($model->url),
+            'value' => CHtml::image($model->url, '', array('class' => 'full')),
             'type'  => 'raw',
         ),
         'id',

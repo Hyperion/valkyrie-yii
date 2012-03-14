@@ -29,10 +29,8 @@ $this->widget('BootGridView', array(
         'report_text',
         array(
             'name'   => 'status',
-            'value'  => 'CHtml::link($data->statusText, "#", array("class" => "editable", "id" => $data->id, "onClick" => "updateRow()"));',
-            'type'   => 'raw',
+            'value'  => '$data->statusText',
             'filter' => array('Не проверено', 'Проверено'),
-        //TODO: create editable column
         ),
         array(
             'name'  => 'username',
@@ -47,8 +45,11 @@ $this->widget('BootGridView', array(
         ),
         array(
             'class'    => 'CButtonColumn',
-            'template' => '{delete}',
+            'template' => '{update}{delete}',
             'buttons'  => array(
+                'update' => array(
+                    'click'  => 'updateRow',
+                ),
                 'delete' => array(
                     'click'   => 'ajaxDialogOpen',
                     'options' => array(
@@ -62,12 +63,24 @@ $this->widget('BootGridView', array(
 ?>
 
 <script type="text/javascript">
-    function updateRow() {
-        $('.editable').editable('<?php echo $this->createUrl('/report/update'); ?>', {
-            data   : "{'0':'Не проверено','1':'Проверено'}",
-            type   : 'select',
-            submit : 'OK',
-            name   : 'status'
-        });
+    ajaxUpdateRow.inputs = {
+        '0': {
+            type: 'text', 
+            name: 'Report[id]', 
+            disabled: true
+        },
+        '2': {
+            type: 'select', 
+            name: 'Report[status]', 
+            option: [ 
+                { value : '0', name: 'Не проверено' }, 
+                { value : '1', name: 'Проверено' }
+            ]
+        }
+    };
+    function updateRow(e)
+    {
+        e.preventDefault();
+        ajaxUpdateRow.editBtnClick();
     }
 </script>
