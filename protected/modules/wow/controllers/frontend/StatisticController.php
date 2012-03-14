@@ -75,33 +75,25 @@ class StatisticController extends Controller
 
     public function actionStatus($realm)
     {
-        Database::$realm = (string) $realm;
+        $model = Realmlist::model()->find('name = :name', array(':name' => $realm));
 
-        $status = array();
-
-        //TODO rewrite as component and add ip from database;
-        $realmid = 1;
-        $fp = @fsockopen("78.46.87.100", 8085);
-        if($fp)
+        if($model)
         {
-            $status['online'] = true;
-            $chars_db = Database::getConnection(Database::$realm);
-            $status['players'] = $chars_db->createCommand("SELECT COUNT(*) FROM characters WHERE online = 1")->queryScalar();
-        }
-        else
-        {
-            $status['online'] = false;
-            $status['players'] = 0;
-        }
+            $status = array();
 
-        $conn = Database::getConnection();
+            $status['online'] = (bool) @fsockopen($model->address, $model->port);
+            if($status['online'])
+                $status['players'] = $model->players;
+            else
+                $status['players'] = 0;
 
-        $status['maxPlayers']    = $conn->createCommand("SELECT MAX(`maxplayers`) FROM uptime WHERE realmid = :realmid")->queryScalar(array(':realmid' => $realmid));
-        $status['uptime'] = $conn->createCommand("SELECT `uptime` FROM `uptime` WHERE `starttime` = (SELECT MAX(`starttime`) FROM `uptime` WHERE realmid = :realmid)")->queryScalar(array(':realmid' => $realmid));
-        $info = $conn->createCommand("SELECT `revision`, `name`, `address` FROM `realmlist` WHERE `id` = :realmid")->queryRow(true, array(':realmid' => $realmid));
-        $status    = array_merge($status, (is_array($info)) ? $info : array());
-        
-        echo json_encode($status);
+            $status['maxPlayers'] = $model->maxPlayers;
+            $status['uptime'] = $model->uptime;
+
+            $status    = array_merge($status, $model->attributes);
+
+            echo json_encode($status);
+        }
     }
 
 }
