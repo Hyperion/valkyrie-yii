@@ -108,7 +108,7 @@ if($model->RequiredLevel):
         <?php endif;
         if($model->RequiredReputationFaction) :
             ?>
-        <li>Requires <?php echo $model->required_faction ?> - <?php echo Faction::itemAlias('rank', $model->RequiredReputationRank) ?></li>
+        <li>Requires <?php echo $model->required_faction ?> - <?php echo CharacterReputation::itemAlias('rank', $model->RequiredReputationRank) ?></li>
     <?php endif;
     if($model->ItemLevel):
         ?>

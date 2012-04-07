@@ -10,6 +10,9 @@ class WowModule extends CWebModule
             'wow.components.*',
         ));
 
+        Yii::setPathOfAlias('Base', __DIR__ . '/models/Base');
+        Yii::setPathOfAlias('Forms', __DIR__ . '/models/Forms');
+
         //Yii::app()->db_world->active = true;
 
         $assets  = __DIR__ . '/assets';
@@ -22,10 +25,10 @@ class WowModule extends CWebModule
             if(Yii::app()->request->enableCsrfValidation)
             {
                 $csrfTokenName = CJavaScript::encode(Yii::app()->request->csrfTokenName);
-                $csrfToken = CJavaScript::encode(Yii::app()->request->csrfToken);
+                $csrfToken     = CJavaScript::encode(Yii::app()->request->csrfToken);
                 Yii::app()->clientScript->registerScript('TooltipAjax', "Tooltip.csrfToken=$csrfToken;Tooltip.csrfTokenName=$csrfTokenName;", CClientScript::POS_END);
             }
-            
+
             Yii::app()->clientScript->registerScriptFile($baseUrl . '/init.js');
             Yii::app()->clientScript->registerCssFile($baseUrl . '/wow.css');
         }

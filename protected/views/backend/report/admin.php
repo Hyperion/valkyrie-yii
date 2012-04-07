@@ -34,7 +34,7 @@ $this->widget('BootGridView', array(
         ),
         array(
             'name'  => 'username',
-            'value' => 'CHtml::link($data->user->username, array("/user/user/view", "id"   => $data->user_id))',
+            'value' => '($data->user) ? CHtml::link($data->user->username, array("/user/user/view", "id"   => $data->user_id)) : Yii::app()->user->guestName',
             'type'  => 'raw',
         ),
         array(

@@ -27,5 +27,10 @@ class DefaultController extends BackendController
         }
         $this->render('index', array('model' => $model));
     }
+    
+    public function actionStatistic()
+    {
+        $this->render('statistic');
+    }
 
 }

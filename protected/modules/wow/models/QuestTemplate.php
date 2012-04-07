@@ -1,6 +1,6 @@
 <?php
 
-class QuestTemplate extends CActiveRecord
+class QuestTemplate extends Base\World
 {
 	public static function model($className=__CLASS__)
 	{
@@ -11,10 +11,4 @@ class QuestTemplate extends CActiveRecord
 	{
 		return 'quest_template';
 	}
-    
-	public function getDbConnection()
-    {
-        return Yii::app()->db_world;
-    }
-
 }

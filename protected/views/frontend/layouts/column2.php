@@ -5,10 +5,10 @@
     </div>
 <?php endif; ?>
 <div class="row">
-    <div class="span9">
+    <div class="span8">
         <?php echo $content; ?>
     </div>
-    <div class="span3">
+    <div class="span3 well">
         <?php
         $this->widget('BootMenu', array(
             'type'  => 'list',

@@ -1,15 +1,10 @@
 <?php
 
-class IpBanned extends CActiveRecord
+class IpBanned extends Base\Realm
 {
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
-    }
-
-    public function getDbConnection()
-    {
-        return Database::getConnection('realmlist');
     }
 
     public function tableName()

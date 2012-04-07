@@ -4,16 +4,39 @@ $this->breadcrumbs=array(
     'Items'=>array('/wow/item'),
 );
 if(isset($model->class))
-    $this->breadcrumbs[$model->class_text] = array("/wow/item?classId={$model->class}");
+    $this->breadcrumbs[$model->class_text] = array("/wow/item?ItemTemplate[class]={$model->class}");
 if(isset($model->subclass))
-    $this->breadcrumbs[$model->subclass_text] = array("/wow/item?classId={$model->class}&subClassId={$model->subclass}");
+    $this->breadcrumbs[$model->subclass_text] = array("/wow/item?ItemTemplate[class]={$model->class}&ItemTemplate[subclass]={$model->subclass}");
 if(isset($model->InventoryType) && $model->class == $model::ITEM_CLASS_ARMOR)
-    $this->breadcrumbs[$model::itemAlias('invtype', $model->InventoryType)] = array("/wow/item?classId={$model->class}&subClassId={$model->subclass}&invType={$model->InventoryType}");
+    $this->breadcrumbs[$model::itemAlias('invtype', $model->InventoryType)] = array("/wow/item?ItemTemplate[class]={$model->class}&ItemTemplate[subclass]={$model->subclass}&ItemTemplate[InventoryType]={$model->InventoryType}");
+
+    Yii::app()->clientScript->registerScript('search', "
+$('.search-button').click(function(){
+    $('.search-form').toggle();
+    return false;
+});
+$('.search-form form').submit(function(){
+    $.fn.yiiGridView.update('item-grid', {
+        data: $(this).serialize()
+    });
+    return false;
+});
+");
 ?>
 
+        <?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
+        <div class="search-form" style="display:none">
+            <?php
+            $this->renderPartial('_search', array(
+                'model' => $model,
+            ));
+            ?>
+        </div><!-- search-form -->
+        
 <?php $this->widget('BootGridView', array(
     'dataProvider'=>$model->search(),
     'enableSorting'=>true,
+    'id' => 'item-grid',
     'columns'=>array(
         array(
             'type'=>'raw',

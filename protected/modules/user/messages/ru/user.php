@@ -43,8 +43,6 @@ return array(
 	'Status' => 'Статус',
 	'Ok' => 'Ok',
 	'Show all'=> 'Показать все',
-	'Save' => 'Сохранить',
-	'Cancel'=> 'Отмена',
 	'New password is saved.' => 'Новый пароль сохранен.',
 	'Change password' => 'Изменить пароль',
 	'Your profile' => 'Ваш профиль',
@@ -67,7 +65,6 @@ return array(
 	'Active' => 'Активирован',
 	'Banned' => 'Заблокирован',
 	'Please fill out the following form with your login credentials:' => 'Пожалуйста, заполните следующую форму с вашими Логин и паролем:',
-	'Fields with <span class="required">*</span> are required.' => '<span class="required">*</span> Обязательные поля.',
 	'List User' => 'Список пользователей',
 	'Edit' => 'Редактировать',
 	'Edit profile' => 'Редактирование профиля',
@@ -124,5 +121,6 @@ return array(
 	'The value of the default field (database).' => 'Значение поля по умолчанию (база данных).',
 	'Display order of fields.' => 'Порядок отображения полей.',
 	'Not visited' => 'Не входил',
+    'Last Ip' => 'Последний IP'
 );
 

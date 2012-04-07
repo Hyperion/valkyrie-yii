@@ -15,7 +15,7 @@ var ajaxUpdateRow = {
         var editbtn = $(this.editbuttonselector);
         var savebtn = $('<a></a>').html(this.updatebuttontext).addClass(this.updatebuttonclass);
         var cancelbtn = $('<a></a>').html(this.cancelbuttontext).addClass(this.cancelbuttonclass);
-        this.tr = editbtn.parents('tr:eq(0)');
+        this.tr = editbtn.parents('tr');
         if(this.url == '')
             this.url = editbtn.attr('href');
         this.tr.children('td').each(function(i) {

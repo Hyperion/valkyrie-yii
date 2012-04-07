@@ -10,7 +10,7 @@ class Controller extends BController
 
     public function allowedActions()
     {
-        return 'index, create, view';
+        return 'index, create, view, report';
     }
 
     public function init()

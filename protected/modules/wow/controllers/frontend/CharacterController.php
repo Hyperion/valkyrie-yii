@@ -3,11 +3,16 @@
 class CharacterController extends Controller
 {
 
+    public function allowedActions()
+    {
+        return '*';
+    }
+
     public function init()
     {
         parent::init();
 
-        $this->layout = '//layouts/column2';
+        $this->layout = '/layouts/character';
 
         if(isset($_GET['realm']))
             Database::$realm = (string) $_GET['realm'];
@@ -20,31 +25,9 @@ class CharacterController extends Controller
             {
                 $this->pageCaption = $this->_model->getPvpTitle($this->_model->honorRank) . ' ';
             }
-            
+
             $this->pageCaption .= $this->_model->name;
             $this->pageDescription = "{$this->_model->race_text} - {$this->_model->class_text} ({$this->_model->talents['name']}) {$this->_model['level']} lvl";
-              
-            $this->menu = array(
-                array(
-                    'label' => 'Сводка',
-                    'url'   => array('/wow/character/view', 'realm' => Database::$realm, 'name'  => $this->_model->name)
-                ),
-                array(
-                    'label' => 'Таланты',
-                    'url'   => array('/wow/character/talents', 'realm' => Database::$realm, 'name'  => $this->_model->name)
-                ),
-                array(
-                    'label' => 'Репутация',
-                    'url'   => array('/wow/character/reputation', 'realm' => Database::$realm, 'name'  => $this->_model->name)
-                ),
-                array(
-                    'label' => 'PvP',
-                    'url'   => array('/wow/character/pvp', 'realm' => Database::$realm, 'name'  => $this->_model->name)
-                ),
-                array(
-                    'label' => 'Лента новостей',
-                    'url'   => array('/wow/character/feed', 'realm' => Database::$realm, 'name'  => $this->_model->name)
-                    ));
         }
     }
 
@@ -61,7 +44,7 @@ class CharacterController extends Controller
     {
         $this->layout = '//layouts/column1';
 
-        Database::$realm = Database::model()->find('type = "characters"')->title;
+        Database::$realm = Database::model()->find('type = "char"')->name;
         $model = new Character('search');
         $model->unsetAttributes();
 
@@ -119,7 +102,7 @@ class CharacterController extends Controller
 
     public function loadModel($name)
     {
-        $this->_model = Character::model()->find('name = ?', array($name));
+        $this->_model = Character::model()->with('honor', 'stats')->find('name = ?', array($name));
         if($this->_model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $this->_model;

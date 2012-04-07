@@ -21,40 +21,15 @@ $form = $this->beginWidget('BootActiveForm', array(
     </tr>
     <tr>
         <td>
-            <?php
-            echo $form->dropDownListrow($model, 'race', array(
-                '1' => 'Human',
-                '2' => 'Orc',
-                '3' => 'Dwarf',
-                '4' => 'Night Elf',
-                '5' => 'Undead',
-                '6' => 'Tauren',
-                '7' => 'Gnome',
-                '8' => 'Troll'));
-            ?>
+            <?php echo $form->dropDownListrow($model, 'race', Character::itemAlias('race')); ?>
         </td>
         <td>
-            <?php
-            echo $form->dropDownListRow($model, 'class', array(
-                '1'  => 'Warrior',
-                '2'  => 'Paladin',
-                '3'  => 'Hunter',
-                '4'  => 'Rogue',
-                '5'  => 'Priest',
-                '7'  => 'Shaman',
-                '8'  => 'Mage',
-                '9'  => 'Warlock',
-                '11' => 'Druid'));
-            ?>
+            <?php echo $form->dropDownListRow($model, 'class', Character::itemAlias('class')); ?>
         </td>
     </tr>
     <tr>
         <td>
-            <?php
-            echo $form->dropDownListRow($model, 'gender', array(
-                '0' => 'Male',
-                '1' => 'Female'));
-            ?>
+            <?php echo $form->dropDownListRow($model, 'gender', Character::itemAlias('gender')); ?>
         </td>
         <td></td>
     </tr>

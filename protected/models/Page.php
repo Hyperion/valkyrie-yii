@@ -3,10 +3,7 @@
 class Page extends CActiveRecord
 {
 
-    public $russian = array("а", "б", "в", "г", "д", "е", "ё", "ж", "з", "и", "й", "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я", ' ', '.', ',', '?', '/', '|', '\\', '%', '$', '@', '#', '*', '^', '(', ')', ';', ':', '"', '!');
-    public $trans = array("a", "b", "v", "g", "d", "e", "yo", "zh", "z", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "f", "h", "c", "ch", "sh", "shh", "", "y", "", "e", "yu", "ya", '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_', '_');
-
-    /**
+     /**
      * Returns the static model of the specified AR class.
      * @return Pages the static model class
      */
@@ -36,6 +33,7 @@ class Page extends CActiveRecord
             array('description, keywords', 'length', 'max' => 150),
             array('alt, url', 'safe'),
             array('url', 'unique', 'message' => 'Запись с таким ЧПУ уже существует.'),
+            array('url','ext.yiiext.components.translit.ETranslitFilter','translitAttribute'=>'title'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, title, alt, url, text, description, keywords', 'safe', 'on' => 'search'),
@@ -84,12 +82,4 @@ class Page extends CActiveRecord
                     ),
             ));
     }
-
-    protected function beforeValidate()
-    {
-        if(!$this->url)
-            $this->url = str_ireplace($this->russian, $this->trans, mb_strtolower($this->title, 'utf8'));
-        return parent::beforeValidate();
-    }
-
 }

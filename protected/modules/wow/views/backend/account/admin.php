@@ -40,10 +40,13 @@ $('.search-form form').submit(function(){
             'dataProvider' => $model->search(),
             'filter' => $model,
             'columns' => array(
-                'id',
+                array(
+                    'name' => 'id',
+                    'filter' => 'false'
+                ),
                 'username',
                 'email',
-                'locked',
+                'last_ip',
                 array(
                     'class' => 'CButtonColumn',
                 ),

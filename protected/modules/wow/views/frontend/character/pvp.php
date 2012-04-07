@@ -3,7 +3,7 @@ $this->breadcrumbs = array(
     'Game' => array('/wow/'),
     'Characters' => array('/wow/character/'),
     Database::$realm . ' @ ' . $model->name => array('/wow/character/view', 'realm' => Database::$realm, 'name'  => $model['name']),
-    'PvP'   => array('/wow/character/pvp', 'realm' => Database::$realm, 'name'  => $model['name']),
+    'PvP'
 );
 ?>
 <h1>PvP</h1>

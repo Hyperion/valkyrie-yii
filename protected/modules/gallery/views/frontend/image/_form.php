@@ -2,7 +2,6 @@
 $form = $this->beginWidget('BootActiveForm', array(
     'enableAjaxValidation' => true,
     'type'                 => 'horizontal',
-    'htmlOptions'          => array('enctype' => 'multipart/form-data'),
     ));
 ?>
 

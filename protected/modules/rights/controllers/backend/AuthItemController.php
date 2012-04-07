@@ -15,7 +15,7 @@ class AuthItemController extends BackendController
 	/**
 	* @property CAuthItem the currently loaded data model instance.
 	*/
-	private $_model;
+	protected $_model;
 
 	/**
 	* Initializes the controller.

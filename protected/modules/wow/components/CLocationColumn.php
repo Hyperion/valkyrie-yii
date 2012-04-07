@@ -16,7 +16,7 @@ class CLocationColumn extends CGridColumn
         echo $this->grid->dataProvider->getSort()->link('map',$this->header);
     }
     
-    protected function renderDataCellContent($row,$data)
+    protected function renderDataCellContent($row, $data)
     {
     	$column = 'name_'.Yii::app()->language;
         $connection = Yii::app()->db;

@@ -1,6 +1,6 @@
 <?php
 
-class CreatureTemplate extends CActiveRecord
+class CreatureTemplate extends Base\World
 {
     public static function model($className=__CLASS__)
     {
@@ -10,11 +10,6 @@ class CreatureTemplate extends CActiveRecord
     public function tableName()
     {
         return 'creature_template';
-    }
-    
-    public function getDbConnection()
-    {
-        return Yii::app()->db_world;
     }
     
     public static function itemAlias($type, $code=NULL)
@@ -66,7 +61,6 @@ class CreatureTemplate extends CActiveRecord
 
         $dataProvider = new CArrayDataProvider($loot, array(
             'keyField' => 'entry',
-            'pagination' => false,
         ));
         return $dataProvider;
 	}   

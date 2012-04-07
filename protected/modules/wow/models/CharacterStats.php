@@ -1,17 +1,12 @@
 <?php
 
-class CharacterStats extends CActiveRecord
+class CharacterStats extends Base\Char
 {
     private $_levelStats = array();
 
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
-    }
-
-    public function getDbConnection()
-    {
-        return Database::getConnection(Database::$realm);
     }
 
     public function tableName()

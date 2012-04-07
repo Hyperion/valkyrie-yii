@@ -2,7 +2,7 @@
 $this->breadcrumbs = array(
     'Game' => array('/wow/'),
     'Characters' => array('/wow/character/'),
-    Database::$realm . ' @ ' . $model->name => array('/wow/character/simple', 'realm' => Database::$realm, 'name'  => $model['name']),
+    Database::$realm . ' @ ' . $model->name => array('/wow/character/view', 'realm' => Database::$realm, 'name'  => $model['name']),
     'Лента новостей',
 );
 ?>

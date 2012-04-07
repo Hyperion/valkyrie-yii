@@ -15,7 +15,6 @@ class m120306_195834_images extends CDbMigration
             'user_guid'   => 'varchar(75) NOT NULL',
             'create_time' => 'integer NOT NULL',
             'last_visit'  => 'integer NOT NULL',
-            'visits'      => 'INTEGER NOT NULL DEFAULT 0',
             'image'       => 'string NOT NULL',
             'url'         => 'string NOT NULL',
             'thumb_url'   => 'string NOT NULL',

@@ -1,6 +1,6 @@
 <?php
 
-class AccountBanned extends CActiveRecord
+class AccountBanned extends Base\Realm
 {
     public function primaryKey()
     {
@@ -10,11 +10,6 @@ class AccountBanned extends CActiveRecord
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
-    }
-
-    public function getDbConnection()
-    {
-        return Database::getConnection('realmlist');
     }
 
     public function tableName()

@@ -43,6 +43,7 @@ $this->breadcrumbs=array(
 			'name'=>'status',
 			'value'=>'User::itemAlias("UserStatus",$data->status)',
 		),
+        'last_ip',
 		array(
 			'class'=>'CButtonColumn',
 		),

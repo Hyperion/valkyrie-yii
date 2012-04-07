@@ -15,7 +15,6 @@ class m120306_194733_albums extends CDbMigration
             'create_time' => 'integer NOT NULL',
             'cover_id'    => 'integer NOT NULL DEFAULT 0',
             'visible'     => 'boolean DEFAULT 0',
-            'visits'      => 'INTEGER NOT NULL DEFAULT 0',
         ));
 
         $this->createIndex('user_id', $this->_table, 'user_id');

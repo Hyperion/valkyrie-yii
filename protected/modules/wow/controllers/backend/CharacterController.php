@@ -45,7 +45,7 @@ class CharacterController extends BackendController
 
     public function actionAdmin()
     {
-        Database::$realm = Database::model()->find('type = "characters"')->title;
+        Database::$realm = Database::model()->find('type = "char"')->name;
         $model = new Character('search');
         $model->unsetAttributes();
 
@@ -65,5 +65,4 @@ class CharacterController extends BackendController
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
     }
-
 }

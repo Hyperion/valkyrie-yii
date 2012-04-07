@@ -18,7 +18,7 @@ class ImageController extends Controller
         foreach(Yii::app()->user->images as $id)
             echo CHtml::link("Delete $id", array('delete', 'id' => $id));
     }
-    
+
     public function actionCreate()
     {
         $this->_form = new ImageParamsForm;
@@ -113,15 +113,42 @@ class ImageController extends Controller
 
         $this->render('create', array('model' => $this->_form));
     }
-    
+
     public function actionView($id)
     {
-        $model      = $this->loadModel($id);
-        $model->saveCounters(array('visits'=>1));
-        
+        $this->layout = '//layouts/column2';
+
+        $model = $this->loadModel($id);
+        $model->saveVisit();
+
         $this->render('view', array('model' => $model));
     }
-    
+
+    public function actionReport($id)
+    {
+        if(isset($_POST['text']))
+        {
+            $model = $this->loadModel($id);
+            $model->addReport($_POST['text']);
+
+            echo CJSON::encode(array(
+                'status'  => 'success',
+                'content' => 'Жалоба была добавлена',
+            ));
+
+            Yii::app()->end();
+        }
+        else
+            echo CJSON::encode(array(
+                'status'  => 'render',
+                'content' => $this->renderPartial('_report', array(), true, true),
+                'buttons' => array(
+                    CHtml::link('Закрыть', '#', array('class'        => 'btn', 'data-dismiss' => 'modal')),
+                    CHtml::link('<i class="icon-white icon-edit"></i> Пожаловаться', '#', array('class' => 'btn btn-primary', 'type'  => 'submit')),
+                )
+            ));
+    }
+
     protected function addWatermark($image)
     {
         $imagick = new Imagick();

@@ -17,7 +17,7 @@ class BackendController extends BController
     {
         parent::init();
 
-        $this->menu = Yii::app()->cache->get('backendmenu');
+        //$this->menu = Yii::app()->cache->get('backendmenu');
 
         if(!$this->menu)
         {

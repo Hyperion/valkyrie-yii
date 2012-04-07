@@ -1,6 +1,6 @@
 <?php
 
-class Character extends CActiveRecord
+class Character extends Base\Char
 {
     /* Equipment Slots */
 
@@ -89,11 +89,6 @@ class Character extends CActiveRecord
         return parent::model($className);
     }
 
-    public function getDbConnection()
-    {
-        return Database::getConnection(Database::$realm);
-    }
-
     public function tableName()
     {
         return 'characters';
@@ -136,39 +131,39 @@ class Character extends CActiveRecord
     public static function itemAlias($type, $code = NULL)
     {
         $_items = array(
-            'classes' => array(
-                self::CLASS_WARRIOR => Yii::t('WowModule.character', 'Warrior'),
-                self::CLASS_PALADIN => Yii::t('WowModule.character', 'Paladin'),
-                self::CLASS_HUNTER  => Yii::t('WowModule.character', 'Hunter'),
-                self::CLASS_ROGUE   => Yii::t('WowModule.character', 'Rogue'),
-                self::CLASS_PRIEST  => Yii::t('WowModule.character', 'Priest'),
-                self::CLASS_SHAMAN  => Yii::t('WowModule.character', 'Shaman'),
-                self::CLASS_MAGE    => Yii::t('WowModule.character', 'Mage'),
-                self::CLASS_WARLOCK => Yii::t('WowModule.character', 'Warlock'),
-                self::CLASS_DRUID   => Yii::t('WowModule.character', 'Druid'),
+            'class' => array(
+                self::CLASS_WARRIOR => WowModule::t('Warrior'),
+                self::CLASS_PALADIN => WowModule::t('Paladin'),
+                self::CLASS_HUNTER  => WowModule::t('Hunter'),
+                self::CLASS_ROGUE   => WowModule::t('Rogue'),
+                self::CLASS_PRIEST  => WowModule::t('Priest'),
+                self::CLASS_SHAMAN  => WowModule::t('Shaman'),
+                self::CLASS_MAGE    => WowModule::t('Mage'),
+                self::CLASS_WARLOCK => WowModule::t('Warlock'),
+                self::CLASS_DRUID   => WowModule::t('Druid'),
             ),
-            'races'             => array(
-                self::RACE_HUMAN    => Yii::t('WowModule.character', 'Human'),
-                self::RACE_ORC      => Yii::t('WowModule.character', 'Orc'),
-                self::RACE_DWARF    => Yii::t('WowModule.character', 'Dwarf'),
-                self::RACE_NIGHTELF => Yii::t('WowModule.character', 'Night Elf'),
-                self::RACE_UNDEAD   => Yii::t('WowModule.character', 'Undead'),
-                self::RACE_TAUREN   => Yii::t('WowModule.character', 'Tauren'),
-                self::RACE_GNOME    => Yii::t('WowModule.character', 'Gnome'),
-                self::RACE_TROLL    => Yii::t('WowModule.character', 'Troll'),
+            'race'              => array(
+                self::RACE_HUMAN    => WowModule::t('Human'),
+                self::RACE_ORC      => WowModule::t('Orc'),
+                self::RACE_DWARF    => WowModule::t('Dwarf'),
+                self::RACE_NIGHTELF => WowModule::t('Night Elf'),
+                self::RACE_UNDEAD   => WowModule::t('Undead'),
+                self::RACE_TAUREN   => WowModule::t('Tauren'),
+                self::RACE_GNOME    => WowModule::t('Gnome'),
+                self::RACE_TROLL    => WowModule::t('Troll'),
             ),
-            'genders'           => array(
-                0        => 'male',
-                1        => 'female',
+            'gender'            => array(
+                0       => 'male',
+                1       => 'female',
             ),
-            'powers' => array(
+            'power' => array(
                 self::POWER_MANA   => 'Mana',
                 self::POWER_RAGE   => 'Rage',
                 self::POWER_ENERGY => 'Energy',
             ),
-            'factions'         => array(
-                self::FACTION_ALLIANCE => Yii::t('WowModule.character', 'Alliance'),
-                self::FACTION_HORDE    => Yii::t('WowModule.character', 'Horde'),
+            'faction'          => array(
+                self::FACTION_ALLIANCE => WowModule::t('Alliance'),
+                self::FACTION_HORDE    => WowModule::t('Horde'),
             ),
         );
 
@@ -191,29 +186,21 @@ class Character extends CActiveRecord
         $criteria->compare('level', $this->level);
         $criteria->compare('online', $this->online);
         $criteria->compare('honor_standing', $this->honor_standing);
-        $criteria->compare('account', '>0');
+        $criteria->addCondition('account > 0');
 
-        if($this->scenario == 'pvp' or $this->scenario == 'pvp_current')
+        if($this->scenario == 'pvp')
         {
             $criteria->with = 'honor';
-            if($this->scenario == 'pvp')
-                $criteria->compare('honor_standing', '>0');
-            else
-                $criteria->compare('honor.thisWeek_kills', '>25');
+            $criteria->together = true;
+            $criteria->addCondition('honor.thisWeek_kills > 25 OR honor_standing > 0');
+            $criteria->select = 'guid, name, race, honor_standing';
 
             $sort->attributes = array(
                 'name'                 => 'name',
-                'honor.hk'             => 'honor.hk',
-                'level'                => 'level',
-                'race'                 => 'race',
-                'class'                => 'class',
                 'honor_standing'       => 'honor_standing',
-                'honor_highest_rank'   => 'honor_highest_rank',
-                'honor_rank_points'    => 'honor_rank_points',
                 'honor.thisWeek_cp'    => 'honor.thisWeek_cp',
-                'honor.thisWeek_kills' => 'honor.thisWeek_kills',
             );
-            $sort->defaultOrder = 'honor_standing ASC';
+            $sort->defaultOrder = 'honor.thisWeek_cp DESC';
         }
 
         switch($this->faction)
@@ -238,13 +225,13 @@ class Character extends CActiveRecord
         }
 
         return new CMultirealmDataProvider(get_class($this), array(
-                    'all_realms' => $all_realms,
-                    'criteria'   => $criteria,
-                    'pagination' => array(
-                        'pageSize' => 40,
-                    ),
-                    'sort'     => $sort,
-                ));
+                'all_realms' => $all_realms,
+                'criteria'   => $criteria,
+                'pagination' => array(
+                    'pageSize' => 40,
+                ),
+                'sort'     => $sort,
+            ));
     }
 
     public function getHonorRank()
@@ -313,18 +300,18 @@ class Character extends CActiveRecord
 
         $connection = Yii::app()->db;
         $command    = $connection->createCommand()
-                ->select("r.$column AS race, c.$column AS class")
-                ->from('wow_races r, wow_classes c')
-                ->where('r.id = ? AND c.id = ?', array($this->race, $this->class))
-                ->limit(1);
+            ->select("r.$column AS race, c.$column AS class")
+            ->from('wow_races r, wow_classes c')
+            ->where('r.id = ? AND c.id = ?', array($this->race, $this->class))
+            ->limit(1);
         $row = $command->queryRow();
 
         $this->race_text = $row['race'];
         $this->class_text = $row['class'];
 
         $this->_spells = $this->dbConnection
-                ->createCommand("SELECT spell FROM character_spell WHERE guid = {$this->guid} AND disabled = 0")
-                ->queryColumn();
+            ->createCommand("SELECT spell FROM character_spell WHERE guid = {$this->guid} AND disabled = 0")
+            ->queryColumn();
     }
 
     protected function afterFind()
@@ -371,44 +358,49 @@ class Character extends CActiveRecord
             self::EQUIPMENT_SLOT_RANGED    => 28,
         );
 
-        if(!$this->_items)
-            for($i = 0, $j = 0; $i < 37; $i += 2, $j++)
+        $items = array();
+        for($i       = 0; $i < 37; $i += 2)
+            if($this->equipmentCache[$i])
+                $items[] = $this->equipmentCache[$i];
+
+        $models = ItemTemplate::model()->findAllByPk($items);
+        foreach($models as $proto)
+        {
+            $pos               = array_search($proto->entry, $this->equipmentCache);
+            $slot              = $pos / 2;
+            $item_slots[$slot] = array(
+                'entry'         => $proto->entry,
+                'icon'          => $proto->icon,
+                'name'          => $proto->name,
+                'display_id'    => $proto->displayid,
+                'quality'       => $proto->Quality,
+                'item_level'    => $proto->ItemLevel,
+                'class'         => $proto->class,
+                'slot'          => $proto->InventoryType,
+                'can_displayed' => !in_array($proto->InventoryType, array(2, 11, 12)),
+                'can_enchanted' => !in_array($slot, array(3, 17, 1, 5, 10, 11, 12, 13, 16, 18)),
+            );
+
+            $enchant_id = $this->equipmentCache[$pos + 1];
+            $data       = array();
+
+            if($enchant_id)
             {
-                $proto = ItemTemplate::model()->findByPk($this->equipmentCache[$i]);
-                if($proto)
-                {
-                    $item_data = array(
-                        'entry'         => $proto->entry,
-                        'icon'          => $proto->icon,
-                        'name'          => $proto->name,
-                        'display_id'    => $proto->displayid,
-                        'quality'       => $proto->Quality,
-                        'item_level'    => $proto->ItemLevel,
-                        'class'         => $proto->class,
-                        'enchant_id'    => $this->equipmentCache[$i + 1],
-                        'enchant_item'  => 0,
-                        'enchant_text'  => '',
-                        'slot'          => $proto->InventoryType,
-                        'can_displayed' => !in_array($proto->InventoryType, array(2, 11, 12)),
-                        'can_enchanted' => !in_array($j, array(3, 17, 1, 5, 10, 11, 12, 13, 16, 18)),
-                    );
-                    if($item_data['enchant_id'])
-                    {
-                        $column = 'text_' . Yii::app()->language;
-                        $info   = Yii::app()->db
-                                ->createCommand("
+                $column = 'text_' . Yii::app()->language;
+                $info   = Yii::app()->db
+                    ->createCommand("
                                 SELECT wow_enchantment.$column AS text, wow_spellenchantment.id AS spellId
                                 FROM wow_enchantment
                                 LEFT JOIN wow_spellenchantment ON wow_spellenchantment.Value = wow_enchantment.id
-                                WHERE wow_enchantment.id = {$item_data['enchant_id']} LIMIT 1")
-                                ->queryRow();
-                        if(is_array($info))
-                        {
-                            $item_data['enchant_text'] = $info['text'];
-                            if($info['spellId'])
-                            {
-                                $item = Yii::app()->db_world
-                                        ->createCommand("
+                                WHERE wow_enchantment.id = {$enchant_id} LIMIT 1")
+                    ->queryRow();
+                if(is_array($info))
+                {
+                    $item_slots[$slot]['enchant_text'] = $info['text'];
+                    if($info['spellId'])
+                    {
+                        $item = Yii::app()->db_world
+                            ->createCommand("
                                         SELECT entry, name
                                         FROM item_template
                                         WHERE
@@ -417,38 +409,32 @@ class Character extends CActiveRecord
                                         spellid_3 = {$info['spellId']} OR
                                         spellid_4 = {$info['spellId']} OR
                                         spellid_5 = {$info['spellId']} LIMIT 1")
-                                        ->queryRow();
-                                if($item)
-                                {
-                                    $item_data['enchant_text'] = $item['name'];
-                                    $item_data['enchant_item'] = $item['entry'];
-                                }
-                            }
+                            ->queryRow();
+                        if($item)
+                        {
+                            $item_slots[$slot]['enchant_text'] = $item['name'];
+                            $item_slots[$slot]['enchant_item'] = $item['entry'];
                         }
                     }
-                    $data                      = array();
-                    if($item_data['enchant_id'])
-                        $data[] = "data[enchant_id]={$item_data['enchant_id']}";
-
-                    if($proto->itemset)
-                    {
-                        $set        = Yii::app()->db_world
-                                ->createCommand("SELECT entry FROM item_template WHERE itemset = {$proto->itemset}")
-                                ->queryColumn();
-                        $set_pieces = array();
-                        for($k                 = 0; $k < 37; $k += 2)
-                            if(in_array($this->equipmentCache[$k], $set))
-                                $set_pieces[]      = $this->equipmentCache[$k];
-                        $data[]            = 'data[set]=' . implode(',', $set_pieces);
-                    }
-                    $item_data['data'] = implode('&', $data);
-                    $this->_items[$j] = $item_data;
                 }
-                else
-                    $this->_items[$j] = array('slot' => $item_slots[$j]);
+                
+                $data[] = "data[enchant_id]={$enchant_id}";
             }
 
-        return $this->_items;
+            if($proto->itemset)
+            {
+                $set        = Yii::app()->db_world
+                    ->createCommand("SELECT entry FROM item_template WHERE itemset = {$proto->itemset}")
+                    ->queryColumn();
+                $set_pieces = array();
+                for($k                         = 0; $k < 37; $k += 2)
+                    if(in_array($this->equipmentCache[$k], $set))
+                        $set_pieces[]              = $this->equipmentCache[$k];
+                $data[]                    = 'data[set]=' . implode(',', $set_pieces);
+            }
+            $item_slots[$slot]['data'] = implode('&', $data);
+        }
+        return $item_slots;
     }
 
     public function isEquipped($entry)
@@ -467,8 +453,8 @@ class Character extends CActiveRecord
     public function isRangedWeapon()
     {
         return(
-                isset($this->items[self::EQUIPMENT_SLOT_RANGED]['class']) &&
-                $this->items[self::EQUIPMENT_SLOT_RANGED]['class'] == ItemTemplate::ITEM_CLASS_WEAPON);
+            isset($this->items[self::EQUIPMENT_SLOT_RANGED]['class']) &&
+            $this->items[self::EQUIPMENT_SLOT_RANGED]['class'] == ItemTemplate::ITEM_CLASS_WEAPON);
     }
 
     public function getPowerType()
@@ -534,12 +520,12 @@ class Character extends CActiveRecord
                         $tSpell     = Spell::model()->findByPk($tal['ranks'][0]['id']);
                         $name       = $tSpell->spellname_loc0;
                         $spellRanks = Yii::app()->db->createCommand(
-                                        "SELECT spellID
+                                "SELECT spellID
                                 FROM wow_spells
                                 WHERE spellicon = {$tSpell->spellicon} AND
                                     spellname_loc0 = :name")
-                                ->bindParam(':name', $name)
-                                ->queryColumn();
+                            ->bindParam(':name', $name)
+                            ->queryColumn();
 
                         foreach($spellRanks as $spell)
                             if(in_array($spell, $this->_spells))
@@ -669,8 +655,8 @@ class Character extends CActiveRecord
         $skill_professions = implode(', ', $skill_professions);
 
         $professions = $this->dbConnection
-                ->createCommand("SELECT * FROM character_skills WHERE guid = {$this->guid} AND skill IN ({$skill_professions}) LIMIT 2")
-                ->queryAll();
+            ->createCommand("SELECT * FROM character_skills WHERE guid = {$this->guid} AND skill IN ({$skill_professions}) LIMIT 2")
+            ->queryAll();
         if(!is_array($professions))
             return false;
 
@@ -680,8 +666,8 @@ class Character extends CActiveRecord
         foreach($professions as $prof)
         {
             $this->_professions[$i] = Yii::app()->db
-                    ->createCommand("SELECT id, $column AS name, icon FROM wow_professions WHERE id = {$prof['skill']} LIMIT 1")
-                    ->queryRow();
+                ->createCommand("SELECT id, $column AS name, icon FROM wow_professions WHERE id = {$prof['skill']} LIMIT 1")
+                ->queryRow();
             if(!$this->_professions[$i])
                 continue;
             $this->_professions[$i]['value'] = $prof['value'];
@@ -732,8 +718,8 @@ class Character extends CActiveRecord
         $feed = array();
 
         $feed = $this->dbConnection
-                ->createCommand("SELECT * FROM character_feed_log WHERE guid = {$this->guid} ORDER BY date DESC LIMIT {$count}")
-                ->queryAll();
+            ->createCommand("SELECT * FROM character_feed_log WHERE guid = {$this->guid} ORDER BY date DESC LIMIT {$count}")
+            ->queryAll();
 
         for($i = 0; $i < count($feed); $i++)
             switch($feed[$i]['type'])
@@ -744,14 +730,14 @@ class Character extends CActiveRecord
                     break;
                 case 3:
                     $feed[$i]['count']    = $this->dbConnection
-                            ->createCommand("SELECT COUNT(1)
+                        ->createCommand("SELECT COUNT(1)
                             FROM character_feed_log
                             WHERE
                                 guid = {$this->guid}
                                 AND type = 3
                                 AND data = {$feed[$i]['data']}
                                 AND date <= {$feed[$i]['date']}")
-                            ->queryScalar();
+                        ->queryScalar();
                     $feed[$i]['data']     = CreatureTemplate::model()->findByPk($feed[$i]['data']);
                     break;
             }
@@ -769,10 +755,10 @@ class Character extends CActiveRecord
 
         $column   = 'name_' . Yii::app()->language;
         $factions = Yii::app()->db
-                ->createCommand("SELECT `id`, `category`, $column AS `name`, `baseValue`
+            ->createCommand("SELECT `id`, `category`, $column AS `name`, `baseValue`
                     FROM `wow_factions` WHERE `id` IN ($_factions)
                     ORDER BY `id` DESC")
-                ->queryAll();
+            ->queryAll();
 
         // Default categories
         $categories = array(
@@ -876,8 +862,8 @@ class Character extends CActiveRecord
             $faction['percent']  = round($rep_adjusted * 100 / $rep_cap);
 
             if(isset($categories[$faction['category']])
-                    and $faction['id'] != 67
-                    and $faction['id'] != 469)
+                and $faction['id'] != 67
+                and $faction['id'] != 469)
             {
                 if(!isset($storage[$faction['category']]))
                     $storage[$faction['category']] = array();
@@ -890,7 +876,7 @@ class Character extends CActiveRecord
                 {
                     if(isset($categories[$catId][$faction['category']]))
                         if($subcat[$faction['category']]['side'] == -1
-                                or $subcat[$faction['category']]['side'] == $this->faction)
+                            or $subcat[$faction['category']]['side'] == $this->faction)
                         {
                             if(!isset($categories[$catId][$faction['category']]))
                                 $categories[$catId][$faction['category']] = array();
@@ -932,9 +918,9 @@ class Character extends CActiveRecord
 
         $id = 14 * ($this->faction - 1) + $rank;
         return Yii::app()->db
-                        ->createCommand("SELECT $column
+                ->createCommand("SELECT $column
                     FROM `wow_titles` WHERE `id` = $id")
-                        ->queryScalar();
+                ->queryScalar();
     }
 
 }

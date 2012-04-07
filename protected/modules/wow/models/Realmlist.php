@@ -1,16 +1,11 @@
 <?php
 
-class Realmlist extends CActiveRecord
+class Realmlist extends Base\Realm
 {
 
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
-    }
-
-    public function getDbConnection()
-    {
-        return Database::getConnection('realmlist');
     }
 
     public function tableName()

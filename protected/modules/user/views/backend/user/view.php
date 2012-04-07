@@ -4,7 +4,7 @@ $this->breadcrumbs = array(
     $model->username,
 );
 ?>
-<h1><?php echo UserModule::t('View User').' "'.$model->username.'"'; ?></h1>
+<h1><?php echo UserModule::t('View User') . ' "' . $model->username . '"'; ?></h1>
 
 <?php
 echo $this->renderPartial('_menu', array(
@@ -22,13 +22,13 @@ $attributes = array(
 );
 
 $profileFields = ProfileField::model()->forOwner()->sort()->findAll();
-if ($profileFields)
+if($profileFields)
 {
-    foreach ($profileFields as $field)
+    foreach($profileFields as $field)
     {
         array_push($attributes, array(
             'label' => UserModule::t($field->title),
-            'name'  => 'profile.'.$field->varname,
+            'name'  => 'profile.' . $field->varname,
             'type'  => 'raw',
             'value' => (($field->widgetView($model->profile)) ? $field->widgetView($model->profile) : (($field->range) ? Profile::range($field->range, $model->profile->getAttribute($field->varname)) : $model->profile->getAttribute($field->varname))),
         ));
@@ -38,13 +38,13 @@ if ($profileFields)
 array_push($attributes, 'email', 'activkey', array(
     'name'  => 'createtime',
     'value' => date("d.m.Y H:i:s", $model->createtime),
-        ), array(
+    ), array(
     'name'  => 'lastvisit',
     'value' => (($model->lastvisit) ? date("d.m.Y H:i:s", $model->lastvisit) : UserModule::t("Not visited")),
-        ), array(
+    ), array(
     'name'  => 'status',
     'value' => User::itemAlias("UserStatus", $model->status),
-        )
+    ), 'last_ip'
 );
 
 $this->widget('BootDetailView', array(

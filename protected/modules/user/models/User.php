@@ -91,6 +91,7 @@ class User extends CActiveRecord
             'createtime'     => UserModule::t("Registration date"),
             'lastvisit'      => UserModule::t("Last visit"),
             'status'         => UserModule::t("Status"),
+            'last_ip' => UserModule::t('Last Ip'),
         );
     }
 
@@ -107,7 +108,7 @@ class User extends CActiveRecord
                 'condition' => 'status='.self::STATUS_BANED,
             ),
             'notsafe'   => array(
-                'select' => 'id, username, password, email, activkey, createtime, lastvisit, status',
+                'select' => 'id, username, password, email, activkey, createtime, lastvisit, status, last_ip',
             ),
         );
     }
@@ -115,7 +116,7 @@ class User extends CActiveRecord
     public function defaultScope()
     {
         return array(
-            'select' => 'id, username, email, createtime, lastvisit, status',
+            'select' => 'id, username, email, createtime, lastvisit, status, last_ip',
         );
     }
 
@@ -125,6 +126,7 @@ class User extends CActiveRecord
 
         $criteria->compare('username', $this->username, true);
         $criteria->compare('email', $this->email, true);
+        $criteria->compare('last_ip', $this->last_ip, true);
 
         return new CActiveDataProvider(get_class($this), array(
                     'criteria' => $criteria,

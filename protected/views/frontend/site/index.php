@@ -12,4 +12,4 @@
     $("#slider").easySlider();
 </script>
 <?php endif; ?>
-<?php echo Yii::app()->config->get('main_page'); ?>
+<?php echo Yii::app()->config->get('system', 'main_page'); ?>

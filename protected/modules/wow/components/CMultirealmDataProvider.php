@@ -36,11 +36,11 @@ class CMultirealmDataProvider extends CActiveDataProvider
 
 		if($this->all_realms)
 		{
-			$realmInfo = Database::model()->findAll('type = "characters"');
+			$realmInfo = Database::model()->findAll('type = "char" AND password != ""');
 
         	foreach($realmInfo as $server)
         	{
-				Database::$realm = $server->title;
+				Database::$realm = $server->name;
 				$data += $this->model->findAll($criteria);
 			}
 		}

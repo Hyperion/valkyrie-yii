@@ -54,6 +54,7 @@ class LoginController extends Controller
     {
         $lastVisit = User::model()->notsafe()->findByPk(Yii::app()->user->id);
         $lastVisit->lastvisit = time();
+        $lastVisit->last_ip = isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:'127.0.0.1';
         $lastVisit->save();
     }
 

@@ -7,14 +7,14 @@
         <url>#</url>
         <items>
             <submenu>
-                <label>Realms</label>
+                <label>Databases</label>
                 <sort_order>1</sort_order>
-                <url>/wow/realm/index</url>
+                <url>/wow/database/admin</url>
             </submenu>
             <submenu>
                 <label>Accounts</label>
                 <sort_order>2</sort_order>
-                <url>/wow/account/index</url>
+                <url>/wow/account/admin</url>
             </submenu>
             <submenu>
                 <label>Characters</label>

@@ -1,17 +1,13 @@
 <?php
 
-class Account extends CActiveRecord
+class Account extends Base\Realm
 {
+
     public $password;
 
-    public static function model($className=__CLASS__)
+    public static function model($className = __CLASS__)
     {
         return parent::model($className);
-    }
-
-    public function getDbConnection()
-    {
-        return Database::getConnection();
     }
 
     public function tableName()
@@ -22,72 +18,71 @@ class Account extends CActiveRecord
     public function rules()
     {
         return array(
-            array('locale, gmlevel, mutetime, locked', 'numerical', 'integerOnly'=>true),
-            array('username', 'length', 'max'=>32),
-            array('username, password', 'required', 'on'=>'add'),
-            array('password', 'authenticate', 'on'=>'add'),
-            array('username, password', 'required', 'on'=>'create'),
-            //array('username, email', 'recoveryInfo', 'on'=>'recovery'),
-            array('gmlevel, mutetime, locked, locale', 'required', 'on'=>'update'),
-            array('username', 'safe', 'on'=>'search'),
+            array('locale, gmlevel, mutetime, locked', 'numerical', 'integerOnly' => true),
+            array('username', 'length', 'max' => 32),
+            array('username, password', 'required', 'on' => 'add'),
+            array('password', 'authenticate', 'on' => 'add'),
+            array('username, password', 'required', 'on' => 'create'),
+            array('gmlevel, mutetime, locked, locale', 'required', 'on' => 'update'),
+            array('username, email, last_ip, gmlevel, locale, failed_logins, locked', 'safe', 'on' => 'search'),
         );
     }
 
     public function attributeLabels()
     {
         return array(
-            'id' => 'ID',
-            'username' => 'Username',
-            'sha_pass_hash' => 'Password',
-            'gmlevel' => 'Gmlevel',
-            'sessionkey' => 'Sessionkey',
-            'v' => 'V',
-            's' => 'S',
-            'email' => 'Email',
-            'joindate' => 'Joindate',
-            'last_ip' => 'Last Ip',
-            'failed_logins' => 'Failed Logins',
-            'locked' => 'Locked',
-            'last_login' => 'Last Login',
+            'id'              => 'ID',
+            'username'        => 'Username',
+            'sha_pass_hash'   => 'Password',
+            'gmlevel'         => 'Gmlevel',
+            'sessionkey'      => 'Sessionkey',
+            'v'               => 'V',
+            's'               => 'S',
+            'email'           => 'Email',
+            'joindate'        => 'Joindate',
+            'last_ip'         => 'Last Ip',
+            'failed_logins'   => 'Failed Logins',
+            'locked'          => 'Locked',
+            'last_login'      => 'Last Login',
             'active_realm_id' => 'Active Realm',
-            'mutetime' => 'Mutetime',
-            'locale' => 'Локаль',
+            'mutetime'        => 'Mutetime',
+            'locale'          => 'Локаль',
         );
     }
 
     public function search()
     {
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-        $criteria->compare('username',$this->username,true);
-        $criteria->compare('sha_pass_hash',$this->sha_pass_hash,true);
-        $criteria->compare('gmlevel',$this->gmlevel);
-        $criteria->compare('sessionkey',$this->sessionkey,true);
-        $criteria->compare('v',$this->v,true);
-        $criteria->compare('s',$this->s,true);
-        $criteria->compare('email',$this->email,true);
-        $criteria->compare('joindate',$this->joindate,true);
-        $criteria->compare('last_ip',$this->last_ip,true);
-        $criteria->compare('failed_logins',$this->failed_logins,true);
-        $criteria->compare('locked',$this->locked);
-        $criteria->compare('last_login',$this->last_login,true);
-        $criteria->compare('active_realm_id',$this->active_realm_id,true);
-        $criteria->compare('mutetime',$this->mutetime,true);
-        $criteria->compare('locale',$this->locale);
+        $criteria->compare('username', $this->username, true);
+        $criteria->compare('sha_pass_hash', $this->sha_pass_hash, true);
+        $criteria->compare('gmlevel', $this->gmlevel);
+        $criteria->compare('sessionkey', $this->sessionkey, true);
+        $criteria->compare('v', $this->v, true);
+        $criteria->compare('s', $this->s, true);
+        $criteria->compare('email', $this->email, true);
+        $criteria->compare('joindate', $this->joindate, true);
+        $criteria->compare('last_ip', $this->last_ip, true);
+        $criteria->compare('failed_logins', $this->failed_logins, true);
+        $criteria->compare('locked', $this->locked);
+        $criteria->compare('last_login', $this->last_login, true);
+        $criteria->compare('active_realm_id', $this->active_realm_id, true);
+        $criteria->compare('mutetime', $this->mutetime, true);
+        $criteria->compare('locale', $this->locale);
 
-       return new CActiveDataProvider(get_class($this), array(
-            'criteria'=>$criteria,
-        ));
+        return new CActiveDataProvider(get_class($this), array(
+                'criteria' => $criteria,
+            ));
     }
 
     public static function userRelated()
     {
 
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
         $criteria->addInCondition('username', Yii::app()->user->accounts);
         return new CActiveDataProvider(self::model(), array(
-            'criteria'=>$criteria,
-        ));
+                'criteria' => $criteria,
+            ));
     }
 
     protected function beforeSave()
@@ -95,26 +90,26 @@ class Account extends CActiveRecord
         if(parent::beforeSave())
         {
             if($this->password)
-                $this->sha_pass_hash = strtoupper(sha1(strtoupper($this->username).":".strtoupper($this->password)));
+                $this->sha_pass_hash = strtoupper(sha1(strtoupper($this->username) . ":" . strtoupper($this->password)));
             return true;
         }
         else
             return false;
     }
 
-    public function authenticate($attribute,$params)
+    public function authenticate($attribute, $params)
     {
-        $sha_pass_hash = strtoupper(sha1(strtoupper($this->username).":".strtoupper($this->password)));
-        $model = self::model()->find('username=:username', array(':username'=>$this->username));
-        if($model===null)
+        $sha_pass_hash = strtoupper(sha1(strtoupper($this->username) . ":" . strtoupper($this->password)));
+        $model         = self::model()->find('username=:username', array(':username' => $this->username));
+        if($model === null)
         {
-            $this->addError('username','Аккаунт с даным логином не найден.');
+            $this->addError('username', 'Аккаунт с даным логином не найден.');
             return;
         }
         $this->attributes = $model->attributes;
         $this->id = $model->id;
         if($sha_pass_hash != strtoupper($model->sha_pass_hash))
-            $this->addError('password','Неверный пароль.');
+            $this->addError('password', 'Неверный пароль.');
 
         $c = Yii::app()->db
             ->createCommand()
@@ -123,49 +118,50 @@ class Account extends CActiveRecord
             ->where('account = :username', array(':username' => $this->username))
             ->queryScalar();
         if($c > 0)
-            $this->addError('username','Этот аккаунт уже привязан!');
+            $this->addError('username', 'Этот аккаунт уже привязан!');
 
         $this->setIsNewRecord(false);
     }
 
-    /*public function recoveryInfo($attribute,$params)
-    {
-        $model = self::model()->find('username=:username OR email=:email',
-            array(':username'=>$this->username, ':email'=>$this->email));
-        if($model===null)
-        {
-            $this->addError('password','Can not find username or email.');
-            return;
-        }
-        $this->attributes = $model->attributes;
-        $this->id = $model->id;
-        $this->setIsNewRecord(false);
-    }
+    /* public function recoveryInfo($attribute,$params)
+      {
+      $model = self::model()->find('username=:username OR email=:email',
+      array(':username'=>$this->username, ':email'=>$this->email));
+      if($model===null)
+      {
+      $this->addError('password','Can not find username or email.');
+      return;
+      }
+      $this->attributes = $model->attributes;
+      $this->id = $model->id;
+      $this->setIsNewRecord(false);
+      }
 
-    public static function generatePassword() {
-        $consonants = array("b","c","d","f","g","h","j","k","l","m","n","p","r","s","t","v","w","x","y","z");
-        $vocals = array("a","e","i","o","u");
+      public static function generatePassword() {
+      $consonants = array("b","c","d","f","g","h","j","k","l","m","n","p","r","s","t","v","w","x","y","z");
+      $vocals = array("a","e","i","o","u");
 
-        $password = '';
+      $password = '';
 
-        srand((double) microtime() * 1000000);
-        for ($i = 1; $i <= 4; $i++) {
-            $password .= $consonants[rand(0, 19)];
-            $password .= $vocals[rand(0, 4)];
-        }
-        $password .= rand(0, 9);
+      srand((double) microtime() * 1000000);
+      for ($i = 1; $i <= 4; $i++) {
+      $password .= $consonants[rand(0, 19)];
+      $password .= $vocals[rand(0, 4)];
+      }
+      $password .= rand(0, 9);
 
-        return $password;
-    }*/
+      return $password;
+      } */
 
     public function saveUserRelation()
     {
-        $c = Yii::app()->db
+        $c       = Yii::app()->db
             ->createCommand('INSERT INTO {{user_accounts}} (user_id, account) VALUES (:user_id, :account)');
-        $userId = Yii::app()->user->id;
+        $userId  = Yii::app()->user->id;
         $account = $this->username;
         $c->bindParam(':user_id', $userId);
         $c->bindParam(':account', $account);
         $c->execute();
     }
+
 }

@@ -3,52 +3,64 @@
 class BVisitedBehaivor extends CActiveRecordBehavior
 {
 
-    protected $_tableName   = '{{visits}}';
-    protected $_createTable = false;
+    protected $_userKey;
+    protected $_modelClass;
+    protected $_modelId;
+    protected $_tableName   = '{{visit}}';
+    protected $_createTable = true;
     protected $_dbEngine    = 'InnoDB';
 
-    function saveVisit($text)
+    function afterFind($event)
     {
-        $report = new $this->reportModelClass;
+        $app = Yii::app();
 
-        $report->setAttribute($this->reportTextField, $text);
-        $report->setAttribute($this->ownerIdField, $this->getOwner()->getPrimaryKey());
-        $report->setAttribute($this->ownerControllerField, $this->ownerController);
-        $report->setAttribute($this->ownerModuleField, $this->ownerModule);
+        $this->_userKey = ($app->getComponent('user')->getIsGuest()) ? $app->getController()->user_guid : $app->getComponent('user')->getId();
+        $this->_modelClass = get_class($this->getOwner());
+        $this->_modelId = $this->getOwner()->getPrimaryKey();
 
-        return $report->save();
+        if($this->getCreateTable())
+            $this->createTable();
+
+        parent::beforeFind($event);
     }
 
-    function getReports()
+    function saveVisit()
     {
-        $report = $this->getModelInstance();
+        $connection = $this->getDb();
 
-        $criteria = new CDbCriteria();
-        $criteria->compare($this->ownerIdField, $this->getOwner()->getPrimaryKey());
-        $criteria->compare($this->ownerControllerField, $this->ownerController);
-        $criteria->compare($this->ownerModuleField, $this->ownerModule);
+        $visited = $connection
+            ->createCommand('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE user_key = :user_key AND model_class = :model_class AND model_id = :model_id')
+            ->queryScalar(array(':user_key'    => $this->_userKey, ':model_class' => $this->_modelClass, ':model_id'    => $this->_modelId));
 
-        return $report->findAll($criteria);
-    }
-
-    private function getModelInstance()
-    {
-        if(!isset($this->reportModelClass))
+        if(!$visited)
         {
-            throw new CException(Yii::t('app', 'reportModelClass should be defined.'));
+            $command = $connection
+                ->createCommand('INSERT INTO ' . $this->getTableName() . ' (`user_key`,`model_class`,`model_id`) VALUES(:user_key, :model_class, :model_id)');
+
+            $command->bindValue(':user_key', $this->_userKey);
+            $command->bindValue(':model_class', $this->_modelClass);
+            $command->bindValue(':model_id', $this->_modelId);
+            $command->execute();
         }
-        return CActiveRecord::model($this->reportModelClass);
     }
 
-    function afterDelete($event)
+    function getVisits()
     {
-        $reports = $this->getReports();
-        foreach($reports as $report)
-        {
-            $report->delete();
-        }
+        return $this->getDb()
+                ->createCommand('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE model_class = :model_class AND model_id = :model_id')
+                ->queryScalar(array(':model_class' => $this->_modelClass, ':model_id'    => $this->_modelId));
+    }
 
-        parent::afterDelete($event);
+    function beforeDelete($event)
+    {
+        $command = $this->getDb()
+            ->createCommand('DELETE FROM ' . $this->getTableName() . ' WHERE model_class = :model_class AND model_id = :model_id');
+
+        $command->bindValue(':model_class', $this->_modelClass);
+        $command->bindValue(':model_id', $this->_modelId);
+        $command->execute();
+
+        return parent::beforeDelete($event);
     }
 
     public function setTableName($name)
@@ -77,28 +89,28 @@ class BVisitedBehaivor extends CActiveRecordBehavior
     {
         return $this->getOwner()->getDbConnection();
     }
-    
-	public function setDbEngine($name)
-	{
-		$this->_dbEngine=$name;
-	}
-	
-	public function getDbEngine()
-	{
-		return $this->_dbEngine;
-	}
-    
+
+    public function setDbEngine($name)
+    {
+        $this->_dbEngine = $name;
+    }
+
+    public function getDbEngine()
+    {
+        return $this->_dbEngine;
+    }
+
     protected function createTable()
     {
         $connection = $this->getDb();
         $tableName  = $connection->tablePrefix . str_replace(array('{{', '}}'), '', $this->getTableName());
         $sql     = 'CREATE TABLE IF NOT EXISTS `' . $tableName . '` (
 		  `id` int(11) NOT NULL auto_increment,
-		  `modelClass` varchar(64) NOT NULL,
-		  `modelId` int(11) NOT NULL,
+		  `model_class` varchar(64) NOT NULL,
+		  `model_id` int(11) NOT NULL,
 		  `user_key` varchar(75) NOT NULL,
 		  PRIMARY KEY  (`id`),
-		  KEY `model_user_key` (`modelClass`,`modelId`, `user_key`) UNIQUE
+		  UNIQUE KEY `model_user_key` (`model_class`,`model_id`, `user_key`)
 		) ' . ($this->getDbEngine() ? 'ENGINE=' . $this->getDbEngine() : '') . '  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
         $command = $connection->createCommand($sql);
         $command->execute();

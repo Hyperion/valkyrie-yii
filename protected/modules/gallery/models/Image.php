@@ -20,9 +20,12 @@ class Image extends CActiveRecord
                 'updateAttribute'     => null,
             ),
             'BReportableBehaivor' => array(
-                'class'           => 'application.components.behaviors.BReportableBehaivor',
-                'ownerController' => Yii::app()->controller->id,
-                'ownerModule'     => Yii::app()->controller->module->id,
+                'class'            => 'application.components.behaviors.BReportableBehaivor',
+                'ownerController'  => Yii::app()->controller->id,
+                'ownerModule'      => Yii::app()->controller->module->id,
+            ),
+            'BVisitedBehaivor' => array(
+                'class' => 'application.components.behaviors.BVisitedBehaivor',
             )
         );
     }
@@ -46,14 +49,14 @@ class Image extends CActiveRecord
         // will receive user inputs.
         return array(
             array('image, mime_type', 'required'),
-            array('user_id, album_id, create_time, last_visit, visits, size, width, height', 'numerical', 'integerOnly' => true),
+            array('user_id, album_id, create_time, last_visit, size, width, height', 'numerical', 'integerOnly' => true),
             array('url, thumb_url, mime_type', 'length', 'max' => 255),
             array('user_guid', 'length', 'max' => 75),
             array('description', 'safe'),
             array('image', 'file', 'on' => 'create'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, description, user_id, album_id, user_guid, create_time, last_visit, visits, image, url, thumb_url, mime_type, size, width, height, username, albumname', 'safe', 'on' => 'search'),
+            array('id, description, user_id, album_id, user_guid, create_time, last_visit, image, url, thumb_url, mime_type, size, width, height, username, albumname', 'safe', 'on' => 'search'),
         );
     }
 
@@ -130,7 +133,6 @@ class Image extends CActiveRecord
         $criteria->compare('user_guid', $this->user_guid, true);
         $criteria->compare('create_time', $this->create_time);
         $criteria->compare('last_visit', $this->last_visit);
-        $criteria->compare('visits', $this->visits);
         $criteria->compare('image', $this->image, true);
         $criteria->compare('url', $this->url, true);
         $criteria->compare('thumb_url', $this->thumb_url, true);

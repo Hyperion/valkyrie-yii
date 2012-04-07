@@ -1,12 +1,6 @@
-<div class="related-content" id="related-disenchantItems"> 
-	<div class="filters inline"> 
-		<div class="keyword"> 
-			<input id="filter-name-disenchantItems" type="text" class="input filter-name" data-filter="row" maxlength="25" title="Фильтр" value="Фильтр" /> 
-		</div> 
-		<span class="clear"><!-- --></span> 
-	</div> 
- 
-<?php $this->widget('WStaticGridWow', array(
+<div> 
+
+<?php $this->widget('BootGridView', array(
     'id'=>'disenchantItems-grid',
     'dataProvider'=>$dataProvider,
     'columns'=>array(
@@ -33,14 +27,4 @@
 		),
     ),
 )); ?>
-	<script type="text/javascript"> 
-	//<![CDATA[
-		Wiki.related['disenchantItems'] = new WikiRelated('disenchantItems', {
-			paging: true,
-			totalResults: <?=$dataProvider->totalItemCount?>,
-			results: 50,
-			column: 0
-		});
-	//]]>
-	</script> 
 </div> 

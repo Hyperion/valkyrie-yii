@@ -26,22 +26,25 @@ return array(
     // application components
     'components' => array(
         'authManager' => array(
-            'class' => 'RDbAuthManager',
-            'defaultRoles'=>array('Guest'),
+            'class'        => 'RDbAuthManager',
+            'defaultRoles' => array('Guest'),
         ),
         'image' => array(
             'class'  => 'ext.image.ImageComponent',
             'driver' => 'Imagick',
         ),
         'db'     => array(
-            'connectionString' => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
+            'connectionString'   => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
             //'emulatePrepare'   => true,
-            'username'         => DB_USER,
-            'password'         => DB_PASS,
-            'charset'          => 'utf8',
-            'tablePrefix'      => '',
+            'username'           => DB_USER,
+            'password'           => DB_PASS,
+            'charset'            => 'utf8',
+            'tablePrefix'        => '',
+            'schemaCachingDuration' => 3600 * 24 * 365,
+            'enableProfiling'    => true,
+            'enableParamLogging' => true,
         ),
-        'db_world'         => array(
+        'db_world'           => array(
             'class'                 => 'CDbConnection',
             'connectionString'      => 'mysql:host=' . DB_WORLD_HOST . ';dbname=' . DB_WORLD_NAME,
             'username'              => DB_WORLD_USER,
@@ -49,16 +52,19 @@ return array(
             'emulatePrepare'        => true,
             'charset'               => 'utf8',
             'autoConnect'           => false,
-            'schemaCachingDuration' => 3600,
+            'schemaCachingDuration' => 3600 * 24 * 365,
+            'queryCachingDuration'  => 3600 * 24 * 365,
+            'enableProfiling'       => true,
+            'enableParamLogging'    => true,
         ),
         'cache'                 => array(
-            'class' => 'system.caching.CFileCache',
+            'class' => 'system.caching.CApcCache',
         ),
         'log'   => array(
             'class'  => 'CLogRouter',
             'routes' => array(
                 array(
-                    'class'     => 'CFileLogRoute',
+                    'class'     => 'CProfileLogRoute',
                 ),
             ),
         ),

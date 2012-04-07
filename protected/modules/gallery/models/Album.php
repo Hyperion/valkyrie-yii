@@ -14,9 +14,12 @@ class Album extends CActiveRecord
     {
         return array(
             'CTimestampBehavior' => array(
-                'class'           => 'zii.behaviors.CTimestampBehavior',
-                'createAttribute' => 'create_time',
-                'updateAttribute' => null,
+                'class'               => 'zii.behaviors.CTimestampBehavior',
+                'createAttribute'     => 'create_time',
+                'updateAttribute'     => null,
+            ),
+            'BVisitedBehaivor' => array(
+                'class'           => 'application.components.behaviors.BVisitedBehaivor',
             )
         );
     }
@@ -98,8 +101,8 @@ class Album extends CActiveRecord
         $sort = new CSort;
         $sort->attributes = array(
             'username' => array(
-                'asc'      => 'user.username',
-                'desc'     => 'user.username DESC',
+                'asc'  => 'user.username',
+                'desc' => 'user.username DESC',
             ),
             '*',
         );

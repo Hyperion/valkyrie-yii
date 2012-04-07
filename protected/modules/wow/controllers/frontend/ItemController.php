@@ -3,27 +3,27 @@
 class ItemController extends Controller
 {
 
+    public function allowedActions()
+    {
+        return '*';
+    }
+
     public $class = 'ItemTemplate';
-    
+
     public function actionIndex()
     {
         $model = new ItemTemplate('search');
-
         $model->unsetAttributes();
-
-        if(isset($_GET['classId']))
-            $model->class = (int) $_GET['classId'];
-        if(isset($_GET['subClassId']))
-            $model->subclass = (int) $_GET['subClassId'];
-        if(isset($_GET['invType']))
-            $model->InventoryType = (int) $_GET['invType'];
+        
+        if(isset($_GET['ItemTemplate']))
+            $model->attributes = $_GET['ItemTemplate'];
 
         $this->render('index', array('model' => $model));
     }
 
     public function actionDropCreatures($id)
     {
-        $model = $this->loadModel($id);
+        $model        = $this->loadModel($id);
         $dataProvider = $model->dropCreatures;
 
         $this->renderPartial('_dropCreatures', array('dataProvider' => $dataProvider));
@@ -31,7 +31,7 @@ class ItemController extends Controller
 
     public function actionVendors($id)
     {
-        $model = $this->loadModel($id);
+        $model        = $this->loadModel($id);
         $dataProvider = $model->vendors;
 
         $this->renderPartial('_vendors', array('dataProvider' => $dataProvider));
@@ -39,7 +39,7 @@ class ItemController extends Controller
 
     public function actionDisenchantFrom($id)
     {
-        $model = $this->loadModel($id);
+        $model        = $this->loadModel($id);
         $dataProvider = $model->disenchantFrom;
 
         $this->renderPartial('_items', array('dataProvider' => $dataProvider));
@@ -47,9 +47,10 @@ class ItemController extends Controller
 
     public function actionDisenchantItems($id)
     {
-        $model = $this->loadModel($id);
+        $model        = $this->loadModel($id);
         $dataProvider = $model->disenchantItems;
 
         $this->renderPartial('_items', array('dataProvider' => $dataProvider));
     }
+
 }
