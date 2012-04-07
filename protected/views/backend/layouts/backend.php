@@ -30,7 +30,7 @@ $this->widget('BootNavbar', array(
         </div>
         <div class="span9">
             <?php
-            $this->widget('BootCrumb', array(
+            $this->widget('BootBreadcrumbs', array(
                 'links' => $this->breadcrumbs,
             ));
             ?>

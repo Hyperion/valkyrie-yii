@@ -27,7 +27,7 @@
 
             <div class="content">
                 <?php
-                $this->widget('BootCrumb', array(
+                $this->widget('BootBreadcrumbs', array(
                     'links' => $this->breadcrumbs,
                 ));
                 ?><!-- breadcrumbs -->
