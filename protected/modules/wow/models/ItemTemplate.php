@@ -87,7 +87,8 @@ class ItemTemplate extends Base\World
     public function rules()
     {
         return array(
-            array('name, minlvl, maxlvl, minrlvl, maxrlvl, type, class, subclass, InventoryType', 'safe', 'on' => 'search'),
+            array('minlvl, maxlvl, minrlvl, maxrlvl, class_id, subclass, InventoryType', 'numerical', 'integerOnly' => true),
+            array('name, minlvl, maxlvl, minrlvl, maxrlvl, type, class_id, subclass, InventoryType', 'safe', 'on' => 'search'),
         );
     }
 
@@ -163,13 +164,13 @@ class ItemTemplate extends Base\World
 
         if(is_array($this->type))
         {
-            $this->class = 2;
+            $this->class_id = 2;
             $criteria->addInCondition('subclass', $this->type);
         }
         else
             $criteria->compare('subclass', $this->subclass);
 
-        $criteria->compare('class', $this->class);
+        $criteria->compare('class_id', $this->class_id);
         $criteria->compare('name', $this->name, true);
         $criteria->compare('InventoryType', $this->InventoryType);
 
@@ -211,8 +212,11 @@ class ItemTemplate extends Base\World
         {
             $column = 'name_' . Yii::app()->language;
             $this->_subclass_text = Yii::app()->db
-                ->createCommand("SELECT subclass_$column FROM wow_item_subclasses WHERE subclass = {$this->subclass}  AND class = {$this->class} LIMIT 1")
-                ->queryScalar();
+                ->createCommand("SELECT subclass_$column FROM wow_item_subclasses WHERE subclass = :subclass  AND class = :class LIMIT 1")
+                ->queryScalar(array(
+                        ':class' => $this->class_id,
+                        ':subclass' => $this->subclass,
+                    ));
         }
         return $this->_subclass_text;
     }
@@ -223,8 +227,10 @@ class ItemTemplate extends Base\World
         {
             $column = 'name_' . Yii::app()->language;
             $this->_class_text = Yii::app()->db
-                ->createCommand("SELECT class_$column FROM wow_item_subclasses WHERE class = {$this->class} LIMIT 1")
-                ->queryScalar();
+                ->createCommand("SELECT class_$column FROM wow_item_subclasses WHERE class = :class LIMIT 1")
+                ->queryScalar(array(
+                        ':class' => $this->class_id
+                    ));
         }
         return $this->_class_text;
     }
@@ -261,7 +267,7 @@ class ItemTemplate extends Base\World
 
     public function getDps()
     {
-        if(!$this->_dps && $this->class == self::ITEM_CLASS_WEAPON && $this->delay)
+        if(!$this->_dps && $this->class_id == self::ITEM_CLASS_WEAPON && $this->delay)
         {
             $this->_dps = 0;
             for($i = 1; $i <= self::MAX_ITEM_PROTO_DAMAGES; $i++)

@@ -22,15 +22,15 @@
         ?>
         <li>Unique</li>
     <?php endif;
-    if(in_array($model->class, array($model::ITEM_CLASS_ARMOR, $model::ITEM_CLASS_WEAPON))):
+    if(in_array($model->class_id, array($model::ITEM_CLASS_ARMOR, $model::ITEM_CLASS_WEAPON))):
         ?>
         <li><span class="float-right"><?php echo $model->subclass_text ?></span><?php echo $model::itemAlias('invtype', $model->InventoryType) ?></li>
     <?php endif;
-    if($model->class == $model::ITEM_CLASS_CONTAINER):
+    if($model->class_id == $model::ITEM_CLASS_CONTAINER):
         ?>
         <li><?php echo $model->ContainerSlots ?> Slot Bag</li>
 <?php endif;
-if($model->class == $model::ITEM_CLASS_WEAPON && $model->delay):
+if($model->class_id == $model::ITEM_CLASS_WEAPON && $model->delay):
     ?>
         <li>
             <span>Speed <?php echo $model->delay / 1000 ?></span>
@@ -38,7 +38,7 @@ if($model->class == $model::ITEM_CLASS_WEAPON && $model->delay):
         </li>
         <li>(<?php echo $model->dps ?>  damage per second)</li>
     <?php endif;
-    if($model->class == $model::ITEM_CLASS_PROJECTILE && $model->dmg_min1 > 0 && $model->dmg_max1 > 0):
+    if($model->class_id == $model::ITEM_CLASS_PROJECTILE && $model->dmg_min1 > 0 && $model->dmg_max1 > 0):
         ?>
         <li>+<?php echo ($model->dmg_min1 + $model->dmg_max1) / 2 ?> damage per second</li>
     <?php endif;

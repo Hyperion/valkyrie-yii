@@ -50,7 +50,7 @@
 .color-d6, .color-d6 a { color: #ff0000 !important; } /* red */
 
 /* framed icons */
-.icon-frame { display: inline-block; overflow: hidden; padding: 1px; background-color: #000; background-position: 1px 1px; background-repeat: no-repeat; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border: 1px solid #434445; border-bottom-color: #2f3032; border-top-color: #b1b2b4; margin-right: 3px;}
+.icon-frame { display: inline-block; overflow: hidden; padding: 1px; background-color: #000; background-position: 1px 1px !important; background-repeat: no-repeat; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border: 1px solid #434445; border-bottom-color: #2f3032; border-top-color: #b1b2b4; margin-right: 3px;} 
 .icon-frame img { display: block; vertical-align: bottom; }
 .icon-frame.frame-36,
 .icon-frame.frame-50,
@@ -72,10 +72,8 @@
 .item-specs .indent { padding-left: 10px }
 .item-specs .indent-small { padding-left: 5px }
 .item-specs .indent-top { padding-top: 10px }
-.item-specs .icon-socket { float: left; margin-right: 4px; margin-top: 1px; }
 .item-specs .reforge-arrow { position: relative; top: -1px; font-size: 10px; }
 .item-specs a.color-q1:hover { text-decoration: underline; }
-.item-specs .transmog-name { color:#ff80ff }
 
 .icon-gold		{ padding-right: 15px; background: url("/images/wow/icons/gold.gif") right center no-repeat; }
 .icon-silver	{ padding-right: 15px; padding-left: 3px; background: url("/images/wow/icons/silver.gif") right center no-repeat; }

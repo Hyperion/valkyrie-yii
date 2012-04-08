@@ -3,12 +3,12 @@ $this->breadcrumbs=array(
     'Game'=>array('/wow'),
     'Items'=>array('/wow/item'),
 );
-if(isset($model->class))
-    $this->breadcrumbs[$model->class_text] = array("/wow/item?ItemTemplate[class]={$model->class}");
+if(isset($model->class_id))
+    $this->breadcrumbs[$model->class_text] = array("/wow/item?ItemTemplate[class_id]={$model->class_id}");
 if(isset($model->subclass))
-    $this->breadcrumbs[$model->subclass_text] = array("/wow/item?ItemTemplate[class]={$model->class}&ItemTemplate[subclass]={$model->subclass}");
-if(isset($model->InventoryType) && $model->class == $model::ITEM_CLASS_ARMOR)
-    $this->breadcrumbs[$model::itemAlias('invtype', $model->InventoryType)] = array("/wow/item?ItemTemplate[class]={$model->class}&ItemTemplate[subclass]={$model->subclass}&ItemTemplate[InventoryType]={$model->InventoryType}");
+    $this->breadcrumbs[$model->subclass_text] = array("/wow/item?ItemTemplate[class_id]={$model->class_id}&ItemTemplate[subclass]={$model->subclass}");
+if(isset($model->InventoryType) && $model->class_id == $model::ITEM_CLASS_ARMOR)
+    $this->breadcrumbs[$model::itemAlias('invtype', $model->InventoryType)] = array("/wow/item?ItemTemplate[class_id]={$model->class_id}&ItemTemplate[subclass]={$model->subclass}&ItemTemplate[InventoryType]={$model->InventoryType}");
 $this->breadcrumbs[] = $model->name;
 ?>
 
@@ -16,7 +16,7 @@ $this->breadcrumbs[] = $model->name;
 	<div class="snippet"> 
 		<h3>Это интересно!</h3> 
  		<ul class="fact-list">
-<?php if($model->class == $model::ITEM_CLASS_WEAPON || ($model->class == $model::ITEM_CLASS_ARMOR && !in_array($model->InventoryType, array(2, 11, 12, 28)))): ?>
+<?php if($model->class_id == $model::ITEM_CLASS_WEAPON || ($model->class_id == $model::ITEM_CLASS_ARMOR && !in_array($model->InventoryType, array(2, 11, 12, 28)))): ?>
 <?php endif; if($model->DisenchantID): ?> 
 			<li> 
 				<span class="term">Можно распылить</span> 
