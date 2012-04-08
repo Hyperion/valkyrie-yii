@@ -25,7 +25,7 @@ class BeginRequest extends CBehavior
         }
         else if ($user->hasState('_lang'))
             $app->language = $app->user->getState('_lang');
-        else if (isset($app->request->cookies['_lang']))
+        else if (isset($app->request->cookies['_lang']) and array_key_exists($app->request->cookies['_lang']->value, Yii::app()->params->languages))
             $app->language = $app->request->cookies['_lang']->value;
     }
 }
