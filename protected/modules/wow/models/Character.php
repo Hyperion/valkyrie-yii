@@ -399,7 +399,7 @@ class Character extends Base\Char
                     $item_slots[$slot]['enchant_text'] = $info['text'];
                     if($info['spellId'])
                     {
-                        $item = Yii::app()->db_world
+                        $item = Database::getConnection('World')
                             ->createCommand("
                                         SELECT entry, name
                                         FROM item_template
@@ -423,7 +423,7 @@ class Character extends Base\Char
 
             if($proto->itemset)
             {
-                $set        = Yii::app()->db_world
+                $set        = Database::getConnection('World')
                     ->createCommand("SELECT entry FROM item_template WHERE itemset = {$proto->itemset}")
                     ->queryColumn();
                 $set_pieces = array();

@@ -13,8 +13,6 @@ class WowModule extends CWebModule
         Yii::setPathOfAlias('Base', __DIR__ . '/models/Base');
         Yii::setPathOfAlias('Forms', __DIR__ . '/models/Forms');
 
-        //Yii::app()->db_world->active = true;
-
         $assets  = __DIR__ . '/assets';
         $baseUrl = Yii::app()->assetManager->publish($assets);
         if(is_dir($assets) and !Yii::app()->request->isAjaxRequest)

@@ -33,7 +33,7 @@ class WowDropLoot
 		$loot = array();
 		$groups = array();
 		// Мего запрос :)
-		$rows = Yii::app()->db_world->createCommand("
+		$rows = Database::getConnection('World')->createCommand("
 			SELECT 
 				l.ChanceOrQuestChance, 
 				l.mincountOrRef, 
@@ -153,7 +153,7 @@ class WowDropLoot
         // Ищем в группах
         $drop = array();
         $curtable = 'reference_loot_template';
-        $rows = Yii::app()->db_world->createCommand("
+        $rows = Database::getConnection('World')->createCommand("
                 SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, maxcount
                 FROM {$curtable}
                 WHERE
@@ -171,7 +171,7 @@ class WowDropLoot
                     // Запись из группы с равным шансом дропа, считаем реальную вероятность
                     $zerocount = 0;
                     $chancesum = 0;
-                    $subrows = Yii::app()->db_world->createCommand("
+                    $subrows = Database::getConnection('World')->createCommand("
                             SELECT ChanceOrQuestChance
                             FROM {$curtable}
                             WHERE entry = {$row['entry']} AND groupid = {$row['groupid']}")
@@ -264,7 +264,7 @@ class WowDropLoot
             {
                 // Есть непроверенный элемент, надо его проверить
                 $drop[$num]['checked'] = true;
-                $rows = Yii::app()->db_world->createCommand("
+                $rows = Database::getConnection('World')->createCommand("
                         SELECT entry, groupid, ChanceOrQuestChance, mincountOrRef, maxcount
                         FROM {$curtable}
                         WHERE mincountOrRef = {$num}")

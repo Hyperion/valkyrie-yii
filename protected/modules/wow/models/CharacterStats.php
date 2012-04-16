@@ -24,7 +24,7 @@ class CharacterStats extends Base\Char
     public function getLevelStats()
     {
         if(!$this->_levelStats)
-            $this->_levelStats = Yii::app()->db_world->createCommand("
+            $this->_levelStats = Database::getConnection('World')->createCommand("
                 SELECT str AS strength, agi AS agility, sta AS stamina, inte AS intellect, spi AS spirit
                 FROM player_levelstats
                 WHERE race = {$this->character->race}
