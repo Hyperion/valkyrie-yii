@@ -1,0 +1,38 @@
+assets/
+backend/assets/
+protected/runtime/
+themes/classic/views/
+protected/config/local.conf
+
+# System files.
+###############
+
+# For Mac OS X files.
+.fseventsd
+.DS_Store
+.DS_Store?
+.Trashes
+._*
+.Spotlight-V100
+
+# For Windows files.
+ehthumbs.db
+Thumbs.db
+
+# KDE
+.directory
+
+# PhpStorm
+.idea
+
+# scm revert files
+**.orig
+
+# Netbeans project directory
+/nbproject/
+
+# Textmate project files
+/*.tmproj
+
+# vim artifacts
+**.swp
