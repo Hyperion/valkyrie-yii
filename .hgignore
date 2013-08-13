@@ -1,6 +1,0 @@
-syntax: glob
-
-protected/runtime/*
-nbproject/*
-protected/config/local.conf
-.directory
