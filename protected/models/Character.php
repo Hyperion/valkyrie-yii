@@ -193,7 +193,7 @@ class Character extends Base\Char
             $criteria->with = 'honor';
             $criteria->together = true;
             $criteria->addCondition('honor.thisWeek_kills > 25 OR honor_standing > 0');
-            $criteria->select = 'guid, name, race, honor_standing';
+            $criteria->select = 'guid, name, race, honor_standing, gender, class_id, honor_rank_points, honor_highest_rank';
 
             $sort->attributes = array(
                 'name'                 => 'name',
@@ -583,7 +583,7 @@ class Character extends Base\Char
         if($this->_role > 0)
             return $this->_role;
 
-        switch($this->class)
+        switch($this->class_id)
         {
             case self::CLASS_WARRIOR:
                 if($this->talents[2]['count'] > $this->talents[1]['count'] && $this->talents[2]['count'] > $this->talents[0]['count'])
@@ -600,17 +600,17 @@ class Character extends Base\Char
             case self::CLASS_SHAMAN:
                 // Hybrid classes. Need to check active talent tree.
                 if($this->talents[0]['count'] > $this->talents[1]['count'] && $this->talents[0]['count'] > $this->talents[2]['count'])
-                    if($this->class == self::CLASS_PALADIN)
+                    if($this->class_id == self::CLASS_PALADIN)
                         $this->_role = self::ROLE_HEALER;
                     else
                         $this->_role = self::ROLE_CASTER;
                 elseif($this->talents[1]['count'] > $this->talents[0]['count'] && $this->talents[1]['count'] > $this->talents[2]['count'])
-                    if($this->class == self::CLASS_PALADIN)
+                    if($this->class_id == self::CLASS_PALADIN)
                         $this->_role = self::ROLE_TANK; // Paladin: Protection
                     else
                         $this->_role = self::ROLE_MELEE; //Druid: Feral, Shaman: Enhancemenet
                         else
-                if($this->class == self::CLASS_PALADIN)
+                if($this->class_id == self::CLASS_PALADIN)
                     $this->_role = self::ROLE_MELEE;
                 else
                     $this->_role = self::ROLE_HEALER;

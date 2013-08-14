@@ -42,7 +42,7 @@ class Wow
     {
         return CHtml::link(
                 "<span class=\"icon-frame frame-18\">" . CHtml::image("/images/wow/2d/avatar/{$model->race}-{$model->gender}.jpg", "", array("height" => 18, "width" => 18)) . "</span><strong>$model->name</strong>"
-                , array("/character/view/", "realm" => 'Valkyrie', "name"  => $model->name), array("class" => "item-link color-c$model->class_id"));
+                , array("/character/simple/", "realm" => 'Valkyrie', "name"  => $model->name), array("class" => "item-link color-c$model->class_id"));
     }
 
 }

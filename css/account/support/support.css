@@ -1,0 +1,141 @@
+@charset "utf-8";
+
+.left-container { width:500px; float:left;}
+.right-container { width:450px; float:right; }
+.left-container .form-note { width: 328px; margin-left: 134px; }
+.interior { background-color:#e0dfdd;padding:10px; }
+.support-subtitle { font-size:20px; font-weight:bold; }
+.support-small-subtitle { font-size:18px; font-weight:bold;}
+.interior .signs-list { padding-left: 1.5em; }
+.interior .signs { margin-bottom:10px; margin-left:10px; list-style: disc; }
+
+.progress-bar { float:right; font-size:14px; line-height:28px; position:relative;top:-30px;}
+.progress-bar .arrow1 { background:url("../../images/account-recovery/bar-arrow1.png") 0 0 no-repeat; height:28px; width:13px; display:block;float:right; }
+.progress-bar .arrow2 { background:url("../../images/account-recovery/bar-arrow2.png") 0 0 no-repeat; height:28px; width:13px; display:block;float:right; }
+.progress-bar .arrow3 { background:url("../../images/account-recovery/bar-arrow3.png") 0 0 no-repeat; height:28px; width:13px; display:block;float:right; }
+.progress-bar .arrow4 { background:url("../../images/account-recovery/bar-arrow4.png") 0 0 no-repeat; height:28px; width:13px; display:block;float:right; }
+.progress-bar .arrow5 { background:url("../../images/account-recovery/bar-arrow5.png") 0 0 no-repeat; height:28px; width:13px; display:block;float:right; }
+.progress-bar .caption { display:block; float:right; color:#FFF;line-height:28px;padding-left:10px; padding-right:10px; }
+.progress-bar .caption.green {background-color:#89b100; }
+.progress-bar .caption.gray { background-color:#a0a0a0; }
+.progress-bar .caption {clear:none;}
+
+/* New Intro Page */
+.large-subtitle { font-size:20px; font-weight:bold; }
+
+.process-container { background:#e0dfdd url("../../images/account-recovery/process-arrow.png") 50% 50% no-repeat;padding:30px;margin-bottom:50px;}
+.process-container .stage1 { width:300px; background:url("../../images/account-recovery/process-1.png") 0 0 no-repeat; padding-left:45px; font-size:18px; font-weight:bold; float:left; margin-left:40px; }
+.process-container .stage1 strong { color:#6e8e00; }
+.process-container .stage2 { width:300px; background:url("../../images/account-recovery/process-2.png") 0 0 no-repeat; padding-left:45px; font-size:18px; font-weight:bold; float:right; margin-right:40px; }
+.process-container .stage2 strong { color:#6e8e00; }
+
+.before-container { background:#e0dfdd;padding:30px;margin-bottom:30px;}
+.before-container .stage1 { width:250px; background:url("../../images/account-recovery/intro-icon-1.png") 0 4px no-repeat; padding-left:45px; font-size:18px; font-weight:bold; float:left; }
+.before-container .stage2 { width:250px; background:url("../../images/account-recovery/intro-icon-2.png") 0 4px no-repeat; padding-left:45px; font-size:18px; font-weight:bold; float:left; margin-left:20px;}
+.before-container .stage3 { width:250px; background:url("../../images/account-recovery/intro-icon-3.png") 0 4px no-repeat; padding-left:45px; font-size:18px; font-weight:bold; float:left; margin-left:20px;}
+.before-container .margin-top { font-size:14px; font-weight:normal; color:#4a4a4a;margin-top:10px; }
+
+/* New success page */
+.success-container .dual { background:url("../../images/account-recovery/success-arrow.png") 50% 150px no-repeat; margin-top:40px;}
+.success-container .complete { width:465px; float:left; font-size:18px; font-weight:bold;}
+.success-container .inprogress { width:465px; float:right; font-size:18px; font-weight:bold;}
+.success-container .inprogress .subtitle {float:right; color:#777; font-size:14px; margin-top:2px;}
+.ko-kr .success-container .inprogress .subtitle { display: none; }
+.success-container .interior { background-color:#e0dfdd; height:260px; padding:30px; margin-top:6px;}
+.success-container .interior .tick { background:url("../../images/account-recovery/bullet-tick.png") 0 0 no-repeat; padding-left:30px; font-size:14px; font-weight:normal; margin-bottom:30px; color:#4a4a4a;}
+.success-container .interior .notick { background:url("../../images/account-recovery/bullet-notick.png") 0 0 no-repeat; padding-left:30px; font-size:14px; margin-bottom:30px; color:#4a4a4a;}
+.success-container .interior .errortick {background:url("../../images/account-recovery/icon-cross.gif") 0 0 no-repeat; padding-left:30px; font-size:14px; margin-bottom:30px; color:#4a4a4a;}
+.success-container .interior .errortick strong {color: #b9801d;}
+.success-container .no-submit .interior {height:auto;}
+.also-container { background:#e0dfdd;padding:30px;margin-bottom:30px;}
+.also-container .also1 { background:url("../../images/account-recovery/icon-also-1.png") 0 0 no-repeat; padding-left:30px; font-size:14px; margin-bottom:20px;}
+.also-container .also2 { background:url("../../images/account-recovery/icon-also-2.png") 0 0 no-repeat; padding-left:30px; font-size:14px; margin-bottom:20px;}
+.also-container .also3 { background:url("../../images/account-recovery/icon-also-3.png") 0 0 no-repeat; padding-left:30px; font-size:14px; margin-bottom:20px;}
+.also-container .also4 { background:url("../../images/account-recovery/icon-also-4.png") 0 0 no-repeat; padding-left:30px; font-size:14px; }
+.also-container .notick { background:url("../../images/account-recovery/bullet-notick.png") 0 0 no-repeat; padding-left:30px; font-size:14px; margin-bottom:24px; color:#4a4a4a; font-weight:bold; padding-bottom:6px; }
+
+/* Contact info columns */
+.columns-3 .column .caption { text-transform: uppercase; }
+.columns-3 .column ul { margin: 0 0 1em 0; }
+.columns-3 .column ul li { list-style: none; margin: 0 0 1em 0; }
+
+/* Header lines */
+h4.intro-header {padding-bottom: 20px;}
+h4.contact-header {padding-bottom: 35px;}
+
+/* Contact Support Footnotes */
+#footnote p {  margin-top:20px; }
+
+/* Intro page spacing */
+.intro-box {width: 100%; margin: 0 0 3em 0; background: #e0dfdd; padding: 8px}
+p.intro { margin-bottom: 30px; }
+fieldset.ui-controls.intro {margin-left:0px;}
+
+
+/* Wide Radio buttons */
+h3.choose {margin-top: 30px; }
+.indented {margin-left: 60px; margin-top: 5px;}
+.wide-radio-button .form-row-checkbox .checkbox {width:48px;}
+.wide-radio-button .form-row-checkbox .checkbox {display: inline-block; vertical-align: middle; line-height: 1.5; width: 48px; text-align: right; }
+.wide-radio-button .form-row-checkbox label { width: 90%; }
+
+/* Captcha */
+.captcha-container {
+background-color:#B9B8B5;
+margin:1em 0 2em;
+padding:5px 0 20px;
+}
+
+.captcha{
+min-width:310px;
+outline:medium none;
+padding:0;
+width:35%;
+margin-left:40%;}
+
+.reset-captcha { margin:0 auto; text-align: center; }
+
+.captcha img {
+border:5px solid #FFFFFF;
+height:77px;
+width:300px;
+}
+
+/* Activation key page */
+#license-entry fieldset.ui-controls  { margin-top: 80px; }
+#license-entry .ui-note .form-note {width: 500px;}
+
+/* Alert page buttons */
+fieldset.ui-controls.alert-page { margin-top: 40px; margin-left: 0%; width: 80%; }
+
+/* Success */
+.success-box {width: 100%; margin: 1em 0 1em 0; background: #e0dfdd; padding: 2px; padding-bottom:0;}
+#success-wrapper { margin: 15px 0 0 20px; padding: 0; list-style: none;  }
+#success-wrapper li { padding-bottom: 10px; padding-left: 80px; }
+#success-wrapper li.password-restore{ background: url("../../images/account-recovery/pw_restore.png") 0 0 no-repeat }
+#success-wrapper li.ticket-issued { background: url("../../images/account-recovery/ticket_issued.png") 0 0 no-repeat }
+#success-wrapper li.ticket-not-issued { background: url("../../images/account-recovery/ticket_not_issued.png") 0 0 no-repeat }
+
+/* Success next steps */
+#nextstep-wrapper { margin: 0 0 0 20px; padding: 0; list-style: none;  }
+#nextstep-wrapper li { padding-bottom: 8px;  background: url("../../local-common/images/icons/arrows.gif") 0% -102px no-repeat;  padding-left:20px;}
+
+.account-recovery .headline {width: 600px;}
+
+/*password retrieve for KR*/
+.retrieve-kr { float: left; }
+.section-radio { background: none repeat scroll 0 0 #e0dfdd; margin-bottom: 1.5em; padding: 15px; display: block; float: left; width: 550px; }
+.section-radio .retrieve-choice { width: 180px; float: left; padding: 15px 5px; -moz-border-radius: 4px 4px 4px 4px; text-align: left; }
+.section-radio .retrieve-choice:hover { background-color: #fff; -moz-border-radius: 4px 4px 4px 4px;; }
+.section-radio .retrieve-choice input { background: none; border: none; color: #5a5a5a; font-size: 14px/26px ; height: auto; outline: none; padding: 2px 7px; min-width: 20px; width: 20px; position: relative; top: 2px; }
+.section-radio .retrieve-choice span { font-weight: bold; }
+.section-radio hr { margin: 1em 0; }
+.section-radio .desc { float: left; padding: 2px 10px; width: 310px; font-weight:normal }
+.confirm-notice { list-style-image: url("../../images/icons/warning-background.png"); }
+.confirm-notice li span { position: relative; font-size: 13px; top: -8px; }
+.confirm-notice li { line-height: 20px; margin-top: 5px; }
+.form-row .form-left .label-full { font-weight:bold; }
+.form-row .form-left .form-right { font-weight:normal }
+.form-right span.password-reset-desc { font-weight:normal; display:block; padding-bottom:5px }
+.ipin-pop-box { background:url("../../images/locale/ko-kr/logo-ipin.gif") no-repeat scroll 0 0 transparent; cursor:pointer; display:block; height:99px; left:50%; margin:50px 0 50px -179px; position:relative; width:358px; }
+.ipin-desc { text-align:center }

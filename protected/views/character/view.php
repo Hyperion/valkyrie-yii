@@ -28,7 +28,8 @@ $this->breadcrumbs = array(
                     'items' => array(
                         array(
                             'label' => 'Сводка',
-                            'url'   => array('/character/view', 'realm' => 'Valkyrie', 'name'  => $model->name)
+                            'url'   => array('/character/simple', 'realm' => 'Valkyrie', 'name'  => $model->name),
+                            'active' => true,
                         ),
                         array(
                             'label' => 'Таланты',
@@ -100,6 +101,7 @@ $this->breadcrumbs = array(
     </div>
 </div>
 <div class="summary-bottom">
+<?php $this->renderPartial('_recent_activity', array('model' => $model)); ?>
 <div class="summary-bottom-left">
     <div class="summary-talents" id="summary-talents">
         <ul>
@@ -148,7 +150,8 @@ $this->breadcrumbs = array(
                     break;
             }
 
-            //$this->renderPartial('_stats_js', array('model' => $model->stats));
+            $this->renderPartial('_stats_simple', array('model' => $model->stats));
+            $this->renderPartial('_stats_js', array('model' => $model->stats));
             ?>
         </div>
         <?php $this->renderPartial('_bg_professions', array('model' => $model)); ?>

@@ -33,6 +33,7 @@ class CharacterController extends Controller
     {
         $this->registerFiles();
         $this->cs->registerCssFile('/css/wow/character/summary.css');
+        $this->cs->registerScriptFile('/js/wow/character/summary.js', CClientScript::POS_END);
         $this->cs->registerCss(1, '#content .content-top { background: url("/images/wow/character/summary/backgrounds/race/'.$this->_model->race.'.jpg") left top no-repeat; } .profile-wrapper { background-image: url("/images/wow/2d/profilemain/race/'.$this->_model->race.'-'.$this->_model->gender.'.jpg"); }');
 
         $this->render('view', array(
@@ -44,6 +45,7 @@ class CharacterController extends Controller
     {
         $this->registerFiles();
         $this->cs->registerCssFile('/css/wow/character/summary.css');
+        $this->cs->registerScriptFile('/js/wow/character/summary.js', CClientScript::POS_END);
         $this->cs->registerCss(1, '#content .content-top { background: url("/images/wow/character/summary/backgrounds/race/'.$this->_model->race.'.jpg") left top no-repeat; } .profile-wrapper { background-image: url("/images/wow/2d/profilemain/race/'.$this->_model->race.'-'.$this->_model->gender.'.jpg"); }');
 
         $this->render('view', array(
@@ -55,6 +57,7 @@ class CharacterController extends Controller
     {
         $this->registerFiles();
         $this->cs->registerCssFile('/css/wow/character/summary.css');
+        $this->cs->registerScriptFile('/js/wow/character/summary.js', CClientScript::POS_END);
 
         $this->render('view', array(
             'model' => $this->_model,
@@ -115,6 +118,7 @@ class CharacterController extends Controller
 
     public function actionFeed($realm, $name)
     {
+        $this->registerFiles();
         $this->render('feed', array(
             'model' => $this->_model,
         ));
@@ -132,6 +136,5 @@ class CharacterController extends Controller
     {
         $this->cs->registerCssFile('/css/wow/profile.css');
         $this->cs->registerScriptFile('/js/wow/profile.js', CClientScript::POS_END);
-        $this->cs->registerScriptFile('/js/wow/character/summary.js', CClientScript::POS_END);
     }
 }

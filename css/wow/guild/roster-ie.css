@@ -1,0 +1,8 @@
+/* Filters area */
+.roster-filters { padding: 0; height: 60px; }
+.roster-filters .selection { float: left; margin-right: 10px; }
+#professions-filters, #roster-filters {float: left }
+
+/* Tables (Professions)*/
+#profession-tables .inactive .toggler { color: #939291}
+

@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+.parent-confirmation .inline-message { height: 32px; }
+
+.input-right { width: 680px; }
+.input-row-captcha .input-right { width: 310px }
+.input-row-verification .input-right { width: 607px; }
+.form-method .input-right { width: 318px; }
+
+.password-strength { position: relative; zoom: 1; }
+.password-rating { float: none; position: absolute; right: 0; top: 0; zoom: 1; }
+
+.form-blockable { zoom: 1; }
+.form-block { background: #D3D1CE; filter: alpha(opacity=50); zoom: 1; }
+
+.verification-note { zoom: 1; }
+
+.agreement-check .legal .scroll-container { display: inline; zoom: 1; }
+.agreement-check .legal .scroll-container .legal-agree input { height: auto; }
+
+.input-row-important .input-left { display: inline; float: left; }
+.input-row-important .input-right { display: inline; float: left; }
+
+.submit-row .input-left { display: inline; float: left; }
+.submit-row .input-right { width: 595px; display: inline; float: left; }
+.submit-row .hover span { background-position: center -43px; }

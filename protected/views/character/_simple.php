@@ -12,7 +12,7 @@
 <div data-id="<?=($item['slot']-1)?>" data-type="<?=$item['slot']?>" class="slot slot-<?=$item['slot']?> item-quality-<?=$item['quality']?>" id="slot-<?=$slot?>">
 	<div class="slot-inner">
     	<div class="slot-contents">
-        	<a href="/wow/item/<?=$item['entry']?>" class="item" data-item="<?=$item['data']?>">
+        	<a href="/item/<?=$item['entry']?>" class="item" data-item="<?=$item['data']?>">
             	<img src="http://media.blizzard.com/wow/icons/56/<?=$item['icon']?>.jpg" alt="" />
                 <span class="frame"></span>
             </a>

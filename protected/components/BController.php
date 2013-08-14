@@ -32,6 +32,12 @@ class BController extends CController
         $this->class = ($this->class) ? $this->class : ucfirst($this->id);
         Yii::setPathOfAlias('Base', __DIR__ . '/../models/Base');
         date_default_timezone_set('Europe/Moscow');
+
+        $this->_cs = Yii::app()->clientScript;
+        $this->_cs->registerPackage('jquery');
+        $this->_cs->registerScriptFile('/js/local-common/core.js');
+        $this->_cs->registerScriptFile('/js/local-common/tooltip.js');
+        $this->_cs->registerScriptFile('/js/wow/wow.js', CClientScript::POS_END);
     }
 
     public function getCs()

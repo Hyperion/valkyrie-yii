@@ -24,11 +24,11 @@ class CharacterStats extends Base\Char
     public function getLevelStats()
     {
         if(!$this->_levelStats)
-            $this->_levelStats = Database::getConnection('World')->createCommand("
+            $this->_levelStats = Yii::app()->db_world->createCommand("
                 SELECT str AS strength, agi AS agility, sta AS stamina, inte AS intellect, spi AS spirit
                 FROM player_levelstats
                 WHERE race = {$this->character->race}
-                    AND class = {$this->character->class}
+                    AND class = {$this->character->class_id}
                     AND level = {$this->character->level}
                 LIMIT 1")->queryRow();
         return $this->_levelStats;
@@ -72,7 +72,7 @@ class CharacterStats extends Base\Char
 
     public function getManaPerFiveSeconds()
     {
-        switch ($this->character->class)
+        switch ($this->character->class_id)
         {
             case Character::CLASS_DRUID:
             case Character::CLASS_HUNTER:
@@ -104,7 +104,7 @@ class CharacterStats extends Base\Char
                            array( 0.0,   0.0,  10.0 ),      // 10: unused
                            array( 3.33, 12.41, 0.79 ));     // 11: druid
 
-        $my_class = $this->character->class;
+        $my_class = $this->character->class_id;
         $crit_ratio = $crit_data[$my_class][1] + $crit_data[$my_class][2] * $this->character->level;
         $crit_chance = $crit_data[$my_class][0] + $this->intellect / $crit_ratio;
 
@@ -118,7 +118,7 @@ class CharacterStats extends Base\Char
         if ($level > 60)
             $level = 60;
 
-        switch($this->character->class)
+        switch($this->character->class_id)
         {
             case Character::CLASS_ROGUE:    $classrate = 29 - ((60 - $level) * 0.4);  break;
             case Character::CLASS_HUNTER:   $classrate = 53 - ((60 - $level) * 0.7);  break;
@@ -134,7 +134,7 @@ class CharacterStats extends Base\Char
         $str = $this->strength;
         $agi = $this->agility;
 
-        switch($this->character->class)
+        switch($this->character->class_id)
         {
             case Character::CLASS_WARRIOR:  $value = $level * 3.0 + $str * 2.0 - 20.0; break;
             case Character::CLASS_PALADIN:  $value = $level * 3.0 + $str * 2.0 - 20.0; break;

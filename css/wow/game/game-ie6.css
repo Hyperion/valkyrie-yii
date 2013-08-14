@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+.racegroup.alliance {margin-left:10px;}
+.racegroup.horde {margin-right:10px;}
+
+/* Game Landing page */
+.main-content-banner.left-bnr {margin-left:14px;}
+.main-content-banner.right-bnr {margin-right:14px;}
+.recent-updates ul li a {background: url(../../images/layout/cms/arrow_r_hover.gif) 100% -5px no-repeat; }
+.game-search-box {height:150px;}
+#game-search-button {background:url("../../images/game/landing/mag-glass.gif") 100% 0 no-repeat;}
+.main-content-banner .banner-desc {line-height:13px;}
+.game-services {margin-top:30px;}
+.game-moreinfo {margin-top:30px;}
+.game-search-box  {margin-top:20px;}

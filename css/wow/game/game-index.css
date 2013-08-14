@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+.header { font-weight: bold; }
+
+.game-index #content .content-top { background: url("../../images/game/landing/bg.jpg") 0 0 no-repeat; }
+.wiki.directory .title { padding-bottom: 30px; }
+
+.index { padding: 0 25px 25px 25px; }
+.index .panel { margin: 0; }
+.index .panel .column { float: left; width: 285px; }
+.index .panel .box { margin: 20px 0; padding-top: 20px; border-top: 1px solid #321d0e; }
+.index .panel .box:first-child { border: 0; padding: 0; margin-top: 0; }
+.index .panel .box .header { margin-bottom: 5px; font-size: 18px; text-transform: uppercase; }
+.index .panel .box .header a { color: #F5EBD1; }
+.index .panel .box .header a:hover { text-decoration: underline; }
+.index .panel .box .subcategory { color: #98542d; font-size: 16px; padding-bottom: 3px; }
+.index .panel .box li { padding: 3px 0; padding-left: 6px; }
+.index .panel .box li a { display: block; }
+
+.index .panel .column .double { border: 0; width: 50%; float: left; }
+.index .panel .column .double li { height: 18px; }
+.index .panel .column .double a { height: 18px; line-height: 18px; display: block; }
+.index .panel .column .double a img,
+.index .panel .column .double a .icon-frame { vertical-align: bottom; margin-right: 5px; }
+
+a.beginners-guide { display: block; width: 270px; padding: 43px 15px 15px 15px; margin-top: 15px; border: 1px solid #372511; background: url("../../images/game/landing/thumb-beginners-guide.jpg") 0 0 no-repeat;
+	-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+	-moz-box-shadow: #0d0703 0 0 5px; -webkit-box-shadow: #0d0703 0 0 5px; box-shadow: #0d0703 0 0 5px; }
+a.beginners-guide:hover { border-color: #FFB100; background-position: 0 -200px; }
+a.beginners-guide strong { display: block; font-size: 20px; font-weight: normal; }
+a.beginners-guide span { color: #98562a; }
+
+.extras { margin-top: 40px; padding-bottom: 100px; }
+.extras li { float: left; width: 33%; }
+.extras a { display: block; font-size: 14px; padding: 0 15px 0 55px; position: relative; }
+.extras a span { color: #874d25; font-size: 12px; }
+.extras a .icon { width: 38px; height: 38px; border: 1px solid #483120; position: absolute; left: 0; top: 5px;
+	background: #211309 url("../../images/game/landing/sub-contents-sprite.gif") 0 0 no-repeat;
+	-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+	-moz-box-shadow: #0d0703 0 0 5px; -webkit-box-shadow: #0d0703 0 0 5px; box-shadow: #0d0703 0 0 5px; }
+.extras a:hover .icon { border-color: #FFB100; }
+.extras .pvp a .icon { background-position: -18px -939px; }
+.extras .realm a .icon { background-position: -21px -21px; }
+.extras .patches a .icon { background-position: -21px -135px; }
+
+/* ie */
+.ie67 .index .panel .column .double { width: 49%; }
+.ie6 .index .panel .box.first-child { border: 0; padding: 0; margin-top: 0; }
+.ie6 .extras a .icon { left: -55px; }

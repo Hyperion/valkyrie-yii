@@ -1,0 +1,41 @@
+
+.wiki .panel,
+.wiki .related,
+.wiki .fact-list,
+.wiki .title h2,
+.wiki-boss .abilities li,
+.faction-square-0,
+.faction-square-1 { zoom: 1; }
+
+/* directory */
+.ie6 .wiki.directory { height: 850px; }
+.ie6 .wiki.directory .groups { margin-right: 20px; }
+.ie6 .wiki.directory .groups .group { zoom: 1; }
+.ie6 .wiki.directory .navigation li a.nav-active { background: #0d0703; }
+.ie6 .wiki .grid { height: 115px; }
+
+/* profession */
+.ie6 .wiki-profession .related-professions a .frame-56 { left: -75px; }
+.ie67 .wiki-profession .perks li { zoom: 1; }
+.ie67 .wiki-profession .title h2 .icon-frame { margin-right: 15px; float: left; position: relative; top: 0; left: 0; zoom: 1; }
+
+/* zone */
+.ie6 .wiki-zone .zone-bosses .boss-avatar a { height: 60px; }
+
+/* ie6 */
+.ie6 .wiki .title { margin-bottom: 30px; }
+.ie6 .wiki .model .rotate span { background: url("../../images/wiki/model-rotate.gif") no-repeat; }
+.ie6 .wiki .radio-buttons a { background-image: url("../../images/wiki/model-radios.gif"); }
+.ie6 .wiki .sidebar { background: none; }
+.ie6 .wiki .sidebar .thumbnail .view { background-image: url("../../images/layout/lightbox/ui.gif"); }
+
+/* ie6/7 */
+.ie67 .wiki .related .tabs li,
+.ie67 .wiki .related .tabs li a,
+.ie67 .wiki .related .tabs li a span { display: block; float: left; }
+.ie67 .wiki .title h2 { line-height: 130%; }
+
+/* Is this needed?
+.wiki .related { padding-bottom: 1px; }
+.wiki .related-content { padding: 1px 0; }
+*/

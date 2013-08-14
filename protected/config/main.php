@@ -9,7 +9,7 @@ return array(
     'sourceLanguage' => 'en',
     // preloading 'log' component
     'preload'        => array(
-        'log',
+        #'log',
     ),
     // autoloading model and component classes
     'import' => array(
@@ -54,12 +54,12 @@ return array(
             'class' => 'system.caching.CDummyCache',
         ),
         'log'   => array(
-            'class'  => 'CLogRouter',
-            'routes' => array(
-                array(
-                    'class'     => 'CProfileLogRoute',
-                ),
-            ),
+            #'class'  => 'CLogRouter',
+            #'routes' => array(
+            #    array(
+            #        'class'     => 'CProfileLogRoute',
+            #    ),
+            #),
         ),
         'errorHandler' => array(
             'errorAction' => 'site/error',
@@ -73,8 +73,6 @@ return array(
             'rules' => array(
                 '<_c:\w+>/<id:\d+>' => '<_c>/view',
                 '<_c:character|guild>/<_a:\w+>/<realm>/<name:\w+>' => '<_c>/<_a>',
-                array('<_c>/<_a>', 'pattern' => '<_c:statistic>/<realm>/<_a:\w+>', 'urlSuffix' => '.json', 'caseSensitive' => false),
-                array('<_c>/<_a>', 'pattern' => '<_c:statistic>/<realm>/<_a:\w+>', 'urlSuffix' => '.xml', 'caseSensitive' => false),
                 array('<_c>/<_a>', 'pattern' => '<_c:statistic>/<realm>/<_a:\w+>', 'caseSensitive' => false),
             ),
             'showScriptName' => false,
