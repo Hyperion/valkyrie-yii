@@ -1,6 +1,6 @@
 <?php
 
-class BController extends RController
+class BController extends CController
 {
 
     public $breadcrumbs = array();
@@ -16,30 +16,12 @@ class BController extends RController
     {
         return array(
             'accessControl',
-            'rights',
-            array('ESetReturnUrlFilter'),
         );
-    }
-
-    public function accessRules()
-    {
-        $ips = Yii::app()->getDb()->createCommand('SELECT mask FROM blocked_ips')->queryColumn();
-        if(count($ips))
-            return array(
-                array('deny',
-                    'ips' => $ips,
-                ),
-            );
-        else
-            return array();
     }
 
     public function actions()
     {
         return array(
-            'create' => 'application.components.actions.Create',
-            'update' => 'application.components.actions.Update',
-            'delete' => 'application.components.actions.Delete',
             'view'   => 'application.components.actions.View',
         );
     }
@@ -47,22 +29,9 @@ class BController extends RController
     public function init()
     {
         parent::init();
-        
         $this->class = ($this->class) ? $this->class : ucfirst($this->id);
-        
-        if(!$this->isAjax)
-        {
-            $this->getCs()->registerPackage('jquery');
-            $this->getCs()->registerPackage('jquery.ui');
-        }
-    }
-
-    public function actionHandleUpload()
-    {
-        $file = CUploadedFile::getInstanceByName('imageName');
-        $name = md5($file->getName() . time()) . '.' . $file->getExtensionName();
-        $file->saveAs(Yii::getPathOfAlias('application') . '/../uploads/' . $name);
-        echo '<div id="image">/uploads/' . $name . '</div>';
+        Yii::setPathOfAlias('Base', __DIR__ . '/../models/Base');
+        date_default_timezone_set('Europe/Moscow');
     }
 
     public function getCs()
