@@ -27,8 +27,8 @@ return array(
             'charset'            => 'utf8',
             'tablePrefix'        => '',
             'schemaCachingDuration' => 3600 * 24 * 365,
-            'enableProfiling'    => true,
-            'enableParamLogging' => true,
+            //'enableProfiling'    => YII_DEBUG,
+            //'enableParamLogging' => YII_DEBUG,
         ),
         'db_chars' => array(
             'connectionString'   => 'mysql:host=' . DB_CHARS_HOST . ';dbname=' . DB_CHARS_NAME,
@@ -38,7 +38,10 @@ return array(
             'charset'            => 'utf8',
             'tablePrefix'        => '',
             'schemaCachingDuration' => 3600 * 24 * 365,
-            'class'            => 'CDbConnection'          // DO NOT FORGET THIS!
+            'class'            => 'CDbConnection',
+            //'enableProfiling'    => YII_DEBUG,
+            //'enableParamLogging' => YII_DEBUG,
+
         ),
         'db_world' => array(
             'connectionString'   => 'mysql:host=' . DB_WORLD_HOST . ';dbname=' . DB_WORLD_NAME,
@@ -53,14 +56,14 @@ return array(
         'cache'                 => array(
             'class' => 'system.caching.CDummyCache',
         ),
-        'log'   => array(
-            #'class'  => 'CLogRouter',
-            #'routes' => array(
-            #    array(
-            #        'class'     => 'CProfileLogRoute',
-            #    ),
-            #),
-        ),
+        /*'log'   => array(
+            'class'  => 'CLogRouter',
+            'routes' => array(
+                array(
+                    'class'     => 'CProfileLogRoute',
+                ),
+            ),
+        ),*/
         'errorHandler' => array(
             'errorAction' => 'site/error',
         ),

@@ -20,7 +20,7 @@
 			"spellDmg_petSpellDmg": -1,
 			"shadowResist": <?=$model->resShadow?>,
 			"resistNature_pet": -1,
-			"armorPercent": 24.08047866821289,
+			"armorPercent": <?=$model->armorReducedDamage ?>,
 			"manaRegenPerFive": 1036,
 			"dmgRangeDps": <?=$model->rangedDps?>,
 			"frostCrit": <?=$model->spellCritPctFrost?>,

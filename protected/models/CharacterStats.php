@@ -150,4 +150,17 @@ class CharacterStats extends Base\Char
 
         return $value;
     }
+
+    public function getArmorReducedDamage() {
+
+        $tmpvalue = 0.1 * $this->armor / (8.5 * $this->character->level + 40);
+        $tmpvalue = $tmpvalue/(1.0 + $tmpvalue);
+
+        if ($tmpvalue < 0.0)
+            $tmpvalue = 0.0;
+        if ($tmpvalue > 0.75)
+            $tmpvalue = 0.75;
+
+        return $tmpvalue * 100;
+    }
 }
