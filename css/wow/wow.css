@@ -445,7 +445,7 @@ tr:hover .fansite-link,
 .table dl.odd { background: #2B1507; border-top: 1px solid #31190A; }
 .table dl:hover { background: #180c04; border-top-color: #0f0702; }
 
-.table-options { color: #855b47; padding: 0 10px; height: 40px; line-height: 40px; background: url("/images/wow/content/table-options-bg.jpg") 50% 0 no-repeat }
+.table-options { color: #855b47; padding: 0 10px; line-height: 40px; background: url("/images/wow/content/table-options-bg.jpg") 50% 0 no-repeat }
 .table-options strong { color: #FEF092 }
 .table-options .input { padding: 1px }
 .table-options .option { float: right; }

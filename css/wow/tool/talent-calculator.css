@@ -2,7 +2,7 @@
 
 /* layout */
 .talentcalc { }
-.talentcalc-tree-wrapper { float: left; width: 228px; margin-right: 24px; position: relative; }
+.talentcalc-tree-wrapper { float: left; width: 228px; margin-right: 19px; position: relative; }
 .talentcalc-tree-wrapper.tree-last { margin-right: 0 !important; }
 .talentcalc-tree-wrapper.tree-specialization .talentcalc-tree-header .icon .frame { background-position: 0 -50px; }
 .talentcalc-pet .talentcalc-tree-wrapper { margin-right: 0 !important; }

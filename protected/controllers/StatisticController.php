@@ -58,7 +58,7 @@ class StatisticController extends Controller
         ));
     }
 
-    public function actionBanned()
+    /*public function actionBanned()
     {
         $ipBanned      = new IpBanned('search');
         $accountBanned = new AccountBanned('search');
@@ -91,6 +91,6 @@ class StatisticController extends Controller
 
             echo json_encode($status);
         }
-    }
+    }*/
 
 }

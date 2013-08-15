@@ -1,14 +1,13 @@
 <?php
-$form = $this->beginWidget('BootActiveForm', array(
+$form = $this->beginWidget('CActiveForm', array(
     'action' => Yii::app()->createUrl($this->route),
     'method' => 'get',
-    'type'   => 'horizontal',
     ));
 ?>
 <table width="100%">
     <tr>
         <td width="50%">
-            <?php echo $form->textFieldRow($model, 'name'); ?>
+            <?php echo $form->textField($model, 'name'); ?>
             <div class="control-group">
                 <label class="control-label" for="ItemTemplate_ItemLevel">
                     <?php echo $model->getAttributeLabel('ItemLevel'); ?>

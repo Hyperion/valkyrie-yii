@@ -78,10 +78,5 @@ return array(
             'showScriptName' => false,
         ),
     ),
-    'behaviors'        => array(
-        'onBeginRequest' => array(
-            'class'  => 'application.components.behaviors.BeginRequest'
-        ),
-    ),
     'params' => require(dirname(__FILE__) . '/params.php'),
 );

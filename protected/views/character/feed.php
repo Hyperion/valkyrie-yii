@@ -1,6 +1,5 @@
 <?php
 $this->breadcrumbs = array(
-    'Game' => array('/wow/'),
     'Characters' => array('/character/'),
     'Valkyrie @ ' . $model->name => array('/character/simple', 'realm' => 'Valkyrie', 'name' => $model['name']),
     'Лента новостей' => array('/character/feed', 'realm' => 'Valkyrie', 'name' => $model['name']),

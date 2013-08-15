@@ -2,6 +2,8 @@
 $(function() {
     Wow.bindItemTooltips();
     Wow.bindSpellTooltips();
+    Wow.bindCreatureTooltips();
+    Wow.bindCharacterTooltips();
 });
 
 var Wow = {
@@ -45,7 +47,7 @@ var Wow = {
 
             var self = $(this),
                 data = self.data('spell'),
-                href = self.attr('href').replace('/item/', ""),
+                href = self.attr('href').replace('/spell/', ""),
                 id = parseInt(href),
                 query = (data) ? '?'+ data : "";
 
@@ -53,8 +55,7 @@ var Wow = {
                 Tooltip.show(this, '/spell/tooltip/id/'+ id + query, true);
         };
 
-        doc.undelegate('a[href*="/spell/"]', 'mouseover.tooltip', callback);
-        doc.delegate('a[href*="/spell/"]', 'mouseover.tooltip', callback);
+        doc.on('mouseover', 'a[href*="/spell/"]', callback);
     },
 
     bindCreatureTooltips: function() {
@@ -73,8 +74,7 @@ var Wow = {
                 Tooltip.show(this, '/creature/tooltip/id/'+ id + query, true);
         };
 
-        doc.undelegate('a[href*="/creature/"]', 'mouseover.tooltip', callback);
-        doc.delegate('a[href*="/creature/"]', 'mouseover.tooltip', callback);
+        doc.on('mouseover', 'a[href*="/creature/"]', callback);
     },
 
     /**
@@ -96,8 +96,7 @@ var Wow = {
             Tooltip.show(this, '/character/tooltip/'+ href[1] +'/'+ href[2], true);
         };
 
-        doc.undelegate('a[href*="/character/"]', 'mouseover.tooltip', callback);
-        doc.delegate('a[href*="/character/"]', 'mouseover.tooltip', callback);
+        doc.on('mouseover', 'a[href*="/character/"]', callback);
     },
 
     /**

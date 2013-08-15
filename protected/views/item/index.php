@@ -23,8 +23,8 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-
-        <?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
+    <div class="table-options">
+        <h3><?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?></h3>
         <div class="search-form" style="display:none">
             <?php
             $this->renderPartial('_search', array(
@@ -32,8 +32,10 @@ $('.search-form form').submit(function(){
             ));
             ?>
         </div><!-- search-form -->
+    </div>
+
         
-<?php $this->widget('BootGridView', array(
+<?php $this->widget('WGridWow', array(
     'dataProvider'=>$model->search(),
     'enableSorting'=>true,
     'id' => 'item-grid',
@@ -42,7 +44,7 @@ $('.search-form form').submit(function(){
             'type'=>'raw',
             'value'=>'CHtml::link(
             	"<span class=\"icon-frame frame-18\" style=\"background-image: url(\'http://eu.media.blizzard.com/wow/icons/18/$data->icon.jpg\');\"></span><strong>$data->name</strong>"
-            	,array("/wow/item/view", "id" => $data->entry),
+            	,array("/item/view", "id" => $data->entry),
             	array("class"=>"item-link color-q$data->Quality"))',
             'name'=>'name',
         ),

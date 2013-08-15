@@ -143,14 +143,14 @@ class Character extends Base\Char
                 self::CLASS_DRUID   => Wow::t('Druid'),
             ),
             'race'              => array(
-                self::RACE_HUMAN    => Wow::t('Human'),
-                self::RACE_ORC      => Wow::t('Orc'),
-                self::RACE_DWARF    => Wow::t('Dwarf'),
-                self::RACE_NIGHTELF => Wow::t('Night Elf'),
-                self::RACE_UNDEAD   => Wow::t('Undead'),
-                self::RACE_TAUREN   => Wow::t('Tauren'),
-                self::RACE_GNOME    => Wow::t('Gnome'),
-                self::RACE_TROLL    => Wow::t('Troll'),
+                self::RACE_HUMAN    => 'human',
+                self::RACE_ORC      => 'orc',
+                self::RACE_DWARF    => 'dwarf',
+                self::RACE_NIGHTELF => 'nightelf',
+                self::RACE_UNDEAD   => 'undead',
+                self::RACE_TAUREN   => 'tauren',
+                self::RACE_GNOME    => 'gnome',
+                self::RACE_TROLL    => 'troll',
             ),
             'gender'            => array(
                 0       => 'male',
@@ -231,6 +231,10 @@ class Character extends Base\Char
                 ),
                 'sort'     => $sort,
             ));
+    }
+
+    public function getClass() {
+        return $this->class_id;
     }
 
     public function getHonorRank()

@@ -1,86 +1,172 @@
 <?php
 $this->breadcrumbs = array(
-    'Game' => array('/wow/'),
-    'Characters' => array('/wow/character/'),
-    Database::$realm . ' @ ' . $model->name => array('/wow/character/view', 'realm' => Database::$realm, 'name'  => $model['name']),
-    'PvP'
-);
-?>
-<h1>PvP</h1>
-<?php $bar    = $model->honorBar; ?>
-<ul>
-    <h4>
-        <?php if($model->honorRank > 4): ?>
-            <img src="/images/wow/icons/rank/PvPRank0<?php echo $model->honorRank; ?>.png">
-        <?php endif; ?>
-        Теущий ранг: <?php echo ($model->getPvpTitle($model->honorRank)) ? $model->getPvpTitle($model->honorRank) : 'нет'; ?>
-    </h4>
-    <div class="progress">
-        <div><?php echo $model->honor_rank_points ?>/<?php echo $bar['cap']; ?></div>
-        <div class="bar" style="width: <?php echo $bar['percent']; ?>%;"></div>
+    'Characters' => array('/character/'),
+    Database::$realm.' @ '.$model->name => array('/character/simple', 'realm' => Database::$realm, 'name' => $model['name']),
+    'PvP' => array('/character/pvp', 'realm' => Database::$realm, 'name' => $model['name']),
+); ?>
+<div class="profile-sidebar-anchor">
+    <div class="profile-sidebar-outer">
+        <div class="profile-sidebar-inner">
+            <div class="profile-sidebar-contents">
+
+                <div class="profile-sidebar-crest">
+                    <?=CHtml::link('<span class="hover"></span><span class="fade"></span>',
+                        array('/character/simple', 'realm' => 'Valkyrie', 'name' => $model['name']),
+                        array(
+                            'rel' => 'np',
+                            'class' => 'profile-sidebar-character-model',
+                            'style' => "background-image: url(/images/wow/2d/inset/{$model['race']}-{$model['gender']}.jpg);",
+                        ))?>
+                    <div class="profile-sidebar-info">
+                        <div class="name">
+                            <?=CHtml::link($model['name'], array('/character/simple', 'realm' => 'Valkyrie', 'name' => $model['name']))?>
+                        </div>
+
+                        <div class="under-name color-c<?=$model['class_id']?>">
+                            <a href="/wow/game/race/<?=$model['race']?>" class="race"><?=$model['race_text']?></a> -
+                            <a href="/wow/game/class/<?=$model['class_id']?>" class="class"><?=$model['class_text']?></a>
+                            <span class="level"><strong><?=$model['level']?></strong></span> lvl<span class="comma">,</span>
+                        </div>
+
+                        <div class="realm">
+                            <span id="profile-info-realm" class="tip" data-battlegroup="Valkyrie">Valkyrie</span>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <?php $this->widget('WProfileSidebarMenu', array(
+                    'items' => array(
+                        array(
+                            'label'=>'Сводка',
+                            'url'=>array('/character/simple', 'realm'=>Database::$realm, 'name'=>$model->name)
+                        ),
+                        array(
+                            'label'=>'Таланты',
+                            'url'=>array('/character/talents', 'realm'=>Database::$realm, 'name'=>$model->name)
+                        ),
+                        array(
+                            'label'=>'Репутация',
+                            'url'=>array('/character/reputation', 'realm'=>Database::$realm, 'name'=>$model->name)
+                        ),
+                        array(
+                            'label'=>'PvP',
+                            'url'=>array('/character/pvp', 'realm'=>Database::$realm, 'name'=>$model->name),
+                            'active' => true,
+                        ),
+                        array(
+                            'label'=>'Лента новостей',
+                            'url'=>array('/character/feed', 'realm'=>Database::$realm, 'name'=>$model->name)
+                        ),
+                    ),
+                )); ?>
+            </div>
+        </div>
     </div>
-    <h4>Общий прогресс</h4>
-    <?php
-    if($model->honor_rank_points < 0)
-        $percent = 0;
-    else
-        $percent = round($model->honor_rank_points / 650);
-    ?>
-    <div class="progress">
-        <div><?php echo $model->honor_rank_points; ?>/65000</div>
-        <div class="bar" style="width: <?php echo $percent; ?>%;"></div>
+</div>
+<div class="profile-contents">
+    <div class="profile-section-header">
+        <h3 class="category ">PvP</h3>
     </div>
-    <h4>Сегодня</h4>
-    <li>
-        <span>Почетных убийств</span>
-        <span><?php echo $model->honor->today_hk; ?></span>
-    </li>
-    <li>
-        <span>Не почетных убийств</span>
-        <span><?php echo $model->honor->today_dk; ?></span>
-    </li>
-    <h4>Вчера</h4>
-    <li>
-        <span>Почетных убийств</span>
-        <span><?php echo $model->honor->yesterday_kills; ?></span>
-    </li>
-    <li>
-        <span>Очки чести</span>
-        <span><?php echo $model->honor->yesterday_cp; ?></span>
-    </li>
-    <h4>Эта неделя</h4>
-    <li>
-        <span>Почетных убийств</span>
-        <span><?php echo $model->honor->thisWeek_kills; ?></span>
-    </li>
-    <li>
-        <span>Очки чести</span>
-        <span><?php echo $model->honor->thisWeek_cp; ?></span>
-    </li>
-    <h4>Предыдущая неделя</h4>
-    <li>
-        <span>Почетных убийств</span>
-        <span><?php echo $model->honor->lastWeek_kills; ?></span>
-    </li>
-    <li>
-        <span>Очки чести</span>
-        <span><?php echo $model->honor->lastWeek_cp; ?></span>
-    </li>
-    <li>
-        <span>Положение</span>
-        <span><?php echo $model->honor_standing; ?></span>
-    </li>
-    <h4>Игровое время</h4>
-    <li>
-        <span>Почетных убийств</span>
-        <span><?php echo $model->honor->hk; ?></span>
-    </li>
-    <li>
-        <span>Не почетных убийств</span>
-        <span><?php echo $model->honor->dk; ?></span>
-    </li>
-    <li>
-        <span>Высший ранг</span>
-        <span><?php echo $model->getPvpTitle($model->honor_highest_rank); ?></span>
-    </li>
-</ul>
+
+    <div class="profile-section">
+        <?php $bar = $model->honorBar; ?>
+        <ul>
+            <h3 class="pvp-title">
+                <?php if($model->honorRank > 4): ?>
+                    <img src="/images/wow/icons/rank/PvPRank0<?=$model->honorRank?>.png">
+                <?php endif; ?>
+                <?=$model->getPvpTitle($model->honorRank)?>
+                <?php if($model->honorRank > 4): ?>
+                    (Ранг <?=$model->honorRank - 4 ?>)
+                <?php endif; ?>
+            </h3>
+            <div class="pvp-standing">
+                <div class="pvp-bar">
+                    <div class="pvp-score"><?=$model->honor_rank_points?>/<?=$bar['cap']?></div>
+                    <div class="pvp-fill" style="width: <?=$bar['percent']?>%;"></div>
+                </div>
+            </div>
+            <h4 class="pvp-header">Общий прогресс</h4>
+            <?php if($model->honor_rank_points < 0) $percent = 0;
+            else $percent = round($model->honor_rank_points/650); ?>
+            <div class="pvp-standing">
+                <div class="pvp-bar">
+                    <div class="pvp-score"><?=$model->honor_rank_points?>/65000</div>
+                    <div class="pvp-bar-gold" style="width: <?=$percent?>%;"></div>
+                </div>
+            </div>
+            <h4 class="pvp-header">Сегодня</h4>
+            <span class="clear"></span>
+            <li class="pvp-details">
+                <span class="pvp-item">Почетных убийств</span>
+                <span class="pvp-value positive"><?=$model->honor->today_hk?></span>
+                <span class="clear"></span>
+            </li>
+            <li class="pvp-details">
+                <span class="pvp-item">Не почетных убийств</span>
+                <span class="pvp-value negative"><?=$model->honor->today_dk?></span>
+                <span class="clear"></span>
+            </li>
+            <h4 class="pvp-header">Вчера</h4>
+            <span class="clear"></span>
+            <li class="pvp-details">
+                <span class="pvp-item">Почетных убийств</span>
+                <span class="pvp-value positive"><?=$model->honor->yesterday_kills?></span>
+                <span class="clear"></span>
+            </li>
+            <li class="pvp-details">
+                <span class="pvp-item">Очки чести</span>
+                <span class="pvp-value neutral"><?=$model->honor->yesterday_cp?></span>
+                <span class="clear"></span>
+            </li>
+            <h4 class="pvp-header">Эта неделя</h4>
+            <span class="clear"></span>
+            <li class="pvp-details">
+                <span class="pvp-item">Почетных убийств</span>
+                <span class="pvp-value positive"><?=$model->honor->thisWeek_kills?></span>
+                <span class="clear"></span>
+            </li>
+            <li class="pvp-details">
+                <span class="pvp-item">Очки чести</span>
+                <span class="pvp-value neutral"><?=$model->honor->thisWeek_cp?></span>
+                <span class="clear"></span>
+            </li>
+            <h4 class="pvp-header">Предыдущая неделя</h4>
+            <span class="clear"></span>
+            <li class="pvp-details">
+                <span class="pvp-item">Почетных убийств</span>
+                <span class="pvp-value positive"><?=$model->honor->lastWeek_kills?></span>
+                <span class="clear"></span>
+            </li>
+            <li class="pvp-details">
+                <span class="pvp-item">Очки чести</span>
+                <span class="pvp-value neutral"><?=$model->honor->lastWeek_cp?></span>
+                <span class="clear"></span>
+            </li>
+            <li class="pvp-details">
+                <span class="pvp-item">Положение</span>
+                <span class="pvp-value neutral"><?=$model->honor_standing?></span>
+                <span class="clear"></span>
+            </li>
+            <h4 class="pvp-header">Игровое время</h4>
+            <span class="clear"></span>
+            <li class="pvp-details">
+                <span class="pvp-item">Почетных убийств</span>
+                <span class="pvp-value positive"><?=$model->honor->hk?></span>
+                <span class="clear"></span>
+            </li>
+            <li class="pvp-details">
+                <span class="pvp-item">Не почетных убийств</span>
+                <span class="pvp-value negative"><?=$model->honor->dk?></span>
+                <span class="clear"></span>
+            </li>
+            <li class="pvp-details">
+                <span class="pvp-item">Высший ранг</span>
+                <span class="pvp-value neutral"><?=$model->getPvpTitle($model->honor_highest_rank)?></span>
+                <span class="clear"></span>
+            </li>
+        </ul>
+    </div>
+</div>

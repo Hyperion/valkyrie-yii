@@ -39,7 +39,7 @@ padding-left: 45px;
 .pvp-fill {
     height: 32px;
     z-index: 1;
-    background: url("/images/wow/character/pvp/bar-background.png") no-repeat;
+    background: url("/images/wow/character/pvp/bar-background.png") no-repeat 0 -66px;
     -moz-border-radius: 3px;
     -moz-border-radius-topright: 0;
     -moz-border-radius-bottomright: 0;

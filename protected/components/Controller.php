@@ -1,16 +1,46 @@
 <?php
 
-class Controller extends BController
+class Controller extends CController
 {
     public $layout = '//layouts/column1';
     private $_pageDescription = null;
     private $_pageKeywords    = null;
     private $_pageCaption     = null;
     protected $body_class;
+    public $breadcrumbs = array();
+    public $class;
+    protected $_model;
+    private $_cs;
+    private $_isAjax;
 
-    public function allowedActions()
+    public function init()
     {
-        return 'index, view';
+        parent::init();
+        $this->class = ($this->class) ? $this->class : ucfirst($this->id);
+        Yii::setPathOfAlias('Base', __DIR__ . '/../models/Base');
+        date_default_timezone_set('Europe/Moscow');
+
+        $this->_cs = Yii::app()->clientScript;
+        $this->_cs->registerPackage('jquery');
+        $this->_cs->registerScriptFile('/js/local-common/core.js');
+        $this->_cs->registerScriptFile('/js/local-common/tooltip.js');
+        $this->_cs->registerScriptFile('/js/wow/wow.js', CClientScript::POS_END);
+    }
+
+    public function getCs()
+    {
+        if($this->_cs === null)
+            $this->_cs = Yii::app()->getComponent('clientScript');
+
+        return $this->_cs;
+    }
+
+    public function getIsAjax()
+    {
+        if($this->_isAjax === null)
+            $this->_isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH']==='XMLHttpRequest';
+
+        return $this->_isAjax;
     }
 
     protected function beforeRender($view)

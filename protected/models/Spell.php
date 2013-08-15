@@ -154,4 +154,27 @@ class Spell extends CActiveRecord
     {
         return $this->dbConnection->createCommand("SELECT rangeMax FROM wow_spellrange WHERE rangeID = {$this->rangeID} LIMIT 1")->queryScalar();
     }
+
+    public function rules()
+    {
+        return array(
+            array('spellname_loc0, levelspell', 'safe', 'on' => 'search'),
+        );
+    }
+
+
+    public function search()
+    {
+        $criteria=new CDbCriteria;
+
+        $criteria->compare('spellname_loc0', $this->spellname_loc0);
+        $criteria->compare('levelspell', $this->levelspell);
+
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria'=>$criteria,
+            'pagination'=> array(
+                'pageSize'=> 40,
+            ),
+        ));
+    }
 }

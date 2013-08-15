@@ -39,6 +39,9 @@ class ItemController extends Controller
         if(isset($_GET['invType']))
             $model->InventoryType = (int) $_GET['invType'];
 
+        if(isset($_GET['ItemTemplate']))
+            $model->attributes = $_GET['ItemTemplate'];
+
         $this->render('index', array('model' => $model));
     }
 

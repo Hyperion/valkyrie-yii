@@ -1,9 +1,8 @@
 <?php
 $this->breadcrumbs = array(
-    'Game' => array('/wow/'),
-    'Characters' => array('/wow/character/'),
-    Database::$realm.' @ '.$model->name => array('/wow/character/simple', 'realm' => Database::$realm, 'name' => $model['name']),
-    'Talents' => array('/wow/character/talent', 'realm' => Database::$realm, 'name' => $model['name']),
+    'Characters' => array('/character/'),
+    'Valkyrie @ '.$model->name => array('/character/simple', 'realm' => 'Valkyrie', 'name' => $model['name']),
+    'Talents' => array('/wow/character/talent', 'realm' => 'Valkyrie', 'name' => $model['name']),
 ); ?>
 <div class="profile-sidebar-anchor">
     <div class="profile-sidebar-outer">
@@ -12,7 +11,7 @@ $this->breadcrumbs = array(
 
         <div class="profile-sidebar-crest">
             <?=CHtml::link('<span class="hover"></span><span class="fade"></span>',
-                array('/wow/character/simple', 'realm' => Database::$realm, 'name' => $model['name']),
+                array('/character/simple', 'realm' => 'Valkyrie', 'name' => $model['name']),
                 array(
                     'rel' => 'np',
                     'class' => 'profile-sidebar-character-model',
@@ -20,17 +19,17 @@ $this->breadcrumbs = array(
             ))?>
             <div class="profile-sidebar-info">
                 <div class="name">
-                    <?=CHtml::link($model['name'], array('/wow/character/simple', 'realm' => Database::$realm, 'name' => $model['name']))?>
+                    <?=CHtml::link($model['name'], array('/character/simple', 'realm' => 'Valkyrie', 'name' => $model['name']))?>
                 </div>
 
-                <div class="under-name color-c<?=$model['class']?>">
+                <div class="under-name color-c<?=$model['class_id']?>">
                     <a href="/wow/game/race/<?=$model['race']?>" class="race"><?=$model['race_text']?></a> -
-                    <a href="/wow/game/class/<?=$model['class']?>" class="class"><?=$model['class_text']?></a>
+                    <a href="/wow/game/class/<?=$model['class_id']?>" class="class"><?=$model['class_text']?></a>
                     <span class="level"><strong><?=$model['level']?></strong></span> lvl<span class="comma">,</span>
                 </div>
 
                 <div class="realm">
-                    <span id="profile-info-realm" class="tip" data-battlegroup="<?=CHtml::encode(Database::$realm)?>"><?=CHtml::encode(Database::$realm)?></span>
+                    <span id="profile-info-realm" class="tip" data-battlegroup="Valkyrie">Valkyrie</span>
                 </div>
 
 
@@ -41,23 +40,24 @@ $this->breadcrumbs = array(
     'items' => array(
         array(
             'label'=>'Сводка',
-            'url'=>array('/wow/character/simple', 'realm'=>Database::$realm, 'name'=>$model->name)
+            'url'=>array('/character/simple', 'realm'=>Database::$realm, 'name'=>$model->name)
         ),
         array(
             'label'=>'Таланты',
-            'url'=>array('/wow/character/talents', 'realm'=>Database::$realm, 'name'=>$model->name)
+            'url'=>array('/character/talents', 'realm'=>Database::$realm, 'name'=>$model->name),
+            'active' => true
         ),
         array(
             'label'=>'Репутация',
-            'url'=>array('/wow/character/reputation', 'realm'=>Database::$realm, 'name'=>$model->name)
+            'url'=>array('/character/reputation', 'realm'=>Database::$realm, 'name'=>$model->name)
         ),
         array(
             'label'=>'PvP',
-            'url'=>array('/wow/character/pvp', 'realm'=>Database::$realm, 'name'=>$model->name)
+            'url'=>array('/character/pvp', 'realm'=>Database::$realm, 'name'=>$model->name)
         ),
         array(
             'label'=>'Лента новостей',
-            'url'=>array('/wow/character/feed', 'realm'=>Database::$realm, 'name'=>$model->name)
+            'url'=>array('/character/feed', 'realm'=>Database::$realm, 'name'=>$model->name)
         ),
     ),
 )); ?>

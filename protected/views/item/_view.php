@@ -117,7 +117,7 @@ if($model->RequiredLevel):
     foreach($model->spells as $spell):
         ?>
         <li class="color-q2">
-            <a href="/wow/spell/<?php echo $spell['spellid'] ?>">
+            <a href="/spell/<?php echo $spell['spellid'] ?>">
         <?php echo $model::itemAlias('spell_trigger', $spell['trigger']) ?>: <?php echo $spell['description'] ?>
             </a>
         </li>

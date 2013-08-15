@@ -1,18 +1,17 @@
 <?php
 $this->breadcrumbs=array(
-    'Game'=>array('/wow'),
-    'Characters',
+    'Characters' => '',
 );
 ?>
 
-<?php $this->widget('BootGridView', array(
+<?php $this->widget('WGridWow', array(
     'id'=>'characters-grid',
     'dataProvider'=>$model->search(true),
     'enableSorting'=>true,
     'columns'=>array(
         array(
             'type'=>'raw',
-            'value'=>'WowModule::charUrl($data)',
+            'value'=>'Wow::charUrl($data)',
             'name'=>'name',
         ),
         'level',
