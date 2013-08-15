@@ -143,15 +143,10 @@ $this->breadcrumbs = array(
     <div class="summary-stats-profs-bgs">
         <div class="summary-stats" id="summary-stats">
             <?php
-            switch($this->action->id)
-            {
-                case 'simple': default:
-                    //$this->renderPartial('_stats_simple', array('model' => $model->stats));
-                    break;
-            }
-
-            $this->renderPartial('_stats_simple', array('model' => $model->stats));
-            $this->renderPartial('_stats_js', array('model' => $model->stats));
+            if($model->stats):
+                $this->renderPartial('_stats_simple', array('model' => $model->stats));
+                $this->renderPartial('_stats_js', array('model' => $model->stats));
+            endif;
             ?>
         </div>
         <?php $this->renderPartial('_bg_professions', array('model' => $model)); ?>
