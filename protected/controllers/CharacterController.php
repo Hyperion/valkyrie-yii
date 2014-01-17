@@ -30,8 +30,8 @@ class CharacterController extends Controller
     public function actionSimple()
     {
         $this->registerFiles();
-        $this->cs->registerCssFile('/css/wow/character/summary.css');
-        $this->cs->registerScriptFile('/js/wow/character/summary.js', CClientScript::POS_END);
+        $this->cs->registerCssFile(Yii::app()->request->baseUrl . '/css/wow/character/summary.css');
+        $this->cs->registerScriptFile(Yii::app()->request->baseUrl . '/js/wow/character/summary.js', CClientScript::POS_END);
         $this->cs->registerCss(1, '#content .content-top { background: url("/images/wow/character/summary/backgrounds/race/' . $this->_model->race . '.jpg") left top no-repeat; } .profile-wrapper { background-image: url("/images/wow/2d/profilemain/race/' . $this->_model->race . '-' . $this->_model->gender . '.jpg"); }');
 
         $this->render('view', array(
@@ -42,8 +42,8 @@ class CharacterController extends Controller
     public function actionAdvanced()
     {
         $this->registerFiles();
-        $this->cs->registerCssFile('/css/wow/character/summary.css');
-        $this->cs->registerScriptFile('/js/wow/character/summary.js', CClientScript::POS_END);
+        $this->cs->registerCssFile(Yii::app()->request->baseUrl . '/css/wow/character/summary.css');
+        $this->cs->registerScriptFile(Yii::app()->request->baseUrl . '/js/wow/character/summary.js', CClientScript::POS_END);
         $this->cs->registerCss(1, '#content .content-top { background: url("/images/wow/character/summary/backgrounds/race/' . $this->_model->race . '.jpg") left top no-repeat; } .profile-wrapper { background-image: url("/images/wow/2d/profilemain/race/' . $this->_model->race . '-' . $this->_model->gender . '.jpg"); }');
 
         $this->render('view', array(
@@ -54,8 +54,8 @@ class CharacterController extends Controller
     public function actionThreed()
     {
         $this->registerFiles();
-        $this->cs->registerCssFile('/css/wow/character/summary.css');
-        $this->cs->registerScriptFile('/js/wow/character/summary.js', CClientScript::POS_END);
+        $this->cs->registerCssFile(Yii::app()->request->baseUrl . '/css/wow/character/summary.css');
+        $this->cs->registerScriptFile(Yii::app()->request->baseUrl . '/js/wow/character/summary.js', CClientScript::POS_END);
 
         $this->render('view', array(
             'model' => $this->_model,
@@ -77,18 +77,18 @@ class CharacterController extends Controller
         ));
     }
 
-    public function actionTalents($realm, $name)
+    /*public function actionTalents($realm, $name)
     {
 
         $this->registerFiles();
-        $this->cs->registerCssFile('/css/wow/character/talent.css');
-        $this->cs->registerCssFile('/css/wow/tool/talent-calculator.css');
-        $this->cs->registerScriptFile('/js/wow/tool/talent-calculator.js', CClientScript::POS_END);
+        $this->cs->registerCssFile(Yii::app()->request->baseUrl . '/css/wow/character/talent.css');
+        $this->cs->registerCssFile(Yii::app()->request->baseUrl . '/css/wow/tool/talent-calculator.css');
+        $this->cs->registerScriptFile(Yii::app()->request->baseUrl . '/js/wow/tool/talent-calculator.js', CClientScript::POS_END);
 
         $this->render('talents', array(
             'model' => $this->_model,
         ));
-    }
+    }*/
 
     public function actionTooltip($realm, $name)
     {
@@ -101,8 +101,8 @@ class CharacterController extends Controller
     public function actionReputation($realm, $name)
     {
         $this->registerFiles();
-        $this->cs->registerCssFile('/css/wow/character/reputation.css');
-        $this->cs->registerScriptFile('/js/wow/character/reputation.js', CClientScript::POS_END);
+        $this->cs->registerCssFile(Yii::app()->request->baseUrl . '/css/wow/character/reputation.css');
+        $this->cs->registerScriptFile(Yii::app()->request->baseUrl . '/js/wow/character/reputation.js', CClientScript::POS_END);
 
         $this->render('reputation', array(
             'model' => $this->_model,
@@ -112,7 +112,7 @@ class CharacterController extends Controller
     public function actionPvp($realm, $name)
     {
         $this->registerFiles();
-        $this->cs->registerCssFile('/css/wow/character/pvp.css');
+        $this->cs->registerCssFile(Yii::app()->request->baseUrl . '/css/wow/character/pvp.css');
 
         $this->render('pvp', array(
             'model' => $this->_model,
@@ -132,12 +132,18 @@ class CharacterController extends Controller
         $this->_model = Character::model()->with('honor', 'stats')->find('name = ?', array($name));
         if ($this->_model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
+
+        // Hide GM characters
+        $account = Account::model()->find('id = ?', array($this->_model->account));
+	if ($account !== null && !$account->isPlayer())
+            throw new CHttpException(404, 'The requested page does not exist.');
+
         return $this->_model;
     }
 
     private function registerFiles()
     {
-        $this->cs->registerCssFile('/css/wow/profile.css');
-        $this->cs->registerScriptFile('/js/wow/profile.js', CClientScript::POS_END);
+        $this->cs->registerCssFile(Yii::app()->request->baseUrl . '/css/wow/profile.css');
+        $this->cs->registerScriptFile(Yii::app()->request->baseUrl . '/js/wow/profile.js', CClientScript::POS_END);
     }
 }
