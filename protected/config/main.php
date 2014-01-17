@@ -75,7 +75,7 @@ return array(
             'urlFormat' => 'path',
             'rules' => array(
                 '<_c:\w+>/<id:\d+>' => '<_c>/view',
-                '<_c:character|guild>/<_a:\w+>/<realm>/<name:\w+>' => '<_c>/<_a>',
+                '<_c:character|guild>/<_a:\w+>/<realm>/<name:[A-Za-z]+>' => '<_c>/<_a>',
                 array('<_c>/<_a>', 'pattern' => '<_c:statistic>/<realm>/<_a:\w+>', 'caseSensitive' => false),
             ),
             'showScriptName' => false,
