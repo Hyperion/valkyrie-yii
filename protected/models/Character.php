@@ -43,7 +43,7 @@ class Character extends Base\Char
     const RACE_UNDEAD              = 5;
     const RACE_TAUREN              = 6;
     const RACE_GNOME               = 7;
-    const RACE_TROLL               = 9;
+    const RACE_TROLL               = 8;
     const FACTION_ALLIANCE         = 1;
     const FACTION_HORDE            = 2;
     const POWER_HEALTH             = 0xFFFFFFFE;
