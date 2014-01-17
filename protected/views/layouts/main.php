@@ -34,5 +34,13 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    $(function() {
+        Menu.initialize('<?= Yii::app()->request->baseUrl ?>/data/menu.json');
+    });
+    //]]>
+</script>
 </body>
 </html>

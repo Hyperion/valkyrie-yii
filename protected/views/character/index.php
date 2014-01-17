@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-    'Characters' => '',
+    'Characters' => array('/character'),
 );
 ?>
 

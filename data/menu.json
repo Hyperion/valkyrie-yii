@@ -1,0 +1,21 @@
+{"label": "Armory", "url": "/armory/", "children": [
+    {"label": "Characters", "url": "/armory/character"},
+    {"label": "Items", "url": "/armory/item"},
+    {"label": "Spells", "url": "/armory/spell"},
+    {"label": "Statistic", "url": "/armory/statistic", "children": [
+        {"label": "Online", "url": "/armory/statistic/Valkyrie/online"},
+        {"label": "PvP", "url": "/armory/statistic/Valkyrie/pvp"},
+        {"label": "PvP Current", "url": "/armory/statistic/Valkyrie/pvpCurrent"}
+    ]},
+    {"label": "Talent Calculator", "url": "/armory/tool/talentCalculator", "children": [
+        {"label": "Warrior", "url": "/armory/tool/talentCalculator/class/1"},
+        {"label": "Paladin", "url": "/armory/tool/talentCalculator/class/2"},
+        {"label": "Hunter", "url": "/armory/tool/talentCalculator/class/3"},
+        {"label": "Rogue", "url": "/armory/tool/talentCalculator/class/4"},
+        {"label": "Priest", "url": "/armory/tool/talentCalculator/class/5"},
+        {"label": "Shaman", "url": "/armory/tool/talentCalculator/class/7"},
+        {"label": "Mage", "url": "/armory/tool/talentCalculator/class/8"},
+        {"label": "Warlock", "url": "/armory/tool/talentCalculator/class/9"},
+        {"label": "Druid", "url": "/armory/tool/talentCalculator/class/11"}
+    ]}
+]}

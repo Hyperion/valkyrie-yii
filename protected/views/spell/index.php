@@ -1,7 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-    'Game'=>array('/wow'),
-    'Spells' => 0,
+    'Spells' => array('/spell'),
 );
 ?>
 

@@ -1,7 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Game'                    => array('/'),
-    'Statistic'				  => array('/statistic'),
+    'Statistic' => array('/statistic'),
 );
 if($current)
     $this->breadcrumbs['Valkyrie @ PvP Current'] = array('/statistic/pvpcurrent', 'realm' => 'Valkyrie');

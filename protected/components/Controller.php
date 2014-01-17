@@ -25,6 +25,7 @@ class Controller extends CController
         $this->_cs = Yii::app()->clientScript;
         $this->_cs->registerPackage('jquery');
         $this->_cs->registerScriptFile($baseUrl . '/js/local-common/core.js');
+        $this->_cs->registerScriptFile($baseUrl . '/js/local-common/menu.js');
         $this->_cs->registerScriptFile($baseUrl . '/js/local-common/tooltip.js');
         $this->_cs->registerScriptFile($baseUrl . '/js/wow/wow.js', CClientScript::POS_END);
     }

@@ -1,6 +1,5 @@
 <?php
 $this->breadcrumbs = array(
-    'Tools' => array('/tool/'),
     'Talent Calculator' => array('/tool/talentCalculator'),
 ); ?>
 <div class="profile-sidebar-anchor">

@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-    'Statistic'=>array('index'),
-    'Online' => 0,
+    'Statistic'=>array('/statistic'),
+    'Online' => array('/statistic/online'),
 );
 ?>
 <style>
