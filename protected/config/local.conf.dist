@@ -14,3 +14,9 @@ define('DB_WORLD_HOST', 'localhost');
 define('DB_WORLD_USER', 'root');
 define('DB_WORLD_PASS', '');
 define('DB_WORLD_NAME', 'zp_world'); 
+
+define('DB_REALMD_HOST', 'localhost');
+define('DB_REALMD_USER', 'root');
+define('DB_REALMD_PASS', '');
+define('DB_REALMD_NAME', 'realmd');
+
