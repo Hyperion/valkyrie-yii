@@ -225,7 +225,7 @@ tr:hover .fansite-link,
 #wrapper { width: 1006px; margin: 0 auto; position: relative } /* use even width value so the centering is identical in IE and other browsers */
 
 /* header */
-#header { padding-top: 26px; }
+#header { background: url("/images/wow/layout/logo.png") 5px 17px no-repeat; padding-top: 26px; }
 #header #logo { height: 115px }
 #header #logo a { width: 275px; height: 115px; display: block; border: none; text-indent: -9999px }
 #header .header-plate { height: 93px; position: relative; }
