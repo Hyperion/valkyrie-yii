@@ -3,11 +3,11 @@ $this->breadcrumbs=array(
     'Items' => array('/item'),
 );
 if(isset($model->class))
-    $this->breadcrumbs[$model->class_text] = array("/item?ItemTemplate[class]={$model->class}");
+    $this->breadcrumbs[$model->class_text] = array("/item?classId={$model->class}");
 if(isset($model->subclass))
-    $this->breadcrumbs[$model->subclass_text] = array("/item?ItemTemplate[class]={$model->class}&ItemTemplate[subclass]={$model->subclass}");
+    $this->breadcrumbs[$model->subclass_text] = array("/item?classId={$model->class}&subClassId={$model->subclass}");
 if(isset($model->InventoryType) && $model->class == $model::ITEM_CLASS_ARMOR)
-    $this->breadcrumbs[$model::itemAlias('invtype', $model->InventoryType)] = array("/item?ItemTemplate[class]={$model->class}&ItemTemplate[subclass]={$model->subclass}&ItemTemplate[InventoryType]={$model->InventoryType}");
+    $this->breadcrumbs[$model::itemAlias('invtype', $model->InventoryType)] = array("/item?classId={$model->class}&subClassId={$model->subclass}&invType={$model->InventoryType}");
 
     Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
