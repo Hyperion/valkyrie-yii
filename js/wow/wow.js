@@ -28,7 +28,7 @@ var Wow = {
 
             var self = $(this),
                 data = self.data('item'),
-                href = self.attr('href').replace('/item/', ""),
+                href = self.attr('href').replace(Core.baseUrl + '/item/', ""),
                 id = parseInt(href),
                 query = (data) ? '?'+ data : "";
 
@@ -47,7 +47,7 @@ var Wow = {
 
             var self = $(this),
                 data = self.data('spell'),
-                href = self.attr('href').replace('/spell/', ""),
+                href = self.attr('href').replace(Core.baseUrl + '/spell/', ""),
                 id = parseInt(href),
                 query = (data) ? '?'+ data : "";
 

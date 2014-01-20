@@ -59,7 +59,7 @@ $this->breadcrumbs = array(
                         ),
                         array(
                             'label' => 'Лента новостей',
-                            'url' => array('/wow/character/feed', 'realm' => 'Valkyrie', 'name' => $model->name),
+                            'url' => array('/character/feed', 'realm' => 'Valkyrie', 'name' => $model->name),
                             'active' => true
                         ),
                     ),
@@ -83,11 +83,11 @@ $this->breadcrumbs = array(
                         ?>
                         <li>
                             <dl>
-                                <dd><a href="/item/<?= $event['data'] ?>" class="color-q<?= $event['item']->Quality ?>"
+                                <dd><a href="<?= Yii::app()->request->baseUrl ?>/item/<?= $event['data'] ?>" class="color-q<?= $event['item']->Quality ?>"
                                        data-item="">
                                         <span class="icon-frame frame-18"
                                               style='background-image: url("http://media.blizzard.com/wow/icons/18/<?= $event['item']->icon ?>.jpg");'></span></a>
-                                    Получено <a href="/item/<?= $event['data'] ?>"
+                                    Получено <a href="<?= Yii::app()->request->baseUrl ?>/item/<?= $event['data'] ?>"
                                                 class="color-q<?= $event['item']->Quality ?>"
                                                 data-item=""><?= $event['item']->name ?></a>
                                 </dd>
