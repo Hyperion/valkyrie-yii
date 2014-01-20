@@ -339,7 +339,10 @@ class Character extends Base\Char
 
     public function getItems()
     {
-        $item_slots = array(
+        if (!empty($this->_items))
+            return $this->_items;
+
+        $this->_items = array(
             self::EQUIPMENT_SLOT_HEAD      => 1,
             self::EQUIPMENT_SLOT_NECK      => 2,
             self::EQUIPMENT_SLOT_SHOULDERS => 3,
@@ -371,7 +374,7 @@ class Character extends Base\Char
         {
             $pos               = array_search($proto->entry, $this->equipmentCache);
             $slot              = $pos / 2;
-            $item_slots[$slot] = array(
+            $this->_items[$slot] = array(
                 'entry'         => $proto->entry,
                 'icon'          => $proto->icon,
                 'name'          => $proto->name,
@@ -399,7 +402,7 @@ class Character extends Base\Char
                     ->queryRow();
                 if(is_array($info))
                 {
-                    $item_slots[$slot]['enchant_text'] = $info['text'];
+                    $this->_items[$slot]['enchant_text'] = $info['text'];
                     if($info['spellId'])
                     {
                         $item = ItemTemplate::model()->getDbConnection()
@@ -415,8 +418,8 @@ class Character extends Base\Char
                             ->queryRow();
                         if($item)
                         {
-                            $item_slots[$slot]['enchant_text'] = $item['name'];
-                            $item_slots[$slot]['enchant_item'] = $item['entry'];
+                            $this->_items[$slot]['enchant_text'] = $item['name'];
+                            $this->_items[$slot]['enchant_item'] = $item['entry'];
                         }
                     }
                 }
@@ -435,9 +438,9 @@ class Character extends Base\Char
                         $set_pieces[]              = $this->equipmentCache[$k];
                 $data[]                    = 'data[set]=' . implode(',', $set_pieces);
             }
-            $item_slots[$slot]['data'] = implode('&', $data);
+            $this->_items[$slot]['data'] = implode('&', $data);
         }
-        return $item_slots;
+        return $this->_items;
     }
 
     public function isEquipped($entry)
