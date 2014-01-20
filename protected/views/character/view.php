@@ -153,6 +153,11 @@ $this->breadcrumbs = array(
     </div>
 </div>
 
+<?php 
+    if ($model->level == 60)
+        $this->renderPartial('_raid', array('model' => $model));
+?>
+
 <script type="text/javascript">
     //<![CDATA[
     var MsgSummary = {

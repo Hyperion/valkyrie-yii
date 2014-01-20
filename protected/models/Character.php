@@ -748,6 +748,91 @@ class Character extends Base\Char
         return $feed;
     }
 
+    public function getRaidProgression()
+    {
+        $raid_encounters = array(
+            12118 => array('raid' => 'mc', 'id' => 0), // Lucifron
+            11982 => array('raid' => 'mc', 'id' => 1), // Magmadar
+            12259 => array('raid' => 'mc', 'id' => 2), // Gehennas
+            12057 => array('raid' => 'mc', 'id' => 3), // Garr
+            12056 => array('raid' => 'mc', 'id' => 4), // Baron Geddon
+            12264 => array('raid' => 'mc', 'id' => 5), // Shazzrah
+            12098 => array('raid' => 'mc', 'id' => 6), // Sulfuron Harbinger
+            11988 => array('raid' => 'mc', 'id' => 7), // Golemagg the Incinerator
+            12018 => array('raid' => 'mc', 'id' => 8), // Majordomo Executus
+            11502 => array('raid' => 'mc', 'id' => 9), // Ragnaros
+
+            10184 => array('raid' => 'mc', 'id' => 0), // Onyxia
+
+            12435 => array('raid' => 'bwl', 'id' => 0), // Razorgore the Untamed
+            13020 => array('raid' => 'bwl', 'id' => 1), // Vaelastrasz the Corrupt
+            12017 => array('raid' => 'bwl', 'id' => 2), // Broodlord Lashlayer
+            11983 => array('raid' => 'bwl', 'id' => 3), // Firemaw
+            14601 => array('raid' => 'bwl', 'id' => 4), // Ebonroc
+            11981 => array('raid' => 'bwl', 'id' => 5), // Flamegor
+            14020 => array('raid' => 'bwl', 'id' => 6), // Chromaggus
+            11583 => array('raid' => 'bwl', 'id' => 7), // Nefarian
+
+            14517 => array('raid' => 'zg', 'id' => 0), // High Priestess Jeklik
+            14507 => array('raid' => 'zg', 'id' => 1), // High Priest Venoxis
+            14510 => array('raid' => 'zg', 'id' => 2), // High Priestess Mar'li
+            14509 => array('raid' => 'zg', 'id' => 3), // High Priest Thekal
+            14515 => array('raid' => 'zg', 'id' => 4), // High Priestess Arlokk
+            14834 => array('raid' => 'zg', 'id' => 5), // Hakkar the Soulflayer
+            11382 => array('raid' => 'zg', 'id' => 6), // Bloorlord Mandokir
+            11380 => array('raid' => 'zg', 'id' => 7), // Jin'do the Hexxer
+            15114 => array('raid' => 'zg', 'id' => 8), // Gahz'ranka
+            15082 => array('raid' => 'zg', 'id' => 9), // Gri'lek
+            15084 => array('raid' => 'zg', 'id' => 9), // Renataki
+            15083 => array('raid' => 'zg', 'id' => 9), // Hazza'rah
+            15085 => array('raid' => 'zg', 'id' => 9)  // Wushoolay
+        );
+
+        $bosses = $this->dbConnection
+            ->createCommand("SELECT data
+                FROM character_feed_log
+                WHERE
+                     guid = {$this->guid}
+                    AND type = 3")
+            ->queryAll();
+
+        $progress = array(
+            'mc'  => array_fill(0, 10, 0),
+            'ony' => array_fill(0,  1, 0),
+            'bwl' => array_fill(0,  8, 0),
+            'zg'  => array_fill(0, 10, 0)
+        );
+
+        for ($i = 0; $i < count($bosses); $i++) {
+            $entry = $bosses[$i]['data'];
+
+            if (!isset($raid_encounters[$entry]))
+                continue;
+
+            $encounter = $raid_encounters[$entry];
+
+            $progress[$encounter['raid']][$encounter['id']]++;
+        }
+
+        foreach ($progress as $raid => $encounters) {
+            $total = count($encounters);
+            $done = 0;
+
+            foreach ($encounters as $count)
+                if ($count > 0)
+                    $done++;
+
+            if ($done == $total)
+                $progress[$raid]['status'] = 'completed';
+            else if ($done > 0)
+                $progress[$raid]['status'] = 'in-progress';
+            else
+                $progress[$raid]['status'] = 'incomplete';
+        }
+
+        return $progress;
+    }
+
     public function getFactions()
     {
         $_factions = array();

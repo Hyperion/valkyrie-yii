@@ -884,7 +884,7 @@ Summary.RaidProgression = function(options, data) {
             nPlayers = "10/25";
         }
 
-        var $tooltip = Wow.createSimpleTooltip(raid.name + ' (' + raid.playerLevel + ')');
+        var $tooltip = Wow.createSimpleTooltip(raid.name);
         $tooltip.append($('<li/>').addClass('color-tooltip-yellow').text(raid.location));
         $tooltip.append($('<li/>').addClass('color-tooltip-yellow').text(Core.msg(MsgSummary.raid.tooltip.players, nPlayers)));
         if(raid.expansion > 0) {
