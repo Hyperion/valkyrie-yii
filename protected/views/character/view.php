@@ -135,7 +135,7 @@ $this->breadcrumbs = array(
                 <span class="value"><?php echo (is_object($model->stats)) ? $model->stats->maxhealth : $model->power1; ?></span>
             </li>
             <li class="resource-<?php echo $model->powerType; ?>" id="summary-power" data-id="power-<?php echo$model->powerType; ?>">
-                <span class="name"><?php echo $model::itemAlias('powers', $model->powerType); ?></span>
+                <span class="name"><?php echo $model::itemAlias('power', $model->powerType); ?></span>
                 <span class="value"><?php echo $model->powerValue; ?></span>
             </li>
         </ul>
