@@ -78,9 +78,9 @@ if($model->class == $model::ITEM_CLASS_WEAPON && $model->delay):
         <?php
         endif;
     endforeach;
-    if(isset($model['enchant_id']) && $model['enchant_id'] > 0):
+    if(isset($data['enchant_id']) && $data['enchant_id'] > 0):
         ?>
-        <li class="color-tooltip-green"><?php echo $model->getEnchantText((int) $model['enchant_id']) ?></li>
+        <li class="color-tooltip-green"><?php echo $model->getEnchantText((int) $data['enchant_id']) ?></li>
     <?php endif;
     if($model->MaxDurability > 0):
         ?>
@@ -141,13 +141,12 @@ if($model->RequiredLevel):
     <?php
 endif;
 if($model->itemset):
-    if(isset($model['set'])):
-        //$model['set'] = explode(',', $model['set']);
-        $count       = 0;
-        $equipped    = $model['set'];
+    if(isset($data['set'])):
+        $equipped    = explode(',', $data['set']);
+        $count       = count($equipped);
     else:
-        $count    = 0;
         $equipped = array();
+        $count    = 0;
     endif;
     ?>
         <li>
