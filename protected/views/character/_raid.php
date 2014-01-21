@@ -9,25 +9,25 @@
                     <tbody>
                         <tr class="icons">
                             <td></td>
-                                <td class="mc expansion-0" data-raid="mc">
+                                <td class="mc" data-raid="mc">
                                     <div class="icon">
                                         <div>MC</div>
                                     </div>
                                 </td>
                                 <td class="spacer"><div></div></td>
-                                <td class="ony expansion-0" data-raid="ony">
+                                <td class="ony" data-raid="ony">
                                     <div class="icon">
                                         <div>Ony</div>
                                     </div>
                                 </td>
                                 <td class="spacer"><div></div></td>
-                                <td class="bwl expansion-0" data-raid="bwl">
+                                <td class="bwl" data-raid="bwl">
                                     <div class="icon">
                                         <div>BWL</div>
                                     </div>
                                 </td>
                                 <td class="spacer"><div></div></td>
-                                <td class="zg expansion-0" data-raid="zg">
+                                <td class="zg" data-raid="zg">
                                     <div class="icon">
                                         <div>ZG</div>
                                     </div>
