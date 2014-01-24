@@ -228,7 +228,7 @@ tr:hover .fansite-link,
 #header { background: url("/images/wow/layout/logo.png") 5px 17px no-repeat; padding-top: 26px; }
 #header #logo { height: 115px }
 #header #logo a { width: 275px; height: 115px; display: block; border: none; text-indent: -9999px }
-#header .header-plate { height: 93px; position: relative; }
+#header .header-plate { height: 18px; position: relative; }
 #header .user-plate { color: #fff; width: 355px; height: 140px; position: absolute; right: 4px; bottom: 0; }
 #header .user-plate .card-overlay { width: 343px; height: 15px; background: url("/images/wow/layout/card-overlay.png"); position: absolute; bottom: 0; right: 5px; }
 
