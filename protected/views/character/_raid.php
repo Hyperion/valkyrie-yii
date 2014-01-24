@@ -32,6 +32,24 @@
                                         <div>ZG</div>
                                     </div>
                                 </td>
+                                <td class="spacer"><div></div></td>
+                                <td class="aq10" data-raid="aq10">
+                                    <div class="icon">
+                                        <div>AQ20</div>
+                                    </div>
+                                </td>
+                                <td class="spacer"><div></div></td>
+                                <td class="aq40" data-raid="aq40">
+                                    <div class="icon">
+                                        <div>AQ40</div>
+                                    </div>
+                                </td>
+                                <td class="spacer"><div></div></td>
+                                <td class="nax" data-raid="nax">
+                                    <div class="icon">
+                                        <div>Nax</div>
+                                    </div>
+                                </td>
                             <td class="spacer-edge"><div></div></td>
                         </tr>
                         <tr class="normal">
@@ -43,6 +61,12 @@
                             <td data-raid="bwl" class="status status-<?= $progress['bwl']['status'] ?>"><div></div></td>
                             <td></td>
                             <td data-raid="zg" class="status status-<?= $progress['zg']['status'] ?>"><div></div></td>
+                            <td></td>
+                            <td data-raid="aq10" class="status status-incomplete"></td>
+                            <td></td>
+                            <td data-raid="aq40" class="status status-incomplete"></td>
+                            <td></td>
+                            <td data-raid="nax" class="status status-incomplete"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -130,6 +154,21 @@
                                 { name: "Gahz'ranka",            nKills: <?= $progress['zg'][8] ?> },
                                 { name: "Edge of Madness",       nKills: <?= $progress['zg'][9] ?> }
                             ]
+                        },
+                        aq10: {
+                            name: "Ruins of Ahn'Qiraj",
+                            nPlayers: 20,
+                            location: "Silithus"
+                        },
+                        aq40: {
+                            name: "Ahn'Qiraj Temple",
+                            nPlayers: 40,
+                            location: "Silithus"
+                        },
+                        nax: {
+                            name: "Naxxramas",
+                            nPlayers: 40,
+                            location: "Eastern Plaguelands"
                         }
                     }
                 );

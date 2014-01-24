@@ -356,6 +356,7 @@ a.summary-stats-toggler:hover .inner { background-position: right bottom; /*back
 .summary-raid tr.icons .aq10 .icon { background-position:   -244px 0; }
 .summary-raid tr.icons .aq40 .icon { background-position:   -305px 0; }
 .summary-raid tr.icons .nax  .icon { background-position:   -366px 0; }
+.summary-raid tr.icons .aq10, tr.icons .aq40, tr.icons .nax { opacity: 0.5; }
 .summary-raid td.status div { cursor: help; height: 22px; font-size: 10px; line-height: 22px; text-align: center; }
 .summary-raid tr.normal td.status-incomplete div { background-color: #32180c; }
 .summary-raid tr.heroic td.status-incomplete div { background-color: #2d150a; }
