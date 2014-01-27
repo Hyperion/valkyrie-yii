@@ -1,0 +1,152 @@
+{"label": "Armory", "url": "/armory/", "children": [
+    {"label": "Characters", "url": "/armory/character"},
+    {"label": "Items", "url": "/armory/item", "children": [
+        {"label": "Weapon", "url": "/armory/item?classId=2", "children": [
+            {"label": "One-Handed Axes", "url": "/armory/item?classId=2&subClassId=0"},
+            {"label": "Two-Handed Axes", "url": "/armory/item?classId=2&subClassId=1"},
+            {"label": "Bows", "url": "/armory/item?classId=2&subClassId=2"},
+            {"label": "Guns", "url": "/armory/item?classId=2&subClassId=3"},
+            {"label": "One-Handed Maces", "url": "/armory/item?classId=2&subClassId=4"},
+            {"label": "Two-Handed Maces", "url": "/armory/item?classId=2&subClassId=5"},
+            {"label": "Polearms", "url": "/armory/item?classId=2&subClassId=6"},
+            {"label": "One-Handed Swords", "url": "/armory/item?classId=2&subClassId=7"},
+            {"label": "Two-Handed Swords", "url": "/armory/item?classId=2&subClassId=8"},
+            {"label": "Staves", "url": "/armory/item?classId=2&subClassId=10"},
+            {"label": "Fist Weapons", "url": "/armory/item?classId=2&subClassId=13"},
+            {"label": "Miscellaneous", "url": "/armory/item?classId=2&subClassId=14"},
+            {"label": "Daggers", "url": "/armory/item?classId=2&subClassId=15"},
+            {"label": "Thrown", "url": "/armory/item?classId=2&subClassId=16"},
+            {"label": "Crossbows", "url": "/armory/item?classId=2&subClassId=18"},
+            {"label": "Wands", "url": "/armory/item?classId=2&subClassId=19"},
+            {"label": "Fishing Poles", "url": "/armory/item?classId=2&subClassId=20"}
+        ]},
+        {"label": "Armor", "url": "/armory/item?classId=4", "children": [
+            {"label": "Miscellaneous", "url": "/armory/item?classId=4&subClassId=0", "children": [
+                {"label": "Head", "url": "/armory/item?classId=4&subClassId=0&invType=1"},
+                {"label": "Neck", "url": "/armory/item?classId=4&subClassId=0&invType=2"},
+                {"label": "Shirt", "url": "/armory/item?classId=4&subClassId=0&invType=4"},
+                {"label": "Finger", "url": "/armory/item?classId=4&subClassId=0&invType=11"},
+                {"label": "Trinket", "url": "/armory/item?classId=4&subClassId=0&invType=12"},
+                {"label": "Held in off-hand", "url": "/armory/item?classId=4&subClassId=0&invType=23"}
+            ]},
+            {"label": "Cloth", "url": "/armory/item?classId=4&subClassId=1", "children": [
+                {"label": "Head", "url": "/armory/item?classId=4&subClassId=1&invType=1"},
+                {"label": "Shoulder", "url": "/armory/item?classId=4&subClassId=1&invType=3"},
+                {"label": "Chest", "url": "/armory/item?classId=4&subClassId=1&invType=5"},
+                {"label": "Waist", "url": "/armory/item?classId=4&subClassId=1&invType=6"},
+                {"label": "Legs", "url": "/armory/item?classId=4&subClassId=1&invType=7"},
+                {"label": "Feet", "url": "/armory/item?classId=4&subClassId=1&invType=8"},
+                {"label": "Wrists", "url": "/armory/item?classId=4&subClassId=1&invType=9"},
+                {"label": "Hands", "url": "/armory/item?classId=4&subClassId=1&invType=10"},
+                {"label": "Back", "url": "/armory/item?classId=4&subClassId=1&invType=16"}
+            ]},
+            {"label": "Leather", "url": "/armory/item?classId=4&subClassId=2", "children": [
+                {"label": "Head", "url": "/armory/item?classId=4&subClassId=2&invType=1"},
+                {"label": "Shoulder", "url": "/armory/item?classId=4&subClassId=2&invType=3"},
+                {"label": "Chest", "url": "/armory/item?classId=4&subClassId=2&invType=5"},
+                {"label": "Waist", "url": "/armory/item?classId=4&subClassId=2&invType=6"},
+                {"label": "Legs", "url": "/armory/item?classId=4&subClassId=2&invType=7"},
+                {"label": "Feet", "url": "/armory/item?classId=4&subClassId=2&invType=8"},
+                {"label": "Wrists", "url": "/armory/item?classId=4&subClassId=2&invType=9"},
+                {"label": "Hands", "url": "/armory/item?classId=4&subClassId=2&invType=10"}
+            ]},
+            {"label": "Mail", "url": "/armory/item?classId=4&subClassId=3", "children": [
+                {"label": "Head", "url": "/armory/item?classId=4&subClassId=3&invType=1"},
+                {"label": "Shoulder", "url": "/armory/item?classId=4&subClassId=3&invType=3"},
+                {"label": "Chest", "url": "/armory/item?classId=4&subClassId=3&invType=5"},
+                {"label": "Waist", "url": "/armory/item?classId=4&subClassId=3&invType=6"},
+                {"label": "Legs", "url": "/armory/item?classId=4&subClassId=3&invType=7"},
+                {"label": "Feet", "url": "/armory/item?classId=4&subClassId=3&invType=8"},
+                {"label": "Wrists", "url": "/armory/item?classId=4&subClassId=3&invType=9"},
+                {"label": "Hands", "url": "/armory/item?classId=4&subClassId=3&invType=10"}
+            ]},
+            {"label": "Plate", "url": "/armory/item?classId=4&subClassId=4", "children": [
+                {"label": "Head", "url": "/armory/item?classId=4&subClassId=4&invType=1"},
+                {"label": "Shoulder", "url": "/armory/item?classId=4&subClassId=4&invType=3"},
+                {"label": "Chest", "url": "/armory/item?classId=4&subClassId=4&invType=5"},
+                {"label": "Waist", "url": "/armory/item?classId=4&subClassId=4&invType=6"},
+                {"label": "Legs", "url": "/armory/item?classId=4&subClassId=4&invType=7"},
+                {"label": "Feet", "url": "/armory/item?classId=4&subClassId=4&invType=8"},
+                {"label": "Wrists", "url": "/armory/item?classId=4&subClassId=4&invType=9"},
+                {"label": "Hands", "url": "/armory/item?classId=4&subClassId=4&invType=10"}
+            ]},
+            {"label": "Shield", "url": "/armory/item?classId=4&subClassId=6"}
+        ]},
+        {"label": "Container", "url": "/armory/item?classId=1", "children": [
+            {"label": "Bag", "url": "/armory/item?classId=1&subClassId=0"},
+            {"label": "Soul Bag", "url": "/armory/item?classId=1&subClassId=1"},
+            {"label": "Herb Bag", "url": "/armory/item?classId=1&subClassId=2"},
+            {"label": "Enchanting Bag", "url": "/armory/item?classId=1&subClassId=3"}
+        ]},
+        {"label": "Consumable", "url": "/armory/item?classId=0", "children": [
+            {"label": "Potion", "url": "/armory/item?classId=0&subClassId=1"},
+            {"label": "Elixir", "url": "/armory/item?classId=0&subClassId=2"},
+            {"label": "Flask", "url": "/armory/item?classId=0&subClassId=3"},
+            {"label": "Scroll", "url": "/armory/item?classId=0&subClassId=4"},
+            {"label": "Food & Drink", "url": "/armory/item?classId=0&subClassId=5"},
+            {"label": "Item Enhancement", "url": "/armory/item?classId=0&subClassId=6"},
+            {"label": "Bandage", "url": "/armory/item?classId=0&subClassId=7"},
+            {"label": "Other", "url": "/armory/item?classId=0&subClassId=8"}
+        ]},
+        {"label": "Trade Goods", "url": "/armory/item?classId=7", "children": [
+            {"label": "Parts", "url": "/armory/item?classId=7&subClassId=1"},
+            {"label": "Explosives", "url": "/armory/item?classId=7&subClassId=2"},
+            {"label": "Devices", "url": "/armory/item?classId=7&subClassId=3"},
+            {"label": "Cloth", "url": "/armory/item?classId=7&subClassId=5"},
+            {"label": "Leather", "url": "/armory/item?classId=7&subClassId=6"},
+            {"label": "Metal & Stone", "url": "/armory/item?classId=7&subClassId=7"},
+            {"label": "Meat", "url": "/armory/item?classId=7&subClassId=8"},
+            {"label": "Herb", "url": "/armory/item?classId=7&subClassId=9"},
+            {"label": "Elemental", "url": "/armory/item?classId=7&subClassId=10"},
+            {"label": "Other", "url": "/armory/item?classId=7&subClassId=11"},
+            {"label": "Enchanting", "url": "/armory/item?classId=7&subClassId=12"}
+        ]},
+        {"label": "Projectile", "url": "/armory/item?classId=6", "children": [
+            {"label": "Arrow", "url": "/armory/item?classId=6&subClassId=2"},
+            {"label": "Bullet", "url": "/armory/item?classId=6&subClassId=3"}
+        ]},
+        {"label": "Quiver", "url": "/armory/item?classId=11", "children": [
+            {"label": "Quiver", "url": "/armory/item?classId=11&subClassId=2"},
+            {"label": "Ammo Pouch", "url": "/armory/item?classId=11&subClassId=3"}
+        ]},
+        {"label": "Recipe", "url": "/armory/item?classId=9", "children": [
+            {"label": "Book", "url": "/armory/item?classId=9&subClassId=0"},
+            {"label": "Leatherworking", "url": "/armory/item?classId=9&subClassId=1"},
+            {"label": "Tailoring", "url": "/armory/item?classId=9&subClassId=2"},
+            {"label": "Engineering", "url": "/armory/item?classId=9&subClassId=3"},
+            {"label": "Blacksmithing", "url": "/armory/item?classId=9&subClassId=4"},
+            {"label": "Cooking", "url": "/armory/item?classId=9&subClassId=5"},
+            {"label": "Alchemy", "url": "/armory/item?classId=9&subClassId=6"},
+            {"label": "First Aid", "url": "/armory/item?classId=9&subClassId=7"},
+            {"label": "Enchanting", "url": "/armory/item?classId=9&subClassId=8"},
+            {"label": "Fishing", "url": "/armory/item?classId=9&subClassId=9"}
+        ]},
+        {"label": "Miscellaneous", "url": "/armory/item?classId=15", "children": [
+            {"label": "Junk", "url": "/armory/item?classId=15&subClassId=0"},
+            {"label": "Reagent", "url": "/armory/item?classId=15&subClassId=1"},
+            {"label": "Pet", "url": "/armory/item?classId=15&subClassId=2"},
+            {"label": "Holiday", "url": "/armory/item?classId=15&subClassId=3"},
+            {"label": "Other", "url": "/armory/item?classId=15&subClassId=4"},
+            {"label": "Mount", "url": "/armory/item?classId=15&subClassId=5"}
+        ]},
+        {"label": "Quest", "url": "/armory/item?classId=12"},
+        {"label": "Key", "url": "/armory/item?classId=13"}
+    ]},
+    {"label": "Spells", "url": "/armory/spell"},
+    {"label": "Statistic", "url": "/armory/statistic", "children": [
+        {"label": "Online", "url": "/armory/statistic/Valkyrie/online"},
+        {"label": "PvP", "url": "/armory/statistic/Valkyrie/pvp"},
+        {"label": "PvP Current", "url": "/armory/statistic/Valkyrie/pvpCurrent"}
+    ]},
+    {"label": "Talent Calculator", "url": "/armory/tool/talentCalculator", "children": [
+        {"label": "Warrior", "url": "/armory/tool/talentCalculator/class/1"},
+        {"label": "Paladin", "url": "/armory/tool/talentCalculator/class/2"},
+        {"label": "Hunter", "url": "/armory/tool/talentCalculator/class/3"},
+        {"label": "Rogue", "url": "/armory/tool/talentCalculator/class/4"},
+        {"label": "Priest", "url": "/armory/tool/talentCalculator/class/5"},
+        {"label": "Shaman", "url": "/armory/tool/talentCalculator/class/7"},
+        {"label": "Mage", "url": "/armory/tool/talentCalculator/class/8"},
+        {"label": "Warlock", "url": "/armory/tool/talentCalculator/class/9"},
+        {"label": "Druid", "url": "/armory/tool/talentCalculator/class/11"}
+    ]}
+]}

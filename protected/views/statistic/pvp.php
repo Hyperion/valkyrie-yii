@@ -1,7 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Game'                    => array('/'),
-    'Statistic'				  => array('/statistic'),
+    'Statistic' => array('/statistic'),
 );
 if($current)
     $this->breadcrumbs['Valkyrie @ PvP Current'] = array('/statistic/pvpcurrent', 'realm' => 'Valkyrie');
@@ -9,7 +8,8 @@ else
     $this->breadcrumbs['Valkyrie @ PvP'] = array('/statistic/pvp', 'realm' => 'Valkyrie');
 ?>
 
-<?php $this->widget('WGridWow', array(
+<?php 
+$this->widget('WGridWow', array(
     'filter' => $model,
     'dataProvider'=>$model->search(40),
     'enableSorting'=>true,
@@ -57,8 +57,8 @@ else
             'name'=>'faction',
             'sortable'=>false,
             'filter' => array(
-                0 => 'Alliance',
-                1 => 'Horde',
+                1 => 'Alliance',
+                2 => 'Horde',
                 ),
         ),
         array(

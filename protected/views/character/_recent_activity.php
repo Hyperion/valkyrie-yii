@@ -10,11 +10,11 @@
                         ?>
                         <li>
                             <dl>
-                                <dd><a href="/item/<?= $event['data'] ?>"
+                                <dd><a href="<?= Yii::app()->request->baseUrl ?>/item/<?= $event['data'] ?>"
                                        class="color-q<?= $event['item']->Quality ?>" data-item="">
                                         <span class="icon-frame frame-18"
                                               style='background-image: url("http://media.blizzard.com/wow/icons/18/<?= $event['item']->icon ?>.jpg");'></span></a>
-                                    Получено <a href="/item/<?= $event['data'] ?>"
+                                    Получено <a href="<?= Yii::app()->request->baseUrl ?>/item/<?= $event['data'] ?>"
                                                 class="color-q<?= $event['item']->Quality ?>"
                                                 data-item=""><?= $event['item']->name ?></a>
                                 </dd>
@@ -38,7 +38,7 @@
                 }
             ?>
         </ul>
-        <a class="profile-linktomore" rel="np" href="/character/feed/Valkyrie/<?= $model->name ?>">Смотреть более ранние
+        <a class="profile-linktomore" rel="np" href="<?= Yii::app()->request->baseUrl ?>/character/feed/Valkyrie/<?= $model->name ?>">Смотреть более ранние
             новости</a>
         <span class="clear"></span>
     </div>

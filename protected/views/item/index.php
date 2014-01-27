@@ -1,14 +1,13 @@
 <?php
 $this->breadcrumbs=array(
-    'Game'=>array('/wow'),
-    'Items'=>array('/wow/item'),
+    'Items' => array('/item'),
 );
-if(isset($model->class_id))
-    $this->breadcrumbs[$model->class_text] = array("/wow/item?ItemTemplate[class_id]={$model->class_id}");
+if(isset($model->class))
+    $this->breadcrumbs[$model->class_text] = array("/item?classId={$model->class}");
 if(isset($model->subclass))
-    $this->breadcrumbs[$model->subclass_text] = array("/wow/item?ItemTemplate[class_id]={$model->class_id}&ItemTemplate[subclass]={$model->subclass}");
-if(isset($model->InventoryType) && $model->class_id == $model::ITEM_CLASS_ARMOR)
-    $this->breadcrumbs[$model::itemAlias('invtype', $model->InventoryType)] = array("/wow/item?ItemTemplate[class_id]={$model->class_id}&ItemTemplate[subclass]={$model->subclass}&ItemTemplate[InventoryType]={$model->InventoryType}");
+    $this->breadcrumbs[$model->subclass_text] = array("/item?classId={$model->class}&subClassId={$model->subclass}");
+if(isset($model->InventoryType) && $model->class == $model::ITEM_CLASS_ARMOR)
+    $this->breadcrumbs[$model::itemAlias('invtype', $model->InventoryType)] = array("/item?classId={$model->class}&subClassId={$model->subclass}&invType={$model->InventoryType}");
 
     Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){

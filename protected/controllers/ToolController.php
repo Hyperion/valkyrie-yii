@@ -23,10 +23,12 @@ class ToolController extends Controller
 
     public function actionTalentCalculator()
     {
-        $this->cs->registerCssFile('/css/wow/profile.css');
-        $this->cs->registerCssFile('/css/wow/character/talent.css');
-        $this->cs->registerCssFile('/css/wow/tool/talent-calculator.css');
-        $this->cs->registerScriptFile('/js/wow/tool/talent-calculator.js', CClientScript::POS_END);
+        $baseUrl = Yii::app()->request->baseUrl;
+
+        $this->cs->registerCssFile($baseUrl . '/css/wow/profile.css');
+        $this->cs->registerCssFile($baseUrl . '/css/wow/character/talent.css');
+        $this->cs->registerCssFile($baseUrl . '/css/wow/tool/talent-calculator.css');
+        $this->cs->registerScriptFile($baseUrl . '/js/wow/tool/talent-calculator.js', CClientScript::POS_END);
 
         $class = (isset($_GET['class'])) ? (int) $_GET['class'] : 1;
         $build = (isset($_GET['build'])) ? $_GET['build'] : null;

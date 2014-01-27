@@ -53,6 +53,15 @@ return array(
             'schemaCachingDuration' => 3600 * 24 * 365,
             'class'            => 'CDbConnection'          // DO NOT FORGET THIS!
         ),
+        'db_realmd' => array(
+            'connectionString'   => 'mysql:host=' . DB_REALMD_HOST . ';dbname=' . DB_REALMD_NAME,
+            'username'           => DB_REALMD_USER,
+            'password'           => DB_REALMD_PASS,
+            'charset'            => 'utf8',
+            'tablePrefix'        => '',
+            'schemaCachingDuration' => 3600 * 24 * 365,
+            'class'            => 'CDbConnection'
+        ),
         'cache'                 => array(
             'class' => 'system.caching.CDummyCache',
         ),
@@ -75,7 +84,7 @@ return array(
             'urlFormat' => 'path',
             'rules' => array(
                 '<_c:\w+>/<id:\d+>' => '<_c>/view',
-                '<_c:character|guild>/<_a:\w+>/<realm>/<name:\w+>' => '<_c>/<_a>',
+                '<_c:character|guild>/<_a:\w+>/<realm>/<name:[A-Za-z]+>' => '<_c>/<_a>',
                 array('<_c>/<_a>', 'pattern' => '<_c:statistic>/<realm>/<_a:\w+>', 'caseSensitive' => false),
             ),
             'showScriptName' => false,

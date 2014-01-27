@@ -327,7 +327,7 @@ a.summary-stats-toggler:hover .inner { background-position: right bottom; /*back
 .summary-raid-wrapper-left .heroic, .summary-raid tr.heroic { background-color: #291306; }
 .summary-raid-wrapper-left .heroic span { padding-right: 18px; }
 
-.summary-raid-wrapper-table { float: left; width: 758px; height: 165px; overflow: hidden; }
+.summary-raid-wrapper-table { float: left; width: 858px; height: 85px; overflow: hidden; }
 .summary-raid thead th { height: 50px; font-weight: normal; vertical-align: bottom; }
 .summary-raid thead .name-anchor { position: relative; width: 1px; height: 0; }
 .summary-raid thead .name { position: absolute; top: -22px; font-size: 11px; text-transform: lowercase; }
@@ -346,47 +346,24 @@ a.summary-stats-toggler:hover .inner { background-position: right bottom; /*back
 .summary-raid td.spacer div { width: 26px !important; }
 .summary-raid th.spacer-left div { width: 1px !important; }
 .summary-raid tr.icons { color: #fff; }
-.summary-raid tr.icons .icon { border-top: 2px solid white; }
-.summary-raid tr.icons td.expansion-0 .icon { border-color: #73612f; }
-.summary-raid tr.icons td.expansion-1 .icon { border-color: #49a624; }
-.summary-raid tr.icons td.expansion-2 .icon { border-color: #25aaff; }
-.summary-raid tr.icons td.expansion-3 .icon { border-color: #f15c00; }
 .summary-raid tr.icons .icon, .summary-raid tr.icons .icon div { width: 61px; height: 60px; }
 .summary-raid tr.icons .icon { background: url("/images/wow/character/summary/raid-icons.jpg") no-repeat; }
 .summary-raid tr.icons .icon div { overflow: hidden; text-align: center; cursor: help; text-shadow: 1px 1px 1px black; font-family: 'Arial Black', Verdana, Arial, sans-serif; font-size: 11px; line-height: 98px; }
 .summary-raid tr.icons .mc   .icon { background-position:        0 0; }
-.summary-raid tr.icons .bwl  .icon { background-position:    -61px 0; }
-.summary-raid tr.icons .aq10 .icon { background-position:   -122px 0; }
-.summary-raid tr.icons .aq40 .icon { background-position:   -183px 0; }
-.summary-raid tr.icons .kar  .icon { background-position:   -244px 0; }
-.summary-raid tr.icons .gru  .icon { background-position:   -305px 0; }
-.summary-raid tr.icons .mag  .icon { background-position:   -366px 0; }
-.summary-raid tr.icons .za   .icon { background-position:   -427px 0; }
-.summary-raid tr.icons .ssc  .icon { background-position:   -488px 0; }
-.summary-raid tr.icons .tk   .icon { background-position:   -549px 0; }
-.summary-raid tr.icons .mh   .icon { background-position:   -610px 0; }
-.summary-raid tr.icons .bt   .icon { background-position:   -671px 0; }
-.summary-raid tr.icons .sp   .icon { background-position:   -732px 0; }
-.summary-raid tr.icons .nax  .icon { background-position:   -793px 0; }
-.summary-raid tr.icons .os   .icon { background-position:   -854px 0; }
-.summary-raid tr.icons .voa  .icon { background-position:   -915px 0; }
-.summary-raid tr.icons .eoe  .icon { background-position:   -976px 0; }
-.summary-raid tr.icons .uld  .icon { background-position:  -1037px 0; }
-.summary-raid tr.icons .toc  .icon { background-position:  -1098px 0; }
-.summary-raid tr.icons .ony  .icon { background-position:  -1159px 0; }
-.summary-raid tr.icons .icc  .icon { background-position:  -1220px 0; }
-.summary-raid tr.icons .rs   .icon { background-position:  -1281px 0; }
-.summary-raid tr.icons .bh   .icon { background-position:  -1342px 0; }
-.summary-raid tr.icons .bot  .icon { background-position:  -1403px 0; }
-.summary-raid tr.icons .bd   .icon { background-position:  -1464px 0; }
-.summary-raid tr.icons .tfw  .icon { background-position:  -1525px 0; }
+.summary-raid tr.icons .ony  .icon { background-position:    -61px 0; }
+.summary-raid tr.icons .bwl  .icon { background-position:   -122px 0; }
+.summary-raid tr.icons .zg   .icon { background-position:   -183px 0; }
+.summary-raid tr.icons .aq10 .icon { background-position:   -244px 0; }
+.summary-raid tr.icons .aq40 .icon { background-position:   -305px 0; }
+.summary-raid tr.icons .nax  .icon { background-position:   -366px 0; }
+.summary-raid tr.icons .aq10, tr.icons .aq40, tr.icons .nax { opacity: 0.5; }
 .summary-raid td.status div { cursor: help; height: 22px; font-size: 10px; line-height: 22px; text-align: center; }
 .summary-raid tr.normal td.status-incomplete div { background-color: #32180c; }
 .summary-raid tr.heroic td.status-incomplete div { background-color: #2d150a; }
 .summary-raid td.status-in-progress div { background-color: #fcff00; }
 .summary-raid td.status-completed div { background-color: #5cc301; }
 
-.summary-raid-legend { text-align: center; padding: 24px 0 11px 0; }
+.summary-raid-legend { padding: 24px 0 11px 0; }
 .summary-raid-legend span { background: url("/images/wow/character/summary/raid-legend.gif") no-repeat left center; padding-left: 14px; margin-right: 20px; }
 .summary-raid-legend .in-progress { color: #fcff00; background-position: 0 center; margin-right: 0; }
 .summary-raid-legend .completed   { color: #5cc301; background-position: -150px center; }

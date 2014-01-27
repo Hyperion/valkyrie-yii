@@ -78,9 +78,9 @@ if($model->class == $model::ITEM_CLASS_WEAPON && $model->delay):
         <?php
         endif;
     endforeach;
-    if(isset($model['enchant_id']) && $model['enchant_id'] > 0):
+    if(isset($data['enchant_id']) && $data['enchant_id'] > 0):
         ?>
-        <li class="color-tooltip-green"><?php echo $model->getEnchantText((int) $model['enchant_id']) ?></li>
+        <li class="color-tooltip-green"><?php echo $model->getEnchantText((int) $data['enchant_id']) ?></li>
     <?php endif;
     if($model->MaxDurability > 0):
         ?>
@@ -117,7 +117,7 @@ if($model->RequiredLevel):
     foreach($model->spells as $spell):
         ?>
         <li class="color-q2">
-            <a href="/spell/<?php echo $spell['spellid'] ?>">
+            <a href="<?php echo Yii::app()->request->baseUrl ?>/spell/<?php echo $spell['spellid'] ?>">
         <?php echo $model::itemAlias('spell_trigger', $spell['trigger']) ?>: <?php echo $spell['description'] ?>
             </a>
         </li>
@@ -141,13 +141,12 @@ if($model->RequiredLevel):
     <?php
 endif;
 if($model->itemset):
-    if(isset($model['set'])):
-        //$model['set'] = explode(',', $model['set']);
-        $count       = 0;
-        $equipped    = $model['set'];
+    if(isset($data['set'])):
+        $equipped    = explode(',', $data['set']);
+        $count       = count($equipped);
     else:
-        $count    = 0;
         $equipped = array();
+        $count    = 0;
     endif;
     ?>
         <li>
@@ -155,12 +154,12 @@ if($model->itemset):
                 <li class="color-tooltip-yellow"><?php echo $model->set['name'] ?> (<?php echo $count ?>/<?php echo $model->set['count'] ?>)</li>
     <?php foreach($model->set['items'] as $item): ?>
                     <li class="indent">
-                        <a class="color-<?php echo ((in_array($item['entry'], $equipped)) ? 'tooltip-beige' : 'd4') ?>" href="/wow/item/<?php echo $item['entry'] ?>"><?php echo $item['name'] ?></a>
+                        <a class="color-<?php echo ((in_array($item['entry'], $equipped)) ? 'tooltip-beige' : 'd4') ?>" href="<?php echo Yii::app()->request->baseUrl ?>/item/<?php echo $item['entry'] ?>"><?php echo $item['name'] ?></a>
                     </li>
     <?php endforeach; ?>
                 <li class="indent-top"></li>
     <?php foreach($model->set['bonuses'] as $piece => $spell): ?>
-                    <li class="color-<?php echo (($piece <= $count) ? 'tooltip-green' : 'd4') ?>">(<?php echo $piece ?>) Set: <a href="/wow/spell/<?php echo $spell->spellID ?>"><?php echo $spell->info ?></a></li>
+                    <li class="color-<?php echo (($piece <= $count) ? 'tooltip-green' : 'd4') ?>">(<?php echo $piece ?>) Set: <a href="<?php Yii::app()->request->baseUrl ?>/spell/<?php echo $spell->spellID ?>"><?php echo $spell->info ?></a></li>
     <?php endforeach; ?>
             </ul>
         </li>

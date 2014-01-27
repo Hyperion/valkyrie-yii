@@ -14,28 +14,10 @@
 <body class="<?= $this->body_class ?>">
 <div id="wrapper">
     <div id="header">
-        <div id="search-bar">
-            <form action="/wow/search" method="get" id="search-form">
-                <div>
-                    <input type="submit" id="search-button" value="" tabindex="41"/>
-                    <input type="text" name="q" id="search-field" maxlength="200" tabindex="40"
-                           alt="Search characters, items, forums and more…"
-                           value="Search characters, items, forums and more…"/>
-                </div>
-            </form>
-        </div>
 
         <h1 id="logo"><a href="/">World of Warcraft</a></h1>
 
         <div class="header-plate">
-            <div class="user-plate ajax-update">
-                <a href="?login" class="card-login"
-                   onclick="BnetAds.trackImpression('Battle.net Login', 'Character Card', 'New'); return Login.open('https://eu.battle.net/login/login.frag');">
-                    <strong>Log in now</strong> to enhance and personalize your experience!
-                </a>
-
-                <div class="card-overlay"></div>
-            </div>
         </div>
     </div>
     <div id="content">
@@ -52,5 +34,13 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    $(function() {
+        Menu.initialize('<?= Yii::app()->request->baseUrl ?>/data/menu.json');
+    });
+    //]]>
+</script>
 </body>
 </html>

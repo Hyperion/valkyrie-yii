@@ -20,11 +20,14 @@ class Controller extends CController
         Yii::setPathOfAlias('Base', __DIR__ . '/../models/Base');
         date_default_timezone_set('Europe/Moscow');
 
+        $baseUrl = Yii::app()->request->baseUrl;
+
         $this->_cs = Yii::app()->clientScript;
         $this->_cs->registerPackage('jquery');
-        $this->_cs->registerScriptFile('/js/local-common/core.js');
-        $this->_cs->registerScriptFile('/js/local-common/tooltip.js');
-        $this->_cs->registerScriptFile('/js/wow/wow.js', CClientScript::POS_END);
+        $this->_cs->registerScriptFile($baseUrl . '/js/local-common/core.js');
+        $this->_cs->registerScriptFile($baseUrl . '/js/local-common/menu.js');
+        $this->_cs->registerScriptFile($baseUrl . '/js/local-common/tooltip.js');
+        $this->_cs->registerScriptFile($baseUrl . '/js/wow/wow.js', CClientScript::POS_END);
     }
 
     public function getCs()

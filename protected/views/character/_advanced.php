@@ -110,17 +110,17 @@
         <div class="slot slot-pos-<?php echo $slot; ?> slot-<?php echo $item['slot']; ?><?php echo(($slot > 4 && $slot < 16 && $slot != 8 && $slot != 14) ? ' slot-align-right' : null) ?> item-quality-<?php echo$item['quality'] ?>">
             <div class="slot-inner">
                 <div class="slot-contents">
-                    <a href="/item/<?php echo$item['entry'] ?>" class="item" data-item="<?php echo$item['data'] ?>"><img src="http://media.blizzard.com/wow/icons/56/<?=$item['icon']?>.jpg" alt="" /><span class="frame"></span></a>
+                    <a href="<?php echo Yii::app()->request->baseUrl ?>/item/<?php echo$item['entry'] ?>" class="item" data-item="<?php echo$item['data'] ?>"><img src="http://media.blizzard.com/wow/icons/56/<?=$item['icon']?>.jpg" alt="" /><span class="frame"></span></a>
                     <div class="details">
                         <span class="name color-q<?php echo$item['quality'] ?>">
                             <?php echo((($slot > 4 && $slot < 16 && $slot != 8 && $slot != 14) && !isset($item['enchant_text']) && $item['can_enchanted']) ? '<a href="javascript:;" class="audit-warning"></a>' : null) ?>
-                            <a href="/wow/item/<?php echo$item['entry'] ?>" data-item="<?php echo$item['data'] ?>"><?php echo$item['name'] ?></a>
+                            <a href="<?php echo Yii::app()->request->baseUrl ?>/item/<?php echo$item['entry'] ?>" data-item="<?php echo$item['data'] ?>"><?php echo$item['name'] ?></a>
                         <?php echo((($slot < 5 || $slot > 15 || $slot == 8 || $slot == 14) && !isset($item['enchant_text']) && $item['can_enchanted']) ? '<a href="javascript:;" class="audit-warning"></a>' : null) ?>
                         </span>
                             <?php if(isset($item['enchant_text'])): ?>
                             <div class="enchant color-q2">
                                 <?php if(isset($item['enchant_item'])): ?>
-                                    <a href="/item/<?php echo$item['enchant_item'] ?>"><?php echo$item['enchant_text'] ?></a>
+                                    <a href="<?php echo Yii::app()->request->baseUrl ?>/item/<?php echo$item['enchant_item'] ?>"><?php echo$item['enchant_text'] ?></a>
                                     <?php
                                 else: echo $item['enchant_text'];
                                 endif;

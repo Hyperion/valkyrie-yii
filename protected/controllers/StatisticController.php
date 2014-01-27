@@ -16,6 +16,25 @@ class StatisticController extends Controller
 
     public function actionOnline($realm)
     {
+        if (isset($_GET['json']))
+        {
+            Yii::import('ext.yii-json-dataprovider.JSonActiveDataProvider');
+
+            $dataProvider = new JSonActiveDataProvider('Character', array(
+                'attributes' => array('name', 'level', 'class_id', 'race', 'zone'),
+                'criteria' => array(
+                    'condition' => 'online=1 AND account > 0'
+                ),
+                'pagination' => false,
+                'includeDataProviderInformation' => false
+            ));
+
+            $this->layout = false;
+            header('Content-type: application/json');
+            echo $dataProvider->getJsonData();
+            Yii::app()->end();
+        }
+
         $model = new Character('online');
         $model->unsetAttributes();
         $model->online = 1;
