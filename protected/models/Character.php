@@ -122,6 +122,7 @@ class Character extends Base\Char
     public function attributeLabels()
     {
         return array(
+            'class_id'           => 'Class',
             'honor_highest_rank' => 'Max Rank',
             'honor_standing'     => 'Standing',
             'honor_rank_points'  => 'RP',
@@ -188,18 +189,21 @@ class Character extends Base\Char
         $criteria->compare('honor_standing', $this->honor_standing);
         $criteria->addCondition('account > 0');
 
-        if($this->scenario == 'pvp')
+        if ($this->scenario == 'pvp' || $this->scenario == 'pvp_current')
         {
             $criteria->with = 'honor';
             $criteria->together = true;
-            $criteria->addCondition('honor.thisWeek_kills > 25 OR honor_standing > 0');
-            $criteria->select = 'guid, name, race, honor_standing, gender, class_id, honor_rank_points, honor_highest_rank';
+
+            if ($this->scenario == 'pvp')
+                $criteria->addCondition('honor.thisWeek_kills > 25 OR honor_standing > 0');
 
             $sort->attributes = array(
-                'name'                 => 'name',
-                'honor_standing'       => 'honor_standing',
-                'honor.thisWeek_cp'    => 'honor.thisWeek_cp',
+                'honor.hk',
+                'honor.thisWeek_cp',
+                'honor.thisWeek_kills',
+                '*'
             );
+
             $sort->defaultOrder = 'honor.thisWeek_cp DESC';
         }
 

@@ -17,8 +17,8 @@ $this->breadcrumbs=array(
         'level',
         array(
             'type'=>'raw',
-            'value'=>'CHtml::image("/images/wow/icons/class/$data->class.gif")',
-            'name'=>'class',
+            'value'=>'CHtml::image("/images/wow/icons/class/$data->class_id.gif")',
+            'name'=>'class_id',
             'sortable'=>true,
         ),
         array(

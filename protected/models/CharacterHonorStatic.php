@@ -15,6 +15,7 @@ class CharacterHonorStatic extends Base\Char
     public function attributeLabels()
     {
         return array(
+            'hk' => 'HK',
             'thisWeek_cp' => 'Week CP',
             'thisWeek_kills' => 'Week HK',
         );
