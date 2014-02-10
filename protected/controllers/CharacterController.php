@@ -12,7 +12,7 @@ class CharacterController extends Controller
     {
         parent::init();
 
-        $this->layout = '/layouts/character';
+        $this->layout = '//layouts/character';
 
         if (isset($_GET['name'])) {
             $this->_model = $this->loadModel($_GET['name']);
