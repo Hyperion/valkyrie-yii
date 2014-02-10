@@ -15,7 +15,7 @@ class ItemController extends Controller
 
         $this->cs->registerScriptFile($baseUrl . '/js/wow/wiki/wiki.js', CClientScript::POS_END);
         $this->cs->registerScriptFile($baseUrl . '/js/wow/wiki/item.js', CClientScript::POS_END);
-		$this->cs->registerScriptFile($baseUrl . '/js/local-common/third-party/swfobject.js', CClientScript::POS_END);
+		$this->cs->registerScriptFile($baseUrl . '/js/local-common/swfobject.js', CClientScript::POS_END);
         $this->cs->registerScriptFile($baseUrl . '/js/local-common/table.js', CClientScript::POS_END);
         $this->cs->registerScriptFile($baseUrl . '/js/local-common/cms.js', CClientScript::POS_END);
         $this->cs->registerScriptFile($baseUrl . '/js/local-common/filter.js', CClientScript::POS_END);
