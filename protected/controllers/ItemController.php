@@ -6,23 +6,23 @@ class ItemController extends Controller
     {
         $this->layout = '//layouts/wiki';
         $model = $this->loadModel($id);
-
+        
         $baseUrl = Yii::app()->request->baseUrl;
-
+        
         $this->cs->registerCssFile($baseUrl . '/css/wow/wiki/wiki.css');
         $this->cs->registerCssFile($baseUrl . '/css/wow/wiki/item.css');
         $this->cs->registerCssFile($baseUrl . '/css/wow/lightbox.css');
-
+        
         $this->cs->registerScriptFile($baseUrl . '/js/wow/wiki/wiki.js', CClientScript::POS_END);
         $this->cs->registerScriptFile($baseUrl . '/js/wow/wiki/item.js', CClientScript::POS_END);
-		$this->cs->registerScriptFile($baseUrl . '/js/local-common/third-party/swfobject.js', CClientScript::POS_END);
+        $this->cs->registerScriptFile($baseUrl . '/js/local-common/third-party/swfobject.js', CClientScript::POS_END);
         $this->cs->registerScriptFile($baseUrl . '/js/local-common/table.js', CClientScript::POS_END);
         $this->cs->registerScriptFile($baseUrl . '/js/local-common/cms.js', CClientScript::POS_END);
         $this->cs->registerScriptFile($baseUrl . '/js/local-common/filter.js', CClientScript::POS_END);
-		$this->cs->registerScriptFile($baseUrl . '/js/local-common/lightbox.js', CClientScript::POS_END);
+        $this->cs->registerScriptFile($baseUrl . '/js/local-common/lightbox.js', CClientScript::POS_END);
         $this->cs->registerScriptFile($baseUrl . '/js/local-common/utility/model-rotator.js', CClientScript::POS_END);
         $this->cs->registerScriptFile($baseUrl . '/js/local-common/utility/model-viewer.js', CClientScript::POS_END);
-
+        
         $this->render('view', array('model' => $model));
     }
 
