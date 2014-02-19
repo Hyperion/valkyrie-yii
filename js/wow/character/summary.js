@@ -17,13 +17,15 @@ var Summary = {
 
                 var $line = $('<li/>').addClass(isActiveSpec ? 'color-tooltip-yellow' : 'color-q0');
 
-                $line.append(title + ' ');
+                /*$line.append(title + ' ');*/
                 $('<strong>').text($('span.name', $source).text()).appendTo($line);
                 $line.append(' (' + $('span.build', $source).text().replace(/\//g, ' / ') + ')');
-
+				
+				/*
                 if(isActiveSpec) {
                     $line.append(' ' + String.fromCharCode(8211) + ' ' + MsgSummary.talents.specTooltip.active);
                 }
+				*/
 
                 $tooltip.append($line);
             }
