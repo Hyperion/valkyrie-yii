@@ -17,13 +17,8 @@ var Summary = {
 
                 var $line = $('<li/>').addClass(isActiveSpec ? 'color-tooltip-yellow' : 'color-q0');
 
-                /* $line.append(title + ' '); */
                 $('<strong>').text($('span.name', $source).text()).appendTo($line);
                 $line.append(' (' + $('span.build', $source).text().replace(/\//g, ' / ') + ')');
-
-                /* if(isActiveSpec) {
-                    $line.append(' ' + String.fromCharCode(8211) + ' ' + MsgSummary.talents.specTooltip.active);
-                } */
 
                 $tooltip.append($line);
             }
@@ -31,7 +26,6 @@ var Summary = {
             $('<li/>').append($('<h3/>').text(MsgSummary.talents.specTooltip.title)).appendTo($tooltip);
 
             var $talents = $('#summary-talents');
-            /* appendTreeLine(MsgSummary.talents.specTooltip.primary,   $('a:nth(1)', $talents)); */
             appendTreeLine(MsgSummary.talents.specTooltip.secondary, $('a:nth(0)', $talents));
 
             Tooltip.show(this, $tooltip);
