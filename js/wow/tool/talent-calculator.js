@@ -403,7 +403,7 @@ function TalentCalculator(options) {
 
         talent.$cell.removeClass('talent-partial talent-full talent-arrow');
 
-        talent.$icon.css('background-image', active ? 'url(' + Wow.Icon.getUrl(talent.icon, 36) + ')' : 'url(http://static.mmo-champion.com/db/img/icons/greyscale/' + talent.icon + '.png)');
+        talent.$icon.css('background-image', active ? 'url(' + Wow.Icon.getUrl(talent.icon, 36) + ')' : 'url(http://www.wowprovider.com/img/SpellsGrey/' + talent.icon + '.png)');
         if(!active) {
             talent.$icon.css('background-size', '42px 42px');
             talent.$icon.css('background-position', 'center');
