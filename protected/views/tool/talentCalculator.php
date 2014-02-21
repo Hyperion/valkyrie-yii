@@ -1,3 +1,16 @@
+<? $baseUrl = Yii::app()->request->baseUrl; ?>
+<style type="text/css">
+#talentcalc-1 .talentcalc-cell .icon .texture { background-image: url(<?= $baseUrl; ?>/images/wow/talents/icons/1-greyscale.jpg); }
+#talentcalc-2 .talentcalc-cell .icon .texture { background-image: url(<?= $baseUrl; ?>/images/wow/talents/icons/2-greyscale.jpg); }
+#talentcalc-3 .talentcalc-cell .icon .texture { background-image: url(<?= $baseUrl; ?>/images/wow/talents/icons/3-greyscale.jpg); }
+#talentcalc-4 .talentcalc-cell .icon .texture { background-image: url(<?= $baseUrl; ?>/images/wow/talents/icons/4-greyscale.jpg); }
+#talentcalc-5 .talentcalc-cell .icon .texture { background-image: url(<?= $baseUrl; ?>/images/wow/talents/icons/5-greyscale.jpg); }
+#talentcalc-6 .talentcalc-cell .icon .texture { background-image: url(<?= $baseUrl; ?>/images/wow/talents/icons/6-greyscale.jpg); }
+#talentcalc-7 .talentcalc-cell .icon .texture { background-image: url(<?= $baseUrl; ?>/images/wow/talents/icons/7-greyscale.jpg); }
+#talentcalc-8 .talentcalc-cell .icon .texture { background-image: url(<?= $baseUrl; ?>/images/wow/talents/icons/8-greyscale.jpg); }
+#talentcalc-9 .talentcalc-cell .icon .texture { background-image: url(<?= $baseUrl; ?>/images/wow/talents/icons/9-greyscale.jpg); }
+#talentcalc-11 .talentcalc-cell .icon .texture { background-image: url(<?= $baseUrl; ?>/images/wow/talents/icons/11-greyscale.jpg); }
+</style>
 <?php
 $this->breadcrumbs = array(
     'Talent Calculator' => array('/tool/talentCalculator'),
@@ -51,8 +64,8 @@ $this->widget('WProfileSidebarMenu', array('items' => $links));?>
         <span class="clear"><!-- --></span>
     </div>
 
-    <div class="talentcalc-tree" style="width: 228px; height: 387px; background-image: url(/images/wow/talents/backgrounds/7.jpg); background-position: -<?=(228 * $i)?>px 0">
-        <div class="talentcalc-cells-wrapper">
+    <div class="talentcalc-tree" style="width: 228px; height: 387px; background-image: url(/images/wow/talents/backgrounds/<?=$classId?>.jpg); background-position: -<?=(228 * $i)?>px 0">
+        <div id="talentcalc-<?=$classId?>" class="talentcalc-cells-wrapper">
 
 <?php
 $j = 0;
@@ -63,7 +76,7 @@ foreach($data[$i]['talents'] as $tal):
 ?>
     <div class="talentcalc-cell <?=$class?>" style="left: <?=($tal['x'] * 53)?>px; top: <?=($tal['y'] * 53)?>px;" data-id="<?=$tal['id']?>">
         <span class="icon">
-            <span class="texture"></span>
+            <span class="texture" style="background-position: -<?=($j * 36)?>px -<?=($i * 36)?>px;"></span>
 <?php if($tal['keyAbility']): ?>
             <span class="ability"></span>
 <?php endif; ?>
@@ -112,7 +125,10 @@ foreach($data[$i]['talents'] as $tal):
         </span>
 <?php endif; ?>
     </div>
-<?php endforeach; ?>
+<?php
+    $j++;
+endforeach;
+?>
 
 
         </div>
