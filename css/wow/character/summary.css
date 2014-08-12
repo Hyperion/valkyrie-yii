@@ -244,10 +244,8 @@ ul.profile-sidebar-menu a:hover { background: url("/images/wow/profile/sidebar-m
 .summary-talents .build { display: block; color: white; padding-top: 3px; font-weight: normal; font-size: 12px; }
 .summary-talents .build ins { color: #808080; padding: 0 4px; font-weight: normal; text-decoration: none; }
 .summary-talents a:hover { background-position: left -104px; background-color: #49281c; }
-.summary-talents a:hover .name { color: white !important; }
 .summary-talents a.active { background-position: left -52px; background-color: #541805; }
 .summary-talents a.active .name { color: #FFB100; }
-.summary-talents a.active:hover { background-position: left -156px; background-color: #651d06; }
 .summary-talents a.active .icon .frame { background-position: 0 -50px; }
 
 /* stats, professions, battlegrounds */

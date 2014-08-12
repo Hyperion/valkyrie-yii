@@ -32,10 +32,6 @@ $this->breadcrumbs = array(
                             'active' => true,
                         ),
                         array(
-                            'label' => 'Таланты',
-                            'url'   => array('/character/talents', 'realm' => 'Valkyrie', 'name'  => $model->name)
-                        ),
-                        array(
                             'label' => 'Репутация',
                             'url'   => array('/character/reputation', 'realm' => 'Valkyrie', 'name'  => $model->name)
                         ),
@@ -106,7 +102,7 @@ $this->breadcrumbs = array(
     <div class="summary-talents" id="summary-talents">
         <ul>
             <li class="summary-talents-1">
-                <a href="<?php echo $this->createUrl('/character/talents', array('name'  => $model->name, 'realm' => 'Valkyrie')); ?>" rel="np" class="active">
+                <a rel="np" class="active">
                     <span class="inner">
                         <span class="icon">
                             <img src="http://media.blizzard.com/wow/icons/36/<?php echo $model->talents['icon']; ?>.jpg" alt="" />
