@@ -28,7 +28,7 @@ INSERT INTO `wow_talent_icons` (`class`, `spec`, `icon`, `name_de`, `name_en`, `
 (5, 1, 'spell_holy_guardianspirit', 'Heilig', 'Holy', 'Sagrado', 'Sacr&#233;', 'Свет'),
 (1, 1, 'ability_warrior_innerrage', 'Furor', 'Fury', 'Furia', 'Fureur', 'Неистовство'),
 (1, 2, 'inv_shield_06', 'Schutz', 'Protection', 'Protecci&#243;n', 'Protection', 'Защита'),
-(1, 0, 'ability_rogue_eviscerate', 'Waffen', 'Arms', 'Armas', 'Armes', 'Оружие'),
+(1, 0, 'ability_warrior_savageblow', 'Waffen', 'Arms', 'Armas', 'Armes', 'Оружие'),
 (2, 0, 'spell_holy_holybolt', 'Heilig', 'Holy', 'Sagrado', 'Sacr&#233;', 'Свет'),
 (2, 1, 'spell_holy_devotionaura', 'Schutz', 'Protection', 'Protecci&#243;n', 'Protection', 'Защита'),
 (2, 2, 'spell_holy_auraoflight', 'Vergeltung', 'Retribution', 'Reprensi&#243;n', 'Vindicte', 'Воздаяние'),
